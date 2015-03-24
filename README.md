@@ -40,9 +40,9 @@ This application can then be ported as a standalone app, using *ofxPd* (itself u
 [ofxPd](https://github.com/danomatika/ofxPd) is an openFrameworks addon for adding  an instance of Pd within an openFrameworks application.
 
 The graphical syntax of Pof owes a lot to [Gem](http://puredata.info/downloads/gem) (however it has some noticeable differences from it).
-Pof also follows an exploration of all that can be done with [PdDroidParty](https://github.com/chr15m/PdDroidP) approach.
+Pof also follows an exploration of all that can be done with [PdDroidParty](https://github.com/chr15m/PdDroidParty) approach.
 
-POF was initially developed to provide a GUI for the Android version of NinjaTune/[*Coldcut*](http://ninjatune.net/artist/coldcut)'s [Ninja Jamm](http://www.ninjajamm.com/) app. Coldcut support making the code available to the community on an open source basis.
+Pof was initially developed to provide a GUI for the Android version of NinjaTune/[*Coldcut*](http://ninjatune.net/artist/coldcut)'s [Ninja Jamm](http://www.ninjajamm.com/) app. Coldcut support making the code available to the community on an open source basis.
 
 Usage
 ------
@@ -71,7 +71,7 @@ The "help" folder contains the help patches for every Pof objects. If this folde
 `example/pd` folder contains a entry patch `pof_main.pd` which allows to launch several example patchs, located each in a sub-folder. This folder is copied into the `bin/data` folder of each example project (`PofDroid` and `exampleStandalone`), to be included into final applications.
 ![not_a_patch](http://metalu.net/IMG/jpg/thisisnotapatch.jpg)
 
-Also there will be some Pof tutorials on [metalu.net](http://metalu.net) one of this days.
+Also there will be some Pof tutorials on [metalu.net](http://metalu.net) one of these days.
 
 ---------
 
@@ -90,7 +90,7 @@ On Win, you will need [Codeblocks+MiniGW](http://www.codeblocks.org/downloads/26
 
 ** warning : Xcode and Codeblocks project files are not ready yet. **
 
-You also will need to install the following addons : [ofxJSON](https://github.com/jefftimesten/ofxJSON), [ofxUnicode](https://github.com/bakercp/ofxUnicode) and [ofxZipPass](https://github.com/Ant1r/ofxZipPass).  
+You also will need to install the following addons : [ofxPd](https://github.com/danomatika/ofxPd), [ofxJSON](https://github.com/jefftimesten/ofxJSON), [ofxUnicode](https://github.com/bakercp/ofxUnicode) and [ofxZipPass](https://github.com/Ant1r/ofxZipPass).  
 Pof also uses [ofxFontStash](https://github.com/armadillu/ofxFontStash), but this addon is currently included into Pof (because having been hacked a bit for Android compatibility) so it doesn't have to be installed.
 
 ### Installation
