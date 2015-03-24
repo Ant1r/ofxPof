@@ -1,0 +1,58 @@
+#N canvas 442 213 413 531 10;
+#X declare -lib pof;
+#X declare -path .;
+#X declare -path ../buildExternal/bin;
+#X obj 187 15 pof_declare;
+#X obj -24 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X text -22 2 Pof : Pd OpenFrameworks externals;
+#X obj -24 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#X text 5 24 (c) Antoine Rousseau 2014;
+#X obj -24 56 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X text -15 57 pofwin : main window settings.;
+#X obj -22 394 cnv 15 80 30 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X msg -1 159 build;
+#X obj -16 401 pofwin;
+#X msg 14 256 framerate \$1;
+#X msg -16 107 window \$1 600 0;
+#X obj -13 87 hsl 128 15 0 500 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X msg 14 230 8;
+#X msg 44 231 25;
+#X msg 75 231 60;
+#X text 94 255 Set framerate.;
+#X text 83 106 Set window size.;
+#X obj -16 429 route window;
+#X obj -16 451 unpack f f;
+#X floatatom -16 476 5 0 0 0 - - -;
+#X floatatom 41 476 5 0 0 0 - - -;
+#X text 61 428 Get actual window size.;
+#X msg 30 298 background 0 0 0;
+#X msg 31 319 background 40 80 120;
+#X text 139 300 Set background color.;
+#X text 162 314 (R \, G \, B [0:255]);
+#X obj 36 361 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X text 57 359 bang : force send window size;
+#X text 225 499 todo : multiple windows;
+#X text 39 142 Manually rebuild drawing tree (to be called when objects
+have been connected or disconnected). Rebuild is done automatically
+when a pof object has been created or destroyed (but not when a pof
+object is connected/disconnected...).;
+#X connect 8 0 9 0;
+#X connect 9 0 18 0;
+#X connect 10 0 9 0;
+#X connect 11 0 9 0;
+#X connect 12 0 11 0;
+#X connect 13 0 10 0;
+#X connect 14 0 10 0;
+#X connect 15 0 10 0;
+#X connect 18 0 19 0;
+#X connect 19 0 20 0;
+#X connect 19 1 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 9 0;
+#X connect 27 0 9 0;

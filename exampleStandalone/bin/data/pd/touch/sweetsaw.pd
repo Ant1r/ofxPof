@@ -1,0 +1,63 @@
+#N canvas 335 63 446 495 10;
+#X obj 70 395 -~;
+#X obj 88 323 *~;
+#X obj 228 162 * 0.33333;
+#X obj 228 138 mtof;
+#X text 263 139 band limit (MIDI units);
+#X text 55 84 frequency;
+#X obj 71 221 -~ 0.5;
+#X text 27 503 Patch to make an approximately band-limited sawtooth.
+This is useful if you intend to use sawtooth generators above about
+200 Hz. \, perhaps to use any of the techniques shown in the previous
+four patches.;
+#X text 28 562 We generate a perfect square wave at Nyquist/6 \; this
+will have partials 1 \, 3 \, and 5 \, but the Nyquist frequency at
+partial 6 will cut off the rest of the partials. This is stored in
+array1 using the "make-table" subpatch.;
+#X text 64 34 BAND-LIMITED SAWTOOTH GENERATOR;
+#X text 28 632 Now any time we wish to make a discontinuity in the
+output signal \, we make it look exactly like the bandlimited square
+wave looks. We do this by reading through the table we recorded \,
+carefully adding a "digital" \, non-band-limited \, sawtooth to "array1"
+so that the discontinuities in the two cancel out and what you have
+left is the transition in the table.;
+#X text 257 735 updated for Pd version 0.26;
+#X obj 87 344 +~ 501;
+#X obj 243 239 abs~;
+#X obj 228 66 inlet;
+#X obj 148 108 inlet;
+#X obj 70 433 outlet~;
+#X obj 71 197 phasor~;
+#X obj 87 368 tabread~ saw_array;
+#X floatatom 365 204 0 0 0 0 - - -;
+#X obj 228 111 * 140;
+#X obj 228 90 clip 0 1;
+#X text 270 67 band limit (0 -> 1);
+#X obj 227 280 /~;
+#X obj 243 259 +~ 1;
+#X obj 228 212 sig~ 8e+06;
+#X obj 228 186 * 1000;
+#X text 152 85 phase;
+#X obj 226 301 max~ 1000;
+#X obj 72 112 inlet~;
+#X connect 0 0 16 0;
+#X connect 1 0 12 0;
+#X connect 2 0 26 0;
+#X connect 3 0 2 0;
+#X connect 6 0 1 0;
+#X connect 6 0 0 0;
+#X connect 12 0 18 0;
+#X connect 13 0 24 0;
+#X connect 14 0 21 0;
+#X connect 15 0 17 1;
+#X connect 17 0 6 0;
+#X connect 18 0 0 1;
+#X connect 20 0 3 0;
+#X connect 21 0 20 0;
+#X connect 23 0 28 0;
+#X connect 24 0 23 1;
+#X connect 25 0 23 0;
+#X connect 26 0 25 0;
+#X connect 28 0 1 1;
+#X connect 29 0 13 0;
+#X connect 29 0 17 0;

@@ -1,0 +1,8 @@
+#N canvas 1303 452 320 129 10;
+#X declare -lib pof;
+#X declare -path .;
+#X declare -path ../buildExternal/bin;
+#X obj 14 61 import pof;
+#X text 6 13 (utility declaration included in pof help patchs.);
+#X obj 14 81 declare -path .;
+#X obj 13 42 declare -path ../buildExternal/bin;

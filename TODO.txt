@@ -1,0 +1,27 @@
+- pofTri
+- pofLine
+- pofTouch image-mask
+- pofHead priority
+- pofVideoPlayer/Grabber/Recorder
+
+- intercept "quit" event.
+- multi-windowing
+
+- key events
+
+------------
+doc:
+
+touch events
+
+multithreading
+
+2D/3D -> events
+
+build tree
+
+//Gem
+//PdDroidparty
+
+
+

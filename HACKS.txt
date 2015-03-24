@@ -1,0 +1,12 @@
+
+
+-in ofxFontStash : 
+	*add possibility to reload font : add on 1st line ofofxFontStash::setup :
+if (stash != NULL){ sth_delete(stash); stash = NULL;}
+	* correct in fontstash.c set_lod_bias(struct sth_stash* stash, float bias) (protect from openGLES)
+
+- in ofxUnicode/libs/utf8cpp/src/utf8_v2_3_1/source/utf8/checked.h : 
+correct order of template declarations : "append" before "replace_invalid" ;
+or update utf8 to 2.3.4 where it's fixed (untested yet)
+or try ofxUnicode/ICU (untested yet)
+

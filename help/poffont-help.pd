@@ -1,0 +1,32 @@
+#N canvas 606 92 435 325 10;
+#X declare -lib pof;
+#X declare -path .;
+#X declare -path ../buildExternal/bin;
+#X obj 187 15 pof_declare;
+#X obj -24 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X text -22 2 Pof : Pd OpenFrameworks externals;
+#X obj -24 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#X text 5 24 (c) Antoine Rousseau 2014;
+#X obj -23 56 cnv 15 220 20 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X obj -4 190 cnv 15 200 30 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X obj 15 262 pofhead;
+#X msg 71 265 text Hello Pof !;
+#X obj 3 196 poffont font1 font/vera.ttf 50;
+#X text 137 88 Arguments : name filename size(in pixels);
+#X obj 15 294 poftext font1;
+#X obj 71 243 loadbang;
+#X msg 3 104 set font/vera.ttf 50;
+#X text 137 104 Inlet 1 : set FILENAME SIZE;
+#X msg 16 126 set font/FreeMonoBold.ttf 50;
+#X msg 25 151 set font/FreeMonoBold.ttf 24;
+#X text -21 56 poffont : define a font from a file.;
+#X connect 7 0 11 0;
+#X connect 8 0 11 0;
+#X connect 12 0 8 0;
+#X connect 13 0 9 0;
+#X connect 15 0 9 0;
+#X connect 16 0 9 0;

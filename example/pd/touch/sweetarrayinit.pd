@@ -1,0 +1,58 @@
+#N canvas 344 732 296 124 10;
+#X obj 17 20 table saw_array 1002;
+#N canvas 245 551 728 408 make-table 0;
+#X obj 469 146 cos~;
+#X obj 303 146 cos~;
+#X obj 255 141 cos~;
+#X msg 199 210 bang;
+#X text 366 79 period is 2000 samples \, twice the table length;
+#X text 118 286 this network puts a half cycle of a band-limited square
+wave into the table "array1.";
+#X text 114 335 logically the half-cycle is in samples 1 through 1000
+\; samples 0 and 1001 are provided so that the 4-point interpolation
+will work everywhere.;
+#X text 401 57 back the phase up one sample;
+#X msg 340 57 -0.0005;
+#X obj 171 16 loadbang;
+#X obj 303 120 *~ 3;
+#X obj 468 122 *~ 5;
+#X obj 303 171 *~ 0.33333;
+#X obj 468 172 *~ -0.2;
+#X obj 255 169 *~ -1;
+#X msg 171 38 bang;
+#X obj 254 80 phasor~ 22.05;
+#X obj 255 202 *~ 0.57692;
+#X obj 255 261 tabwrite~ saw_array;
+#X obj 112 198 bang~;
+#X msg 80 193 1;
+#X obj 80 239 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
+;
+#X obj 181 259 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+-1;
+#X obj 80 260 switch~ 1024;
+#X msg 112 219 0;
+#X obj 255 233 -~ 0.5;
+#X connect 0 0 13 0;
+#X connect 1 0 12 0;
+#X connect 2 0 14 0;
+#X connect 3 0 18 0;
+#X connect 8 0 16 1;
+#X connect 9 0 15 0;
+#X connect 10 0 1 0;
+#X connect 11 0 0 0;
+#X connect 12 0 17 0;
+#X connect 13 0 17 0;
+#X connect 14 0 17 0;
+#X connect 15 0 8 0;
+#X connect 15 0 3 0;
+#X connect 15 0 20 0;
+#X connect 16 0 2 0;
+#X connect 16 0 10 0;
+#X connect 16 0 11 0;
+#X connect 17 0 25 0;
+#X connect 19 0 24 0;
+#X connect 20 0 21 0;
+#X connect 21 0 23 0;
+#X connect 24 0 21 0;
+#X connect 25 0 18 0;
+#X restore 18 45 pd make-table;

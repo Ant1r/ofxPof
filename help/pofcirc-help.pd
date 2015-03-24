@@ -1,0 +1,40 @@
+#N canvas 629 387 378 354 10;
+#X declare -lib pof;
+#X declare -path .;
+#X declare -path ../buildExternal/bin;
+#X obj 187 15 pof_declare;
+#X obj -24 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X text -22 2 Pof : Pd OpenFrameworks externals;
+#X obj -24 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#X text 5 24 (c) Antoine Rousseau 2014;
+#X obj -24 56 cnv 15 250 20 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X obj 6 240 cnv 15 120 30 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X obj 11 120 pofhead;
+#X floatatom 81 206 5 0 0 0 - - -;
+#X floatatom 125 205 5 0 0 0 - - -;
+#X text -15 56 pofcirc : draw a circle (or an ellipse).;
+#X obj 11 248 pofcirc 200 200 50;
+#X text 48 86 Arguments : initial width height [resolution];
+#X msg 73 146 res \$1;
+#X floatatom 73 121 5 3 100 0 - - -;
+#X obj 11 158 t a a;
+#X obj 38 290 pofcolor 1 0 0 1;
+#X obj 38 312 pofrect 200 200;
+#X text 140 130 Inlet 2: width;
+#X text 140 115 Inlet 1: res (resolution);
+#X text 140 145 Inlet 3: height \; if heigth=0 \, then height=width.
+;
+#X connect 7 0 15 0;
+#X connect 8 0 11 1;
+#X connect 8 0 17 1;
+#X connect 9 0 11 2;
+#X connect 9 0 17 2;
+#X connect 13 0 11 0;
+#X connect 14 0 13 0;
+#X connect 15 0 11 0;
+#X connect 15 1 16 0;
+#X connect 16 0 17 0;

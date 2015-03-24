@@ -1,0 +1,62 @@
+#N canvas 517 183 433 435 10;
+#X declare -lib pof;
+#X declare -path .;
+#X declare -path ../buildExternal/bin;
+#X obj 187 15 pof_declare;
+#X obj -24 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X text -22 2 Pof : Pd OpenFrameworks externals;
+#X obj -24 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#X text 5 24 (c) Antoine Rousseau 2014;
+#X obj -24 56 cnv 15 220 20 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X obj 7 178 cnv 15 120 30 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X obj 14 84 pofhead;
+#X obj 14 222 pofrect 200 200;
+#X text -13 55 pofcolor : change the color/alpha;
+#X text 145 92 Arguments : initial r g b a;
+#X text 149 114 Inlet 2: red [0:1];
+#X text 149 129 Inlet 3: green [0:1];
+#X text 149 144 Inlet 4: blue [0:1];
+#X text 149 160 Inlet 5: alpha [0:1];
+#X obj 107 109 vsl 15 60 0 1 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 83 109 vsl 15 60 0 1 0 0 empty empty empty 0 -9 0 10 -4160 -1
+-1 0 1;
+#X obj 60 110 vsl 15 60 0 1 0 0 empty empty empty 0 -9 0 10 -4034 -1
+-1 0 1;
+#X obj 37 110 vsl 15 60 0 1 0 0 empty empty empty 0 -9 0 10 -258113
+-1 -1 0 1;
+#X obj 143 300 vsl 15 60 0 1 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 110 300 vsl 15 60 0 1 0 0 empty empty empty 0 -9 0 10 -4160
+-1 -1 0 1;
+#X obj 78 300 vsl 15 60 0 1 0 0 empty empty empty 0 -9 0 10 -4034 -1
+-1 0 1;
+#X obj 46 300 vsl 15 60 0 1 0 0 empty empty empty 0 -9 0 10 -258113
+-1 -1 0 1;
+#X obj 14 398 pofrect 80 80;
+#X obj 14 184 pofcolor 1 1 0 1;
+#X obj 14 372 pofcolor 0.7 0.5 0.3 1;
+#X text 134 206 new_red = upcoming_red * pofcolor_red;
+#X text 134 229 new_blue = upcoming_blue * pofcolor_blue;
+#X text 134 217 new_green = upcoming_green * pofcolor_green;
+#X text 134 241 new_alpha = upcoming_alpha * pofcolor_alpha;
+#X text 35 264 pofcolor is cumulative : each pofcolor depends of previous
+ones in the tree.;
+#X text 134 179 new_color = upcoming_color * pofcolor_color;
+#X text 133 193 that means :;
+#X connect 7 0 24 0;
+#X connect 8 0 25 0;
+#X connect 15 0 24 4;
+#X connect 16 0 24 3;
+#X connect 17 0 24 2;
+#X connect 18 0 24 1;
+#X connect 19 0 25 4;
+#X connect 20 0 25 3;
+#X connect 21 0 25 2;
+#X connect 22 0 25 1;
+#X connect 24 0 8 0;
+#X connect 25 0 23 0;

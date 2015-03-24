@@ -1,0 +1,13 @@
+<?xml version="1.0" ?> 
+<pictures>
+    <picture id="0">
+        <url>http://apicture.co.uk/pic.png</url>
+        <width>100</width>
+        <height>100</height>
+    </picture>
+    <picture id="1">
+        <url>http://apicture.co.uk/pic2.png</url>
+        <width>100</width>
+        <height>100</height>
+    </picture>
+</pictures>

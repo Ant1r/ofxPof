@@ -1,0 +1,78 @@
+#N canvas 482 388 418 445 10;
+#X declare -lib pof;
+#X declare -path .;
+#X declare -path ../buildExternal/bin;
+#X obj -8 234 cnv 15 140 30 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X obj 187 15 pof_declare;
+#X obj -24 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X text -22 2 Pof : Pd OpenFrameworks externals;
+#X obj -24 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#X text 5 24 (c) Antoine Rousseau 2014;
+#X obj -24 56 cnv 15 370 35 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X obj 144 278 cnv 15 140 30 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X obj 0 97 pofhead;
+#X floatatom 52 102 5 0 0 0 - - -;
+#X floatatom 105 102 5 0 0 0 - - -;
+#X obj 0 129 poftranslate 50 50;
+#X obj 153 285 pofresetmatrix;
+#X obj 0 292 pofcolor 1 0 0 1;
+#X text 245 283 Arguments : none;
+#X text -19 56 pofresetmatrix : undo all previous translate/rotation/scale
+ops.;
+#X obj 0 317 pofrect 200 100;
+#X obj 0 267 t a a;
+#X obj 0 170 pofrotate 45;
+#X floatatom 46 192 5 0 0 0 - - -;
+#X floatatom 93 193 5 0 0 0 - - -;
+#X floatatom 69 150 5 0 0 0 - - -;
+#X obj 0 213 pofscale 0.5 0.5;
+#X obj 231 147 pofhead;
+#X obj 231 196 pofcolor 0 1 0 2;
+#X obj 231 171 pofresetmatrix;
+#X obj 0 242 pofgetmatrix;
+#X obj 213 102 list prepend matrix;
+#X obj 169 99 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 213 126 list trim;
+#X msg 294 146 matrix none;
+#X obj 231 220 pofrect 100 200;
+#X obj 153 318 pofrect 200 100;
+#X obj 2 373 pofgetmatrix;
+#X obj 2 352 pofhead;
+#X obj 60 351 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 36 415 print matrix;
+#X obj 71 395 print matrix_decomposition;
+#X obj 153 248 print matrix_decomposition;
+#X connect 8 0 11 0;
+#X connect 9 0 11 1;
+#X connect 10 0 11 2;
+#X connect 11 0 18 0;
+#X connect 12 0 32 0;
+#X connect 13 0 16 0;
+#X connect 17 0 13 0;
+#X connect 17 1 12 0;
+#X connect 18 0 22 0;
+#X connect 19 0 22 1;
+#X connect 20 0 22 2;
+#X connect 21 0 18 1;
+#X connect 22 0 26 0;
+#X connect 23 0 25 0;
+#X connect 24 0 31 0;
+#X connect 25 0 24 0;
+#X connect 26 0 17 0;
+#X connect 26 1 27 0;
+#X connect 26 2 38 0;
+#X connect 27 0 29 0;
+#X connect 28 0 26 0;
+#X connect 29 0 25 0;
+#X connect 30 0 25 0;
+#X connect 33 1 36 0;
+#X connect 33 2 37 0;
+#X connect 34 0 33 0;
+#X connect 35 0 33 0;
