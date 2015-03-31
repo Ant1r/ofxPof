@@ -10,16 +10,19 @@ endif
 
 ifeq ($(PLATFORM_OS),Linux)
 APPNAME = pof.pd_linux
-PROJECT_LDFLAGS = -fPIC -Wl,--export-dynamic -rdynamic -shared -Wl,-rpath=./libs 
+PROJECT_CFLAGS = -fPIC
+PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs 
 
 else ifeq ($(PLATFORM_OS),Darwin)
 APPNAME = pof.pd_darwin
-PROJECT_LDFLAGS = -fPIC -Wl,--export-dynamic -rdynamic -shared -Wl,-rpath=./libs 
+PROJECT_CFLAGS = -fPIC
+PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs 
 
 # I imagine this is useless :
 else ifeq ($(PLATFORM_OS),Windows)
 APPNAME = pof.dll
-PROJECT_LDFLAGS = -fPIC -Wl,--export-dynamic -rdynamic -shared -Wl,-rpath=./libs 
+PROJECT_CFLAGS = -fPIC
+PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs 
 endif
 
 PLATFORM_RUN_COMMAND = pd -path bin/ -open ../example/pd/pof_main.pd
