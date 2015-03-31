@@ -27,7 +27,7 @@ class pofBase {
 			pdobj = (PdObject*)pd_new(Class);
 			pdobj->parent = (pofBase*) this;
 			
-			snprintf(selfname,16 , "pof%x", (unsigned int)this);
+			snprintf(selfname,16 , "pof%p", (void*)this);
 			s_self = gensym(selfname);
 			pd_bind(&pdobj->x_obj.ob_pd, s_self);
 			
