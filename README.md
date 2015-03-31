@@ -40,7 +40,7 @@ This application can then be ported as a standalone app, using *ofxPd* (itself u
 [ofxPd](https://github.com/danomatika/ofxPd) is an openFrameworks addon for adding  an instance of Pd within an openFrameworks application.
 
 The graphical syntax of Pof owes a lot to [Gem](http://puredata.info/downloads/gem) (however it has some noticeable differences from it).
-Pof also follows an exploration of all that can be done with [PdDroidParty](https://github.com/chr15m/PdDroidParty) approach.
+Pof also follows an exploration (and some enhancement) of what can be done with [PdDroidParty](http://droidparty.net/).
 
 Pof was initially developed to provide a GUI for the Android version of NinjaTune/[*Coldcut*](http://ninjatune.net/artist/coldcut)'s [Ninja Jamm](http://www.ninjajamm.com/) app. Coldcut support making the code available to the community on an open source basis.
 
@@ -64,14 +64,18 @@ Pof can be integrated into a standalone application, using ofxPd. Given the port
 This application can even be a "player" app, which loads a specific entry patch file at startup. This way updating the app just means transfering the new patch files into the device, and quit/reload the app (no compilation involved).
 For now, **exampleStandalone** folder allows to build standalone for workstation (only tested on Linux-32bit), and **PofDroid** is a test project for building an Android Pof player. Their entry patch are set to `bin/data/pd/pof_main.pd`.
 
+### releases :
+Check for latest binary releases [there](https://github.com/Ant1r/ofxPof/releases).
+
 Documentation
 ------
 The "help" folder contains the help patches for every Pof objects. If this folder is declared in Pd (`-helppath path_to_ofxPof/help`) then the help patchs will be opened with right-click/help on Pof objects.
 
 `example/pd` folder contains a entry patch `pof_main.pd` which allows to launch several example patchs, located each in a sub-folder. This folder is copied into the `bin/data` folder of each example project (`PofDroid` and `exampleStandalone`), to be included into final applications.
-![not_a_patch](http://metalu.net/IMG/jpg/thisisnotapatch.jpg)
 
-Also there will be some Pof tutorials on [metalu.net](http://metalu.net) one of these days.
+![pofplayer](https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/PofPlayer.jpg) ![not_a_patch](https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/ThisIsNotAPatch.jpg) ![sampler](https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/Circles.jpg) ![sampler](https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/Sampler.png) ![sampler](https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/Soft.jpg)
+
+Also there will be some Pof tutorials on [metalu.net](http://metalu.net/ressources-techniques/pure-data/pof-pd-openframeworks) one of these days.
 
 ---------
 
