@@ -1,0 +1,7 @@
+ofxAndroid
+ofxAccelerometer
+ofxPd
+ofxPof
+ofxJSON
+ofxUnicode
+ofxZipPass

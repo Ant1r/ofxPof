@@ -1,0 +1,7 @@
+This place is a good one to try writing your own Pof patch !
+
+Install Pure Data, install ofxPof (see https://github.com/Ant1r/ofxPof for details), locate ofxPof/example/pd/scratchpad folder, open pof_main.pd with Pure Data. Edit, try & watch ; save.
+
+Upload "scratchpad" folder to your phone/tablet and relaunch Pof player.
+That's all !
+
