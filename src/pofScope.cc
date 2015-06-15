@@ -48,7 +48,7 @@ static t_int *pofscope_perform(t_int *w)
     t_sample *in = (t_sample *)(w[2]);
     t_int n = *(t_int *)(w+3);
         
-    px->Mutex.lock();
+    //px->Mutex.lock();
     
     int W = px->curWidth;
     
@@ -67,7 +67,7 @@ static t_int *pofscope_perform(t_int *w)
 		if(oldi != i) px->maxBuf[i % W] = px->minBuf[i % W] = f;
 	}
    
-    px->Mutex.unlock();
+    //px->Mutex.unlock();
     
 	return (w + 4);
 }
