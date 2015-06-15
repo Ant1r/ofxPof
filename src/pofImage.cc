@@ -27,7 +27,7 @@ class pofImLoader: public ofThread {
     	return l;
     }
     	
-} imLoader, imLoaderHTTP; // two loader tasks : one for online resources, one for on disk ones.
+} *imLoader = NULL, *imLoaderHTTP = NULL; // two loader tasks : one for online resources, one for on disk ones.
     
 
 class pofIm{
@@ -63,8 +63,8 @@ class pofIm{
 			preloaded = true;
 			mutex.lock();
 			refCount++;
-			if(!strncmp(file->s_name, "http", strlen("http"))) imLoaderHTTP.enQueue(this);
-			else imLoader.enQueue(this);
+			if(!strncmp(file->s_name, "http", strlen("http"))) imLoaderHTTP->enQueue(this);
+			else imLoader->enQueue(this);
 			mutex.unlock();
 		}
 	}
@@ -239,8 +239,10 @@ void pofImage::setup(void)
 	class_addmethod(pofimage_class, (t_method)pofimage_monitor, gensym("setmonitor"), A_FLOAT, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_out, s_size, A_GIMME, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_out, s_monitor, A_GIMME, A_NULL);
-	imLoader.startThread(true); //, false);    // blocking, non verbose
-	imLoaderHTTP.startThread(true); //, false);    // blocking, non verbose
+    imLoader = new pofImLoader;
+    imLoaderHTTP = new pofImLoader;
+	imLoader->startThread(true); //, false);    // blocking, non verbose
+	imLoaderHTTP->startThread(true); //, false);    // blocking, non verbose
 }
 
 void pofImage::Update()
@@ -250,8 +252,8 @@ void pofImage::Update()
 
 
 	if(monitor) {
-		unsigned int len = imLoader.getLen();
-		unsigned int lenHTTP = imLoaderHTTP.getLen();
+		unsigned int len = imLoader->getLen();
+		unsigned int lenHTTP = imLoaderHTTP->getLen();
 		unsigned int lenTotal = pofIm::getNumImages();
 		if((len != loaderLen)||(lenHTTP != loaderLenHTTP)||(lenTotal != imgLen)) {
 			loaderLen = len;
