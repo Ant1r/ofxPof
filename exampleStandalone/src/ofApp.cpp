@@ -3,7 +3,7 @@
  * BSD Simplified License, see the file "LICENSE.txt" in this distribution.
  * See https://github.com/Ant1r/ofxPof for documentation and updates
  */
-#include "testApp.h"
+#include "ofApp.h"
 #include "pofBase.h"
 
 using namespace pd;

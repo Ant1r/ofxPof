@@ -253,6 +253,7 @@ void pofBase::drawAll(){
 		if(pofWin::win) pofWin::win->tree_draw();
 		unlock();
 	}
+    ofSetupScreen();
 }
 
 void pofBase::buildAll() {

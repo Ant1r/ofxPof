@@ -1,0 +1,16 @@
+#N canvas 592 63 445 219 10;
+#X obj 75 16 inlet head;
+#X msg 226 156 text Antoine Rousseau / metalu.net;
+#X obj 102 131 pofrect 228 15 5;
+#X obj 102 109 pofcolor 0 0 0 0.5;
+#X obj 75 157 pofcolor 0.8 0.8 1 0.8;
+#X obj 75 182 poftexts impact 19;
+#X obj 75 86 t a a;
+#X obj 226 134 loadbang;
+#X connect 0 0 6 0;
+#X connect 1 0 5 0;
+#X connect 3 0 2 0;
+#X connect 4 0 5 0;
+#X connect 6 0 4 0;
+#X connect 6 1 3 0;
+#X connect 7 0 1 0;
