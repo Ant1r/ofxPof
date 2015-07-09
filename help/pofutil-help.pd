@@ -1,4 +1,4 @@
-#N canvas 209 196 363 248 10;
+#N canvas 207 229 363 248 10;
 #X declare -lib pof;
 #X declare -path .;
 #X declare -path ../buildExternal/bin;
@@ -12,16 +12,16 @@
 #X obj -58 57 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
 #X text -52 57 pofutil : various utilities.;
-#N canvas 701 106 428 332 file_utils 0;
+#N canvas 699 111 428 529 file_utils 1;
 #X msg 32 14 getdir;
-#X obj 32 264 pofutil;
+#X obj 32 449 pofutil;
 #X msg 60 90 rmfile /tmp/file_to_delete;
 #X text 223 88 remove file;
 #X msg 60 119 listdir /;
 #X msg 60 145 exists /;
 #X text 127 119 list directory;
 #X text 114 145 test if file exists/isDirectory/isFile;
-#X obj 32 293 print;
+#X obj 32 478 print;
 #X msg 65 190 mkdir /tmp/test_dir;
 #X msg 66 220 rmdir /tmp/test_dir;
 #X text 191 189 make directory;
@@ -29,6 +29,14 @@
 #X msg 51 46 getdatapath;
 #X text 126 44 get openFrameworks app's datapath;
 #X text 74 11 get path of current patch directory;
+#X msg 78 269 getdir;
+#X obj 78 290 pofutil;
+#X msg 78 312 renamedir \$1/testdir \$1/testdir-renamed;
+#X msg 78 341 getdir;
+#X obj 78 362 pofutil;
+#X msg 78 384 renamedir \$1/testdir-renamed \$1/testdir;
+#X text 127 288 rename dir;
+#X text 126 360 rename back;
 #X connect 0 0 1 0;
 #X connect 1 0 8 0;
 #X connect 2 0 1 0;
@@ -37,8 +45,14 @@
 #X connect 9 0 1 0;
 #X connect 10 0 1 0;
 #X connect 13 0 1 0;
+#X connect 16 0 17 0;
+#X connect 17 0 18 0;
+#X connect 18 0 1 0;
+#X connect 19 0 20 0;
+#X connect 20 0 21 0;
+#X connect 21 0 1 0;
 #X restore -44 95 pd file_utils;
-#N canvas 601 613 663 267 string_utils 0;
+#N canvas 599 618 663 360 string_utils 0;
 #X obj 23 186 pofutil;
 #X obj 23 214 print;
 #X msg 23 29 dirbaseext /tmp/path/test.txt;

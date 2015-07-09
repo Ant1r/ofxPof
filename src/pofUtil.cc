@@ -84,6 +84,12 @@ static void pofutil_mkdir(void *x, t_symbol *path)
 	ofDirectory::createDirectory(path->s_name, /*bool bRelativeToData=*/false, /*bool recursive=*/true);
 }
 
+static void pofutil_renamedir(void *x, t_symbol *path, t_symbol *newpath)
+{
+	//pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
+	ofDirectory(path->s_name).renameTo(newpath->s_name, /*bool bRelativeToData=*/false, /*bool overwrite=*/true);
+}
+
 static void pofutil_exists(void *x, t_symbol *path)
 {
 	pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
@@ -452,6 +458,7 @@ void pofUtil::setup(void)
 	class_addmethod(pofutil_class, (t_method)pofutil_rmfile, gensym("rmfile"), A_SYMBOL, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_rmdir, gensym("rmdir"), A_SYMBOL, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_mkdir, gensym("mkdir"), A_SYMBOL, A_NULL);
+	class_addmethod(pofutil_class, (t_method)pofutil_renamedir, gensym("renamedir"), A_SYMBOL, A_SYMBOL, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_listdir, gensym("listdir"), A_GIMME, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_exists, gensym("exists"), A_SYMBOL, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_dirbaseext, gensym("dirbaseext"), A_SYMBOL, A_NULL);
