@@ -30,6 +30,9 @@
 #include "pofAccel.h"
 #include "pofTextbox.h"
 #include "pofJSON.h"
+#include "pofSphere.h"
+#include "pofPlane.h"
+#include "pofDepthTest.h"
 
 #include "version.h"
 
@@ -516,6 +519,9 @@ void pofBase::setup() {
 	pofAccel::setup();
 	pofTextbox::setup();
 	pofJSON::setup();
+	pofPlane::setup();
+	pofSphere::setup();
+	pofDepthTest::setup();
 		
 	queueClock = clock_new(0,(t_method)dequeueToPdtick);
 	clock_delay(queueClock,100);

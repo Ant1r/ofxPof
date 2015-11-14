@@ -1,4 +1,4 @@
-#N canvas 813 300 376 295 10;
+#N canvas 811 333 376 295 10;
 #X declare -lib pof;
 #X declare -path .;
 #X declare -path ../buildExternal/bin;
@@ -9,21 +9,24 @@
 #X obj -24 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
 0;
 #X text 5 24 (c) Antoine Rousseau 2014;
-#X obj -24 56 cnv 15 350 20 empty empty empty 20 12 0 14 -261682 -66577
+#X obj -24 56 cnv 15 370 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
 #X obj -7 164 cnv 15 140 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
 #X obj 0 114 pofhead;
-#X floatatom 52 141 5 0 0 0 - - -;
-#X floatatom 105 142 5 0 0 0 - - -;
+#X floatatom 35 140 5 0 0 0 - - -;
+#X floatatom 70 140 5 0 0 0 - - -;
 #X obj 0 232 pofrect 200 100;
 #X text 152 129 Inlet 2: x;
-#X text 125 110 Arguments : initial vector(x \, y);
 #X text 152 141 Inlet 3: y;
-#X text -19 56 poftranslate : translate following tree by vector (x
-\, y).;
 #X obj 0 172 poftranslate 50 50;
-#X connect 7 0 15 0;
-#X connect 8 0 15 1;
-#X connect 9 0 15 2;
-#X connect 15 0 10 0;
+#X text 152 154 Inlet 4: z;
+#X text 125 110 Arguments : initial vector(x \, y \, z);
+#X floatatom 105 140 5 0 0 0 - - -;
+#X text -19 56 poftranslate : translate following tree by vector (x
+\, y \, z).;
+#X connect 7 0 13 0;
+#X connect 8 0 13 1;
+#X connect 9 0 13 2;
+#X connect 13 0 10 0;
+#X connect 16 0 13 3;

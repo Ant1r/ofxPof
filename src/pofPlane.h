@@ -7,19 +7,18 @@
 
 #include "pofBase.h"
 
-class pofTranslate;
+class pofPlane;
 
-class pofTranslate: public pofBase {
+class pofPlane: public pofBase {
 	public:
-		pofTranslate(t_class *Class, float x0=0, float y0=0, float z0=0):pofBase(Class),v(x0, y0, z0) {  }
+		pofPlane(t_class *Class, float w, float h):
+			pofBase(Class),width(w), height(h)
+		{ }
 
 		virtual void draw();
-		virtual void postdraw(); // called after objects bellow have been drawn
-		virtual bool computeTouch(int &x, int &y);
-		
 		static void setup(void);
 		
-		ofVec3f v, vReal;
+		float width, height;
 };
 
 

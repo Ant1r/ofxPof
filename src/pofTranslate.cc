@@ -7,12 +7,13 @@
 
 t_class *pofTranslate_class;
 
-void *pofTranslate_new(t_floatarg x, t_floatarg y)
+void *pofTranslate_new(t_floatarg x, t_floatarg y, t_floatarg z)
 {
-    pofTranslate* obj = new pofTranslate(pofTranslate_class, x, y);
+    pofTranslate* obj = new pofTranslate(pofTranslate_class, x, y, z);
     
     floatinlet_new(&obj->pdobj->x_obj, &obj->v.x);
     floatinlet_new(&obj->pdobj->x_obj, &obj->v.y);
+    floatinlet_new(&obj->pdobj->x_obj, &obj->v.z);
     return (void*) (obj->pdobj);
 }
 
@@ -26,19 +27,21 @@ void pofTranslate::setup(void)
 {
 	//post("poftranslate_setup");
 	pofTranslate_class = class_new(gensym("poftranslate"), (t_newmethod)pofTranslate_new, (t_method)pofTranslate_free,
-		sizeof(PdObject), 0, A_DEFFLOAT, A_DEFFLOAT, A_NULL);
+		sizeof(PdObject), 0, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_NULL);
 	POF_SETUP(pofTranslate_class);
 }
 
 void pofTranslate::draw()
 {
 	vReal = v;
-	ofTranslate(vReal.x, vReal.y);
+	//ofTranslate(vReal.x, vReal.y);
+	ofTranslate(vReal);
 }
 
 void pofTranslate::postdraw()
 {
-	ofTranslate(-vReal.x, -vReal.y);
+	//ofTranslate(-vReal.x, -vReal.y);
+	ofTranslate(-vReal);
 }
 
 bool pofTranslate::computeTouch(int &xx, int &yy)

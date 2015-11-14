@@ -1,0 +1,36 @@
+#N canvas 574 97 504 413 10;
+#X declare -path .;
+#X declare -path ../buildExternal/bin;
+#X obj 218 15 pof_declare;
+#X obj 7 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X text 9 2 Pof : Pd OpenFrameworks externals;
+#X obj 7 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#X obj 7 56 cnv 15 350 30 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X obj 41 117 pofhead;
+#X obj 41 166 pofdepthtest;
+#X obj 41 212 t a a;
+#X text 13 56 pofdepthtest : turn on depth test \, so rendering happens
+according to z-depth rather than draw order.;
+#X obj 68 242 pofcolor 1 0.2 0 1;
+#X text 114 111 Arguments : none;
+#X text 121 132 Inlet 1: enable(0/1);
+#X obj 105 133 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 68 265 poftranslate 0 0 1;
+#X obj 41 321 poftranslate 0 0 0;
+#X obj 68 287 pofrect 150 250;
+#X obj 41 343 pofrect 250 150;
+#X text 141 342 white rectangle is behind \, but is drawn after.;
+#X text 188 264 red rectangle is ahead \, but is drawn first.;
+#X text 36 24 (c) Antoine Rousseau 2015;
+#X connect 5 0 6 0;
+#X connect 6 0 7 0;
+#X connect 7 0 14 0;
+#X connect 7 1 9 0;
+#X connect 9 0 13 0;
+#X connect 12 0 6 0;
+#X connect 13 0 15 0;
+#X connect 14 0 16 0;
