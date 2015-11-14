@@ -84,6 +84,31 @@ class pofIm{
 		//mutex.unlock();
 	}
 		
+	void bind() {
+		if(!loaded) return;
+		if(im.isAllocated()) {
+			if(!im.isUsingTexture())
+			{
+                im.setUseTexture(true);
+                im.update();
+            }
+			im.bind();
+		}
+	}
+	
+	void unbind() {
+		if(!loaded) return;
+		/*if(im.isAllocated()) {
+			if(!im.isUsingTexture())
+			{
+                im.setUseTexture(true);
+                im.update();
+            }
+			im.unbind();
+		}*/
+		im.unbind();
+	}
+		
 	static pofIm* getImage(t_symbol *file){
 		mutex.lock();
 		std::map<t_symbol*,pofIm*>::iterator it;
@@ -155,23 +180,26 @@ void pofimage_set(void *x, t_symbol *f);
 void *pofimage_new(t_symbol *sym,int argc, t_atom *argv)
 {
     t_symbol *file=NULL;
-    t_float w=0,h=0,xa=0,ya=0,sx=0,sy=0,sw=0,sh=0;
+    t_float w=0,h=0,xa=0,ya=0,sx=0,sy=0,sw=0,sh=0,istexture=0;
 
 	if(argc>0) file = atom_getsymbol(&argv[0]);
 
-    if(argc>1) w = atom_getfloat(&argv[1]);
-    if(argc>2) h = atom_getfloat(&argv[2]);
+    if((argc>1)&&(argv[1].a_type == A_SYMBOL)) istexture = 1;
+    else {
+ 		if(argc>1) w = atom_getfloat(&argv[1]);
+		if(argc>2) h = atom_getfloat(&argv[2]);
 
-    if(argc>3) xa = atom_getfloat(&argv[3]);
-    if(argc>4) ya = atom_getfloat(&argv[4]);
+		if(argc>3) xa = atom_getfloat(&argv[3]);
+		if(argc>4) ya = atom_getfloat(&argv[4]);
 
-    if(argc>5) sx = atom_getfloat(&argv[5]);
-    if(argc>6) sy = atom_getfloat(&argv[6]);
+		if(argc>5) sx = atom_getfloat(&argv[5]);
+		if(argc>6) sy = atom_getfloat(&argv[6]);
 
-    if(argc>7) sw = atom_getfloat(&argv[7]);
-    if(argc>8) sh = atom_getfloat(&argv[8]);
-
-    pofImage* obj = new pofImage(pofimage_class, file, w, h, xa, ya, sx, sy, sw, sh);
+		if(argc>7) sw = atom_getfloat(&argv[7]);
+		if(argc>8) sh = atom_getfloat(&argv[8]);
+	}
+	
+    pofImage* obj = new pofImage(pofimage_class, file, w, h, xa, ya, sx, sy, sw, sh, istexture);
     
     floatinlet_new(&obj->pdobj->x_obj, &obj->width);
     floatinlet_new(&obj->pdobj->x_obj, &obj->height);
@@ -301,17 +329,24 @@ void pofImage::draw()
 	Update();
 	
 	if(image && image->loaded) {
-		if(w == 0) {
-			if(h != 0) w = imWidth * h / imHeight;
-			else w = imWidth;
+		if(isTexture) image->bind();
+		else {	
+			if(w == 0) {
+				if(h != 0) w = imWidth * h / imHeight;
+				else w = imWidth;
+			}
+			if(h == 0) {
+				if(w != 0) h = imHeight * w / imWidth;
+				else h = imHeight; 
+			}
+			image->draw(0, 0, w, h);
 		}
-		if(h == 0) {
-			if(w != 0) h = imHeight * w / imWidth;
-			else h = imHeight; 
-		}
-		
-		image->draw(0, 0, w, h);
 	}
+}
+
+void pofImage::postdraw()
+{
+	if(isTexture) image->unbind();
 }
 
 void pofImage::set(t_symbol *f)
