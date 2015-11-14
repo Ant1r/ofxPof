@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="../../../addons/ofxPd/libs/libpd/pure-data/src/m_binbuf.c" open="1" top="1" tabpos="0">
+	<File name="../../../addons/ofxPd/libs/libpd/pure-data/src/m_binbuf.c" open="0" top="0" tabpos="0">
 		<Cursor position="1527" topLine="55" />
+	</File>
+	<File name="src/main.cpp" open="1" top="1" tabpos="0">
+		<Cursor position="0" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

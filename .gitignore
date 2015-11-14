@@ -66,6 +66,7 @@ buildExternal/bin/pof*
 buildExternal/obj
 
 exampleStandalone/bin/exampleStandalone
+exampleStandalone/bin/exampleStandalone_debug
 exampleStandalone/bin/libs
 exampleStandalone/obj
 
