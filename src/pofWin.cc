@@ -68,6 +68,13 @@ void pofwin_framerate(void *x, t_float rate)
 	x=NULL; /* don't warn about unused variables */
 }
 
+void pofwin_normalizedtextcoords(void *x, t_float enable)
+{
+	x=NULL; /* don't warn about unused variables */
+	if(enable != 0) ofEnableNormalizedTexCoords();
+	else ofDisableNormalizedTexCoords();
+}
+
 void pofwin_build(void *x)
 {
 	pofBase::needBuild = true;
@@ -88,6 +95,7 @@ void pofWin::setup(void)
 	class_addmethod(pofwin_class, (t_method)pofwin_out, s_out, A_GIMME, 0);
 	class_addmethod(pofwin_class, (t_method)pofwin_framerate, gensym("framerate"), A_FLOAT,0);
 	class_addmethod(pofwin_class, (t_method)pofwin_background, gensym("background"), A_FLOAT, A_FLOAT,A_FLOAT,0);
+	class_addmethod(pofwin_class, (t_method)pofwin_normalizedtextcoords, gensym("normalizedtextcoords"), A_FLOAT,0);
 	class_addmethod(pofwin_class, (t_method)pofwin_build, gensym("build"), A_NULL);
 	class_addfloat(pofwin_class, pofwin_float);
 
