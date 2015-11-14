@@ -1,4 +1,4 @@
-#N canvas 606 92 435 325 10;
+#N canvas 604 97 435 325 10;
 #X declare -lib pof;
 #X declare -path .;
 #X declare -path ../buildExternal/bin;
@@ -24,9 +24,16 @@
 #X msg 16 126 set font/FreeMonoBold.ttf 50;
 #X msg 25 151 set font/FreeMonoBold.ttf 24;
 #X text -21 56 poffont : define a font from a file.;
+#X obj 268 148 openpanel;
+#X obj 266 129 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg 268 168 set \$1 50;
 #X connect 7 0 11 0;
 #X connect 8 0 11 0;
 #X connect 12 0 8 0;
 #X connect 13 0 9 0;
 #X connect 15 0 9 0;
 #X connect 16 0 9 0;
+#X connect 18 0 20 0;
+#X connect 19 0 18 0;
+#X connect 20 0 9 0;
