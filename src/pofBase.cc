@@ -501,14 +501,14 @@ void pofBase::setup() {
 	pofGetMatrix::setup();
 	pofColor::setup();
 	pofTouch::setup();
+	pofTouchable::setup();
+	pofVisible::setup();
 	pofFont::setup();
 	pofText::setup();
 	pofFonts::setup();
 	pofTexts::setup();
 	pofImage::setup();
 	pofFbo::setup();
-	pofTouchable::setup();
-	pofVisible::setup();
 	pofScope::setup();
 	pofCirc::setup();
 	pofUtil::setup();
@@ -516,7 +516,7 @@ void pofBase::setup() {
 	pofAccel::setup();
 	pofTextbox::setup();
 	pofJSON::setup();
-	//sys_idlehook = &dequeueToPd;
+		
 	queueClock = clock_new(0,(t_method)dequeueToPdtick);
 	clock_delay(queueClock,100);
 }

@@ -95,10 +95,24 @@ void pofWin::setup(void)
 	if(pofWin::win == NULL) pofWin::win = new pofWin(pofwin_class);
 }
 
+//-------------------------------
+pofWin::pofWin(t_class *Class):pofBase(Class),init(true){
+	//ofAddListener(ofEvents().windowResized,this,&pofWin::windowResized);
+}
+
+pofWin::~pofWin() { 
+	ofRemoveListener(ofEvents().windowResized,this,&pofWin::windowResized);
+}
+
+void pofWin::windowResized(ofResizeEventArgs & resize){
+	windowResized(resize.width,resize.height);
+}
+
 void pofWin::update()
 {
 	if(this==pofWin::win) ofBackground(r,g,b);
 	if(init) {
+		ofAddListener(ofEvents().windowResized,this,&pofWin::windowResized);
 		windowResized(ofGetWindowWidth(),ofGetWindowHeight());
 		init = false;
 	}

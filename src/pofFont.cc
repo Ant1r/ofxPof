@@ -43,7 +43,7 @@ void pofFont::update()
 		t_symbol *file = makefilename(fontfile, pdcanvas);
 		if(!file) return;
 		offont.loadFont(file->s_name,size, true, true);
-		offont.setEncoding(OF_ENCODING_UTF8);
+		//offont.setEncoding(OF_ENCODING_UTF8);
 	}
 	need_reload = false;
 }

@@ -9,13 +9,13 @@
 
 class pofWin: public pofBase {
 	public:
-		pofWin(t_class *Class):pofBase(Class),init(true){
+		pofWin(t_class *Class);/*:pofBase(Class),init(true);{
 			ofAddListener(ofEvents().windowResized,this,&pofWin::windowResized);
-		}
+		}*/
 
-		~pofWin() { 
+		~pofWin(); /*{ 
 			ofRemoveListener(ofEvents().windowResized,this,&pofWin::windowResized);
-		}
+		}*/
 		
 		virtual void update();
 		virtual bool hasUpdate(){ return true;}
@@ -23,9 +23,10 @@ class pofWin: public pofBase {
 		
 		void windowResized(int w, int h);
 
-		void windowResized(ofResizeEventArgs & resize){
+		void windowResized(ofResizeEventArgs & resize);
+		/*{
 			windowResized(resize.width,resize.height);
-		}
+		}*/
 		
 		bool init;
 		int r, g, b; //bg color

@@ -19,7 +19,7 @@ class MyThread : public ofThread {
  		ofRunApp(new ofApp());
 	} 
  
-} thread;
+};
 
 //--------------------------------------------------------------
 void ofApp::exit(){
@@ -109,8 +109,8 @@ extern "C" {
     /* this is called once at setup time, when this code is loaded into Pd. */
 	void pof_setup(void)
 	{
+		(new MyThread)->startThread(true);//, true);
 		pofBase::setup();
-		thread.startThread(true);//, true);
 	}
 }
 
