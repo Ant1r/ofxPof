@@ -33,7 +33,9 @@ class pofsubXML {
 		mutex.lock();
 		if(xml.load(file->s_name)) {
 			loaded = true;
-			xml.reset();
+			try {
+				xml.reset();
+			} catch(...){};
 			mutex.unlock();
 			return true;
 		} else {
