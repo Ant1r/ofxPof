@@ -1,9 +1,10 @@
 #!/bin/bash
 
-# Update example patchs (example/pd folder) to PofDroid and exampleStandAlone datas.
+# Update example patchs (example/pd folder) to projects datas.
+DIRLIST="PofDroid exampleStandalone iPof"
 
-rm -f -r PofDroid/bin/data/pd
-rm -f -r exampleStandalone/bin/data/pd
-cp -r example/pd PofDroid/bin/data/
-cp -r example/pd exampleStandalone/bin/data
+for thisdir in $DIRLIST ; do
+	rm -f -r $thisdir/bin/data/pd
+	cp -r example/pd $thisdir/bin/data/
+done
 
