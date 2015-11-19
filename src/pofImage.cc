@@ -273,6 +273,14 @@ void pofImage::setup(void)
 	imLoaderHTTP->startThread(true); //, false);    // blocking, non verbose
 }
 
+void pofImage::release(void)
+{
+	imLoader->waitForThread(true);
+	delete imLoader;
+	imLoaderHTTP->waitForThread(true);
+	delete imLoaderHTTP;
+}
+
 void pofImage::Update()
 {
 	float w, h;

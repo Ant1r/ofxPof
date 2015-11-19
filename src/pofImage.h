@@ -27,6 +27,7 @@ class pofImage: public pofBase {
 		void unreserveAll();
 		
 		static void setup(void);
+		static void release(void);
 		
 		t_symbol *file, *displayedFile;
 		

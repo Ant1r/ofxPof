@@ -84,10 +84,11 @@ class pofsubJSON {
 
 };
 
+class JSONLoader;
 
 class pofJSON: public pofBase {
 	public:
-		pofJSON(t_class *Class, t_symbol *n):pofBase(Class) {
+		pofJSON(t_class *Class, t_symbol *n):pofBase(Class), loader(NULL) {
 				sjson = pofsubJSON::getJSON(n);
 		}
 		
@@ -97,8 +98,8 @@ class pofJSON: public pofBase {
 
 		static void setup(void);
 			
-		t_symbol *name;
 		pofsubJSON *sjson;
+		JSONLoader *loader;
 		t_canvas *pdcanvas;
 };
 

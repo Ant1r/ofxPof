@@ -527,4 +527,6 @@ void pofBase::setup() {
 	clock_delay(queueClock,100);
 }
 
-
+void pofBase::release() {
+	pofImage::release();
+}

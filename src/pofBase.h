@@ -124,6 +124,7 @@ class pofBase {
 		static void windowResized(int w, int h);
 		
 		static void setup(); // Initialize pd external classes.
+		static void release(); // Release resources before exiting.
 		
 		static void reloadTextures();
 		static void unloadTextures();
