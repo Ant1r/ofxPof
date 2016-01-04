@@ -54,7 +54,8 @@ class pofIm{
 	
 	void doLoad(void) {
 		if(loaded) return;
-		im.loadImage(file->s_name);
+		if( (!strncmp(file->s_name, "http", strlen("http"))) || ofFile(file->s_name).exists())
+            im.load(file->s_name);
 		loaded = true;
 	}
 	
