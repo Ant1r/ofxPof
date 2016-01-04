@@ -45,7 +45,9 @@ void testApp::draw() {
 }
 
 //--------------------------------------------------------------
-void testApp::exit() {}
+void testApp::exit() {
+	pofBase::release();
+}
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key) {}

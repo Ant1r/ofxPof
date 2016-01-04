@@ -10,28 +10,6 @@ std::map<t_symbol*,pofsubJSON*> pofsubJSON::jsons;
 t_class *pofjson_class;
 t_symbol *s_out,*s_errload,*s_loaded;
 
-void *pofjson_new(t_symbol *n)
-{
-    pofJSON* obj = new pofJSON(pofjson_class, n);
-    
-    obj->pdcanvas = canvas_getcurrent();
-    
-    return (void*) (obj->pdobj);
-}
-
-void pofjson_free(void *x)
-{
-	delete (pofJSON*)(((PdObject*)x)->parent);
-}
-
-void pofjson_out(void *x, t_symbol *s, int argc, t_atom *argv)
-{
-	pofJSON* px= (pofJSON*)(((PdObject*)x)->parent);
-
-	if((argc>1) && argv->a_type == A_SYMBOL)
-		outlet_anything(px->m_out1, atom_getsymbol(argv), argc-1, argv+1);
-}
-
 class JSONLoader: public ofThread {
 	public :
     t_symbol *file, *fullfile;
@@ -48,15 +26,47 @@ class JSONLoader: public ofThread {
 		else SETSYMBOL(&at[1], s_errload);
 	
 		pjson->queueToSelfPd(3, at);
+		pjson->loader = NULL;
     }
 };
+
+void *pofjson_new(t_symbol *n)
+{
+    pofJSON* obj = new pofJSON(pofjson_class, n);
+    
+    obj->pdcanvas = canvas_getcurrent();
+    
+    return (void*) (obj->pdobj);
+}
+
+void pofjson_free(void *x)
+{
+	pofJSON* px= (pofJSON*)(((PdObject*)x)->parent);
+	if(px->loader) {
+		px->loader->waitForThread(true);
+		delete px->loader;
+	}
+	delete (pofJSON*)(((PdObject*)x)->parent);
+}
+
+void pofjson_out(void *x, t_symbol *s, int argc, t_atom *argv)
+{
+	pofJSON* px= (pofJSON*)(((PdObject*)x)->parent);
+
+	if((argc>1) && argv->a_type == A_SYMBOL)
+		outlet_anything(px->m_out1, atom_getsymbol(argv), argc-1, argv+1);
+}
 
 void pofjson_load(void *x, t_symbol *file)
 {
 	pofJSON* px= (pofJSON*)(((PdObject*)x)->parent);
 	t_symbol* filename = makefilename(file,px->pdcanvas);
 	
-	(new JSONLoader(file, filename, px))->startThread();
+	if(px->loader) {
+		px->loader->waitForThread(true);
+		delete px->loader;
+	}
+	(px->loader = new JSONLoader(file, filename, px))->startThread();
 }
 
 void pofjson_getsize(void *x, t_symbol *s, int argc, t_atom *argv)
