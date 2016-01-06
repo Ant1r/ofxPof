@@ -4,7 +4,7 @@
  * See https://github.com/Ant1r/ofxPof for documentation and updates.
  */
 #include "pofUtil.h"
-#include <ofxZipPass.h>
+#include "ofxZipPass.h"
 
 static t_class *pofutil_class;
 static t_symbol *s_download, *s_out, *s_unzip, *s_done, *s_error;
