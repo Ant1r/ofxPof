@@ -1,4 +1,3 @@
-ofxAndroid
 ofxAccelerometer
 ofxPd
 ofxPof

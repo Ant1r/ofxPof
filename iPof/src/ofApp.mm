@@ -14,8 +14,6 @@ using namespace pd;
 //--------------------------------------------------------------
 void ofApp::setup() {
     
-    ofAppiOSWindow().enableRetina();
-    
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
     ofBackground(127, 127, 127);

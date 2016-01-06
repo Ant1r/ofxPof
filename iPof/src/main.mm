@@ -33,6 +33,7 @@ extern "C" {
 
 int main(){
 	ofSetupOpenGL(2000, 1500, OF_FULLSCREEN);
+    ofAppiOSWindow::getInstance()->enableRetina();
 	ofRunApp(new ofApp());
 }
 
