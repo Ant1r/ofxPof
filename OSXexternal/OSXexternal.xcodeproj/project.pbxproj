@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -46,7 +46,7 @@
 		C93BB6771B10BB3B00FD662B /* ofxJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6711B10BB3B00FD662B /* ofxJSON.h */; };
 		C93BB6781B10BB3B00FD662B /* ofxJSONElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C93BB6721B10BB3B00FD662B /* ofxJSONElement.cpp */; };
 		C93BB6791B10BB3B00FD662B /* ofxJSONElement.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6731B10BB3B00FD662B /* ofxJSONElement.h */; };
-		C93BB6B41B10CB3900FD662B /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C93BB6AD1B10CA4700FD662B /* openFrameworksDebug.a */; };
+		C93BB6B41B10CB3900FD662B /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C93BB6AD1B10CA4700FD662B /* openFrameworksDebug.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		C93BB6F81B13153700FD662B /* m_pd.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6C01B13153700FD662B /* m_pd.h */; };
 		C93BB6F91B13153700FD662B /* pofAccel.cc in Sources */ = {isa = PBXBuildFile; fileRef = C93BB6C11B13153700FD662B /* pofAccel.cc */; };
 		C93BB6FA1B13153700FD662B /* pofAccel.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6C21B13153700FD662B /* pofAccel.h */; };
@@ -105,6 +105,16 @@
 		C93BB72F1B13153800FD662B /* version.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6F71B13153700FD662B /* version.h */; };
 		C93BB8391B19066700FD662B /* mac-osx-arrow-cursor-56.png.c in Sources */ = {isa = PBXBuildFile; fileRef = C93BB8381B19066700FD662B /* mac-osx-arrow-cursor-56.png.c */; };
 		C95F512D1B105CF700C8B17A /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C95F512C1B105CF700C8B17A /* ofApp.cpp */; };
+		C9DCA5091C05F11700554E71 /* pofDepthTest.cc in Sources */ = {isa = PBXBuildFile; fileRef = C9DCA5071C05F11700554E71 /* pofDepthTest.cc */; };
+		C9DCA50A1C05F11700554E71 /* pofDepthTest.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DCA5081C05F11700554E71 /* pofDepthTest.h */; };
+		C9DCA50D1C05F12C00554E71 /* pofPlane.cc in Sources */ = {isa = PBXBuildFile; fileRef = C9DCA50B1C05F12C00554E71 /* pofPlane.cc */; };
+		C9DCA50E1C05F12C00554E71 /* pofPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DCA50C1C05F12C00554E71 /* pofPlane.h */; };
+		C9DCA5111C05F13E00554E71 /* pofSphere.cc in Sources */ = {isa = PBXBuildFile; fileRef = C9DCA50F1C05F13E00554E71 /* pofSphere.cc */; };
+		C9DCA5121C05F13E00554E71 /* pofSphere.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DCA5101C05F13E00554E71 /* pofSphere.h */; };
+		C9DCA51B1C05FEE000554E71 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9DCA5161C05FEE000554E71 /* Accelerate.framework */; };
+		C9DCA51C1C05FEE000554E71 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9DCA5171C05FEE000554E71 /* AGL.framework */; };
+		C9DCA51D1C05FEE000554E71 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9DCA5181C05FEE000554E71 /* AppKit.framework */; };
+		C9DCA51E1C05FEE000554E71 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9DCA5191C05FEE000554E71 /* ApplicationServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -227,6 +237,16 @@
 		C95F512C1B105CF700C8B17A /* ofApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = "<group>"; };
 		C95F512E1B105CFC00C8B17A /* ofApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = "<group>"; };
 		C95F51311B10AB7000C8B17A /* OF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = OF.xcconfig; sourceTree = "<group>"; };
+		C9DCA5071C05F11700554E71 /* pofDepthTest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofDepthTest.cc; sourceTree = "<group>"; };
+		C9DCA5081C05F11700554E71 /* pofDepthTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofDepthTest.h; sourceTree = "<group>"; };
+		C9DCA50B1C05F12C00554E71 /* pofPlane.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofPlane.cc; sourceTree = "<group>"; };
+		C9DCA50C1C05F12C00554E71 /* pofPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofPlane.h; sourceTree = "<group>"; };
+		C9DCA50F1C05F13E00554E71 /* pofSphere.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofSphere.cc; sourceTree = "<group>"; };
+		C9DCA5101C05F13E00554E71 /* pofSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofSphere.h; sourceTree = "<group>"; };
+		C9DCA5161C05FEE000554E71 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		C9DCA5171C05FEE000554E71 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = System/Library/Frameworks/AGL.framework; sourceTree = SDKROOT; };
+		C9DCA5181C05FEE000554E71 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		C9DCA5191C05FEE000554E71 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,6 +254,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9DCA51B1C05FEE000554E71 /* Accelerate.framework in Frameworks */,
+				C9DCA51C1C05FEE000554E71 /* AGL.framework in Frameworks */,
+				C9DCA51D1C05FEE000554E71 /* AppKit.framework in Frameworks */,
+				C9DCA51E1C05FEE000554E71 /* ApplicationServices.framework in Frameworks */,
 				C93BB6B41B10CB3900FD662B /* openFrameworksDebug.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -548,6 +572,12 @@
 		C93BB6BF1B13153700FD662B /* src */ = {
 			isa = PBXGroup;
 			children = (
+				C9DCA50F1C05F13E00554E71 /* pofSphere.cc */,
+				C9DCA5101C05F13E00554E71 /* pofSphere.h */,
+				C9DCA50B1C05F12C00554E71 /* pofPlane.cc */,
+				C9DCA50C1C05F12C00554E71 /* pofPlane.h */,
+				C9DCA5071C05F11700554E71 /* pofDepthTest.cc */,
+				C9DCA5081C05F11700554E71 /* pofDepthTest.h */,
 				C93BB6C01B13153700FD662B /* m_pd.h */,
 				C93BB6C11B13153700FD662B /* pofAccel.cc */,
 				C93BB6C21B13153700FD662B /* pofAccel.h */,
@@ -621,6 +651,10 @@
 		C95F51191B0F8AAE00C8B17A = {
 			isa = PBXGroup;
 			children = (
+				C9DCA5161C05FEE000554E71 /* Accelerate.framework */,
+				C9DCA5171C05FEE000554E71 /* AGL.framework */,
+				C9DCA5181C05FEE000554E71 /* AppKit.framework */,
+				C9DCA5191C05FEE000554E71 /* ApplicationServices.framework */,
 				C93BB6A81B10CA4700FD662B /* openFrameworksLib.xcodeproj */,
 				C93BB5581B10B46E00FD662B /* openFrameworks-Info.plist */,
 				C93BB4CC1B10B33F00FD662B /* addons */,
@@ -657,6 +691,8 @@
 				C93BB62D1B10BAF400FD662B /* crypt.h in Headers */,
 				C93BB63F1B10BAF400FD662B /* ofxZipPass.h in Headers */,
 				C93BB6771B10BB3B00FD662B /* ofxJSON.h in Headers */,
+				C9DCA50A1C05F11700554E71 /* pofDepthTest.h in Headers */,
+				C9DCA50E1C05F12C00554E71 /* pofPlane.h in Headers */,
 				C93BB6331B10BAF400FD662B /* unzip.h in Headers */,
 				C93BB72F1B13153800FD662B /* version.h in Headers */,
 				C93BB65A1B10BB1300FD662B /* checked.h in Headers */,
@@ -684,6 +720,7 @@
 				C93BB7161B13153700FD662B /* pofRotate.h in Headers */,
 				C93BB7201B13153800FD662B /* pofTexts.h in Headers */,
 				C93BB65D1B10BB1300FD662B /* utf8.h in Headers */,
+				C9DCA5121C05F13E00554E71 /* pofSphere.h in Headers */,
 				C93BB6791B10BB3B00FD662B /* ofxJSONElement.h in Headers */,
 				C93BB7221B13153800FD662B /* pofTouch.h in Headers */,
 				C93BB62F1B10BAF400FD662B /* ioapi.h in Headers */,
@@ -712,6 +749,7 @@
 				C95F511E1B0F8AAE00C8B17A /* Sources */,
 				C95F511F1B0F8AAE00C8B17A /* Frameworks */,
 				C95F51201B0F8AAE00C8B17A /* Headers */,
+				C92493611C328D7A00C309A2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -738,7 +776,7 @@
 				};
 			};
 			buildConfigurationList = C95F511D1B0F8AAE00C8B17A /* Build configuration list for PBXProject "OSXexternal" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -770,6 +808,22 @@
 		};
 /* End PBXReferenceProxy section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		C92493611C328D7A00C309A2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#install_name_tool -change ./libfmodex.dylib @loader_path/libfmodex.dylib  /Users/$USER/Library/Pd/pof/pof.pd_darwin\ninstall_name_tool -change ./libfmodex.dylib @loader_path/libfmodex.dylib  $BUILT_PRODUCTS_DIR/pof.pd_darwin\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C95F511E1B0F8AAE00C8B17A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -796,6 +850,7 @@
 				C93BB5D71B10BAA700FD662B /* ofxFontStash.cpp in Sources */,
 				C93BB8391B19066700FD662B /* mac-osx-arrow-cursor-56.png.c in Sources */,
 				C93BB71D1B13153700FD662B /* pofTextbox.cc in Sources */,
+				C9DCA50D1C05F12C00554E71 /* pofPlane.cc in Sources */,
 				C93BB70F1B13153700FD662B /* pofJSON.cc in Sources */,
 				C93BB63E1B10BAF400FD662B /* ofxZipPass.cpp in Sources */,
 				C93BB70D1B13153700FD662B /* pofImage.cc in Sources */,
@@ -812,6 +867,8 @@
 				C93BB6661B10BB1300FD662B /* ofUTF8.cpp in Sources */,
 				C93BB72B1B13153800FD662B /* pofWin.cc in Sources */,
 				C93BB70B1B13153700FD662B /* pofHead.cc in Sources */,
+				C9DCA5111C05F13E00554E71 /* pofSphere.cc in Sources */,
+				C9DCA5091C05F11700554E71 /* pofDepthTest.cc in Sources */,
 				C93BB7091B13153700FD662B /* pofGetMatrix.cc in Sources */,
 				C93BB6FD1B13153700FD662B /* pofBase.cc in Sources */,
 				C93BB6621B10BB1300FD662B /* ofTextConverter.cpp in Sources */,
@@ -837,10 +894,12 @@
 			baseConfigurationReference = C95F51311B10AB7000C8B17A /* OF.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				"CLANG_CXX_LIBRARY[arch=x86_64]" = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -922,11 +981,14 @@
 					"../../../addons/ofxZipPass/libs/zlib-1.2.5/minizip",
 					../../../addons/ofxZipPass/src,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				INSTALL_PATH = "/Users/$(USER)/Library/Pd/pof";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				OF_CORE_LIBS = "$(LIB_POCO_1) $(LIB_POCO_2) $(LIB_POCO_3) $(LIB_POCO_4) $(LIB_POCO_5) $(LIB_POCO_6) $(LIB_POCO_7) $(LIB_POCO_8) $(LIB_POCO_9) $(LIB_POCO_10) $(LIB_TESS) $(LIB_GLEW) $(LIB_CAIRO1) $(LIB_CAIRO2) $(LIB_CAIRO3) $(LIB_FMODEX) $(LIB_RTAUDIO) $(LIB_OPENSSL1) $(LIB_OPENSSL2) $(LIB_GLFW) $(LIB_FREEIMAGE) $(LIB_FREETYPE) $(LIB_GLUT)";
-				ONLY_ACTIVE_ARCH = YES;
+				OF_CORE_LIBS = "$(LIB_POCO) $(LIB_TESS) $(LIB_GLEW) $(LIB_CAIRO1) $(LIB_CAIRO2) $(LIB_CAIRO3) $(LIB_FMODEX) $(LIB_RTAUDIO) $(LIB_OPENSSL1) $(LIB_OPENSSL2) $(LIB_GLFW) $(LIB_FREEIMAGE) $(LIB_FREETYPE) $(LIB_GLUT)";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
 				SDKROOT = macosx;
+				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Debug;
 		};
@@ -935,10 +997,11 @@
 			baseConfigurationReference = C95F51311B10AB7000C8B17A /* OF.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -1014,10 +1077,14 @@
 					"../../../addons/ofxZipPass/libs/zlib-1.2.5/minizip",
 					../../../addons/ofxZipPass/src,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				INSTALL_PATH = "/Users/$(USER)/Library/Pd/pof";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OF_CORE_LIBS = "$(LIB_POCO_1) $(LIB_POCO_2) $(LIB_POCO_3) $(LIB_POCO_4) $(LIB_POCO_5) $(LIB_POCO_6) $(LIB_POCO_7) $(LIB_POCO_8) $(LIB_POCO_9) $(LIB_POCO_10) $(LIB_TESS) $(LIB_GLEW) $(LIB_CAIRO1) $(LIB_CAIRO2) $(LIB_CAIRO3) $(LIB_FMODEX) $(LIB_RTAUDIO) $(LIB_OPENSSL1) $(LIB_OPENSSL2) $(LIB_GLFW) $(LIB_FREEIMAGE) $(LIB_FREETYPE) $(LIB_GLUT)";
+				OF_CORE_LIBS = "$(LIB_POCO) $(LIB_TESS) $(LIB_GLEW) $(LIB_CAIRO1) $(LIB_CAIRO2) $(LIB_CAIRO3) $(LIB_FMODEX) $(LIB_RTAUDIO) $(LIB_OPENSSL1) $(LIB_OPENSSL2) $(LIB_GLFW) $(LIB_FREEIMAGE) $(LIB_FREETYPE) $(LIB_GLUT)";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
 				SDKROOT = macosx;
+				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -1025,27 +1092,30 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C95F51311B10AB7000C8B17A /* OF.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				DEFINES_MODULE = NO;
 				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
-				DSTROOT = "/Users/$(USER)/Library/Pd";
+				DSTROOT = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = pd_darwin;
 				EXECUTABLE_PREFIX = "";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
-				INSTALL_PATH = /;
+				INSTALL_PATH = "/Users/$(USER)/Library/Pd/pof";
 				KEEP_PRIVATE_EXTERNS = NO;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/matt/Documents/OF/of_v0.8.4_osx_release/addons/ofxPof/buildExternal/bin,
-					/Users/matt/Documents/OF/of_v0.8.4_osx_release/libs/openFrameworksCompiled/lib/osx,
-					/Users/matt/Documents/OF/of_v0.8.4_osx_release/libs/glut/lib/osx/GLUT.framework,
+					"$(OF_PATH)/addons/ofxPof/buildExternal/bin",
+					"$(OF_PATH)/libs/openFrameworksCompiled/lib/osx",
+					"$(OF_PATH)/libs/glut/lib/osx/GLUT.framework",
 				);
-				OF_CORE_LIBS = "$(LIB_POCO_1) $(LIB_POCO_2) $(LIB_POCO_3) $(LIB_POCO_4) $(LIB_POCO_5) $(LIB_POCO_6) $(LIB_POCO_7) $(LIB_POCO_8) $(LIB_POCO_9) $(LIB_POCO_10) $(LIB_TESS) $(LIB_GLEW) $(LIB_CAIRO1) $(LIB_CAIRO2) $(LIB_CAIRO3) $(LIB_FMODEX) $(LIB_RTAUDIO) $(LIB_OPENSSL1) $(LIB_OPENSSL2) $(LIB_GLFW) $(LIB_FREEIMAGE) $(LIB_FREETYPE) $(LIB_GLUT)";
+				OF_CORE_FRAMEWORKS = "-framework Accelerate -framework AGL -framework AppKit -framework ApplicationServices -framework AudioToolbox -framework AVFoundation -framework Cocoa -framework CoreAudio -framework CoreFoundation -framework CoreMedia -framework CoreServices -framework CoreVideo -framework IOKit -framework OpenGL -framework QuartzCore -framework QuickTime -framework QTKit -framework GLUT";
+				OF_CORE_LIBS = "$(LIB_POCO) $(LIB_TESS) $(LIB_GLEW) $(LIB_CAIRO1) $(LIB_CAIRO2) $(LIB_CAIRO3) $(LIB_FMODEX) $(LIB_RTAUDIO) $(LIB_OPENSSL1) $(LIB_OPENSSL2) $(LIB_GLFW) $(LIB_FREEIMAGE) $(LIB_FREETYPE) $(LIB_BOOST_FS) $(LIB_BOOST_SYSTEM) ";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-DPD";
 				OTHER_LDFLAGS = (
 					"-undefined",
@@ -1053,7 +1123,8 @@
 					"$(OF_CORE_LIBS)",
 				);
 				PRODUCT_NAME = pof;
-				SDKROOT = macosx10.10;
+				SDKROOT = macosx;
+				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
 		};
@@ -1061,27 +1132,30 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C95F51311B10AB7000C8B17A /* OF.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				DEFINES_MODULE = NO;
 				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
-				DSTROOT = "/Users/$(USER)/Library/Pd";
+				DSTROOT = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = pd_darwin;
 				EXECUTABLE_PREFIX = "";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
-				INSTALL_PATH = /;
+				INSTALL_PATH = "/Users/$(USER)/Library/Pd/pof";
 				KEEP_PRIVATE_EXTERNS = NO;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/matt/Documents/OF/of_v0.8.4_osx_release/addons/ofxPof/buildExternal/bin,
-					/Users/matt/Documents/OF/of_v0.8.4_osx_release/libs/openFrameworksCompiled/lib/osx,
-					/Users/matt/Documents/OF/of_v0.8.4_osx_release/libs/glut/lib/osx/GLUT.framework,
+					"$(OF_PATH)/addons/ofxPof/buildExternal/bin",
+					"$(OF_PATH)/libs/openFrameworksCompiled/lib/osx",
+					"$(OF_PATH)/libs/glut/lib/osx/GLUT.framework",
 				);
-				OF_CORE_LIBS = "$(LIB_POCO_1) $(LIB_POCO_2) $(LIB_POCO_3) $(LIB_POCO_4) $(LIB_POCO_5) $(LIB_POCO_6) $(LIB_POCO_7) $(LIB_POCO_8) $(LIB_POCO_9) $(LIB_POCO_10) $(LIB_TESS) $(LIB_GLEW) $(LIB_CAIRO1) $(LIB_CAIRO2) $(LIB_CAIRO3) $(LIB_FMODEX) $(LIB_RTAUDIO) $(LIB_OPENSSL1) $(LIB_OPENSSL2) $(LIB_GLFW) $(LIB_FREEIMAGE) $(LIB_FREETYPE) $(LIB_GLUT)";
+				OF_CORE_FRAMEWORKS = "-framework Accelerate -framework AGL -framework AppKit -framework ApplicationServices -framework AudioToolbox -framework AVFoundation -framework Cocoa -framework CoreAudio -framework CoreFoundation -framework CoreMedia -framework CoreServices -framework CoreVideo -framework IOKit -framework OpenGL -framework QuartzCore -framework QuickTime -framework QTKit -framework GLUT";
+				OF_CORE_LIBS = "$(LIB_POCO) $(LIB_TESS) $(LIB_GLEW) $(LIB_CAIRO1) $(LIB_CAIRO2) $(LIB_CAIRO3) $(LIB_FMODEX) $(LIB_RTAUDIO) $(LIB_OPENSSL1) $(LIB_OPENSSL2) $(LIB_GLFW) $(LIB_FREEIMAGE) $(LIB_FREETYPE) $(LIB_BOOST_FS) $(LIB_BOOST_SYSTEM) ";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-DPD";
 				OTHER_LDFLAGS = (
 					"-undefined",
@@ -1089,7 +1163,8 @@
 					"$(OF_CORE_LIBS)",
 				);
 				PRODUCT_NAME = pof;
-				SDKROOT = macosx10.10;
+				SDKROOT = macosx;
+				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Release;
 		};

@@ -40,6 +40,9 @@ class MyThread : public ofThread {
         // can be OF_WINDOW or OF_FULLSCREEN
         //ofSetFrameRate(50);
         
+       
+        ofGetMainLoop()->pollEvents = 0; // YOU NEED TO MAKE "void (*pollEvents)(void)" PUBLIC !!!
+        
         ofRunApp(new ofApp());
         //while(1) usleep(10000);
     }
@@ -58,11 +61,11 @@ void ofApp::setup(){
 
     pointerImage.allocate(56, 80, OF_IMAGE_COLOR_ALPHA);
     int i = 0;
-    while ( i < pointerImage.getPixelsRef().size() ) {
-        pointerImage.getPixelsRef()[i] = pointer56.pixel_data[i];
+    while ( i < pointerImage.getPixels().size() ) {
+        pointerImage.getPixels()[i] = pointer56.pixel_data[i];
         i++;
     }
-    pointerImage.reloadTexture();
+    pointerImage.update(); //reloadTexture();
 }
 
 //--------------------------------------------------------------
@@ -76,7 +79,7 @@ void ofApp::draw(){
     pofBase::drawAll();
     ofSetupScreen();
     ofSetColor(255, 255, 255);
-    pointerImage.draw(ofGetMouseX()-3, ofGetMouseY()-4, 0, 17, 24);
+    //pointerImage.draw(ofGetMouseX()-3, ofGetMouseY()-4, 0, 17, 24);
     /*ofCircle(ofGetMouseX(), ofGetMouseY(), 2);
     ofSetColor(0, 0, 0);
     ofCircle(ofGetMouseX(), ofGetMouseY(), 1);*/

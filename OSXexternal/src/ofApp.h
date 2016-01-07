@@ -29,6 +29,10 @@ public:
     void touchUp(ofTouchEventArgs &touch);
     void touchDoubleTap(ofTouchEventArgs &touch){};
     void touchCancelled(ofTouchEventArgs &touch) {};
+    
+    void audioReceived(float * input, int bufferSize, int nChannels){}
+    void audioRequested(float * output, int bufferSize, int nChannels){}
+
 };
 
 
