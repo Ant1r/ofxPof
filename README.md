@@ -109,28 +109,6 @@ openframeworks/addons/ofxPof
 </pre>
 
 
-Running the exampleStandalone project
----------------------------
-
-### Linux
-
-To build and run it on the terminal:
-<pre>
-make
-make run
-</pre>
-
-Optionally, you can build the example with Codeblocks : open the exampleStandalone.cbp and hit F9 to build. 
-
-### OSX
-
-Open the XCode project and run.
-
-### others
-
-You should be able to generate the project files for your OS with the help of OF's projectGenerator.
-
-
 Building as a Pd external
 -------------------------
 
@@ -152,6 +130,27 @@ see OSXexternal README.
 ### Others
 TODO...
 
+Building the exampleStandalone projects
+---------------------------
+
+### Linux
+
+To build and run it on the terminal:
+<pre>
+make
+make run
+</pre>
+
+Optionally, you can build the example with Codeblocks : open the exampleStandalone.cbp and hit F9 to build. 
+
+### OSX
+
+Open the XCode project and run.
+
+### Windows
+
+You should be able to generate the project files with the help of OF's projectGenerator.
+
 
 Building for Android
 --------------------
@@ -166,7 +165,7 @@ This project should compile for Android >= 4.0 (Ice Cream Sandwich, API 14) ; wi
 
 The size of the final APK file depends greatly of which target processors are selected. This can be set in the file `config.make`, find `ABIS_TO_COMPILE_RELEASE` variable. If you don't define it, default will build for all possible targets (arm, arm7, neon and x86), and the size of the APK will be about 23MB ; if you select only arm7 (which will cover most of the devices) it will be only about 6MB.
 
-Building for Android
+Building for iOS
 --------------------
 Open the iPof Xcode project and run.
 
