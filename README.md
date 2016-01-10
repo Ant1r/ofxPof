@@ -117,9 +117,12 @@ This project is located in the `buildExternal` folder.
 ### Linux
 
 To build and run it on the terminal:
-<pre>
+
+```
 make
-make run</pre> (which opens `ofxPof/example/pf_main.pd`)
+make run
+```
+(which opens `ofxPof/example/pf_main.pd`)
 
 The final external file is : `ofxPof/buildExternal/bin/pof_pd_linux`.
 
@@ -136,10 +139,10 @@ Building the exampleStandalone projects
 ### Linux
 
 To build and run it on the terminal:
-<pre>
+```
 make
 make run
-</pre>
+```
 
 Optionally, you can build the example with Codeblocks : open the exampleStandalone.cbp and hit F9 to build. 
 
