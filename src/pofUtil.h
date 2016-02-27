@@ -9,10 +9,11 @@
 
 class pofFileDownloader;
 class pofUnzipper;
+class pofSysThread;
 
 class pofUtil: public pofBase {
 	public:
-		pofUtil(t_class *Class):pofBase(Class),fileDownloader(NULL), unzipper(NULL) {
+		pofUtil(t_class *Class):pofBase(Class),fileDownloader(NULL), unzipper(NULL), systhread(NULL) {
 		}
 				
 		static void setup(void);
@@ -23,6 +24,7 @@ class pofUtil: public pofBase {
 		
 		pofFileDownloader *fileDownloader;
 		pofUnzipper *unzipper;
+		pofSysThread *systhread;
 };
 
 

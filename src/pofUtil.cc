@@ -8,6 +8,8 @@
 
 static t_class *pofutil_class;
 static t_symbol *s_download, *s_out, *s_unzip, *s_done, *s_error;
+static t_symbol *s_rmfile,*s_rmdir,*s_mkdir,*s_renamedir;
+
 
 static void *pofutil_new(void)
 {
@@ -66,6 +68,7 @@ static void pofutil_time(void *x, t_symbol *s, int argc, t_atom *argv)
 	outlet_anything(px->m_out1, gensym("time"), 1, &ap);
 }
 
+#if 0
 static void pofutil_rmfile(void *x, t_symbol *path)
 {
 	//pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
@@ -89,6 +92,7 @@ static void pofutil_renamedir(void *x, t_symbol *path, t_symbol *newpath)
 	//pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
 	ofDirectory(path->s_name).renameTo(newpath->s_name, /*bool bRelativeToData=*/false, /*bool overwrite=*/true);
 }
+#endif
 
 static void pofutil_exists(void *x, t_symbol *path)
 {
@@ -158,6 +162,96 @@ static void pofutil_dirbaseext(void *x, t_symbol *file)
 	
 	outlet_anything(px->m_out1, gensym("dirbaseext"), 3, at);
 }
+
+//--------------------- sys thread (for asynchronous operations : mkdir rmdir renamedir rmfile...) ----------------
+class pofSysThread : public ofThread {
+	public :
+    void *obj;
+    t_symbol *command;
+    t_binbuf *binbuf;
+    bool running;
+    bool error;
+    
+	pofSysThread(void *x, t_symbol *s, int ac, t_atom *av) : 
+ 		obj(x), command(s), binbuf(NULL), running(false){
+		binbuf = binbuf_new();
+		binbuf_add(binbuf, ac, av);
+	}
+	
+	~pofSysThread() {
+		binbuf_free(binbuf);
+	}
+	
+	void threadedFunction(){
+		float errcode = 0;
+		running = true;
+		int argc = binbuf_getnatom(binbuf);
+		t_atom *argv = binbuf_getvec(binbuf);
+		
+		t_atom at[4];
+		SETSYMBOL(&at[0], s_out);
+		SETSYMBOL(&at[1], command);
+		SETSYMBOL(&at[2], s_error);
+		SETFLOAT(&at[3], errcode);
+
+		if(command == s_rmfile) {
+			if((argc>0) && (argv->a_type == A_SYMBOL)) {
+				if(ofFile::removeFile(atom_getsymbol(argv)->s_name, 
+					false)) // bRelativeToData
+				SETSYMBOL(&at[2], s_done);
+			}
+		}
+		else if(command == s_rmdir) {
+			if((argc>0) && (argv->a_type == A_SYMBOL)) {
+				if(ofDirectory::removeDirectory(atom_getsymbol(argv)->s_name, 
+					true, 		//deleteIfNotEmpty
+					false)) 	// bRelativeToData
+				SETSYMBOL(&at[2], s_done);
+			}
+		}
+		else if(command == s_mkdir) {
+			if((argc>0) && (argv->a_type == A_SYMBOL)) {
+				if(ofDirectory::createDirectory(atom_getsymbol(argv)->s_name, 
+					false, 	// bRelativeToData
+					true))	// recursive
+				SETSYMBOL(&at[2], s_done);
+			}
+		}
+		else if(command == s_renamedir) {
+			if((argc>1) && (argv->a_type == A_SYMBOL) && ((argv+1)->a_type == A_SYMBOL)) {
+				if(ofDirectory(atom_getsymbol(argv)->s_name).renameTo(atom_getsymbol(argv+1)->s_name, 
+					false, 	// bRelativeToData
+					true)) 	//overwrite
+				SETSYMBOL(&at[2], s_done);
+			}
+		}
+
+		((pofUtil*)obj)->queueToSelfPd(4,at);
+		
+		running = false;
+		return;
+    }
+};
+
+static void pofutil_thread(void *x, t_symbol *s, int argc, t_atom *argv)
+{
+	t_atom at;
+	pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
+
+	if(px->systhread != NULL && px->systhread->running) {
+		error("pofutil %s : async thread is already running !", s->s_name);
+		SETSYMBOL(&at, gensym("error_running"));
+		outlet_anything(px->m_out1, s, 1, &at);
+		return;
+	}
+
+	if(px->systhread) delete px->systhread;
+
+	px->systhread = new pofSysThread(px, s, argc, argv);
+	px->systhread->startThread();	
+}
+
+//----------------- Unzip ------------------------
 
 class pofUnzipper : public ofThread {
 	public :
@@ -447,6 +541,11 @@ void pofUtil::setup(void)
 	s_done = gensym("done");
 	s_error = gensym("error");
 	
+	s_rmfile =  gensym("rmfile");
+	s_rmdir =  gensym("rmdir");
+	s_mkdir =  gensym("mkdir");
+	s_renamedir =  gensym("renamedir");
+	
 	pofutil_class = class_new(gensym("pofutil"), (t_newmethod)pofutil_new, (t_method)pofutil_free,
 		sizeof(PdObject), 0, A_NULL);
 
@@ -455,10 +554,15 @@ void pofUtil::setup(void)
 	class_addmethod(pofutil_class, (t_method)pofutil_getdatapath, gensym("getdatapath"), A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_time, gensym("time"), A_GIMME, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_dollarg, gensym("dollarg"), A_NULL);
-	class_addmethod(pofutil_class, (t_method)pofutil_rmfile, gensym("rmfile"), A_SYMBOL, A_NULL);
-	class_addmethod(pofutil_class, (t_method)pofutil_rmdir, gensym("rmdir"), A_SYMBOL, A_NULL);
-	class_addmethod(pofutil_class, (t_method)pofutil_mkdir, gensym("mkdir"), A_SYMBOL, A_NULL);
-	class_addmethod(pofutil_class, (t_method)pofutil_renamedir, gensym("renamedir"), A_SYMBOL, A_SYMBOL, A_NULL);
+	//class_addmethod(pofutil_class, (t_method)pofutil_rmfile, gensym("rmfile"), A_SYMBOL, A_NULL);
+	//class_addmethod(pofutil_class, (t_method)pofutil_rmdir, s_rmdir, A_SYMBOL, A_NULL);
+	//class_addmethod(pofutil_class, (t_method)pofutil_mkdir, s_mkdir, A_SYMBOL, A_NULL);
+	//class_addmethod(pofutil_class, (t_method)pofutil_renamedir, s_renamedir, A_SYMBOL, A_SYMBOL, A_NULL);
+	class_addmethod(pofutil_class, (t_method)pofutil_thread, s_rmfile, A_GIMME, A_NULL);
+	class_addmethod(pofutil_class, (t_method)pofutil_thread, s_rmdir, A_GIMME, A_NULL);
+	class_addmethod(pofutil_class, (t_method)pofutil_thread, s_mkdir, A_GIMME, A_NULL);
+	class_addmethod(pofutil_class, (t_method)pofutil_thread, s_renamedir, A_GIMME, A_NULL);
+	
 	class_addmethod(pofutil_class, (t_method)pofutil_listdir, gensym("listdir"), A_GIMME, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_exists, gensym("exists"), A_SYMBOL, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_dirbaseext, gensym("dirbaseext"), A_SYMBOL, A_NULL);
