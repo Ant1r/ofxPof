@@ -240,7 +240,7 @@ void pofimage_unreserve(void *x, t_symbol *f)
 	else px->unreserve(f);
 }
 
-void pofimage_monitor(void *x, t_float *f)
+void pofimage_monitor(void *x, t_float f)
 {
 	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
 	px->monitor = (f != 0);
