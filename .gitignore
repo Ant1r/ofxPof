@@ -64,11 +64,12 @@ pof.zip
 
 buildExternal/bin/pof*
 buildExternal/obj
+buildExternal/pof*
+OSXexternal/pof*
 
 exampleStandalone/bin/exampleStandalone
 exampleStandalone/bin/exampleStandalone_debug
 exampleStandalone/bin/libs
 exampleStandalone/obj
-*/pof
 
 
