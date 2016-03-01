@@ -3,6 +3,8 @@
 #   This file is where we make project specific configurations.
 ################################################################################
 
+$(shell touch ../src/pofBase.cc)
+
 ifndef PLATFORM_OS 
     # determine from the uname if not defined manually
     PLATFORM_OS=$(shell uname -s)
