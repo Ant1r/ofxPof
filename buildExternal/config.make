@@ -10,21 +10,16 @@ ifndef PLATFORM_OS
     PLATFORM_OS=$(shell uname -s)
 endif
 
+IS64BIT=$(shell if [ -n "`uname -a | grep x86_64`" ] ; then echo yes ; else echo no ; fi)
+
 ifeq ($(PLATFORM_OS),Linux)
-APPNAME = pof.pd_linux
-PROJECT_CFLAGS = -fPIC
-PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs 
-
-else ifeq ($(PLATFORM_OS),Darwin)
-APPNAME = pof.pd_darwin
-PROJECT_CFLAGS = -fPIC
-PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs 
-
-# I imagine this is useless :
-else ifeq ($(PLATFORM_OS),Windows)
-APPNAME = pof.dll
-PROJECT_CFLAGS = -fPIC
-PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs 
+	ifeq ($(IS64BIT),yes)
+		APPNAME = pof.l_ia64
+	else 
+		APPNAME = pof.l_i386
+	endif	
+	PROJECT_CFLAGS = -fPIC
+	PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs
 endif
 
 PLATFORM_RUN_COMMAND = pd -path bin/ -open ../example/pd/pof_main.pd
