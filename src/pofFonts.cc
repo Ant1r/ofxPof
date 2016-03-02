@@ -53,6 +53,7 @@ void pofFonts::update()
 				  );					//lower res mipmaps wil bleed into each other*/
 
 
+		offont.clear();
 		offont.setup(file->s_name, //font file, ttf only
 				  1.0					//lineheight percent
 				  );					//lower res mipmaps wil bleed into each other*/
