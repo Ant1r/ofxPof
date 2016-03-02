@@ -1,4 +1,4 @@
-#N canvas 507 428 446 324 10;
+#N canvas 501 443 522 296 10;
 #X declare -lib pof;
 #X obj 18 17 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -14,7 +14,6 @@
 #X floatatom 125 163 5 0 0 0 - - -, f 5;
 #X obj 44 250 pofrect 200 100;
 #X text 185 180 Inlet 2: x;
-#X text 179 165 Arguments : initial vector(x \, y);
 #X text 185 192 Inlet 3: y;
 #X obj 44 190 pofscale 0.5 1;
 #X obj 87 125 hsl 128 15 0 4 0 0 empty empty empty -2 -8 0 10 -262144
@@ -24,9 +23,13 @@
 #X text 23 70 pofscale : scale following tree.;
 #X obj 229 29 declare -lib pof;
 #X text 20 16 Pof: Pd OpenFrameworks externals;
-#X connect 5 0 12 0;
-#X connect 6 0 12 1;
-#X connect 7 0 12 2;
-#X connect 12 0 8 0;
-#X connect 13 0 6 0;
-#X connect 14 0 7 0;
+#X text 186 206 Inlet 4: z \, if 3d init vector:;
+#X text 179 165 Arguments : initial vector(x \, y) or (x \, y \, z)
+;
+#X obj 372 206 pofscale 0.5 1 2;
+#X connect 5 0 11 0;
+#X connect 6 0 11 1;
+#X connect 7 0 11 2;
+#X connect 11 0 8 0;
+#X connect 12 0 6 0;
+#X connect 13 0 7 0;
