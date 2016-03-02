@@ -1,41 +1,39 @@
-#N canvas 501 477 529 411 10;
+#N canvas 493 497 589 427 10;
 #X declare -lib pof;
-#X declare -path .;
-#X declare -path ../buildExternal/bin;
-#X obj 213 15 pof_declare;
-#X obj 2 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+#X obj 5 5 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
-#X text 4 2 Pof : Pd OpenFrameworks externals;
-#X obj 2 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+#X obj 5 27 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
 0;
-#X obj 2 56 cnv 15 230 20 empty empty empty 20 12 0 14 -261682 -66577
+#X obj 5 58 cnv 15 230 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 27 240 cnv 15 120 30 empty empty empty 20 12 0 14 -261682 -66577
+#X obj 30 242 cnv 15 120 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 34 106 pofhead;
-#X text 173 186 Inlet 2: width;
-#X floatatom 80 213 5 0 0 0 - - -;
-#X floatatom 127 214 5 0 0 0 - - -;
-#X text 173 198 Inlet 3: height \; if height=0 \, then height=width.
+#X obj 37 108 pofhead;
+#X text 176 188 Inlet 2: width;
+#X floatatom 83 215 5 0 0 0 - - -, f 5;
+#X floatatom 130 216 5 0 0 0 - - -, f 5;
+#X text 176 200 Inlet 3: height \; if height=0 \, then height=width.
 ;
-#X text 28 77 Arguments : width height;
-#X obj 34 245 pofplane 200 200;
-#X obj 159 370 pofwin;
-#X msg 159 343 normalizedtextcoords \$1;
-#X obj 159 321 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X text 31 79 Arguments : width height;
+#X obj 37 247 pofplane 200 200;
+#X obj 162 372 pofwin;
+#X msg 162 345 normalizedtextcoords \$1;
+#X obj 162 323 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X text 123 288 You must activate "normalized texture coordinates"
+#X text 126 290 You must activate "normalized texture coordinates"
 for this to work:;
-#X text 11 56 pofplane : draw a (textured) plane.;
-#X obj 34 132 pofimage logo/pOf.png TEX;
-#X msg 63 172 res 2 2;
-#X text 173 170 Inlet 1: res resX resY : set plane resolution (default
+#X text 14 58 pofplane : draw a (textured) plane.;
+#X obj 37 134 pofimage logo/pOf.png TEX;
+#X msg 66 174 res 2 2;
+#X text 176 172 Inlet 1: res resX resY : set plane resolution (default
 6x4).;
-#X text 31 24 (c) Antoine Rousseau 2015;
-#X connect 6 0 18 0;
-#X connect 8 0 12 1;
-#X connect 9 0 12 2;
-#X connect 14 0 13 0;
-#X connect 15 0 14 0;
-#X connect 18 0 12 0;
-#X connect 19 0 12 0;
+#X text 34 26 (c) Antoine Rousseau 2015;
+#X text 7 4 Pof: Pd OpenFrameworks externals;
+#X obj 216 17 declare -lib pof;
+#X connect 4 0 16 0;
+#X connect 6 0 10 1;
+#X connect 7 0 10 2;
+#X connect 12 0 11 0;
+#X connect 13 0 12 0;
+#X connect 16 0 10 0;
+#X connect 17 0 10 0;

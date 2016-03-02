@@ -1,37 +1,35 @@
-#N canvas 516 355 514 355 10;
+#N canvas 514 363 566 352 10;
 #X declare -lib pof;
-#X declare -path .;
-#X declare -path ../buildExternal/bin;
-#X obj 187 15 pof_declare;
-#X obj -24 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+#X obj 6 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
-#X text -22 2 Pof : Pd OpenFrameworks externals;
-#X obj -24 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+#X obj 6 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
 0;
-#X text 5 24 (c) Antoine Rousseau 2014;
-#X obj -24 56 cnv 15 220 20 empty empty empty 20 12 0 14 -261682 -66577
+#X text 35 24 (c) Antoine Rousseau 2014;
+#X obj 6 56 cnv 15 220 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 7 166 cnv 15 140 30 empty empty empty 20 12 0 14 -261682 -66577
+#X obj 37 166 cnv 15 140 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 14 93 pofhead;
-#X floatatom 83 140 5 0 0 0 - - -;
-#X obj 14 299 pofrect 200 100;
-#X text 120 139 Inlet 2: angle (degrees);
-#X text -20 56 pofrotate : rotate following tree.;
-#X obj 14 173 pofrotate 90;
-#X floatatom 77 206 5 0 0 0 - - -;
-#X obj 14 226 pofrotate x;
-#X floatatom 77 246 5 0 0 0 - - -;
-#X text 121 109 Arguments : [initial_angle] [axis (x/y/z) \, default=z]
+#X obj 44 93 pofhead;
+#X floatatom 113 140 5 0 0 0 - - -, f 5;
+#X obj 44 299 pofrect 200 100;
+#X text 150 139 Inlet 2: angle (degrees);
+#X text 10 56 pofrotate : rotate following tree.;
+#X obj 44 173 pofrotate 90;
+#X floatatom 107 206 5 0 0 0 - - -, f 5;
+#X obj 44 226 pofrotate x;
+#X floatatom 107 246 5 0 0 0 - - -, f 5;
+#X text 151 109 Arguments : [initial_angle] [axis (x/y/z) \, default=z]
 ;
-#X obj 14 267 pofrotate y;
-#X text 160 221 (do other axis later ?...);
-#X text 126 208 Caution : pofrotate only computes touch event when
+#X obj 44 267 pofrotate y;
+#X text 190 221 (do other axis later ?...);
+#X text 156 208 Caution : pofrotate only computes touch event when
 set to z axis.;
-#X connect 7 0 12 0;
-#X connect 8 0 12 1;
-#X connect 12 0 14 0;
-#X connect 13 0 14 1;
-#X connect 14 0 17 0;
-#X connect 15 0 17 1;
-#X connect 17 0 9 0;
+#X obj 224 11 declare -lib pof;
+#X text 8 2 Pof: Pd OpenFrameworks externals;
+#X connect 5 0 10 0;
+#X connect 6 0 10 1;
+#X connect 10 0 12 0;
+#X connect 11 0 12 1;
+#X connect 12 0 15 0;
+#X connect 13 0 15 1;
+#X connect 15 0 7 0;

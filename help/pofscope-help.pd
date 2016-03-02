@@ -1,35 +1,30 @@
-#N canvas 647 173 418 430 10;
+#N canvas 643 183 440 464 10;
 #X declare -lib pof;
-#X declare -path .;
-#X declare -path ../buildExternal/bin;
-#X obj 187 15 pof_declare;
-#X obj -24 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+#X obj 11 11 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
-#X text -22 2 Pof : Pd OpenFrameworks externals;
-#X obj -24 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+#X obj 11 33 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
 0;
-#X text 5 24 (c) Antoine Rousseau 2014;
-#X obj -24 56 cnv 15 320 20 empty empty empty 20 12 0 14 -261682 -66577
+#X text 40 32 (c) Antoine Rousseau 2014;
+#X obj 11 64 cnv 15 320 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj -10 386 cnv 15 160 30 empty empty empty 20 12 0 14 -261682 -66577
+#X obj 25 394 cnv 15 160 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj -3 86 pofhead;
-#X text 117 91 Arguments : width height buflen;
-#X text 138 125 Inlet 2: width;
-#X msg 308 27 \; pd dsp 1;
-#X obj 308 6 loadbang;
-#X msg 130 239 buflen \$1;
-#X obj -3 114 pofrect 400 100;
-#X obj 133 197 hsl 128 15 100 400000 1 0 empty empty empty -2 -8 0
-10 -262144 -1 -1 9324 1;
-#X floatatom 130 217 8 0 0 1 samples - -;
-#X floatatom 120 368 5 0 0 0 - - -;
-#X floatatom 58 368 5 0 0 0 - - -;
-#X text -18 55 pofscope : display the waveform of an audio signal.
-;
-#X obj -3 217 pofcolor 0 0.4 0 1;
-#X msg 130 302 compute \$1;
-#X obj 130 282 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 32 94 pofhead;
+#X text 152 99 Arguments : width height buflen;
+#X text 173 133 Inlet 2: width;
+#X msg 343 35 \; pd dsp 1;
+#X obj 343 14 loadbang;
+#X msg 165 247 buflen \$1;
+#X obj 32 122 pofrect 400 100;
+#X obj 168 205 hsl 128 15 100 400000 1 0 empty empty empty -2 -8 0
+10 -262144 -1 -1 0 1;
+#X floatatom 165 225 8 0 0 1 samples - -, f 8;
+#X floatatom 155 376 5 0 0 0 - - -, f 5;
+#X floatatom 93 376 5 0 0 0 - - -, f 5;
+#X text 17 63 pofscope : display the waveform of an audio signal.;
+#X obj 32 225 pofcolor 0 0.4 0 1;
+#X msg 165 310 compute \$1;
+#X obj 165 290 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #N canvas 840 609 437 378 source 0;
 #X obj 52 309 outlet~;
@@ -40,8 +35,8 @@
 #X obj 68 103 *~;
 #X obj 117 258 *~;
 #X obj 117 171 adc~;
-#X obj 206 118 tgl 15 0 empty empty adc 17 7 0 10 -262144 -1 -1 1 1
-;
+#X obj 206 118 tgl 15 0 empty empty noise 17 7 0 10 -262144 -1 -1 0
+1;
 #X obj 206 170 sel 0 1;
 #X msg 206 196 label noise;
 #X msg 289 196 label adc;
@@ -86,16 +81,16 @@
 #X connect 21 0 5 0;
 #X connect 21 0 5 1;
 #X coords 0 -1 1 1 100 60 1 200 100;
-#X restore 11 248 pd source;
-#X obj -3 391 pofscope 400 50 40000;
-#X text 138 140 Inlet 3: gain (height = 2 * gain);
-#X text 138 110 Inlet 1: audio \, buflen \, compute(0/1);
+#X restore 46 256 pd source;
+#X obj 32 399 pofscope 400 50 40000;
+#X text 173 148 Inlet 3: gain (height = 2 * gain);
+#X text 173 118 Inlet 1: audio \, buflen \, compute(0/1);
 #N canvas 829 557 450 300 print_scale 0;
 #X obj 79 241 poffont \$0-f font/vera.ttf 25;
 #X obj 80 55 inlet head;
 #X obj 235 45 inlet buflen;
 #X obj 235 67 / 44100;
-#X floatatom 302 66 5 0 0 1 seconds - -;
+#X floatatom 302 66 5 0 0 1 seconds - -, f 5;
 #X obj 80 206 poftext \$0-f -1 0;
 #X obj 80 93 poftranslate -200 -65;
 #X obj 235 89 * 1000;
@@ -111,22 +106,24 @@
 #X connect 8 0 9 0;
 #X connect 9 0 10 0;
 #X connect 10 0 5 0;
-#X restore 14 181 pd print_scale;
-#X msg 130 158 loadbang;
-#X msg 130 177 44100;
-#X connect 7 0 13 0;
-#X connect 11 0 10 0;
-#X connect 12 0 23 0;
-#X connect 13 0 19 0;
-#X connect 13 0 26 0;
-#X connect 14 0 15 0;
-#X connect 15 0 12 0;
-#X connect 15 0 26 1;
-#X connect 16 0 23 2;
-#X connect 17 0 23 1;
-#X connect 19 0 23 0;
-#X connect 20 0 23 0;
-#X connect 21 0 20 0;
-#X connect 22 0 23 0;
-#X connect 27 0 28 0;
-#X connect 28 0 14 0;
+#X restore 49 189 pd print_scale;
+#X msg 165 166 loadbang;
+#X msg 165 185 44100;
+#X text 13 10 Pof: Pd OpenFrameworks externals;
+#X obj 222 23 declare -lib pof;
+#X connect 5 0 11 0;
+#X connect 9 0 8 0;
+#X connect 10 0 21 0;
+#X connect 11 0 17 0;
+#X connect 11 0 24 0;
+#X connect 12 0 13 0;
+#X connect 13 0 10 0;
+#X connect 13 0 24 1;
+#X connect 14 0 21 2;
+#X connect 15 0 21 1;
+#X connect 17 0 21 0;
+#X connect 18 0 21 0;
+#X connect 19 0 18 0;
+#X connect 20 0 21 0;
+#X connect 25 0 26 0;
+#X connect 26 0 12 0;

@@ -1,30 +1,28 @@
-#N canvas 606 92 442 268 10;
+#N canvas 604 97 487 339 10;
 #X declare -lib pof;
-#X declare -path .;
-#X declare -path ../buildExternal/bin;
-#X obj 187 15 pof_declare;
-#X obj -24 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+#X obj 9 12 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
-#X text -22 2 Pof : Pd OpenFrameworks externals;
-#X obj -24 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+#X obj 9 34 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
 0;
-#X text 5 24 (c) Antoine Rousseau 2014;
-#X obj -23 56 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
+#X text 38 33 (c) Antoine Rousseau 2014;
+#X obj 10 65 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj -1 166 cnv 15 120 30 empty empty empty 20 12 0 14 -261682 -66577
+#X obj 32 175 cnv 15 120 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 14 80 pofhead;
-#X text 126 147 Argument : initial state.;
-#X text 126 160 Inlet 1 : set state : 1=enable 0=disable;
-#X text 49 99 poftouchable enables or disables drawing and touch events
+#X obj 47 89 pofhead;
+#X text 159 156 Argument : initial state.;
+#X text 159 169 Inlet 1 : set state : 1=enable 0=disable;
+#X text 82 108 poftouchable enables or disables drawing and touch events
 for lower tree.;
-#X obj 14 173 pofvisible 1;
-#X text 232 193 see also :;
-#X obj 233 213 poftouchable;
-#X obj 14 212 pofrect 200 200;
-#X obj 48 140 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 47 182 pofvisible 1;
+#X text 265 202 see also :;
+#X obj 266 222 poftouchable;
+#X obj 47 221 pofrect 200 200;
+#X obj 81 149 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X text -18 55 pofvisible : show or hide.;
-#X connect 7 0 11 0;
-#X connect 11 0 14 0;
-#X connect 15 0 11 0;
+#X text 15 64 pofvisible : show or hide.;
+#X obj 220 24 declare -lib pof;
+#X text 11 11 Pof: Pd OpenFrameworks externals;
+#X connect 5 0 9 0;
+#X connect 9 0 12 0;
+#X connect 13 0 9 0;

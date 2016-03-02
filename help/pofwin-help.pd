@@ -1,63 +1,62 @@
-#N canvas 666 117 468 644 10;
-#X declare -path .;
-#X declare -path ../buildExternal/bin;
-#X obj 212 15 pof_declare;
-#X obj 1 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+#N canvas 660 132 510 666 10;
+#X declare -lib pof;
+#X obj 19 15 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
-#X text 3 2 Pof : Pd OpenFrameworks externals;
-#X obj 1 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+#X obj 19 37 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
 0;
-#X text 30 24 (c) Antoine Rousseau 2014;
-#X obj 1 56 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
+#X text 48 36 (c) Antoine Rousseau 2014;
+#X obj 19 68 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X text 10 57 pofwin : main window settings.;
-#X obj 3 510 cnv 15 80 30 empty empty empty 20 12 0 14 -261682 -66577
+#X text 28 69 pofwin : main window settings.;
+#X obj 21 522 cnv 15 80 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X msg 24 159 build;
-#X obj 9 517 pofwin;
-#X msg 39 256 framerate \$1;
-#X msg 9 107 window \$1 600 0;
-#X obj 12 87 hsl 128 15 0 500 0 0 empty empty empty -2 -8 0 10 -262144
+#X msg 42 171 build;
+#X obj 27 529 pofwin;
+#X msg 57 268 framerate \$1;
+#X msg 27 119 window \$1 600 0;
+#X obj 30 99 hsl 128 15 0 500 0 0 empty empty empty -2 -8 0 10 -262144
 -1 -1 0 1;
-#X msg 39 230 8;
-#X msg 69 231 25;
-#X msg 100 231 60;
-#X text 119 255 Set framerate.;
-#X text 108 106 Set window size.;
-#X obj 9 545 route window;
-#X obj 9 567 unpack f f;
-#X floatatom 9 592 5 0 0 0 - - -, f 5;
-#X floatatom 66 592 5 0 0 0 - - -, f 5;
-#X text 86 544 Get actual window size.;
-#X msg 64 396 background 0 0 0;
-#X msg 65 417 background 40 80 120;
-#X text 173 398 Set background color.;
-#X text 196 412 (R \, G \, B [0:255]);
-#X obj 61 477 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+#X msg 57 242 8;
+#X msg 87 243 25;
+#X msg 118 243 60;
+#X text 137 267 Set framerate.;
+#X text 126 118 Set window size.;
+#X obj 27 557 route window;
+#X obj 27 579 unpack f f;
+#X floatatom 27 604 5 0 0 0 - - -, f 5;
+#X floatatom 84 604 5 0 0 0 - - -, f 5;
+#X text 104 556 Get actual window size.;
+#X msg 82 408 background 0 0 0;
+#X msg 83 429 background 40 80 120;
+#X text 191 410 Set background color.;
+#X text 214 424 (R \, G \, B [0:255]);
+#X obj 79 489 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X text 82 475 bang : force send window size;
-#X text 64 142 Manually rebuild drawing tree (to be called when objects
+#X text 100 487 bang : force send window size;
+#X text 82 154 Manually rebuild drawing tree (to be called when objects
 have been connected or disconnected). Rebuild is done automatically
 when a pof object has been created or destroyed (but not when a pof
 object is connected/disconnected...).;
-#X msg 55 334 normalizedtextcoords \$1;
-#X obj 55 312 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X msg 73 346 normalizedtextcoords \$1;
+#X obj 73 324 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X text 77 304 Enable texture normalized (0-1) coordinates \, needed
+#X text 95 316 Enable texture normalized (0-1) coordinates \, needed
 to texture 3d objects.;
-#X connect 8 0 9 0;
-#X connect 9 0 18 0;
+#X obj 230 27 declare -lib pof;
+#X text 21 14 Pof: Pd OpenFrameworks externals;
+#X connect 6 0 7 0;
+#X connect 7 0 16 0;
+#X connect 8 0 7 0;
+#X connect 9 0 7 0;
 #X connect 10 0 9 0;
-#X connect 11 0 9 0;
-#X connect 12 0 11 0;
-#X connect 13 0 10 0;
-#X connect 14 0 10 0;
-#X connect 15 0 10 0;
-#X connect 18 0 19 0;
-#X connect 19 0 20 0;
-#X connect 19 1 21 0;
-#X connect 23 0 9 0;
-#X connect 24 0 9 0;
-#X connect 27 0 9 0;
-#X connect 30 0 9 0;
-#X connect 31 0 30 0;
+#X connect 11 0 8 0;
+#X connect 12 0 8 0;
+#X connect 13 0 8 0;
+#X connect 16 0 17 0;
+#X connect 17 0 18 0;
+#X connect 17 1 19 0;
+#X connect 21 0 7 0;
+#X connect 22 0 7 0;
+#X connect 25 0 7 0;
+#X connect 28 0 7 0;
+#X connect 29 0 28 0;

@@ -1,16 +1,13 @@
-#N canvas 205 262 363 248 10;
-#X declare -path .;
-#X declare -path ../buildExternal/bin;
-#X obj 217 16 pof_declare;
-#X obj 6 4 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+#N canvas 199 361 377 265 10;
+#X declare -lib pof;
+#X obj 14 12 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
-#X text 8 3 Pof : Pd OpenFrameworks externals;
-#X obj 6 26 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+#X obj 14 34 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
 0;
-#X text 35 25 (c) Antoine Rousseau 2014;
-#X obj 6 57 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
+#X text 43 33 (c) Antoine Rousseau 2014;
+#X obj 14 65 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X text 12 57 pofutil : various utilities.;
+#X text 20 65 pofutil : various utilities.;
 #N canvas 697 116 466 447 file_utils 0;
 #X msg 22 14 getdir;
 #X obj 22 375 pofutil;
@@ -43,7 +40,7 @@
 #X connect 10 0 1 0;
 #X connect 13 0 1 0;
 #X connect 14 0 1 0;
-#X restore 20 95 pd file_utils;
+#X restore 28 103 pd file_utils;
 #N canvas 599 618 663 360 string_utils 0;
 #X obj 23 186 pofutil;
 #X obj 23 214 print;
@@ -65,7 +62,7 @@ and;
 #X connect 5 0 0 0;
 #X connect 6 0 0 0;
 #X connect 8 0 0 0;
-#X restore 21 122 pd string_utils;
+#X restore 29 130 pd string_utils;
 #N canvas 583 453 435 253 others 0;
 #X msg 50 70 time;
 #X msg 50 90 time %d-%m-%y at %H-%M-%S;
@@ -80,7 +77,7 @@ and;
 #X connect 2 0 3 0;
 #X connect 3 0 7 0;
 #X connect 4 0 3 0;
-#X restore 20 203 pd others;
+#X restore 28 211 pd others;
 #N canvas 458 657 586 230 download_file 0;
 #X obj 20 150 pofutil;
 #X obj 20 181 print;
@@ -98,7 +95,7 @@ URL :;
 #X connect 5 0 6 0;
 #X connect 6 0 4 0;
 #X connect 7 0 0 0;
-#X restore 21 149 pd download_file;
+#X restore 29 157 pd download_file;
 #N canvas 705 597 344 233 unzip 0;
 #X obj 37 135 pofutil;
 #X msg 37 26 unzip file to_path [password];
@@ -110,4 +107,6 @@ URL :;
 #X connect 0 0 3 0;
 #X connect 1 0 0 0;
 #X connect 4 0 0 0;
-#X restore 21 176 pd unzip;
+#X restore 29 184 pd unzip;
+#X text 16 11 Pof: Pd OpenFrameworks externals;
+#X obj 225 24 declare -lib pof;

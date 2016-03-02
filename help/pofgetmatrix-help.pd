@@ -1,69 +1,67 @@
-#N canvas 576 287 512 409 10;
+#N canvas 603 495 512 409 10;
 #X declare -lib pof;
-#X declare -path .;
-#X declare -path ../buildExternal/bin;
-#X obj -8 234 cnv 15 140 30 empty empty empty 20 12 0 14 -261682 -66577
+#X obj 20 235 cnv 15 140 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 216 5 pof_declare;
-#X obj -24 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+#X obj 4 4 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
-#X text -22 2 Pof : Pd OpenFrameworks externals;
-#X obj -24 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+#X obj 4 26 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
 0;
-#X text 5 24 (c) Antoine Rousseau 2014;
-#X obj -24 56 cnv 15 370 35 empty empty empty 20 12 0 14 -261682 -66577
+#X text 33 25 (c) Antoine Rousseau 2014;
+#X obj 4 57 cnv 15 370 35 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 0 97 pofhead;
-#X floatatom 52 102 5 0 0 0 - - -;
-#X floatatom 105 102 5 0 0 0 - - -;
-#X obj 0 170 pofrotate 45;
-#X floatatom 46 192 5 0 0 0 - - -;
-#X floatatom 93 193 5 0 0 0 - - -;
-#X floatatom 69 150 5 0 0 0 - - -;
-#X obj 0 213 pofscale 0.5 0.5;
-#X obj 0 242 pofgetmatrix;
-#X obj 169 99 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X obj 34 362 print matrix;
-#X obj 69 271 route translate rotate scale;
-#X obj 69 298 unpack f f f;
-#X floatatom 69 320 5 0 0 3 tx - -;
-#X floatatom 103 320 5 0 0 3 ty - -;
-#X floatatom 138 320 5 0 0 3 tz - -;
-#X floatatom 189 321 5 0 0 3 alpha - -;
-#X floatatom 228 321 5 0 0 3 rx - -;
-#X floatatom 263 321 5 0 0 3 ry - -;
-#X obj 352 298 unpack f f f;
-#X floatatom 352 320 5 0 0 3 sx - -;
-#X floatatom 386 320 5 0 0 3 sy - -;
-#X floatatom 421 320 5 0 0 3 sz - -;
-#X obj 0 129 poftranslate 50 50;
-#X obj 189 299 unpack f f f f;
-#X floatatom 298 321 5 0 0 3 rz - -;
-#X text -19 56 pofgetmatrix : get current GL matrix \, and get its
-decomposition to translate/rotate/scale parameters.;
-#X connect 7 0 30 0;
-#X connect 8 0 30 1;
-#X connect 9 0 30 2;
-#X connect 10 0 14 0;
-#X connect 11 0 14 1;
-#X connect 12 0 14 2;
-#X connect 13 0 10 1;
-#X connect 14 0 15 0;
-#X connect 15 1 17 0;
-#X connect 15 2 18 0;
-#X connect 16 0 15 0;
-#X connect 18 0 19 0;
-#X connect 18 1 31 0;
-#X connect 18 2 26 0;
-#X connect 19 0 20 0;
-#X connect 19 1 21 0;
-#X connect 19 2 22 0;
-#X connect 26 0 27 0;
-#X connect 26 1 28 0;
-#X connect 26 2 29 0;
-#X connect 30 0 10 0;
-#X connect 31 0 23 0;
-#X connect 31 1 24 0;
-#X connect 31 2 25 0;
-#X connect 31 3 32 0;
+#X obj 28 98 pofhead;
+#X floatatom 80 103 5 0 0 0 - - -, f 5;
+#X floatatom 133 103 5 0 0 0 - - -, f 5;
+#X obj 28 171 pofrotate 45;
+#X floatatom 74 193 5 0 0 0 - - -, f 5;
+#X floatatom 121 194 5 0 0 0 - - -, f 5;
+#X floatatom 97 151 5 0 0 0 - - -, f 5;
+#X obj 28 214 pofscale 0.5 0.5;
+#X obj 28 243 pofgetmatrix;
+#X obj 197 100 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 62 363 print matrix;
+#X obj 97 272 route translate rotate scale;
+#X obj 97 299 unpack f f f;
+#X floatatom 97 321 5 0 0 3 tx - -, f 5;
+#X floatatom 131 321 5 0 0 3 ty - -, f 5;
+#X floatatom 166 321 5 0 0 3 tz - -, f 5;
+#X floatatom 217 322 5 0 0 3 alpha - -, f 5;
+#X floatatom 256 322 5 0 0 3 rx - -, f 5;
+#X floatatom 291 322 5 0 0 3 ry - -, f 5;
+#X obj 380 299 unpack f f f;
+#X floatatom 380 321 5 0 0 3 sx - -, f 5;
+#X floatatom 414 321 5 0 0 3 sy - -, f 5;
+#X floatatom 449 321 5 0 0 3 sz - -, f 5;
+#X obj 28 130 poftranslate 50 50;
+#X obj 217 300 unpack f f f f;
+#X floatatom 326 322 5 0 0 3 rz - -, f 5;
+#X text 9 57 pofgetmatrix : get current GL matrix \, and get its decomposition
+to translate/rotate/scale parameters.;
+#X obj 225 5 declare -lib pof;
+#X text 6 3 Pof: Pd OpenFrameworks externals;
+#X connect 5 0 28 0;
+#X connect 6 0 28 1;
+#X connect 7 0 28 2;
+#X connect 8 0 12 0;
+#X connect 9 0 12 1;
+#X connect 10 0 12 2;
+#X connect 11 0 8 1;
+#X connect 12 0 13 0;
+#X connect 13 1 15 0;
+#X connect 13 2 16 0;
+#X connect 14 0 13 0;
+#X connect 16 0 17 0;
+#X connect 16 1 29 0;
+#X connect 16 2 24 0;
+#X connect 17 0 18 0;
+#X connect 17 1 19 0;
+#X connect 17 2 20 0;
+#X connect 24 0 25 0;
+#X connect 24 1 26 0;
+#X connect 24 2 27 0;
+#X connect 28 0 8 0;
+#X connect 29 0 21 0;
+#X connect 29 1 22 0;
+#X connect 29 2 23 0;
+#X connect 29 3 30 0;

@@ -1,110 +1,109 @@
-#N canvas 719 113 558 658 10;
-#X declare -lib pof;
+#N canvas 525 230 637 607 10;
 #X declare -path .;
 #X declare -path ../buildExternal/bin;
-#X obj 187 15 pof_declare;
-#X obj -24 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+#X obj 216 18 pof_declare;
+#X obj 5 6 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
-#X text -22 2 Pof : Pd OpenFrameworks externals;
-#X obj -24 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+#X obj 5 28 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
 0;
-#X text 5 24 (c) Antoine Rousseau 2014;
-#X obj -24 56 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
+#X text 34 27 (c) Antoine Rousseau 2014;
+#X obj 5 59 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 8 395 cnv 15 120 30 empty empty empty 20 12 0 14 -261682 -66577
+#X obj 37 398 cnv 15 120 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 14 80 pofhead;
-#X text 149 383 Inlet 2: width;
-#X floatatom 60 373 5 0 0 0 - - -;
-#X floatatom 107 372 5 0 0 0 - - -;
-#X text 149 398 Inlet 3: height;
-#X text -18 56 poftouch : send touch events.;
-#X obj 14 402 poftouch 200 200;
-#X text 142 350 Arguments : initial width height [dont_capture multi]
+#X obj 43 83 pofhead;
+#X text 178 386 Inlet 2: width;
+#X floatatom 89 376 5 0 0 0 - - -, f 5;
+#X floatatom 136 375 5 0 0 0 - - -, f 5;
+#X text 178 401 Inlet 3: height;
+#X text 11 59 poftouch : send touch events.;
+#X obj 43 405 poftouch 200 200;
+#X text 171 353 Arguments : initial width height [dont_capture multi]
 ;
-#X msg 54 211 dont_capture \$1;
-#X obj 56 245 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X msg 83 214 dont_capture \$1;
+#X obj 85 248 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X msg 56 263 multi \$1;
-#X obj 52 143 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X msg 85 266 multi \$1;
+#X obj 81 146 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X msg 52 162 draw \$1;
-#X obj -2 500 unpack f f f;
-#X floatatom -2 529 5 0 0 3 x - -;
-#X floatatom 32 529 5 0 0 3 y - -;
-#X floatatom 67 529 5 0 0 3 touch_id - -;
-#X obj 184 500 unpack f f f;
-#X floatatom 184 529 5 0 0 3 x - -;
-#X floatatom 218 529 5 0 0 3 y - -;
-#X floatatom 253 529 5 0 0 3 touch_id - -;
-#X obj 324 501 unpack f f f;
-#X floatatom 324 530 5 0 0 3 x - -;
-#X floatatom 358 530 5 0 0 3 y - -;
-#X floatatom 393 530 5 0 0 3 touch_id - -;
-#X obj 421 499 bng 15 250 50 0 empty empty cancel 17 7 0 10 -262144
+#X msg 81 165 draw \$1;
+#X obj 27 503 unpack f f f;
+#X floatatom 27 532 5 0 0 3 x - -, f 5;
+#X floatatom 61 532 5 0 0 3 y - -, f 5;
+#X floatatom 96 532 5 0 0 3 touch_id - -, f 5;
+#X obj 213 503 unpack f f f;
+#X floatatom 213 532 5 0 0 3 x - -, f 5;
+#X floatatom 247 532 5 0 0 3 y - -, f 5;
+#X floatatom 282 532 5 0 0 3 touch_id - -, f 5;
+#X obj 353 504 unpack f f f;
+#X floatatom 353 533 5 0 0 3 x - -, f 5;
+#X floatatom 387 533 5 0 0 3 y - -, f 5;
+#X floatatom 422 533 5 0 0 3 touch_id - -, f 5;
+#X obj 450 502 bng 15 250 50 0 empty empty cancel 17 7 0 10 -262144
 -1 -1;
-#X text 110 77 Touch events travel from the bottom to the top of the
+#X text 139 80 Touch events travel from the bottom to the top of the
 tree (while drawing goes from the top to the bottom).;
-#X text 101 161 draw : draw a rectangle of the same dimensions.;
-#X text 113 246 multi : when touchdown has been detected \, continue
+#X text 130 164 draw : draw a rectangle of the same dimensions.;
+#X text 142 249 multi : when touchdown has been detected \, continue
 to listen to other touch id events (only useful for multitouch apps).
 ;
-#X text 149 417 Outlet 2: down|move|up x y id;
-#X text 209 431 cancel 0;
-#X text 154 187 dont_capture : let the touch events climb the tree
+#X text 178 420 Outlet 2: down|move|up x y id;
+#X text 238 434 cancel 0;
+#X text 183 190 dont_capture : let the touch events climb the tree
 even after touchdown has been detected.;
-#X text 111 103 Events emitted by a touch id (=finger) are captured
+#X text 140 106 Events emitted by a touch id (=finger) are captured
 by a poftouch from a touchdown inside of it \, until the touchup event
 of this touch id.;
-#X obj 398 449 poftouchable;
-#X text 396 432 See also :;
-#X msg 64 296 shape rect;
-#X msg 64 321 shape ellipse;
-#X msg 107 487 1;
-#X msg 135 487 0;
-#X obj 107 514 tgl 30 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 427 452 poftouchable;
+#X text 425 435 See also :;
+#X msg 93 299 shape rect;
+#X msg 93 324 shape ellipse;
+#X msg 136 490 1;
+#X msg 164 490 0;
+#X obj 136 517 tgl 30 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 54 192 hradio 15 1 0 3 empty empty empty 0 -8 0 10 -262144 -1
+#X obj 83 195 hradio 15 1 0 3 empty empty empty 0 -8 0 10 -262144 -1
 -1 2;
-#X text 155 218 if dont_capture=2 \, dynamically test for enter/leave
+#X text 184 221 if dont_capture=2 \, dynamically test for enter/leave
 events.;
-#X obj 107 454 route down move up cancel enter leave;
-#X msg 479 496 1;
-#X msg 507 496 0;
-#X obj 479 523 tgl 30 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 136 457 route down move up cancel enter leave;
+#X msg 508 499 1;
+#X msg 536 499 0;
+#X obj 508 526 tgl 30 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X text 149 367 Inlet 1: dont_capture(0/1/2) \, multi(0/1) \, draw(0/1)
+#X text 178 370 Inlet 1: dont_capture(0/1/2) \, multi(0/1) \, draw(0/1)
 ;
-#X connect 7 0 13 0;
-#X connect 9 0 13 1;
-#X connect 10 0 13 2;
-#X connect 13 1 49 0;
-#X connect 15 0 13 0;
-#X connect 16 0 17 0;
-#X connect 17 0 13 0;
-#X connect 18 0 19 0;
-#X connect 19 0 13 0;
-#X connect 20 0 21 0;
-#X connect 20 1 22 0;
-#X connect 20 2 23 0;
-#X connect 24 0 25 0;
-#X connect 24 1 26 0;
-#X connect 24 2 27 0;
-#X connect 28 0 29 0;
-#X connect 28 1 30 0;
-#X connect 28 2 31 0;
-#X connect 42 0 13 0;
-#X connect 43 0 13 0;
-#X connect 44 0 46 0;
-#X connect 45 0 46 0;
-#X connect 47 0 15 0;
-#X connect 49 0 20 0;
-#X connect 49 0 44 0;
-#X connect 49 1 24 0;
-#X connect 49 2 28 0;
-#X connect 49 2 45 0;
-#X connect 49 3 32 0;
-#X connect 49 4 50 0;
-#X connect 49 5 51 0;
-#X connect 50 0 52 0;
-#X connect 51 0 52 0;
+#X text 7 5 Pof: Pd OpenFrameworks externals;
+#X connect 6 0 12 0;
+#X connect 8 0 12 1;
+#X connect 9 0 12 2;
+#X connect 12 1 48 0;
+#X connect 14 0 12 0;
+#X connect 15 0 16 0;
+#X connect 16 0 12 0;
+#X connect 17 0 18 0;
+#X connect 18 0 12 0;
+#X connect 19 0 20 0;
+#X connect 19 1 21 0;
+#X connect 19 2 22 0;
+#X connect 23 0 24 0;
+#X connect 23 1 25 0;
+#X connect 23 2 26 0;
+#X connect 27 0 28 0;
+#X connect 27 1 29 0;
+#X connect 27 2 30 0;
+#X connect 41 0 12 0;
+#X connect 42 0 12 0;
+#X connect 43 0 45 0;
+#X connect 44 0 45 0;
+#X connect 46 0 14 0;
+#X connect 48 0 19 0;
+#X connect 48 0 43 0;
+#X connect 48 1 23 0;
+#X connect 48 2 27 0;
+#X connect 48 2 44 0;
+#X connect 48 3 31 0;
+#X connect 48 4 49 0;
+#X connect 48 5 50 0;
+#X connect 49 0 51 0;
+#X connect 50 0 51 0;

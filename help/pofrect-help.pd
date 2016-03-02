@@ -1,46 +1,44 @@
-#N canvas 509 457 544 356 10;
+#N canvas 491 502 582 398 10;
 #X declare -lib pof;
-#X declare -path .;
-#X declare -path ../buildExternal/bin;
-#X obj 187 15 pof_declare;
-#X obj -24 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+#X obj 9 13 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
-#X text -22 2 Pof : Pd OpenFrameworks externals;
-#X obj -24 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+#X obj 9 35 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
 0;
-#X text 5 24 (c) Antoine Rousseau 2014;
-#X obj -24 56 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
+#X text 38 34 (c) Antoine Rousseau 2014;
+#X obj 9 66 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 1 318 cnv 15 120 30 empty empty empty 20 12 0 14 -261682 -66577
+#X obj 34 328 cnv 15 120 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 8 129 pofhead;
-#X text 137 180 Inlet 2: width;
-#X floatatom 51 292 5 0 0 0 - - -;
-#X floatatom 95 294 5 0 0 0 - - -;
-#X text -15 56 pofrect : draw a rectangle.;
-#X msg 27 218 rounded \$1;
-#X floatatom 27 199 5 0 0 0 - - -;
-#X msg 19 172 res \$1;
-#X floatatom 19 153 5 0 0 0 - - -;
-#X text 137 192 Inlet 3: height \; if height=0 \, then height=width.
+#X obj 41 139 pofhead;
+#X text 170 190 Inlet 2: width;
+#X floatatom 84 302 5 0 0 0 - - -, f 5;
+#X floatatom 128 304 5 0 0 0 - - -, f 5;
+#X text 18 66 pofrect : draw a rectangle.;
+#X msg 60 228 rounded \$1;
+#X floatatom 60 209 5 0 0 0 - - -, f 5;
+#X msg 52 182 res \$1;
+#X floatatom 52 163 5 0 0 0 - - -, f 5;
+#X text 170 202 Inlet 3: height \; if height=0 \, then height=width.
 ;
-#X text 136 137 Inlet 1: res (resolution);
-#X text 189 150 rounded Radius;
-#X obj 8 324 pofrect 200 200;
-#X text 207 103 topRightR bottomRightR bottomLeftR resolution;
-#X text 2 77 Arguments : width height;
-#X text 14 90 Rounded : width height Radius;
-#X text 2 103 Rounded 4 : width height topLeftR;
-#X text 189 162 rounded topLeftR topRightR bottomRightR bottomLeftR
+#X text 169 147 Inlet 1: res (resolution);
+#X text 222 160 rounded Radius;
+#X obj 41 334 pofrect 200 200;
+#X text 240 113 topRightR bottomRightR bottomLeftR resolution;
+#X text 35 87 Arguments : width height;
+#X text 47 100 Rounded : width height Radius;
+#X text 35 113 Rounded 4 : width height topLeftR;
+#X text 222 172 rounded topLeftR topRightR bottomRightR bottomLeftR
 ;
-#X floatatom 30 242 5 0 0 0 - - -;
-#X msg 30 262 rounded 100 30 \$1 10;
-#X connect 7 0 19 0;
-#X connect 9 0 19 1;
-#X connect 10 0 19 2;
-#X connect 12 0 19 0;
+#X floatatom 63 252 5 0 0 0 - - -, f 5;
+#X msg 63 272 rounded 100 30 \$1 10;
+#X obj 223 15 declare -lib pof;
+#X text 11 12 Pof: Pd OpenFrameworks externals;
+#X connect 5 0 17 0;
+#X connect 7 0 17 1;
+#X connect 8 0 17 2;
+#X connect 10 0 17 0;
+#X connect 11 0 10 0;
+#X connect 12 0 17 0;
 #X connect 13 0 12 0;
-#X connect 14 0 19 0;
-#X connect 15 0 14 0;
-#X connect 25 0 26 0;
-#X connect 26 0 19 0;
+#X connect 23 0 24 0;
+#X connect 24 0 17 0;

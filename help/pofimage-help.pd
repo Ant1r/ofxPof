@@ -1,53 +1,50 @@
-#N canvas 521 219 609 745 10;
-#X declare -path .;
-#X declare -path ../buildExternal/bin;
-#X obj 187 15 pof_declare;
-#X obj -24 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+#N canvas 519 224 609 745 10;
+#X declare -lib pof;
+#X obj 5 4 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
-#X text -22 2 Pof : Pd OpenFrameworks externals;
-#X obj -24 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+#X obj 5 26 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
 0;
-#X text 5 24 (c) Antoine Rousseau 2014;
-#X obj -24 56 cnv 15 240 20 empty empty empty 20 12 0 14 -261682 -66577
+#X text 34 25 (c) Antoine Rousseau 2014;
+#X obj 5 57 cnv 15 240 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 3 526 cnv 15 180 30 empty empty empty 20 12 0 14 -261682 -66577
+#X obj 32 527 cnv 15 180 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 9 90 pofhead;
-#X text 265 124 Inlet 2: width;
-#X floatatom 89 503 5 0 0 0 - - -, f 5;
-#X floatatom 169 501 5 0 0 0 - - -, f 5;
-#X text 265 137 Inlet 3: height;
-#X text -18 56 pofimage : draw an image from a file.;
-#X obj 169 563 route size;
-#X floatatom 169 606 5 0 0 0 - - -, f 5;
-#X floatatom 226 607 5 0 0 0 - - -, f 5;
-#X obj 169 586 unpack f f;
-#X text 167 620 get image size;
-#X msg 27 126 set img/pd.png;
-#X text 183 97 Arguments : file [width [height]];
-#X text 265 110 Inlet 1: set IMAGE.FILE;
-#X msg 34 149 set img/of.png;
-#X msg 44 169 set logo/pOf.png;
-#X obj 10 535 pofimage logo/pOf.png 200 0;
-#X text 205 470 if width = 0 \, respect ratio (and use height).;
-#X text 205 482 if height = 0 \, respect ratio (and use width).;
-#X text 205 497 if height = 0 and width = 0 \, use file dimensions.
+#X obj 38 91 pofhead;
+#X text 294 125 Inlet 2: width;
+#X floatatom 118 504 5 0 0 0 - - -, f 5;
+#X floatatom 198 502 5 0 0 0 - - -, f 5;
+#X text 294 138 Inlet 3: height;
+#X text 11 57 pofimage : draw an image from a file.;
+#X obj 198 564 route size;
+#X floatatom 198 607 5 0 0 0 - - -, f 5;
+#X floatatom 255 608 5 0 0 0 - - -, f 5;
+#X obj 198 587 unpack f f;
+#X text 196 621 get image size;
+#X msg 56 127 set img/pd.png;
+#X text 212 98 Arguments : file [width [height]];
+#X text 294 111 Inlet 1: set IMAGE.FILE;
+#X msg 63 150 set img/of.png;
+#X msg 73 170 set logo/pOf.png;
+#X obj 39 536 pofimage logo/pOf.png 200 0;
+#X text 234 471 if width = 0 \, respect ratio (and use height).;
+#X text 234 483 if height = 0 \, respect ratio (and use width).;
+#X text 234 498 if height = 0 and width = 0 \, use file dimensions.
 ;
-#X msg 81 460 unreserve _all_;
-#X msg 54 191 set img/moon.jpg;
-#X msg 80 274 reserve img/moon.jpg;
-#X msg 81 295 reserve img/pd.png;
-#X msg 81 315 reserve img/of.png;
-#X msg 81 335 reserve logo/pOf.png;
-#X obj 300 583 pofimage;
-#X obj 345 605 route monitor;
-#X msg 351 552 setmonitor 1;
-#X obj 351 530 loadbang;
-#X floatatom 345 694 5 0 0 1 images_to_load_from_disk - -, f 5;
-#X floatatom 379 672 5 0 0 1 images_to_load_from_web - -, f 5;
-#X obj 300 530 pofhead;
-#X obj 345 629 unpack f f f;
-#X floatatom 414 651 5 0 0 1 images_loaded - -, f 5;
+#X msg 110 461 unreserve _all_;
+#X msg 83 192 set img/moon.jpg;
+#X msg 109 275 reserve img/moon.jpg;
+#X msg 110 296 reserve img/pd.png;
+#X msg 110 316 reserve img/of.png;
+#X msg 110 336 reserve logo/pOf.png;
+#X obj 329 584 pofimage;
+#X obj 374 606 route monitor;
+#X msg 380 553 setmonitor 1;
+#X obj 380 531 loadbang;
+#X floatatom 374 695 5 0 0 1 images_to_load_from_disk - -, f 5;
+#X floatatom 408 673 5 0 0 1 images_to_load_from_web - -, f 5;
+#X obj 329 531 pofhead;
+#X obj 374 630 unpack f f f;
+#X floatatom 443 652 5 0 0 1 images_loaded - -, f 5;
 #N canvas 118 576 442 212 ALIAS_prefixed_path 0;
 #X obj 34 61 pofutil;
 #X msg 34 40 setstring img_dir img/;
@@ -66,41 +63,43 @@
 #X connect 5 0 4 0;
 #X connect 6 0 2 0;
 #X connect 7 0 1 0;
-#X restore 15 669 pd ALIAS_prefixed_path;
-#X text 169 162 As a texture : file TEX : then image won't be drawn
+#X restore 44 670 pd ALIAS_prefixed_path;
+#X text 198 163 As a texture : file TEX : then image won't be drawn
 \, but instead will be selected for texturing following 3d shapes \;
 see;
-#X obj 211 193 pofplane;
-#X msg 63 217 set https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/PofPlayer.jpg
+#X obj 240 194 pofplane;
+#X msg 92 218 set https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/PofPlayer.jpg
 ;
-#X msg 81 355 reserve https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/PofPlayer.jpg
+#X msg 110 356 reserve https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/PofPlayer.jpg
 ;
-#X msg 81 406 unreserve https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/PofPlayer.jpg
+#X msg 110 407 unreserve https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/PofPlayer.jpg
 ;
-#X connect 7 0 23 0;
-#X connect 9 0 23 1;
-#X connect 10 0 23 2;
-#X connect 13 0 16 0;
-#X connect 16 0 14 0;
-#X connect 16 1 15 0;
-#X connect 18 0 23 0;
-#X connect 21 0 23 0;
-#X connect 22 0 23 0;
-#X connect 23 1 13 0;
-#X connect 27 0 23 0;
-#X connect 28 0 23 0;
-#X connect 29 0 23 0;
-#X connect 30 0 23 0;
-#X connect 31 0 23 0;
-#X connect 32 0 23 0;
-#X connect 33 1 34 0;
-#X connect 34 0 40 0;
-#X connect 35 0 33 0;
-#X connect 36 0 35 0;
-#X connect 39 0 33 0;
-#X connect 40 0 37 0;
-#X connect 40 1 38 0;
-#X connect 40 2 41 0;
-#X connect 45 0 23 0;
-#X connect 46 0 23 0;
-#X connect 47 0 23 0;
+#X text 7 3 Pof: Pd OpenFrameworks externals;
+#X obj 216 16 declare -lib pof;
+#X connect 5 0 21 0;
+#X connect 7 0 21 1;
+#X connect 8 0 21 2;
+#X connect 11 0 14 0;
+#X connect 14 0 12 0;
+#X connect 14 1 13 0;
+#X connect 16 0 21 0;
+#X connect 19 0 21 0;
+#X connect 20 0 21 0;
+#X connect 21 1 11 0;
+#X connect 25 0 21 0;
+#X connect 26 0 21 0;
+#X connect 27 0 21 0;
+#X connect 28 0 21 0;
+#X connect 29 0 21 0;
+#X connect 30 0 21 0;
+#X connect 31 1 32 0;
+#X connect 32 0 38 0;
+#X connect 33 0 31 0;
+#X connect 34 0 33 0;
+#X connect 37 0 31 0;
+#X connect 38 0 35 0;
+#X connect 38 1 36 0;
+#X connect 38 2 39 0;
+#X connect 43 0 21 0;
+#X connect 44 0 21 0;
+#X connect 45 0 21 0;

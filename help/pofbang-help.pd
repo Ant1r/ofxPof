@@ -1,37 +1,33 @@
-#N canvas 699 251 494 433 10;
+#N canvas 693 330 494 433 10;
 #X declare -lib pof;
-#X declare -path .;
-#X declare -path ../buildExternal/bin;
-#X obj 187 15 pof_declare;
-#X obj -24 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+#X obj 3 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
-#X text -22 2 Pof : Pd OpenFrameworks externals;
-#X obj -24 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+#X obj 3 25 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
 0;
-#X text 5 24 (c) Antoine Rousseau 2014;
-#X obj -23 56 cnv 15 250 20 empty empty empty 20 12 0 14 -261682 -66577
+#X text 32 24 (c) Antoine Rousseau 2014;
+#X obj 4 56 cnv 15 250 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj -1 195 cnv 15 120 30 empty empty empty 20 12 0 14 -261682 -66577
+#X obj 26 195 cnv 15 120 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 14 108 pofhead;
-#X obj 41 164 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 41 108 pofhead;
+#X obj 68 164 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X text 127 192 Argument : initial state.;
-#X text 127 205 Inlet 1 : set state : 1=enable 0=disable;
-#X obj 14 203 pofbang;
-#X obj 53 237 t b b;
-#X obj 53 261 timer;
-#X floatatom 125 283 5 0 0 0 - - -;
-#X obj 53 371 /;
-#X msg 53 348 1000 \$1;
-#X obj 170 154 pofwin;
-#X msg 170 131 framerate \$1;
-#X msg 139 94 10;
-#X msg 170 94 20;
-#X msg 203 94 25;
-#X msg 236 94 30;
-#X msg 268 94 50;
-#X msg 304 94 60;
+#X text 154 192 Argument : initial state.;
+#X text 154 205 Inlet 1 : set state : 1=enable 0=disable;
+#X obj 41 203 pofbang;
+#X obj 80 237 t b b;
+#X obj 80 261 timer;
+#X floatatom 152 283 5 0 0 0 - - -, f 5;
+#X obj 80 371 /;
+#X msg 80 348 1000 \$1;
+#X obj 197 154 pofwin;
+#X msg 197 131 framerate \$1;
+#X msg 166 94 10;
+#X msg 197 94 20;
+#X msg 230 94 25;
+#X msg 263 94 30;
+#X msg 295 94 50;
+#X msg 331 94 60;
 #N canvas 948 331 265 164 lowpass 0;
 #X obj 91 8 inlet;
 #X obj 91 85 outlet;
@@ -43,9 +39,9 @@
 #X connect 2 0 4 0;
 #X connect 3 0 2 0;
 #X connect 4 0 2 1;
-#X restore 53 286 pd lowpass;
-#X floatatom 63 321 5 0 0 1 frame_period - -;
-#X floatatom 53 392 5 0 0 1 framerate - -;
+#X restore 80 286 pd lowpass;
+#X floatatom 90 321 5 0 0 1 frame_period - -, f 5;
+#X floatatom 80 392 5 0 0 1 framerate - -, f 5;
 #N canvas 1281 551 450 300 minmax 0;
 #X obj 178 77 f;
 #X obj 225 76 max;
@@ -69,31 +65,33 @@
 #X connect 6 0 9 0;
 #X connect 9 0 0 0;
 #X connect 9 0 7 0;
-#X restore 237 304 pd minmax;
-#X floatatom 237 329 5 0 0 3 min - -;
-#X floatatom 288 330 5 0 0 3 max - -;
-#X obj 288 284 bng 15 250 50 0 empty empty reset 17 7 0 10 -262144
+#X restore 264 304 pd minmax;
+#X floatatom 264 329 5 0 0 3 min - -, f 5;
+#X floatatom 315 330 5 0 0 3 max - -, f 5;
+#X obj 315 284 bng 15 250 50 0 empty empty reset 17 7 0 10 -262144
 -1 -1;
-#X text -18 56 pofbang : listen to render events.;
-#X connect 7 0 11 0;
-#X connect 8 0 11 0;
-#X connect 11 1 12 0;
-#X connect 12 0 13 0;
-#X connect 12 1 13 1;
-#X connect 13 0 14 0;
+#X text 9 56 pofbang : listen to render events.;
+#X obj 217 5 declare -lib pof;
+#X text 5 2 Pof: Pd OpenFrameworks externals;
+#X connect 5 0 9 0;
+#X connect 6 0 9 0;
+#X connect 9 1 10 0;
+#X connect 10 0 11 0;
+#X connect 10 1 11 1;
+#X connect 11 0 12 0;
+#X connect 11 0 23 0;
+#X connect 11 0 26 0;
 #X connect 13 0 25 0;
-#X connect 13 0 28 0;
-#X connect 15 0 27 0;
+#X connect 14 0 13 0;
 #X connect 16 0 15 0;
-#X connect 18 0 17 0;
-#X connect 19 0 18 0;
-#X connect 20 0 18 0;
-#X connect 21 0 18 0;
-#X connect 22 0 18 0;
-#X connect 23 0 18 0;
-#X connect 24 0 18 0;
-#X connect 25 0 26 0;
-#X connect 25 0 16 0;
-#X connect 28 0 29 0;
-#X connect 28 1 30 0;
-#X connect 31 0 28 1;
+#X connect 17 0 16 0;
+#X connect 18 0 16 0;
+#X connect 19 0 16 0;
+#X connect 20 0 16 0;
+#X connect 21 0 16 0;
+#X connect 22 0 16 0;
+#X connect 23 0 24 0;
+#X connect 23 0 14 0;
+#X connect 26 0 27 0;
+#X connect 26 1 28 0;
+#X connect 29 0 26 1;
