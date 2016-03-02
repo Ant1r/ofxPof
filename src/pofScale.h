@@ -11,7 +11,7 @@ class pofScale;
 
 class pofScale: public pofBase {
 	public:
-		pofScale(t_class *Class, float x0=0, float y0=0):pofBase(Class),v(x0,y0) {  }
+		pofScale(t_class *Class, float x0=0, float y0=0, float z0=0):pofBase(Class),v(x0,y0,z0) {  }
 
 		virtual void draw();
 		virtual void postdraw(); // called after objects bellow have been drawn
@@ -19,7 +19,7 @@ class pofScale: public pofBase {
 		
 		static void setup(void);
 		
-		ofVec2f v, vReal;
+		ofVec3f v, vReal;
 };
 
 

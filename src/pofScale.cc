@@ -7,12 +7,35 @@
 
 t_class *pofScale_class;
 
-void *pofScale_new(t_floatarg x,t_floatarg y)
+void *pofScale_new(/*t_floatarg x,t_floatarg y, t_floatarg z*/t_symbol *s, int argc, t_atom *argv)
 {
-    pofScale* obj = new pofScale(pofScale_class, x, y);
+    pofScale* obj /*= new pofScale(pofScale_class, x, y, z)*/;
+    float f, x, y, z;
+    int n = 0;
+    
+    x = y = z = 1;
+    
+    while(argc) {
+		if(argv->a_type == A_FLOAT) {
+			n++;
+			f = atom_getfloat(argv);
+			switch(n) {
+				case 1 : x = f; break;
+				case 2 : y = f; break;
+				case 3 : z = f; break;
+			}
+		}	
+		else break;
+		argv++;
+		argc--;
+	}
+     
+    obj = new pofScale(pofScale_class, x, y, z);
     
     floatinlet_new(&obj->pdobj->x_obj, &obj->v.x);
     floatinlet_new(&obj->pdobj->x_obj, &obj->v.y);
+    if (n >= 3) floatinlet_new(&obj->pdobj->x_obj, &obj->v.z);
+    
     return (void*) (obj->pdobj);
 }
 
@@ -26,19 +49,19 @@ void pofScale::setup(void)
 {
 	//post("pofscale_setup");
 	pofScale_class = class_new(gensym("pofscale"), (t_newmethod)pofScale_new, (t_method)pofScale_free,
-		sizeof(PdObject), 0, A_DEFFLOAT, A_DEFFLOAT, A_NULL);
+		sizeof(PdObject), 0, A_GIMME/*A_DEFFLOAT, A_DEFFLOAT*/, A_NULL);
 	POF_SETUP(pofScale_class);
 }
 
 void pofScale::draw()
 {
 	vReal = v;
-	ofScale(vReal.x, vReal.y);
+	ofScale(vReal.x, vReal.y, vReal.z);
 }
 
 void pofScale::postdraw()
 {
-	ofScale(1.0/vReal.x,1.0/vReal.y);
+	ofScale(1.0/vReal.x, 1.0/vReal.y, 1.0/vReal.z);
 }
 
 bool pofScale::computeTouch(int &xx, int &yy)
