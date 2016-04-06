@@ -1,0 +1,74 @@
+#N canvas 832 77 604 745 10;
+#X declare -lib pof;
+#X obj 5 4 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X obj 5 26 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#X text 34 25 (c) Antoine Rousseau 2014;
+#X obj 5 57 cnv 15 240 20 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X text 11 57 pofimage : draw an image from a file.;
+#X obj 240 194 pofplane;
+#X text 7 3 Pof: Pd OpenFrameworks externals;
+#X obj 216 16 declare -lib pof;
+#X msg 86 377 load \$1;
+#X obj 127 264 openpanel;
+#X obj 68 266 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X msg 224 372 play \$1;
+#X obj 226 347 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X msg 134 240 symbol ~/Datas;
+#X obj 143 201 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X floatatom 119 118 5 0 0 0 - - -, f 5;
+#X msg 93 291 set symbol \$1;
+#X msg 95 317 symbol /home/arsene/Datas/bobine2-h264.mov;
+#X msg 98 348 symbol nimp;
+#X obj 441 80 pofwin;
+#X msg 441 54 normalizedtextcoords \$1;
+#X obj 441 32 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 38 153 pofrotate x;
+#X obj 39 426 poffilm tex;
+#X obj 60 640 pofquad 500 500;
+#X msg 135 572 corner 0 \$1 \$1;
+#X floatatom 132 549 5 0 0 0 - - -, f 5;
+#X msg 95 514 res \$1 \$1;
+#X msg 94 486 2;
+#X msg 177 486 40, f 4;
+#X msg 127 486 5;
+#X floatatom 232 544 5 0 0 0 - - -, f 5;
+#X msg 235 567 corner 1 \$1 -150;
+#X obj 38 91 pofhead;
+#X text 294 125 Inlet 2: width;
+#X text 294 138 Inlet 3: height;
+#X text 198 163 As a texture : file TEX : then image won't be drawn
+\, but instead will be selected for texturing following 3d shapes \;
+see;
+#X text 294 111 Inlet 1: load MOVIE.FILE;
+#X text 201 99 Arguments : none;
+#X connect 8 0 23 0;
+#X connect 9 0 16 0;
+#X connect 10 0 9 0;
+#X connect 11 0 23 0;
+#X connect 12 0 11 0;
+#X connect 13 0 9 0;
+#X connect 14 0 13 0;
+#X connect 15 0 22 1;
+#X connect 16 0 17 0;
+#X connect 17 0 8 0;
+#X connect 18 0 8 0;
+#X connect 20 0 19 0;
+#X connect 21 0 20 0;
+#X connect 22 0 23 0;
+#X connect 23 0 24 0;
+#X connect 25 0 24 0;
+#X connect 26 0 25 0;
+#X connect 27 0 24 0;
+#X connect 28 0 27 0;
+#X connect 29 0 27 0;
+#X connect 30 0 27 0;
+#X connect 31 0 32 0;
+#X connect 32 0 24 0;
+#X connect 33 0 22 0;
