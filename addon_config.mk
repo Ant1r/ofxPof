@@ -24,7 +24,7 @@ meta:
 common:
 	# dependencies with other addons, a list of them separated by spaces 
 	# or use += in several lines
-	ADDON_DEPENDENCIES = ofxAccelerometer ofxJSON ofxUnicode ofxZipPass
+	ADDON_DEPENDENCIES = ofxAccelerometer ofxJSON ofxZipPass
 
 	#ofxFontStash // was included into Pof because was hacked ; report here ofxUnicode dependency.
 	
