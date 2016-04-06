@@ -33,6 +33,7 @@
 #include "pofSphere.h"
 #include "pofPlane.h"
 #include "pofDepthTest.h"
+#include "pofFilm.h"
 
 #include "version.h"
 
@@ -530,6 +531,7 @@ void pofBase::setup() {
 	pofPlane::setup();
 	pofSphere::setup();
 	pofDepthTest::setup();
+	pofFilm::setup();
 		
 	queueClock = clock_new(0,(t_method)dequeueToPdtick);
 	clock_delay(queueClock,100);
