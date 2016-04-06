@@ -59,7 +59,7 @@ Carthage/Build
 *.cbTemp
 
 # Specific
-
+*~
 pof.zip
 
 buildExternal/bin/pof*
