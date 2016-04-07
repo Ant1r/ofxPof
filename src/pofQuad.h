@@ -12,7 +12,7 @@ class pofQuad;
 class pofQuad: public pofBase {
 	public:
 		pofQuad(t_class *Class):
-			pofBase(Class)
+			pofBase(Class), drawMesh(true), drawVertices(false), drawWireframe(false), drawFaces(false)
 		{ 
             corners[0].set(-200,-150);
             corners[1].set(200,-150);
@@ -26,5 +26,9 @@ class pofQuad: public pofBase {
 		
 		ofPoint corners[4];
 		int rows, columns;
+		bool drawMesh;
+		bool drawVertices;
+		bool drawWireframe;
+		bool drawFaces;
 };
 

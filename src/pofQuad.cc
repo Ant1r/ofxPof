@@ -3,6 +3,9 @@
  * BSD Simplified License, see the file "LICENSE.txt" in this distribution.
  * See https://github.com/Ant1r/ofxPof for documentation and updates.
  */
+
+// see: https://sites.google.com/site/ofauckland/examples/quad-warping
+
 #include "pofQuad.h"
 
 t_class *pofquad_class;
@@ -43,6 +46,34 @@ void pofquad_corner(void *x, float num, float X, float Y, float Z)
 	if((num>=0)&&(num<=3)) px->corners[int(num)].set(X,Y,Z);
 }
 
+void pofquad_drawMesh(void *x, float on)
+{
+	pofQuad* px = (pofQuad*)(((PdObject*)x)->parent);
+	
+	px->drawMesh = (on!=0);
+}
+
+void pofquad_drawVertices(void *x, float on)
+{
+	pofQuad* px = (pofQuad*)(((PdObject*)x)->parent);
+	
+	px->drawVertices = (on!=0);
+}
+
+void pofquad_drawWireframe(void *x, float on)
+{
+	pofQuad* px = (pofQuad*)(((PdObject*)x)->parent);
+	
+	px->drawWireframe = (on!=0);
+}
+
+void pofquad_drawFaces(void *x, float on)
+{
+	pofQuad* px = (pofQuad*)(((PdObject*)x)->parent);
+	
+	px->drawFaces = (on!=0);
+}
+
 void pofQuad::setup(void)
 {
 	//post("pofquad_setup");
@@ -50,6 +81,10 @@ void pofQuad::setup(void)
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
 	class_addmethod(pofquad_class, (t_method)pofquad_res, gensym("res"), A_FLOAT, A_FLOAT, A_NULL );
 	class_addmethod(pofquad_class, (t_method)pofquad_corner, gensym("corner"), A_FLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_NULL );
+	class_addmethod(pofquad_class, (t_method)pofquad_drawMesh, gensym("drawMesh"), A_FLOAT, A_NULL );
+	class_addmethod(pofquad_class, (t_method)pofquad_drawVertices, gensym("drawVertices"), A_FLOAT, A_NULL );
+	class_addmethod(pofquad_class, (t_method)pofquad_drawWireframe, gensym("drawWireframe"), A_FLOAT, A_NULL );
+	class_addmethod(pofquad_class, (t_method)pofquad_drawFaces, gensym("drawFaces"), A_FLOAT, A_NULL );
 
 	POF_SETUP(pofquad_class);
 }
@@ -63,16 +98,17 @@ int ofxIndex(float x, float y, float w) {
     return y*w+x;
 }
 
-void ofxQuadWarp(ofPoint lt, ofPoint rt, ofPoint rb, ofPoint lb, int rows, int cols) {
+void pofQuad::draw() {
     if(!pofBase::currentTexture) return;
     
-    float tw = 1;//pofBase::currentTexture->getWidth();
-    float th = 1;//pofBase::currentTexture->getHeight();
+    ofPoint lt=corners[0], rt=corners[1], rb=corners[2], lb=corners[3];
+    float tw = 1;
+    float th = 1;
     
     ofMesh mesh;
     
-    for (int x=0; x<=cols; x++) {
-        float f = float(x)/cols;
+    for (int x=0; x<=columns; x++) {
+        float f = float(x)/columns;
         ofPoint vTop(ofxLerp(lt,rt,f));
         ofPoint vBottom(ofxLerp(lb,rb,f));
         ofPoint tTop(ofxLerp(ofPoint(0,0),ofPoint(tw,0),f));
@@ -87,19 +123,16 @@ void ofxQuadWarp(ofPoint lt, ofPoint rt, ofPoint rb, ofPoint lb, int rows, int c
     }
     
     for (float y=0; y<rows; y++) {
-        for (float x=0; x<cols; x++) {
-            mesh.addTriangle(ofxIndex(x,y,cols+1), ofxIndex(x+1,y,cols+1), ofxIndex(x,y+1,cols+1));
-            mesh.addTriangle(ofxIndex(x+1,y,cols+1), ofxIndex(x+1,y+1,cols+1), ofxIndex(x,y+1,cols+1));
+        for (float x=0; x<columns; x++) {
+            mesh.addTriangle(ofxIndex(x,y,columns+1), ofxIndex(x+1,y,columns+1), ofxIndex(x,y+1,columns+1));
+            mesh.addTriangle(ofxIndex(x+1,y,columns+1), ofxIndex(x+1,y+1,columns+1), ofxIndex(x,y+1,columns+1));
         }
     }
     
-    mesh.draw();
-    //mesh.drawVertices();
-}
-
-void pofQuad::draw()
-{
-    ofxQuadWarp(corners[0], corners[1], corners[2], corners[3], rows, columns);
+    if (drawMesh) mesh.draw();
+    if (drawVertices) mesh.drawVertices();
+    if (drawWireframe) mesh.drawWireframe();
+    if (drawFaces) mesh.drawFaces();
 }
 
 
