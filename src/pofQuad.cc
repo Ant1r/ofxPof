@@ -99,7 +99,7 @@ int ofxIndex(float x, float y, float w) {
 }
 
 void pofQuad::draw() {
-    if(!pofBase::currentTexture) return;
+    //if(!pofBase::currentTexture) return;
     
     ofPoint lt=corners[0], rt=corners[1], rb=corners[2], lb=corners[3];
     float tw = 1;
