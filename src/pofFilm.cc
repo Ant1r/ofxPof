@@ -56,7 +56,13 @@ static void poffilm_play(void *x, t_float p)
 static void poffilm_goto(void *x, t_float p)
 {
     pofFilm* px = (pofFilm*)(((PdObject*)x)->parent);
-    
+    px->gotoFrame = p;  
+}
+
+static void poffilm_speed(void *x, t_float s)
+{
+    pofFilm* px = (pofFilm*)(((PdObject*)x)->parent);
+    px->speed = s;  
 }
 
 void pofFilm::setup(void)
@@ -67,6 +73,7 @@ void pofFilm::setup(void)
 	class_addmethod(poffilm_class, (t_method)poffilm_load, gensym("load"), A_SYMBOL, A_NULL);
 	class_addmethod(poffilm_class, (t_method)poffilm_play, gensym("play"), A_FLOAT, A_NULL);
 	class_addmethod(poffilm_class, (t_method)poffilm_goto, gensym("goto"), A_FLOAT, A_NULL);
+	class_addmethod(poffilm_class, (t_method)poffilm_speed, gensym("speed"), A_FLOAT, A_NULL);
 	POF_SETUP(poffilm_class);
 }
 
@@ -86,6 +93,16 @@ void pofFilm::draw()
 	}
 	
 	if(player->isLoaded()) {
+		if(gotoFrame>= 0) {
+		    player->setFrame(gotoFrame);
+		    gotoFrame = -1;
+		}
+		
+		if(speed > -1000) {
+		    player->setSpeed(speed);
+		    speed = -1000;
+		}
+		
 		if(playing != actualPlaying) {
 			actualPlaying = playing;
 			if(actualPlaying) player->play();
@@ -93,7 +110,10 @@ void pofFilm::draw()
 		}	
 		
 		player->update();
-		if(isTexture) player->bind();
+		if(isTexture) {
+		    player->bind();
+		    pofBase::currentTexture = &player->getTexture();
+		}
 		else player->draw(-width/2, -height/2, width, height);
 	} 
 }

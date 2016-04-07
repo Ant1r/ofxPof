@@ -1,4 +1,4 @@
-#N canvas 827 81 609 745 10;
+#N canvas 827 75 609 745 10;
 #X declare -lib pof;
 #X obj 5 4 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -7,106 +7,97 @@
 #X text 34 25 (c) Antoine Rousseau 2014;
 #X obj 5 57 cnv 15 240 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 16 534 cnv 15 180 30 empty empty empty 20 12 0 14 -261682 -66577
+#X obj 27 597 cnv 15 180 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 38 91 pofhead;
+#X obj 37 91 pofhead;
 #X text 294 125 Inlet 2: width;
-#X floatatom 118 504 5 0 0 0 - - -, f 5;
-#X floatatom 198 502 5 0 0 0 - - -, f 5;
 #X text 294 138 Inlet 3: height;
-#X text 11 57 pofimage : draw an image from a file.;
-#X text 212 98 Arguments : file [width [height]];
-#X text 234 471 if width = 0 \, respect ratio (and use height).;
-#X text 234 483 if height = 0 \, respect ratio (and use width).;
-#X text 234 498 if height = 0 and width = 0 \, use file dimensions.
-;
-#X text 198 163 As a texture : file TEX : then image won't be drawn
-\, but instead will be selected for texturing following 3d shapes \;
-see;
-#X obj 240 194 pofplane;
 #X text 7 3 Pof: Pd OpenFrameworks externals;
 #X obj 216 16 declare -lib pof;
 #X msg 98 395 load \$1;
 #X text 294 111 Inlet 1: load MOVIE.FILE;
-#X obj 127 264 openpanel;
-#X obj 68 266 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+#X obj 98 243 openpanel;
+#X obj 64 235 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X msg 257 307 play \$1;
-#X obj 259 282 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X msg 236 418 play \$1;
+#X obj 236 393 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X msg 134 240 symbol ~/Datas;
-#X obj 143 201 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X msg 98 219 symbol ~/Datas;
+#X obj 107 180 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X floatatom 162 452 5 0 0 0 - - -, f 5;
-#X msg 338 398 load \$1;
-#X obj 363 319 openpanel;
-#X obj 360 290 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
-#X msg 382 294 symbol ~/Datas;
-#X obj 391 255 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
-#X obj 52 492 t a a;
-#X obj 20 587 pofcolor 1 1 1 1;
-#X obj 170 619 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 7000 1;
-#X msg 420 415 play \$1;
-#X obj 422 390 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
-1;
-#X floatatom 326 529 5 0 0 0 - - -, f 5;
-#X floatatom 430 514 5 0 0 0 - - -, f 5;
-#X floatatom 409 591 5 0 0 0 - - -, f 5;
-#X msg 105 309 set symbol \$1;
-#X msg 107 335 symbol /home/arsene/Datas/bobine2-h264.mov;
-#X msg 331 344 set symbol \$1;
-#X msg 333 370 symbol /home/arsene/Datas/bobine2-h264.avi;
-#X obj 220 684 pofcolor 1 1 1 1;
-#X obj 385 646 pofcolor 1 1 1 1;
-#X obj 395 656 pofcolor 1 1 1 1;
-#X obj 127 668 pofcolor 1 1 1 1;
-#X obj 199 580 loadbang;
-#X msg 200 600 0.5;
+#X floatatom 124 435 5 0 0 0 - - -, f 5;
+#X msg 98 278 set symbol \$1;
+#X msg 98 304 symbol /home/arsene/Datas/bobine2-mjpeg.avi;
 #X msg 110 366 symbol nimp;
-#X obj 289 558 poffilm tex;
 #X obj 441 80 pofwin;
-#X msg 441 54 normalizedtextcoords \$1;
-#X obj 441 32 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 441 32 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 37 436 pofrotate x;
-#X obj 285 585 pofdepthtest;
-#X obj 35 645 poffilm tex;
-#X obj 60 716 pofplane 500 500;
-#X obj 328 609 pofsphere 150;
-#X connect 5 0 56 0;
-#X connect 19 0 58 0;
-#X connect 21 0 41 0;
-#X connect 22 0 21 0;
-#X connect 23 0 58 0;
-#X connect 24 0 23 0;
-#X connect 25 0 21 0;
-#X connect 26 0 25 0;
-#X connect 27 0 56 1;
-#X connect 28 0 52 0;
-#X connect 29 0 43 0;
-#X connect 30 0 29 0;
-#X connect 31 0 29 0;
-#X connect 32 0 31 0;
-#X connect 33 0 34 0;
-#X connect 33 1 52 0;
-#X connect 34 0 58 0;
-#X connect 35 0 34 4;
-#X connect 36 0 52 0;
+#X obj 240 194 pofimage;
+#X text 14 59 poffilm : video player.;
+#X text 212 98 Arguments : [width [height]];
+#X text 198 163 As a texture : [poffilm tex] image won't be drawn \,
+but instead will be selected for texturing following 3d shapes \; see
+;
+#X obj 297 193 pofplane;
+#X obj 37 602 poffilm 500 500;
+#X obj 405 13 loadbang;
+#X msg 441 54 normalizedtextcoords 0;
+#X msg 405 33 0;
+#X msg 236 501 speed \$1;
+#X msg 236 456 1;
+#X msg 379 476 goto \$1;
+#X floatatom 382 457 5 0 0 0 - - -, f 5;
+#X msg 293 368 symbol /home/arsene/Datas/bobine2-h264.mov;
+#X obj 241 550 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X floatatom 233 590 5 0 0 0 - - -, f 5;
+#X msg 293 588 2;
+#X msg 155 494 0;
+#X msg 201 454 0,5;
+#X msg 171 464 0,1;
+#X msg 307 456 2;
+#X msg 272 456 1,5;
+#X msg 334 455 3;
+#X msg 211 241 symbol /home/arsene/Documents/OF/of_v0.9.3_linux_release/examples/video/videoPlayerExample/bin/data/movies/fingers.mov
+;
+#X msg 292 344 symbol /home/arsene/Datas/bobine2.mov;
+#X msg 291 323 symbol /home/arsene/Datas/bobine2-mjpeg.avi;
+#X floatatom 103 563 5 0 0 0 - - -, f 5;
+#X floatatom 151 566 5 0 0 0 - - -, f 5;
+#X connect 5 0 24 0;
+#X connect 10 0 30 0;
+#X connect 12 0 19 0;
+#X connect 13 0 12 0;
+#X connect 14 0 30 0;
+#X connect 15 0 14 0;
+#X connect 16 0 12 0;
+#X connect 17 0 16 0;
+#X connect 18 0 24 1;
+#X connect 19 0 20 0;
+#X connect 20 0 10 0;
+#X connect 21 0 10 0;
+#X connect 23 0 32 0;
+#X connect 24 0 30 0;
+#X connect 31 0 33 0;
+#X connect 32 0 22 0;
+#X connect 33 0 23 0;
+#X connect 34 0 30 0;
+#X connect 35 0 34 0;
+#X connect 36 0 30 0;
 #X connect 37 0 36 0;
-#X connect 40 0 60 1;
-#X connect 41 0 42 0;
-#X connect 42 0 19 0;
-#X connect 43 0 44 0;
-#X connect 44 0 28 0;
-#X connect 49 0 50 0;
-#X connect 50 0 35 0;
-#X connect 51 0 19 0;
-#X connect 52 0 57 0;
-#X connect 54 0 53 0;
-#X connect 55 0 54 0;
-#X connect 56 0 33 0;
-#X connect 57 0 60 0;
-#X connect 58 0 59 0;
+#X connect 38 0 10 0;
+#X connect 39 0 34 0;
+#X connect 39 0 40 0;
+#X connect 41 0 34 0;
+#X connect 42 0 34 0;
+#X connect 43 0 34 0;
+#X connect 44 0 34 0;
+#X connect 45 0 34 0;
+#X connect 46 0 34 0;
+#X connect 47 0 34 0;
+#X connect 48 0 10 0;
+#X connect 49 0 10 0;
+#X connect 50 0 10 0;
+#X connect 51 0 30 1;
+#X connect 52 0 30 2;

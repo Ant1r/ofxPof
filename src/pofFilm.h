@@ -12,7 +12,9 @@ class pofFilm;
 class pofFilm: public pofBase {
 	public:
 		pofFilm(t_class *Class, float w, float h, float istext):
-			pofBase(Class), player(NULL), width(w), height(h), playing(0), actualPlaying(0), file(NULL), loadedFile(NULL),isTexture(istext!=0)
+			pofBase(Class), player(NULL), width(w), height(h), playing(0), actualPlaying(0), 
+			file(NULL), loadedFile(NULL),isTexture(istext!=0),
+			gotoFrame(-1), speed(1)
 		{ }
 
 		virtual void draw();
@@ -22,7 +24,9 @@ class pofFilm: public pofBase {
 		ofVideoPlayer *player;
 		float width, height, playing, actualPlaying;
 		t_symbol *file, *loadedFile;
-		bool isTexture;
+		bool isTexture;		
+		float gotoFrame;
+		float speed;
 };
 
 
