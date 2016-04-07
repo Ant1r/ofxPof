@@ -107,6 +107,8 @@ class pofBase {
 		static t_clock *queueClock;
 		static bool doRender;
 		
+		static ofTexture *currentTexture;
+		
 		static void pof_build(void *x, t_symbol *s, int argc, t_atom *argv);
 		
 		static void buildAll();

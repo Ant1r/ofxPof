@@ -34,6 +34,7 @@
 #include "pofPlane.h"
 #include "pofDepthTest.h"
 #include "pofFilm.h"
+#include "pofQuad.h"
 
 #include "version.h"
 
@@ -46,7 +47,7 @@ deque<t_binbuf*> pofBase::toPdQueue;
 deque<std::vector<Any> > pofBase::toPdQueueVec;
 t_clock *pofBase::queueClock;
 bool pofBase::doRender = true;
-
+ofTexture *pofBase::currentTexture = NULL;
 t_symbol *s_build;
 t_symbol *s_system;
 t_symbol *s_backpressed;
@@ -532,6 +533,7 @@ void pofBase::setup() {
 	pofSphere::setup();
 	pofDepthTest::setup();
 	pofFilm::setup();
+	pofQuad::setup();
 		
 	queueClock = clock_new(0,(t_method)dequeueToPdtick);
 	clock_delay(queueClock,100);

@@ -94,6 +94,7 @@ class pofIm{
                 im.update();
             }
 			im.bind();
+			pofBase::currentTexture = &im.getTexture();
 		}
 	}
 	
