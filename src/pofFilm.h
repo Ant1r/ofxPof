@@ -7,6 +7,10 @@
 
 #include "pofBase.h"
 
+#ifdef TARGET_LINUX_ARM
+#define RASPI
+#endif
+
 #ifdef RASPI
 #include "ofxOMXPlayer.h"
 #endif

@@ -129,6 +129,10 @@ void pofFilm::draw()
 		
 #else
     if(player->getIsOpen()) {
+		if(playing != actualPlaying) {
+			actualPlaying = playing;
+			player->setPaused(!playing);
+		}	
 #endif		
 		if(isTexture) {
 		    player->getTextureReference().bind();
