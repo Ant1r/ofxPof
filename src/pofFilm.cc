@@ -82,16 +82,33 @@ void pofFilm::draw()
 	float h = height;
 	if(h==0) h = width;
 
+#ifndef RASPI
 	if(!player) player = new ofVideoPlayer;
+#endif		
 	
 	if((file != NULL) && (file != loadedFile) ) {
 		loadedFile = file;
+#ifdef RASPI
+	    if(player) delete player;
+		player = new ofxOMXPlayer;
+		ofxOMXPlayerSettings settings;
+	    settings.videoPath = loadedFile->s_name;
+	    //settings.useHDMIForAudio = true;	//default true
+	    settings.enableTexture = true;		//default true
+	    settings.enableLooping = true;		//default true
+	    settings.enableAudio = false;		//default true, save resources by disabling
+        player->setup(settings);
 		//string *f = new string(loadedFile->s_name);
 		//player->load(*f);
 		
-		player->load(loadedFile->s_name);
+#else
+		player->loadMovie(loadedFile->s_name);
+#endif		
 	}
 	
+	if(!player) return;
+	
+#ifndef RASPI	
 	if(player->isLoaded()) {
 		if(gotoFrame>= 0) {
 		    player->setFrame(gotoFrame);
@@ -108,18 +125,21 @@ void pofFilm::draw()
 			if(actualPlaying) player->play();
 			else player->stop();
 		}	
-		
 		player->update();
+		
+#else
+    if(player->getIsOpen()) {
+#endif		
 		if(isTexture) {
-		    player->bind();
-		    pofBase::currentTexture = &player->getTexture();
+		    player->getTextureReference().bind();
+		    pofBase::currentTexture = &player->getTextureReference();
 		}
 		else player->draw(-width/2, -height/2, width, height);
-	} 
+	}
 }
 
 void pofFilm::postdraw()
 {
-	if(isTexture) player->unbind();
+	if(isTexture && (player!=NULL)) player->getTextureReference().unbind();
 }
 

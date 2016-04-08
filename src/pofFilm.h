@@ -7,6 +7,10 @@
 
 #include "pofBase.h"
 
+#ifdef RASPI
+#include "ofxOMXPlayer.h"
+#endif
+
 class pofFilm;
 
 class pofFilm: public pofBase {
@@ -21,7 +25,11 @@ class pofFilm: public pofBase {
 		virtual void postdraw();
 		static void setup(void);
 		
+#ifdef RASPI
+        ofxOMXPlayer *player;
+#else
 		ofVideoPlayer *player;
+#endif
 		float width, height, playing, actualPlaying;
 		t_symbol *file, *loadedFile;
 		bool isTexture;		
