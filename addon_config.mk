@@ -26,6 +26,12 @@ common:
 	# or use += in several lines
 	ADDON_DEPENDENCIES = ofxAccelerometer ofxJSON ofxZipPass
 
+#ifeq ($(LINUX_ARM),1)
+#WARNING : for RaspberryPI you have to manually uncomment the following line:
+    #ADDON_DEPENDENCIES += ofxOMXPlayer
+#endif
+
+
 	#ofxFontStash // was included into Pof because was hacked ; report here ofxUnicode dependency.
 	
 	# include search paths, this will be usually parsed from the file system
@@ -37,6 +43,7 @@ common:
 	# addon
 	ADDON_CFLAGS = -DHAVE_UNISTD_H -DPD
 	
+
 	# any special flag that should be passed to the linker when using this
 	# addon, also used for system libraries with -lname
 	# ADDON_LDFLAGS =
