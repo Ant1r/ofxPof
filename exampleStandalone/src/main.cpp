@@ -2,8 +2,11 @@
 #include "testApp.h"
 
 //========================================================================
-int main(){
+int main(int argc, char *argv[]){
 	ofSetupOpenGL(400, 400, OF_WINDOW);
 	ofSetFrameRate(50);
-	ofRunApp(new testApp());
+	
+	testApp *app = new testApp();
+	app->arguments = vector<string>(argv, argv + argc);
+	ofRunApp(app);
 }

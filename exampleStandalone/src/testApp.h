@@ -30,9 +30,8 @@ class testApp : public ofBaseApp{
 		void touchDown(ofTouchEventArgs &touch);
 		void touchMoved(ofTouchEventArgs &touch);
 		void touchUp(ofTouchEventArgs &touch);
-		//void touchDoubleTap(ofTouchEventArgs &touch);
 		void touchCancelled() {};
-
 		
 		ofxPd pd;
+		vector<string> arguments;
 };
