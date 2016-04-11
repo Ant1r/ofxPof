@@ -1,4 +1,4 @@
-#N canvas 660 132 510 666 10;
+#N canvas 574 84 561 707 10;
 #X declare -lib pof;
 #X obj 19 15 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -10,53 +10,84 @@
 #X text 28 69 pofwin : main window settings.;
 #X obj 21 522 cnv 15 80 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X msg 42 171 build;
-#X obj 27 529 pofwin;
-#X msg 57 268 framerate \$1;
+#X msg 66 195 build;
+#X obj 27 601 pofwin;
+#X msg 81 286 framerate \$1;
 #X msg 27 119 window \$1 600 0;
 #X obj 30 99 hsl 128 15 0 500 0 0 empty empty empty -2 -8 0 10 -262144
 -1 -1 0 1;
-#X msg 57 242 8;
-#X msg 87 243 25;
-#X msg 118 243 60;
-#X text 137 267 Set framerate.;
-#X text 126 118 Set window size.;
-#X obj 27 557 route window;
-#X obj 27 579 unpack f f;
-#X floatatom 27 604 5 0 0 0 - - -, f 5;
-#X floatatom 84 604 5 0 0 0 - - -, f 5;
-#X text 104 556 Get actual window size.;
-#X msg 82 408 background 0 0 0;
-#X msg 83 429 background 40 80 120;
-#X text 191 410 Set background color.;
-#X text 214 424 (R \, G \, B [0:255]);
-#X obj 79 489 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X text 100 487 bang : force send window size;
-#X text 82 154 Manually rebuild drawing tree (to be called when objects
+#X msg 81 260 8;
+#X msg 111 261 25;
+#X msg 142 261 60;
+#X text 161 285 Set framerate.;
+#X obj 27 629 route window;
+#X obj 27 651 unpack f f;
+#X floatatom 27 676 5 0 0 0 - - -, f 5;
+#X floatatom 84 676 5 0 0 0 - - -, f 5;
+#X text 104 628 Get actual window size.;
+#X msg 106 408 background 0 0 0;
+#X msg 107 429 background 40 80 120;
+#X text 215 410 Set background color.;
+#X text 238 424 (R \, G \, B [0:255]);
+#X obj 110 468 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X text 131 466 bang : force send window size;
+#X text 106 178 Manually rebuild drawing tree (to be called when objects
 have been connected or disconnected). Rebuild is done automatically
 when a pof object has been created or destroyed (but not when a pof
 object is connected/disconnected...).;
-#X msg 73 346 normalizedtextcoords \$1;
-#X obj 73 324 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X msg 97 362 normalizedtextcoords \$1;
+#X obj 97 340 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X text 95 316 Enable texture normalized (0-1) coordinates \, needed
+#X text 119 332 Enable texture normalized (0-1) coordinates \, needed
 to texture 3d objects.;
 #X obj 230 27 declare -lib pof;
 #X text 21 14 Pof: Pd OpenFrameworks externals;
+#X text 126 118 Set window size : window WIDHT HEIGHT [FULLSCREEN]
+;
+#X msg 112 525 pos \$1 100;
+#X obj 115 506 hsl 128 15 0 1500 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 1400 1;
+#N canvas 4 75 450 300 testfullscreen 0;
+#X obj 232 103 bng 15 250 50 0 empty empty empty 17 7 0 10 -260097
+-1 -1;
+#X obj 232 150 t b a;
+#X obj 232 174 del 2000;
+#X msg 232 130 window 400 400 1;
+#X obj 232 218 t a;
+#X msg 232 196 window 400 400 0;
+#X obj 232 246 outlet;
+#X connect 0 0 3 0;
+#X connect 1 0 2 0;
+#X connect 1 1 4 0;
+#X connect 2 0 5 0;
+#X connect 3 0 1 0;
+#X connect 4 0 6 0;
+#X connect 5 0 4 0;
+#X coords 0 -1 1 1 150 20 1 100 100;
+#X restore 35 142 pd testfullscreen;
+#X text 179 524 Set window position;
+#X msg 112 574 cursor \$1;
+#X obj 112 555 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
 #X connect 6 0 7 0;
-#X connect 7 0 16 0;
+#X connect 7 0 15 0;
 #X connect 8 0 7 0;
 #X connect 9 0 7 0;
 #X connect 10 0 9 0;
 #X connect 11 0 8 0;
 #X connect 12 0 8 0;
 #X connect 13 0 8 0;
+#X connect 15 0 16 0;
 #X connect 16 0 17 0;
-#X connect 17 0 18 0;
-#X connect 17 1 19 0;
+#X connect 16 1 18 0;
+#X connect 20 0 7 0;
 #X connect 21 0 7 0;
-#X connect 22 0 7 0;
-#X connect 25 0 7 0;
-#X connect 28 0 7 0;
-#X connect 29 0 28 0;
+#X connect 24 0 7 0;
+#X connect 27 0 7 0;
+#X connect 28 0 27 0;
+#X connect 33 0 7 0;
+#X connect 34 0 33 0;
+#X connect 35 0 7 0;
+#X connect 37 0 7 0;
+#X connect 38 0 37 0;

@@ -43,7 +43,25 @@ void pofwin_window(void *x, t_float width, t_float height, t_float fullscreen)
 	pofBase::lock();
 
 	ofSetWindowShape((int)width,(int)height);
+	ofSetFullscreen(fullscreen!=0);
+	ofSetWindowShape((int)width,(int)height);
 
+	pofBase::unlock();
+}
+
+void pofwin_pos(void *x, t_float X, t_float Y)
+{
+	x=NULL; /* don't warn about unused variables */
+	pofBase::lock();
+	ofSetWindowPosition((int)X,(int)Y);
+	pofBase::unlock();
+}
+
+void pofwin_cursor(void *x, t_float cursor)
+{
+	x=NULL; /* don't warn about unused variables */
+	pofBase::lock();
+	if(cursor!=0) ofShowCursor(); else ofHideCursor();
 	pofBase::unlock();
 }
 
@@ -94,7 +112,9 @@ void pofWin::setup(void)
 	class_addmethod(pofwin_class, (t_method)pofwin_window, s_window, A_FLOAT, A_FLOAT,A_DEFFLOAT,0);
 	class_addmethod(pofwin_class, (t_method)pofwin_out, s_out, A_GIMME, 0);
 	class_addmethod(pofwin_class, (t_method)pofwin_framerate, gensym("framerate"), A_FLOAT,0);
+	class_addmethod(pofwin_class, (t_method)pofwin_cursor, gensym("cursor"), A_FLOAT,0);
 	class_addmethod(pofwin_class, (t_method)pofwin_background, gensym("background"), A_FLOAT, A_FLOAT,A_FLOAT,0);
+	class_addmethod(pofwin_class, (t_method)pofwin_pos, gensym("pos"), A_FLOAT, A_FLOAT, 0);
 	class_addmethod(pofwin_class, (t_method)pofwin_normalizedtextcoords, gensym("normalizedtextcoords"), A_FLOAT,0);
 	class_addmethod(pofwin_class, (t_method)pofwin_build, gensym("build"), A_NULL);
 	class_addfloat(pofwin_class, pofwin_float);
