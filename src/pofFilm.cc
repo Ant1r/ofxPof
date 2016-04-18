@@ -77,17 +77,21 @@ void pofFilm::setup(void)
 	POF_SETUP(poffilm_class);
 }
 
+#include <locale.h>
+
 void pofFilm::draw()
 {
 	float h = height;
+	char* currentLocale = setlocale(LC_ALL, NULL); // pointer to store current locale
 	if(h==0) h = width;
 
 #ifndef RASPI
-	if(!player) player = new ofVideoPlayer;
+//	if(!player) player = new ofVideoPlayer;
 #endif		
 	
 	if((file != NULL) && (file != loadedFile) ) {
 		loadedFile = file;
+		actualPlaying = 0;
 #ifdef RASPI
 	    if(player) delete player;
 		player = new ofxOMXPlayer;
@@ -100,10 +104,15 @@ void pofFilm::draw()
         player->setup(settings);
 		//string *f = new string(loadedFile->s_name);
 		//player->load(*f);
-		
+		 
 #else
+	    if(player) delete player;
+	    player = new ofVideoPlayer;
 		player->loadMovie(loadedFile->s_name);
-#endif		
+#endif	
+        setlocale(LC_ALL, currentLocale); // WHY DO I HAVE TO DO THAT ??????????? OF changes the locale when loading a video...
+                                          // Without this fix, on a french computer pd starts stringing floating numbers with a comma,
+                                          // e.g. "0,5" which breaks the communication with TclTk GUI and other network connected programs.
 	}
 	
 	if(!player) return;
