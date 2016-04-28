@@ -307,7 +307,8 @@ void pofImage::Update()
 	
 	if(file && (file != displayedFile)) {
 		if(image) pofIm::letImage(image);
-		image = pofIm::getImage(file);
+		//image = pofIm::getImage(file);
+		image = pofIm::getImage(makefilename(file, pdcanvas));
 		displayedFile = file;
 	}
 
@@ -361,7 +362,7 @@ void pofImage::postdraw()
 
 void pofImage::set(t_symbol *f)
 {
-	file = makefilename(f, pdcanvas);
+	file = f ;//makefilename(f, pdcanvas);
 }
 
 void pofImage::reserve(t_symbol *f)
