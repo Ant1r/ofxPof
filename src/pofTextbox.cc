@@ -98,7 +98,7 @@ void pofTextbox::update()
 }
 
 #ifdef TARGET_ANDROID
-void pofTextbox::okPressed(bool &b)
+void pofTextbox::okPressed(/*bool &b*/)
 {
 	if(needSend) {
 		needSend = false;
@@ -108,11 +108,12 @@ void pofTextbox::okPressed(bool &b)
 		SETSYMBOL(&ap[0], s_out);
 		queueToSelfPd(1, ap);
 	}
+	//return true;
 }
 #endif
 
 #ifdef TARGET_ANDROID
-void pofTextbox::cancelPressed(bool &b)
+void pofTextbox::cancelPressed(/*bool &b*/)
 {
 	if(needSend) {
 		needSend = false;
@@ -122,5 +123,6 @@ void pofTextbox::cancelPressed(bool &b)
 		SETSYMBOL(&ap[0], s_out);
 		queueToSelfPd(1, ap);
 	}
+	//return true;
 }
 #endif

@@ -14,8 +14,8 @@ class pofTextbox: public pofBase {
 	public:
 		pofTextbox(t_class *Class): pofBase(Class), question(""), answer(""), needShow(false), needSend(false){
 #ifdef TARGET_ANDROID
-			ofAddListener(ofxAndroidEvents().okPressed,this,&pofTextbox::okPressed);
-			ofAddListener(ofxAndroidEvents().cancelPressed,this,&pofTextbox::cancelPressed);
+			ofAddListener(ofxAndroidEvents().okPressed,this,&pofTextbox::okPressed, OF_EVENT_ORDER_AFTER_APP);
+			ofAddListener(ofxAndroidEvents().cancelPressed,this,&pofTextbox::cancelPressed, OF_EVENT_ORDER_AFTER_APP);
 #endif
 		}
 		virtual ~pofTextbox() {
@@ -28,8 +28,8 @@ class pofTextbox: public pofBase {
 		virtual void update();
 		virtual bool hasUpdate(){ return true;}
 #ifdef TARGET_ANDROID
-		virtual void okPressed(bool &b);
-		virtual void cancelPressed(bool &b);
+		virtual void okPressed(/*bool &b*/);
+		virtual void cancelPressed(/*bool &b*/);
 #endif
 		static void setup(void);
 		
