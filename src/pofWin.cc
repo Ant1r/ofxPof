@@ -40,13 +40,14 @@ void pofwin_window(void *x, t_float width, t_float height, t_float fullscreen)
 	if(width<1) width = 1;
 	if(height<1) height = 1;
 	
+#ifndef TARGET_ANDROID
 	pofBase::lock();
 
 	ofSetWindowShape((int)width,(int)height);
 	ofSetFullscreen(fullscreen!=0);
 	ofSetWindowShape((int)width,(int)height);
-
 	pofBase::unlock();
+#endif
 }
 
 void pofwin_pos(void *x, t_float X, t_float Y)
