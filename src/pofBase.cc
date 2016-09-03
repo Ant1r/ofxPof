@@ -407,7 +407,8 @@ int pofBase::dequeueToPd()
 {
 	t_binbuf *bb;
 	
-	toPdMutex.lock();
+	if(!toPdMutex.try_lock()) return 0;
+	
 	if(toPdQueue.size()==0) {
 		toPdMutex.unlock();	
 		return 0;
@@ -428,15 +429,14 @@ int pofBase::dequeueToPd()
 int pofBase::dequeueToPdVec()
 {
 	
-	toPdMutex.lock();
+	std::vector<Any> vec;
+	//toPdMutex.lock();
+	if(!toPdMutex.try_lock()) return 0;
+
 	if(toPdQueueVec.size()==0) {
 		toPdMutex.unlock();	
 		return 0;
 	}
-
-	std::vector<Any> vec;
-	t_binbuf *bb = binbuf_new();
-	t_atom at;
 	
 	vec = toPdQueueVec.front();
 	toPdQueueVec.pop_front();
@@ -444,7 +444,10 @@ int pofBase::dequeueToPdVec()
 	
 	// vec to binbuf :
 	//Any *any;
+	t_binbuf *bb = binbuf_new();
+	t_atom at;
 	unsigned int i, l = vec.size(); 
+	
 	for (i=0 ; i<l ; i++) {
 		Any *any = &vec[i];
 		if(any->type() == typeid(string)) {
