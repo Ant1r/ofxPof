@@ -115,6 +115,11 @@
 		C9DCA51C1C05FEE000554E71 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9DCA5171C05FEE000554E71 /* AGL.framework */; };
 		C9DCA51D1C05FEE000554E71 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9DCA5181C05FEE000554E71 /* AppKit.framework */; };
 		C9DCA51E1C05FEE000554E71 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9DCA5191C05FEE000554E71 /* ApplicationServices.framework */; };
+		C9ED7F781D7AC70E000FC356 /* pofFilm.cc in Sources */ = {isa = PBXBuildFile; fileRef = C9ED7F761D7AC70E000FC356 /* pofFilm.cc */; };
+		C9ED7F791D7AC70E000FC356 /* pofFilm.h in Headers */ = {isa = PBXBuildFile; fileRef = C9ED7F771D7AC70E000FC356 /* pofFilm.h */; };
+		C9ED7F7C1D7AC730000FC356 /* pofQuad.cc in Sources */ = {isa = PBXBuildFile; fileRef = C9ED7F7A1D7AC730000FC356 /* pofQuad.cc */; };
+		C9ED7F7D1D7AC730000FC356 /* pofQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = C9ED7F7B1D7AC730000FC356 /* pofQuad.h */; };
+		C9ED7F7F1D7ACB1B000FC356 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9ED7F7E1D7ACB1B000FC356 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -247,6 +252,11 @@
 		C9DCA5171C05FEE000554E71 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = System/Library/Frameworks/AGL.framework; sourceTree = SDKROOT; };
 		C9DCA5181C05FEE000554E71 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		C9DCA5191C05FEE000554E71 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		C9ED7F761D7AC70E000FC356 /* pofFilm.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofFilm.cc; sourceTree = "<group>"; };
+		C9ED7F771D7AC70E000FC356 /* pofFilm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofFilm.h; sourceTree = "<group>"; };
+		C9ED7F7A1D7AC730000FC356 /* pofQuad.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofQuad.cc; sourceTree = "<group>"; };
+		C9ED7F7B1D7AC730000FC356 /* pofQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofQuad.h; sourceTree = "<group>"; };
+		C9ED7F7E1D7ACB1B000FC356 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +264,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9ED7F7F1D7ACB1B000FC356 /* AVFoundation.framework in Frameworks */,
 				C9DCA51B1C05FEE000554E71 /* Accelerate.framework in Frameworks */,
 				C9DCA51C1C05FEE000554E71 /* AGL.framework in Frameworks */,
 				C9DCA51D1C05FEE000554E71 /* AppKit.framework in Frameworks */,
@@ -572,12 +583,8 @@
 		C93BB6BF1B13153700FD662B /* src */ = {
 			isa = PBXGroup;
 			children = (
-				C9DCA50F1C05F13E00554E71 /* pofSphere.cc */,
-				C9DCA5101C05F13E00554E71 /* pofSphere.h */,
-				C9DCA50B1C05F12C00554E71 /* pofPlane.cc */,
-				C9DCA50C1C05F12C00554E71 /* pofPlane.h */,
-				C9DCA5071C05F11700554E71 /* pofDepthTest.cc */,
-				C9DCA5081C05F11700554E71 /* pofDepthTest.h */,
+				C9ED7F761D7AC70E000FC356 /* pofFilm.cc */,
+				C9ED7F771D7AC70E000FC356 /* pofFilm.h */,
 				C93BB6C01B13153700FD662B /* m_pd.h */,
 				C93BB6C11B13153700FD662B /* pofAccel.cc */,
 				C93BB6C21B13153700FD662B /* pofAccel.h */,
@@ -589,6 +596,8 @@
 				C93BB6C81B13153700FD662B /* pofCirc.h */,
 				C93BB6C91B13153700FD662B /* pofColor.cc */,
 				C93BB6CA1B13153700FD662B /* pofColor.h */,
+				C9DCA5071C05F11700554E71 /* pofDepthTest.cc */,
+				C9DCA5081C05F11700554E71 /* pofDepthTest.h */,
 				C93BB6CB1B13153700FD662B /* pofFbo.cc */,
 				C93BB6CC1B13153700FD662B /* pofFbo.h */,
 				C93BB6CD1B13153700FD662B /* pofFont.cc */,
@@ -602,7 +611,11 @@
 				C93BB6D51B13153700FD662B /* pofImage.cc */,
 				C93BB6D61B13153700FD662B /* pofImage.h */,
 				C93BB6D71B13153700FD662B /* pofJSON.cc */,
+				C9ED7F7A1D7AC730000FC356 /* pofQuad.cc */,
+				C9ED7F7B1D7AC730000FC356 /* pofQuad.h */,
 				C93BB6D81B13153700FD662B /* pofJSON.h */,
+				C9DCA50B1C05F12C00554E71 /* pofPlane.cc */,
+				C9DCA50C1C05F12C00554E71 /* pofPlane.h */,
 				C93BB6D91B13153700FD662B /* pofRect.cc */,
 				C93BB6DA1B13153700FD662B /* pofRect.h */,
 				C93BB6DB1B13153700FD662B /* pofResetMatrix.cc */,
@@ -613,6 +626,8 @@
 				C93BB6E01B13153700FD662B /* pofScale.h */,
 				C93BB6E11B13153700FD662B /* pofScope.cc */,
 				C93BB6E21B13153700FD662B /* pofScope.h */,
+				C9DCA50F1C05F13E00554E71 /* pofSphere.cc */,
+				C9DCA5101C05F13E00554E71 /* pofSphere.h */,
 				C93BB6E31B13153700FD662B /* pofText.cc */,
 				C93BB6E41B13153700FD662B /* pofText.h */,
 				C93BB6E51B13153700FD662B /* pofTextbox.cc */,
@@ -651,6 +666,7 @@
 		C95F51191B0F8AAE00C8B17A = {
 			isa = PBXGroup;
 			children = (
+				C9ED7F7E1D7ACB1B000FC356 /* AVFoundation.framework */,
 				C9DCA5161C05FEE000554E71 /* Accelerate.framework */,
 				C9DCA5171C05FEE000554E71 /* AGL.framework */,
 				C9DCA5181C05FEE000554E71 /* AppKit.framework */,
@@ -689,6 +705,7 @@
 				C93BB6651B10BB1300FD662B /* ofUnicode.h in Headers */,
 				C93BB6751B10BB3B00FD662B /* json.h in Headers */,
 				C93BB62D1B10BAF400FD662B /* crypt.h in Headers */,
+				C9ED7F7D1D7AC730000FC356 /* pofQuad.h in Headers */,
 				C93BB63F1B10BAF400FD662B /* ofxZipPass.h in Headers */,
 				C93BB6771B10BB3B00FD662B /* ofxJSON.h in Headers */,
 				C9DCA50A1C05F11700554E71 /* pofDepthTest.h in Headers */,
@@ -707,6 +724,7 @@
 				C93BB7261B13153800FD662B /* pofTranslate.h in Headers */,
 				C93BB70E1B13153700FD662B /* pofImage.h in Headers */,
 				C93BB6611B10BB1300FD662B /* utf8.h in Headers */,
+				C9ED7F791D7AC70E000FC356 /* pofFilm.h in Headers */,
 				C93BB6631B10BB1300FD662B /* ofTextConverter.h in Headers */,
 				C93BB7281B13153800FD662B /* pofUtil.h in Headers */,
 				C93BB7081B13153700FD662B /* pofFonts.h in Headers */,
@@ -830,6 +848,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C93BB62E1B10BAF400FD662B /* ioapi.c in Sources */,
+				C9ED7F781D7AC70E000FC356 /* pofFilm.cc in Sources */,
 				C95F512D1B105CF700C8B17A /* ofApp.cpp in Sources */,
 				C93BB6641B10BB1300FD662B /* ofUnicode.cpp in Sources */,
 				C93BB7231B13153800FD662B /* pofTouchable.cc in Sources */,
@@ -842,6 +861,7 @@
 				C93BB7251B13153800FD662B /* pofTranslate.cc in Sources */,
 				C93BB7031B13153700FD662B /* pofFbo.cc in Sources */,
 				C93BB5D21B10BAA700FD662B /* fontstash.c in Sources */,
+				C9ED7F7C1D7AC730000FC356 /* pofQuad.cc in Sources */,
 				C93BB71F1B13153700FD662B /* pofTexts.cc in Sources */,
 				C93BB5871B10BA7200FD662B /* ofxAccelerometer.cpp in Sources */,
 				C93BB7111B13153700FD662B /* pofRect.cc in Sources */,
