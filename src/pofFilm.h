@@ -39,6 +39,8 @@ class pofFilm: public pofBase {
 		bool isTexture;		
 		float gotoFrame;
 		float speed;
+		t_canvas *pdcanvas;
+
 };
 
 

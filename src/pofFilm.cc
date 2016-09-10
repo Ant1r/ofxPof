@@ -26,7 +26,9 @@ void *poffilm_new(t_symbol *s, int argc, t_atom *argv)
         floatinlet_new(&obj->pdobj->x_obj, &obj->width);
         floatinlet_new(&obj->pdobj->x_obj, &obj->height);
     }
-    
+
+    obj->pdcanvas = canvas_getcurrent();
+
     return (void*) (obj->pdobj);
 }
 
@@ -82,7 +84,7 @@ void pofFilm::setup(void)
 void pofFilm::draw()
 {
 	float h = height;
-	char* currentLocale = setlocale(LC_ALL, NULL); // pointer to store current locale
+	//char* currentLocale = setlocale(LC_ALL, NULL); // pointer to store current locale
 	if(h==0) h = width;
 
 #ifndef RASPI
@@ -96,7 +98,7 @@ void pofFilm::draw()
 	    if(player) delete player;
 		player = new ofxOMXPlayer;
 		ofxOMXPlayerSettings settings;
-	    settings.videoPath = loadedFile->s_name;
+	    settings.videoPath = makefilename(loadedFile, pdcanvas)->s_name;//loadedFile->s_name;
 	    //settings.useHDMIForAudio = true;	//default true
 	    settings.enableTexture = true;		//default true
 	    settings.enableLooping = true;		//default true
@@ -108,9 +110,9 @@ void pofFilm::draw()
 #else
 	    if(player) delete player;
 	    player = new ofVideoPlayer;
-		player->loadMovie(loadedFile->s_name);
+		player->loadMovie(makefilename(loadedFile, pdcanvas)->s_name/*loadedFile->s_name*/);
 #endif	
-        setlocale(LC_ALL, currentLocale); // WHY DO I HAVE TO DO THAT ??????????? OF changes the locale when loading a video...
+        setlocale(LC_ALL, "C"); // WHY DO I HAVE TO DO THAT ??????????? OF changes the locale when loading a video...
                                           // Without this fix, on a french computer pd starts stringing floating numbers with a comma,
                                           // e.g. "0,5" which breaks the communication with TclTk GUI and other network connected programs.
 	}
@@ -122,17 +124,20 @@ void pofFilm::draw()
 		if(gotoFrame>= 0) {
 		    player->setFrame(gotoFrame);
 		    gotoFrame = -1;
+		    //setlocale(LC_ALL, currentLocale);
 		}
 		
 		if(speed > -1000) {
 		    player->setSpeed(speed);
 		    speed = -1000;
+		    //setlocale(LC_ALL, currentLocale);
 		}
 		
 		if(playing != actualPlaying) {
 			actualPlaying = playing;
 			if(actualPlaying) player->play();
 			else player->stop();
+			//setlocale(LC_ALL, currentLocale);
 		}	
 		player->update();
 		
@@ -149,6 +154,7 @@ void pofFilm::draw()
 		}
 		else player->draw(-width/2, -height/2, width, height);
 	}
+	//setlocale(LC_ALL, "C");
 }
 
 void pofFilm::postdraw()
