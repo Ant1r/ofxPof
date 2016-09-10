@@ -4,10 +4,12 @@ rm -rf pof/
 mkdir pof/
 echo copying help patches...
 cp -a ../help/* pof/
-#if [ -n "`uname -a | grep x86_64`" ]
-#	then cp bin/pof.pd_linux pof/pof.l_ia64
-#	else cp bin/pof.pd_linux pof/pof.l_i386
-#fi
+
+echo copying example patches...
+mkdir pof/example/
+cp -a ../example/pd/* pof/example/
+
+
 echo copying pof external...
 cp bin/pof.* pof/
 
