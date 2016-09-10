@@ -25,7 +25,7 @@ PROJECT_CFLAGS = -fPIC
 PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs
 endif
 
-PLATFORM_RUN_COMMAND = pd -path bin/ -open ../example/pd/pof_main.pd
+PLATFORM_RUN_COMMAND = pd -path bin/ -lib pof -helppath ../help -open ../example/pd/pof_main.pd
 
 ################################################################################
 # OF ROOT
