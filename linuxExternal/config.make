@@ -19,8 +19,8 @@ ifeq ($(PLATFORM_OS),Linux)
 		APPNAME = pof.l_i386
 	endif	
 	PROJECT_CFLAGS = -fPIC
-	# PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs
-	PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs:'$ORIGIN/libs'
+	PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs
+	#PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath="./libs:'$ORIGIN/libs'"
 endif
 
 PLATFORM_RUN_COMMAND = pd -path bin/ -lib pof -helppath ../help -open ../example/pd/pof_main.pd

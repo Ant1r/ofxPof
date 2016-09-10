@@ -13,16 +13,19 @@ cp -a ../example/pd/* pof/example/
 echo copying pof external...
 cp bin/pof.* pof/
 
+patchelf --set-rpath '$ORIGIN/libs' pof/pof.*
+
 mkdir pof/libs
 echo copying libs...
 cp -a bin/libs/* pof/libs
 
-LIBS_TO_COPY="freeimage boost_filesystem boost_system openal gstreamer gstbase gstapp gstvideo sndfile"
+LIBS_TO_COPY="freeimage boost_filesystem boost_system openal gstreamer gstbase gstapp gstvideo sndfile GLEW openjpeg IlmImf  IlmThread Half Iex raw"
 
 for libtocopy in $LIBS_TO_COPY ; do 
 	libfile=`ldd bin/pof.* | grep lib${libtocopy} | cut -d' ' -f 3`
 	echo "$libtocopy : copying $libfile in libs"
 	cp $libfile pof/libs
+	patchelf --set-rpath '$ORIGIN' pof/libs/`basename $libfile`
 	done
 
 	
