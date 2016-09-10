@@ -1,4 +1,4 @@
-#N canvas 827 75 609 745 10;
+#N canvas 591 127 627 517 10;
 #X declare -lib pof;
 #X obj 5 4 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -7,97 +7,74 @@
 #X text 34 25 (c) Antoine Rousseau 2014;
 #X obj 5 57 cnv 15 240 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 27 597 cnv 15 180 30 empty empty empty 20 12 0 14 -261682 -66577
+#X obj 27 465 cnv 15 180 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
 #X obj 37 91 pofhead;
 #X text 294 125 Inlet 2: width;
 #X text 294 138 Inlet 3: height;
 #X text 7 3 Pof: Pd OpenFrameworks externals;
 #X obj 216 16 declare -lib pof;
-#X msg 98 395 load \$1;
+#X msg 72 248 load \$1;
 #X text 294 111 Inlet 1: load MOVIE.FILE;
-#X obj 98 243 openpanel;
-#X obj 64 235 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X msg 236 418 play \$1;
-#X obj 236 393 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X msg 97 321 play \$1;
+#X obj 97 296 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X msg 98 219 symbol ~/Datas;
-#X obj 107 180 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
-#X floatatom 124 435 5 0 0 0 - - -, f 5;
-#X msg 98 278 set symbol \$1;
-#X msg 98 304 symbol /home/arsene/Datas/bobine2-mjpeg.avi;
-#X msg 110 366 symbol nimp;
+#X floatatom 124 114 5 0 0 0 - - -, f 5;
 #X obj 441 80 pofwin;
 #X obj 441 32 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 37 436 pofrotate x;
+#X obj 37 115 pofrotate x;
 #X obj 240 194 pofimage;
 #X text 14 59 poffilm : video player.;
 #X text 212 98 Arguments : [width [height]];
 #X text 198 163 As a texture : [poffilm tex] image won't be drawn \,
 but instead will be selected for texturing following 3d shapes \; see
 ;
-#X obj 297 193 pofplane;
-#X obj 37 602 poffilm 500 500;
+#X obj 297 194 pofplane;
+#X obj 37 470 poffilm 500 500;
 #X obj 405 13 loadbang;
 #X msg 441 54 normalizedtextcoords 0;
 #X msg 405 33 0;
-#X msg 236 501 speed \$1;
-#X msg 236 456 1;
-#X msg 379 476 goto \$1;
-#X floatatom 382 457 5 0 0 0 - - -, f 5;
-#X msg 293 368 symbol /home/arsene/Datas/bobine2-h264.mov;
-#X obj 241 550 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+#X msg 205 347 speed \$1;
+#X msg 288 264 1;
+#X msg 435 322 goto \$1;
+#X floatatom 435 301 5 0 0 0 - - -, f 5;
+#X obj 257 322 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
 -1 -1 0 1;
-#X floatatom 233 590 5 0 0 0 - - -, f 5;
-#X msg 293 588 2;
-#X msg 155 494 0;
-#X msg 201 454 0,5;
-#X msg 171 464 0,1;
-#X msg 307 456 2;
-#X msg 272 456 1,5;
-#X msg 334 455 3;
-#X msg 211 241 symbol /home/arsene/Documents/OF/of_v0.9.3_linux_release/examples/video/videoPlayerExample/bin/data/movies/fingers.mov
-;
-#X msg 292 344 symbol /home/arsene/Datas/bobine2.mov;
-#X msg 291 323 symbol /home/arsene/Datas/bobine2-mjpeg.avi;
-#X floatatom 103 563 5 0 0 0 - - -, f 5;
-#X floatatom 151 566 5 0 0 0 - - -, f 5;
-#X connect 5 0 24 0;
-#X connect 10 0 30 0;
-#X connect 12 0 19 0;
+#X msg 345 264 2;
+#X msg 375 264 3;
+#X floatatom 103 431 5 0 0 0 - - -, f 5;
+#X floatatom 151 434 5 0 0 0 - - -, f 5;
+#X msg 72 227 symbol img/fingers.mov;
+#X msg 227 266 0.5;
+#X msg 193 266 0.25;
+#X msg 257 264 0;
+#X msg 152 266 0.125;
+#X msg 317 264 1.5;
+#X floatatom 205 325 5 0 0 0 - - -, f 5;
+#X connect 5 0 17 0;
+#X connect 10 0 23 0;
+#X connect 12 0 23 0;
 #X connect 13 0 12 0;
-#X connect 14 0 30 0;
-#X connect 15 0 14 0;
-#X connect 16 0 12 0;
-#X connect 17 0 16 0;
-#X connect 18 0 24 1;
-#X connect 19 0 20 0;
-#X connect 20 0 10 0;
-#X connect 21 0 10 0;
-#X connect 23 0 32 0;
-#X connect 24 0 30 0;
-#X connect 31 0 33 0;
-#X connect 32 0 22 0;
-#X connect 33 0 23 0;
-#X connect 34 0 30 0;
-#X connect 35 0 34 0;
-#X connect 36 0 30 0;
-#X connect 37 0 36 0;
-#X connect 38 0 10 0;
-#X connect 39 0 34 0;
-#X connect 39 0 40 0;
-#X connect 41 0 34 0;
-#X connect 42 0 34 0;
-#X connect 43 0 34 0;
-#X connect 44 0 34 0;
-#X connect 45 0 34 0;
-#X connect 46 0 34 0;
-#X connect 47 0 34 0;
-#X connect 48 0 10 0;
-#X connect 49 0 10 0;
-#X connect 50 0 10 0;
-#X connect 51 0 30 1;
-#X connect 52 0 30 2;
+#X connect 14 0 17 1;
+#X connect 16 0 25 0;
+#X connect 17 0 23 0;
+#X connect 24 0 26 0;
+#X connect 25 0 15 0;
+#X connect 26 0 16 0;
+#X connect 27 0 23 0;
+#X connect 28 0 42 0;
+#X connect 29 0 23 0;
+#X connect 30 0 29 0;
+#X connect 31 0 42 0;
+#X connect 32 0 42 0;
+#X connect 33 0 42 0;
+#X connect 34 0 23 1;
+#X connect 35 0 23 2;
+#X connect 36 0 10 0;
+#X connect 37 0 42 0;
+#X connect 38 0 42 0;
+#X connect 39 0 42 0;
+#X connect 40 0 42 0;
+#X connect 41 0 42 0;
+#X connect 42 0 27 0;
