@@ -52,7 +52,7 @@ Pof can be used in two ways :
 
 ### patch edition :
 
-Pof can be used with Pd just like any other external ; for this purpose it has to be compiled separately (see **buildExternal**(linux, 32bit only at the moment) and **OSXexternal** folders), and can be distributed as a dynamically linked library :
+Pof can be used with Pd just like any other external ; for this purpose it has to be compiled separately (see **linuxExternal**(linux, 32bit only at the moment) and **OSXexternal** folders), and can be distributed as a dynamically linked library :
 
 *	for Linux 32bit : pof.pd_linux
 *	for Mac : pof.pd_darwin 
@@ -112,7 +112,7 @@ openframeworks/addons/ofxPof
 Building as a Pd external
 -------------------------
 
-This project is located in the `buildExternal` folder.
+This project is located in the `linuxExternal` folder.
 
 ### Linux
 
@@ -124,7 +124,7 @@ make run
 ```
 (which opens `ofxPof/example/pf_main.pd`)
 
-The final external file is : `ofxPof/buildExternal/bin/pof_pd_linux`.
+The final external file is : `ofxPof/linuxExternal/bin/pof_pd_linux`.
 
 ### OSX
 

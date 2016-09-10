@@ -62,9 +62,9 @@ Carthage/Build
 *~
 pof.zip
 
-buildExternal/bin/pof*
-buildExternal/obj
-buildExternal/pof*
+linuxExternal/bin/pof*
+linuxExternal/obj
+linuxExternal/pof*
 OSXexternal/pof*
 
 exampleStandalone/bin/exampleStandalone
