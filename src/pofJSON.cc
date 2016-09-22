@@ -14,8 +14,9 @@ class JSONLoader: public ofThread {
 	public :
     t_symbol *file, *fullfile;
     pofJSON* pjson;
+    bool valid;
     
-	JSONLoader(t_symbol *f, t_symbol *ff, pofJSON* pj) : file(f), fullfile(ff), pjson(pj) {}
+	JSONLoader(t_symbol *f, t_symbol *ff, pofJSON* pj) : file(f), fullfile(ff), pjson(pj), valid(true) {}
 	void threadedFunction(){
 		t_atom at[3];
 		
@@ -25,8 +26,8 @@ class JSONLoader: public ofThread {
 		if(fullfile && pjson->sjson->load(fullfile)) SETSYMBOL(&at[1], s_loaded);
 		else SETSYMBOL(&at[1], s_errload);
 	
-		pjson->queueToSelfPd(3, at);
-		pjson->loader = NULL;
+		if(valid) pjson->queueToSelfPd(3, at);
+		//pjson->loader = NULL; //LEAK !
     }
 };
 
@@ -61,12 +62,25 @@ void pofjson_load(void *x, t_symbol *file)
 {
 	pofJSON* px= (pofJSON*)(((PdObject*)x)->parent);
 	t_symbol* filename = makefilename(file,px->pdcanvas);
-	
+    t_atom at;
+    	
 	if(px->loader) {
-		px->loader->waitForThread(true);
+		//px->loader->waitForThread(true);
+		if(px->loader->isThreadRunning()) {
+		    //px->loader->valid = false;
+		    SETSYMBOL(&at, file);
+		    outlet_anything(px->m_out1, gensym("error_running"), 0, NULL);
+		    return;
+		}
 		delete px->loader;
 	}
 	(px->loader = new JSONLoader(file, filename, px))->startThread();
+}
+
+void pofjson_cancel(void *x) // abort current loading 
+{
+	pofJSON* px= (pofJSON*)(((PdObject*)x)->parent);
+    if(px->loader) px->loader->valid = false;
 }
 
 void pofjson_getsize(void *x, t_symbol *s, int argc, t_atom *argv)
@@ -113,6 +127,7 @@ void pofJSON::setup(void)
 		sizeof(PdObject), 0, A_SYMBOL, A_NULL);
 	class_addmethod(pofjson_class, (t_method)pofjson_out, s_out, A_GIMME, 0);
 	class_addmethod(pofjson_class, (t_method)pofjson_load, gensym("load"), A_SYMBOL, A_NULL);
+	class_addmethod(pofjson_class, (t_method)pofjson_cancel, gensym("cancel"), A_NULL);
 	class_addmethod(pofjson_class, (t_method)pofjson_getf, gensym("getf"), A_GIMME, A_NULL);
 	class_addmethod(pofjson_class, (t_method)pofjson_gets, gensym("gets"), A_GIMME, A_NULL);
 	class_addmethod(pofjson_class, (t_method)pofjson_getsize, gensym("getsize"), A_GIMME, A_NULL);
