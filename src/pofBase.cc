@@ -156,7 +156,7 @@ void pofBase::reset_tree()
 void pofBase::tree_build(pofBase *parent)
 {
 	if(isBuilt) {
-		post("pof error : double connection discarded.");
+		pd_error(&(pdobj->x_obj),"pof error: duplicate connection discarded.");
 		return;
 	}
 	
@@ -171,12 +171,6 @@ void pofBase::tree_build(pofBase *parent)
 
 bool pofBase::touchtree_build(pofBase *parent)
 {
-	/*if(touchIsBuilt) {
-		//post("pof error : double connection discarded."); // already signaled
-		return;
-	}
-	touchIsBuilt = true;*/
-	
 	std::list<pofBase*>::iterator it = children.begin();
 	pofBase *newparent = parent;
 	bool touchable = isTouchable();
