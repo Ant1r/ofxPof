@@ -40,9 +40,9 @@ class pofIm{
 
 	public:
 	ofImage im;
-	bool loaded, preloaded;
+	bool loaded, preloaded, needUpdate;
 	
-	pofIm(t_symbol *f):file(f),refCount(1), loaded(false), preloaded(false){
+	pofIm(t_symbol *f):file(f),refCount(1), loaded(false), preloaded(false), needUpdate(false) {
 		images[file] = this;
 		im.setAnchorPercent(0.5,0.5);
 		im.setUseTexture(false);
@@ -78,7 +78,11 @@ class pofIm{
 			if(!im.isUsingTexture())
 			{
                 im.setUseTexture(true);
-                im.update();
+                needUpdate = true;
+            }
+            if(needUpdate) {
+            	im.update();
+            	needUpdate = false;
             }
 			im.draw(x, y, w, h);
 		}
@@ -91,7 +95,11 @@ class pofIm{
 			if(!im.isUsingTexture())
 			{
                 im.setUseTexture(true);
-                im.update();
+                needUpdate = true;
+            }
+            if(needUpdate) {
+            	im.update();
+            	needUpdate = false;
             }
 			im.bind();
 			pofBase::currentTexture = &im.getTexture();
@@ -175,7 +183,7 @@ void pofImLoader::threadedFunction() {
 //------------------------------------------//
 
 t_class *pofimage_class;
-t_symbol *s_set, *s_size, *s_monitor;
+t_symbol *s_set, *s_saved, *s_size, *s_monitor, *s_color;
 
 void pofimage_set(void *x, t_symbol *f);
 
@@ -227,6 +235,12 @@ void pofimage_set(void *x, t_symbol *f)
 	px->set(f);
 }
 
+void pofimage_save(void *x, t_symbol *f)
+{
+	pofImage* px= (pofImage*)(((PdObject*)x)->parent);	
+	px->save(f);
+}
+
 void pofimage_reserve(void *x, t_symbol *f)
 {
 	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
@@ -254,21 +268,117 @@ static void pofimage_out(void *x, t_symbol *s, int argc, t_atom *argv)
     outlet_anything(px->m_out2, s, argc, argv);
 }
 
+void pofimage_setcolor(void *x, t_symbol *s, int argc, t_atom *argv)
+{
+	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
+	if(px->image == NULL) return;
+
+	t_float X=0.0, Y=0.0, R=0.0, G=0.0, B=0.0, A=1.0;
+	 	
+	if(argc>0) X = atom_getfloat(&argv[0]);
+	if(argc>1) Y = atom_getfloat(&argv[1]);
+	if(argc>2) R = atom_getfloat(&argv[2]);
+	if(argc>3) G = atom_getfloat(&argv[3]);
+	if(argc>4) B = atom_getfloat(&argv[4]);
+	if(argc>5) A = atom_getfloat(&argv[5]);
+	
+	ofImage *image = &px->image->im;
+	if(image && px->image->loaded) {
+		image->setColor(X, Y, ofColor(R*255.0, G*255.0, B*255.0, A*255.0));
+		px->image->needUpdate = true;
+	} 
+}
+
+void pofimage_getcolor(void *x, t_float X, t_float Y)
+{
+	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
+	if(px->image == NULL) return;
+	
+	ofImage *image = &px->image->im;
+	if(image && px->image->loaded) {
+		t_atom ap[4];
+		ofColor color = image->getColor(X, Y);
+		SETFLOAT(&ap[0], color.r/255.0);
+		SETFLOAT(&ap[1], color.g/255.0);
+		SETFLOAT(&ap[2], color.b/255.0);
+		SETFLOAT(&ap[3], color.a/255.0);
+		outlet_anything(px->m_out2, s_color, 4, ap);
+	} 
+}
+
+void pofimage_resize(void *x, t_float W, t_float H)
+{
+	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
+	//if(px->image == NULL) return;
+	
+	/*ofImage *image = &px->image->im;
+	if(image && px->image->loaded) {
+		image->resize(W, H);
+		px->image->needUpdate = true;
+	}*/
+	px->resize.set(W, H);
+}
+
+void pofimage_crop(void *x, t_float X, t_float Y, t_float W, t_float H)
+{
+	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
+	/*if(px->image == NULL) return;
+	
+	ofImage *image = &px->image->im;
+	if(image && px->image->loaded) {
+		image->crop(X, Y, W, H);
+	}*/
+	px->crop.set(X, Y, W, H);
+}
+
+void pofimage_clear(void *x)
+{
+	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
+	if(px->image == NULL) return;
+	
+	ofImage *image = &px->image->im;
+	if(image && px->image->loaded) {
+		image->clear();
+	}
+}
+
+void pofimage_grab(void *x, t_float X, t_float Y, t_float W, t_float H)
+{
+	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
+	/*if(px->image == NULL) return;
+	
+	ofImage *image = &px->image->im;
+	if(image && px->image->loaded) {
+		image->grabScreen(X, Y, W, H);
+	}*/
+	px->grab.set(X, Y, W, H);
+}
+
 void pofImage::setup(void)
 {
 	//post("pofimage_setup");
 	s_set = gensym("set");
+	s_saved = gensym("saved");
 	s_size = gensym("size");
 	s_monitor = gensym("monitor");
+	s_color = gensym("color");
 	pofimage_class = class_new(gensym("pofimage"), (t_newmethod)pofimage_new, (t_method)pofimage_free,
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
 	POF_SETUP(pofimage_class);
 	class_addmethod(pofimage_class, (t_method)pofimage_set, s_set, A_SYMBOL, A_NULL);
+	class_addmethod(pofimage_class, (t_method)pofimage_save, gensym("save"), A_SYMBOL, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_reserve, gensym("reserve"), A_SYMBOL, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_unreserve, gensym("unreserve"), A_SYMBOL, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_monitor, gensym("setmonitor"), A_FLOAT, A_NULL);
+	class_addmethod(pofimage_class, (t_method)pofimage_setcolor, gensym("setcolor"), A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)pofimage_getcolor, gensym("getcolor"), A_FLOAT, A_FLOAT, A_NULL);
+	class_addmethod(pofimage_class, (t_method)pofimage_resize, gensym("resize"), A_FLOAT, A_FLOAT, A_NULL);
+	class_addmethod(pofimage_class, (t_method)pofimage_crop, gensym("crop"), A_FLOAT, A_FLOAT, A_FLOAT, A_FLOAT, A_NULL);
+	class_addmethod(pofimage_class, (t_method)pofimage_clear, gensym("clear"), A_NULL);
+	class_addmethod(pofimage_class, (t_method)pofimage_grab, gensym("grab"), A_FLOAT, A_FLOAT, A_FLOAT, A_FLOAT, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_out, s_size, A_GIMME, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_out, s_monitor, A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)pofimage_out, s_saved, A_GIMME, A_NULL);
     imLoader = new pofImLoader;
     imLoaderHTTP = new pofImLoader;
 	imLoader->startThread(true); //, false);    // blocking, non verbose
@@ -311,7 +421,6 @@ void pofImage::Update()
 		image = pofIm::getImage(makefilename(file, pdcanvas));
 		displayedFile = file;
 	}
-
 	if(image) {
 		image->load();
 		if(image->loaded) {
@@ -320,8 +429,28 @@ void pofImage::Update()
 		} else w = h = 0;
 	} else w = h = 0;
 	
-	if( (w != imWidth) || (h != imHeight) ) {	
-
+	if(resize.y && image && image->loaded) {
+		image->im.resize(resize.x, resize.y);
+		resize.y = 0;
+	}
+	if(crop.height && image && image->loaded) {
+		image->im.crop(crop.x, crop.y, crop.width, crop.height);
+		crop.set(0, 0, 0, 0);
+	}
+	if(grab.height && image && image->loaded) {
+		image->im.grabScreen(crop.x, crop.y, crop.width, crop.height);
+		grab.set(0, 0, 0, 0);
+	}
+	
+	if(image && (savefile!=NULL)) {
+		image->im.save(savefile->s_name);
+		SETSYMBOL(&ap[0], s_saved);
+		SETSYMBOL(&ap[1], savefile);
+		queueToSelfPd(2, ap);
+		savefile = NULL;
+	}
+	
+	if( (w != imWidth) || (h != imHeight) ) {
 		SETSYMBOL(&ap[0], s_size);
 		SETFLOAT(&ap[1], w);
 		SETFLOAT(&ap[2], h);
@@ -363,6 +492,11 @@ void pofImage::postdraw()
 void pofImage::set(t_symbol *f)
 {
 	file = f ;//makefilename(f, pdcanvas);
+}
+
+void pofImage::save(t_symbol *f)
+{
+	savefile = f ;//makefilename(f, pdcanvas);
 }
 
 void pofImage::reserve(t_symbol *f)

@@ -11,8 +11,15 @@ class pofIm;
 
 class pofImage: public pofBase {
 	public:
-		pofImage(t_class *Class, t_symbol *f=NULL, float w=0, float h=0, float xa=0, float ya=0, float sx=0, float sy=0, float sw=0, float sh=0, float istext=0):pofBase(Class),file(NULL), displayedFile(NULL), width(w), height(h), xanchor(xa), yanchor(ya), subx(sx), suby(sy), subwidth(sw), subheight(sh), image(NULL),reservedChanged(false), monitor(false),isTexture(istext!=0) {
-			m_out2 = outlet_new(&(pdobj->x_obj), 0);
+		pofImage(t_class *Class, t_symbol *f=NULL, 
+			float w=0, float h=0, 
+			float xa=0, float ya=0, float sx=0, float sy=0, float sw=0, float sh=0, 
+			float istext=0):
+				pofBase(Class),file(NULL), displayedFile(NULL), savefile(NULL), width(w), height(h), 
+				xanchor(xa), yanchor(ya), subx(sx), suby(sy), subwidth(sw), subheight(sh), 
+				image(NULL),reservedChanged(false), monitor(false),isTexture(istext!=0) 
+		{
+				m_out2 = outlet_new(&(pdobj->x_obj), 0);
 		}
 		//virtual ~pofImage() { }
 
@@ -21,6 +28,7 @@ class pofImage: public pofBase {
 		virtual void postdraw();
 		
 		void set(t_symbol *f);
+		void save(t_symbol *f);
 		
 		void reserve(t_symbol *f);
 		void unreserve(t_symbol *f);
@@ -30,12 +38,16 @@ class pofImage: public pofBase {
 		static void release(void);
 		
 		t_symbol *file, *displayedFile;
+		t_symbol *savefile;
 		
 		float width, height;	
 		float imWidth, imHeight;	
 		float xanchor, yanchor;
 		float subx, suby;
 		float subwidth, subheight;
+		ofPoint resize;
+		ofRectangle crop;
+		ofRectangle grab;
 		t_canvas *pdcanvas;
 		pofIm *image;
 		t_outlet *m_out2;
