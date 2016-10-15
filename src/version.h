@@ -4,3 +4,4 @@
 #define POF_VERSION_MINOR 1
 #define POF_VERSION_PATCH 4
 
+const char* versionString();

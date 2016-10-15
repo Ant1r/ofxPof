@@ -474,12 +474,12 @@ string pofBase::getString(const string& id)
 	return stringsMap[id];
 }
 //--------------------- SETUPs -----------------
-#define STRINGIFY2(x) #x
+/*#define STRINGIFY2(x) #x
 #define STRINGIFY(x) STRINGIFY2(x)
 
 const char* versionString() {
 return ( "" STRINGIFY(POF_VERSION_MAJOR) "." STRINGIFY(POF_VERSION_MINOR) "." STRINGIFY(POF_VERSION_PATCH));
-}
+}*/
 
 t_class *pof_class;
 
