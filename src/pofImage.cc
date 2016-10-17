@@ -424,10 +424,16 @@ void pofImage::Update()
 	if(image) {
 		image->load();
 		if(image->loaded) {
-			w = image->im.getWidth();
+			if(!image->im.isAllocated()) 
+			    image->im.allocate(width!=0?width:1, 
+			        height!=0?height:width!=0?width:1, 
+			        OF_IMAGE_COLOR_ALPHA);
+            w = image->im.getWidth();
 			h = image->im.getHeight();
 		} else w = h = 0;
 	} else w = h = 0;
+	
+
 	
 	if(resize.y && image && image->loaded) {
 		image->im.resize(resize.x, resize.y);
