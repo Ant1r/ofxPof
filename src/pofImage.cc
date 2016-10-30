@@ -4,6 +4,7 @@
  * See https://github.com/Ant1r/ofxPof for documentation and updates.
  */
 #include "pofImage.h"
+#include "pofFbo.h"
 
 class pofIm;
 
@@ -354,6 +355,12 @@ void pofimage_grab(void *x, t_float X, t_float Y, t_float W, t_float H)
 	px->grab.set(X, Y, W, H);
 }
 
+void pofimage_grabfbo(void *x, t_symbol *fbo, t_float attachmentPoint)
+{
+	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
+	px->grabfbo = fbo;
+}
+
 void pofImage::setup(void)
 {
 	//post("pofimage_setup");
@@ -376,6 +383,7 @@ void pofImage::setup(void)
 	class_addmethod(pofimage_class, (t_method)pofimage_crop, gensym("crop"), A_FLOAT, A_FLOAT, A_FLOAT, A_FLOAT, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_clear, gensym("clear"), A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_grab, gensym("grab"), A_FLOAT, A_FLOAT, A_FLOAT, A_FLOAT, A_NULL);
+	class_addmethod(pofimage_class, (t_method)pofimage_grabfbo, gensym("grabfbo"), A_SYMBOL, A_DEFFLOAT, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_out, s_size, A_GIMME, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_out, s_monitor, A_GIMME, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_out, s_saved, A_GIMME, A_NULL);
@@ -456,6 +464,15 @@ void pofImage::Update()
 		savefile = NULL;
 	}
 	
+	if(image && grabfbo)
+	{
+		pofsubFbo* sub = pofsubFbo::get(grabfbo);
+		sub->fbo.readToPixels(image->im.getPixels());
+		pofsubFbo::let(sub);
+		grabfbo = NULL;
+		image->im.update();
+	}
+
 	if( (w != imWidth) || (h != imHeight) ) {
 		SETSYMBOL(&ap[0], s_size);
 		SETFLOAT(&ap[1], w);
