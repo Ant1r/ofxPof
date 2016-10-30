@@ -285,7 +285,8 @@ void pofimage_setcolor(void *x, t_symbol *s, int argc, t_atom *argv)
 	
 	ofImage *image = &px->image->im;
 	if(image && px->image->loaded) {
-		image->setColor(X, Y, ofColor(R*255.0, G*255.0, B*255.0, A*255.0));
+		image->setColor(ofClamp(X, 0, image->getWidth()), ofClamp(Y, 0, image->getHeight()), 
+			ofColor(R*255.0, G*255.0, B*255.0, A*255.0));
 		px->image->needUpdate = true;
 	} 
 }
@@ -298,7 +299,7 @@ void pofimage_getcolor(void *x, t_float X, t_float Y)
 	ofImage *image = &px->image->im;
 	if(image && px->image->loaded) {
 		t_atom ap[4];
-		ofColor color = image->getColor(X, Y);
+		ofColor color = image->getColor(ofClamp(X, 0, image->getWidth()), ofClamp(Y, 0, image->getHeight()));
 		SETFLOAT(&ap[0], color.r/255.0);
 		SETFLOAT(&ap[1], color.g/255.0);
 		SETFLOAT(&ap[2], color.b/255.0);
