@@ -7,68 +7,60 @@
 
 t_class *poffbo_class;
 
-class pofsubFbo	{
-	static std::map<t_symbol*,pofsubFbo*> sfbos;
-	int refCount;
-	t_symbol *name;
-	public:
-	float width, height;
-	
-	ofFbo fbo;
-	
-	pofsubFbo(t_symbol *n):refCount(1), name(n), width(0), height(0) {
-		sfbos[n] = this;
-		ofAddListener(pofBase::reloadTexturesEvent, this, &pofsubFbo::reloadTexture);
-		//ofAddListener(pofBase::unloadTexturesEvent, this, &pofsubFbo::unloadTexture);
-	}
-	
-	~pofsubFbo() {
-		sfbos.erase(name);
-		ofRemoveListener(pofBase::reloadTexturesEvent, this, &pofsubFbo::reloadTexture);
-		//ofRemoveListener(pofBase::unloadTexturesEvent, this, &pofFbo::unloadTexture);
-	}
-	
-	void reloadTexture(ofEventArgs & args) { fbo.allocate(width, height, GL_RGBA); }
-	//void unloadTexture(ofEventArgs & args);
-	
-	static pofsubFbo* get(t_symbol *name){
-		std::map<t_symbol*,pofsubFbo*>::iterator it;
-		it = sfbos.find(name);
-		if(it!=sfbos.end()) { //fbo found
-			it->second->refCount++;
-			return it->second;
-		}
-		else { // fbo not found ; create a new one.
-			new pofsubFbo(name);
-			return sfbos[name];
-		}
-	}
-				
-	static void let(pofsubFbo *sfbo) {
-		if(!--sfbo->refCount) delete sfbo;
-	}
-	
-	void begin(float w, float h) {
-	    if(w < 0) w = 0;
-		if(h < 0) h = 0;
-		
-		if(w != 0) width = w;
-		if(h != 0) height = h;
-		
-		if(width != 0 && height != 0) {
-			if( (!fbo.isAllocated()) || (fbo.getWidth() != width) || (fbo.getHeight() != height))
-				fbo.allocate(width, height, GL_RGBA);
-		}
-		fbo.begin();
-	}
-	
-	void draw(float w, float h) {
-		if(fbo.isAllocated()) fbo.draw(-width/2,-height/2,width,height);
-	}
-
-};
-
 std::map<t_symbol*,pofsubFbo*> pofsubFbo::sfbos;
+
+pofsubFbo::pofsubFbo(t_symbol *n):refCount(1), name(n), width(0), height(0) {
+	sfbos[n] = this;
+	ofAddListener(pofBase::reloadTexturesEvent, this, &pofsubFbo::reloadTexture);
+	//ofAddListener(pofBase::unloadTexturesEvent, this, &pofsubFbo::unloadTexture);
+}
+	
+pofsubFbo::~pofsubFbo() {
+	sfbos.erase(name);
+	ofRemoveListener(pofBase::reloadTexturesEvent, this, &pofsubFbo::reloadTexture);
+	//ofRemoveListener(pofBase::unloadTexturesEvent, this, &pofFbo::unloadTexture);
+}
+
+void pofsubFbo::reloadTexture(ofEventArgs & args) { fbo.allocate(width, height, GL_RGBA); }
+
+pofsubFbo* pofsubFbo::get(t_symbol *name){
+	std::map<t_symbol*,pofsubFbo*>::iterator it;
+	it = sfbos.find(name);
+	if(it!=sfbos.end()) { //fbo found
+		it->second->refCount++;
+		return it->second;
+	}
+	else { // fbo not found ; create a new one.
+		new pofsubFbo(name);
+		return sfbos[name];
+	}
+}
+			
+void pofsubFbo::let(pofsubFbo *sfbo) {
+	if(!--sfbo->refCount) delete sfbo;
+}
+
+void pofsubFbo::begin(float w, float h) {
+    if(w < 0) w = 0;
+	if(h < 0) h = 0;
+	
+	if(w != 0) width = w;
+	if(h != 0) height = h;
+	
+	if(width != 0 && height != 0) {
+		if( (!fbo.isAllocated()) || (fbo.getWidth() != width) || (fbo.getHeight() != height))
+			fbo.allocate(width, height, GL_RGBA);
+	}
+	fbo.begin();
+}
+
+void pofsubFbo::end() {
+	fbo.end();
+}
+
+void pofsubFbo::draw(float w, float h) {
+	if(fbo.isAllocated()) fbo.draw(-width/2,-height/2,width,height);
+}
 
 
 /*******************************************/
@@ -155,7 +147,7 @@ void pofFbo::draw()
 
 void pofFbo::postdraw()
 {
-	sfbo->fbo.end();
+	sfbo->end();
 	sfbo->draw(width, height);
 }
 

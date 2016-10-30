@@ -7,7 +7,28 @@
 
 #include "pofBase.h"
 
-class pofsubFbo;
+class pofsubFbo	{
+	static std::map<t_symbol*,pofsubFbo*> sfbos;
+	int refCount;
+	t_symbol *name;
+	public:
+	float width, height;
+	
+	ofFbo fbo;
+	
+	pofsubFbo(t_symbol *n);	
+	~pofsubFbo();
+	
+	void reloadTexture(ofEventArgs & args);
+	//void unloadTexture(ofEventArgs & args);
+	
+	static pofsubFbo* get(t_symbol *name);			
+	static void let(pofsubFbo *sfbo);
+	
+	void begin(float w, float h);
+	void end();	
+	void draw(float w, float h);
+};
 
 class pofFbo: public pofBase {
 	public:
