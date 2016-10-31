@@ -57,7 +57,7 @@ void pofRect::setup(void)
 	pofrect_class = class_new(gensym("pofrect"), (t_newmethod)pofrect_new, (t_method)pofrect_free,
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
 	class_addmethod(pofrect_class, (t_method)pofrect_rounded, gensym("rounded"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_NULL);
-	class_addmethod(pofrect_class, (t_method)pofrect_res, gensym("res"), A_FLOAT);
+	class_addmethod(pofrect_class, (t_method)pofrect_res, gensym("res"), A_FLOAT, A_NULL);
 
 	POF_SETUP(pofrect_class);
 }
