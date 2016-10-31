@@ -9,7 +9,8 @@ Pof can be used with Pd just like any other external ; for this purpose it has t
 
 *	for Linux 32bit : pof.l_l386
 *	for Linux 32bit : pof.l_ia64
-*	for Linux ARM (rasberryPi) : pof_l_arm
+*	for Linux ARM (rasberryPi) : pof.l_arm
+
 ---------
 
 To compile for X86-64bit, OF needs to be recompiled with -fPIC cflag, as well as all the libs that are shipped with OF. More info to come (look [there](https://github.com/Ant1r/ofxPof/releases) to get precompiled 64bit libs)...
