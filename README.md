@@ -39,12 +39,8 @@ Pof also follows an exploration (and some enhancement) of what can be done with 
 
 Pof was initially developed to provide a GUI for the Android version of NinjaTune/[*Coldcut*](http://ninjatune.net/artist/coldcut)'s [Ninja Jamm](http://www.ninjajamm.com/) app. Coldcut support making the code available to the community on an open source basis.
 
-Usage
-------
-
-Pof can be used in two ways :
-
-### patch edition :
+Installation
+------------
 
 Pof can be used with Pd just like any other external; it can be downloaded from Pd menu "Help"/"Find externals" for (currently) following platforms:
 
@@ -57,7 +53,9 @@ Look at [linuxExternal](./linuxExternal) and [OSXexternal](./OSXexternal) folder
 
 When properly installed (the path of the library must be declared into pd prefs or into the application patch itself, and **pof** must be loaded, by prefs or with `[declare -lib pof]`) it opens an additional window where the drawings will appear, much like with [Gem](http://puredata.info/downloads/gem).
 
-### patch execution :
+Standalone app
+--------------
+
 Pof can be integrated into a standalone application, using ofxPd. Given the portability of openFrameworks, this app can be ported to various OSes, in particular mobile ones like Android or iOS, and rPI.  
 This application could even be a "player" app, which loads a specific entry patch file at startup. This way updating the app just means transfering the new patch files into the device, and quit/reload the app (no compilation involved).
 
@@ -65,7 +63,8 @@ Some demo app projects are included here : [exampleStandalone](./exampleStandalo
 
 
 Documentation
-------
+-------------
+
 The "help" folder contains the help patches for every Pof objects. If this folder is declared in Pd (`-helppath path_to_ofxPof/help`) then the help patchs will be opened with right-click/help on Pof objects.
 
 `example/pd` folder contains a entry patch `pof_main.pd` which allows to launch several example patchs, located each in a sub-folder. This folder is copied into the `bin/data` folder of each example project (`PofDroid`, `iPof` and `exampleStandalone`), to be included into final applications.
@@ -114,7 +113,7 @@ openframeworks/addons/ofxPof
 Developing ofxPof
 ----------------
 
-You can help develop ofxPof on GitHub: [https://github.com/Ant1r/ofxPof](https://github.com/Ant1r/ofxPof)
+You can help developing ofxPof on GitHub: [https://github.com/Ant1r/ofxPof](https://github.com/Ant1r/ofxPof).
 
 Create an account, clone or fork the repo, then request a push/merge.
 
@@ -129,4 +128,3 @@ Copyright (c) Antoine Rousseau <antoine@metalu.net> 2014-2016
 BSD Simplified License.  
 For information on usage and redistribution, and for a DISCLAIMER OF ALL WARRANTIES, see the file "LICENSE.txt" in this distribution.
 
-See <https://github.com/Ant1r/ofxPof> for last version.
