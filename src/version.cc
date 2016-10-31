@@ -3,7 +3,7 @@
 
 #define POF_VERSION_MAJOR 0
 #define POF_VERSION_MINOR 1
-#define POF_VERSION_PATCH 4
+#define POF_VERSION_PATCH 5
 
 #define STRINGIFY2(x) #x
 #define STRINGIFY(x) STRINGIFY2(x)
