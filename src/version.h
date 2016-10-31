@@ -1,7 +1,4 @@
 #pragma once
 
-#define POF_VERSION_MAJOR 0
-#define POF_VERSION_MINOR 1
-#define POF_VERSION_PATCH 4
-
 const char* versionString();
+void printVersionMessage();

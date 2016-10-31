@@ -475,12 +475,6 @@ string pofBase::getString(const string& id)
 	return stringsMap[id];
 }
 //--------------------- SETUPs -----------------
-/*#define STRINGIFY2(x) #x
-#define STRINGIFY(x) STRINGIFY2(x)
-
-const char* versionString() {
-return ( "" STRINGIFY(POF_VERSION_MAJOR) "." STRINGIFY(POF_VERSION_MINOR) "." STRINGIFY(POF_VERSION_PATCH));
-}*/
 
 t_class *pof_class;
 
@@ -495,9 +489,7 @@ void pofBase::setup() {
 	s_system = gensym("SYSTEM");
 	s_backpressed = gensym("backPressed");
 
-	post(		"Pof: openFrameworks for Pure Data.");
-	verbose(-1, " Pof: %s compiled on " __DATE__, versionString());
-    verbose(-1, " Pof: (BSD) Antoine Rousseau @ metalu.net");
+  printVersionMessage();
     
 	pof_class = class_new(gensym("pof"), (t_newmethod)pof_new, 0, sizeof(PdObject), 0, A_NULL);
 	
