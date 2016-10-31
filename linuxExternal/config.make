@@ -12,8 +12,12 @@ endif
 
 IS64BIT=$(shell if [ -n "`uname -a | grep x86_64`" ] ; then echo yes ; else echo no ; fi)
 
+ISARM=$(shell if [ -n "`uname -m | grep arm`" ] ; then echo yes ; else echo no ; fi)
+
 ifeq ($(PLATFORM_OS),Linux)
-	ifeq ($(IS64BIT),yes)
+	ifeq ($(ISARM),yes)
+		APPNAME = pof.l_arm
+	else ifeq ($(IS64BIT),yes)
 		APPNAME = pof.l_ia64
 	else 
 		APPNAME = pof.l_i386
