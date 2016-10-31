@@ -91,8 +91,13 @@ On Win, you will need [Codeblocks+MiniGW](http://www.codeblocks.org/downloads/26
 
 ** warning : Codeblocks project files for windows are not ready yet. **
 
-You also will need to install the following addons : [ofxPd](https://github.com/danomatika/ofxPd), [ofxJSON](https://github.com/jefftimesten/ofxJSON) and [ofxZipPass](https://github.com/Ant1r/ofxZipPass).
-You also need [ofxAccelerometer](https://github.com/Ant1r/ofxPof/releases/download/v0.1.0/ofxAccelerometer.zip) that you will find in Android or iOS OF distribution, or you can download [here](https://github.com/Ant1r/ofxPof/releases/download/v0.1.0/ofxAccelerometer.zip).
+You also will need to install the following addons :
+
+- [ofxPd](https://github.com/danomatika/ofxPd)
+- [ofxJSON](https://github.com/jefftimesten/ofxJSON)
+- [ofxZipPass](https://github.com/Ant1r/ofxZipPass)
+- [ofxAccelerometer](https://github.com/Ant1r/ofxPof/releases/download/v0.1.0/ofxAccelerometer.zip) that you will find in Android or iOS OF distribution, or you can download [here](https://github.com/Ant1r/ofxPof/releases/download/v0.1.0/ofxAccelerometer.zip).
+
 
 Pof also uses [ofxFontStash](https://github.com/armadillu/ofxFontStash) and its dependency [ofxUnicode](https://github.com/bakercp/ofxUnicode), but these addons have been included into Pof (for compilation ease and because having been hacked a bit for Android compatibility) so don't have to be installed.
 
@@ -104,7 +109,7 @@ openframeworks/addons/ofxPof
 </pre>
 
 
-
+----------------
 
 Developing ofxPof
 ----------------
@@ -115,6 +120,7 @@ Create an account, clone or fork the repo, then request a push/merge.
 
 If you find any bugs or suggestions please log them to GitHub as well.
 
+--------------
 
 Author
 -------
