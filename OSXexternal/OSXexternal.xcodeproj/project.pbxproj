@@ -105,6 +105,9 @@
 		C93BB72F1B13153800FD662B /* version.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6F71B13153700FD662B /* version.h */; };
 		C93BB8391B19066700FD662B /* mac-osx-arrow-cursor-56.png.c in Sources */ = {isa = PBXBuildFile; fileRef = C93BB8381B19066700FD662B /* mac-osx-arrow-cursor-56.png.c */; };
 		C95F512D1B105CF700C8B17A /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C95F512C1B105CF700C8B17A /* ofApp.cpp */; };
+		C99191301DC89B2A00433B4F /* pofPath.cc in Sources */ = {isa = PBXBuildFile; fileRef = C991912D1DC89B2A00433B4F /* pofPath.cc */; };
+		C99191311DC89B2A00433B4F /* pofPath.h in Headers */ = {isa = PBXBuildFile; fileRef = C991912E1DC89B2A00433B4F /* pofPath.h */; };
+		C99191321DC89B2A00433B4F /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = C991912F1DC89B2A00433B4F /* version.cc */; };
 		C9DCA5091C05F11700554E71 /* pofDepthTest.cc in Sources */ = {isa = PBXBuildFile; fileRef = C9DCA5071C05F11700554E71 /* pofDepthTest.cc */; };
 		C9DCA50A1C05F11700554E71 /* pofDepthTest.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DCA5081C05F11700554E71 /* pofDepthTest.h */; };
 		C9DCA50D1C05F12C00554E71 /* pofPlane.cc in Sources */ = {isa = PBXBuildFile; fileRef = C9DCA50B1C05F12C00554E71 /* pofPlane.cc */; };
@@ -242,6 +245,9 @@
 		C95F512C1B105CF700C8B17A /* ofApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = "<group>"; };
 		C95F512E1B105CFC00C8B17A /* ofApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = "<group>"; };
 		C95F51311B10AB7000C8B17A /* OF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = OF.xcconfig; sourceTree = "<group>"; };
+		C991912D1DC89B2A00433B4F /* pofPath.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofPath.cc; sourceTree = "<group>"; };
+		C991912E1DC89B2A00433B4F /* pofPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofPath.h; sourceTree = "<group>"; };
+		C991912F1DC89B2A00433B4F /* version.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = version.cc; sourceTree = "<group>"; };
 		C9DCA5071C05F11700554E71 /* pofDepthTest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofDepthTest.cc; sourceTree = "<group>"; };
 		C9DCA5081C05F11700554E71 /* pofDepthTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofDepthTest.h; sourceTree = "<group>"; };
 		C9DCA50B1C05F12C00554E71 /* pofPlane.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofPlane.cc; sourceTree = "<group>"; };
@@ -583,8 +589,6 @@
 		C93BB6BF1B13153700FD662B /* src */ = {
 			isa = PBXGroup;
 			children = (
-				C9ED7F761D7AC70E000FC356 /* pofFilm.cc */,
-				C9ED7F771D7AC70E000FC356 /* pofFilm.h */,
 				C93BB6C01B13153700FD662B /* m_pd.h */,
 				C93BB6C11B13153700FD662B /* pofAccel.cc */,
 				C93BB6C21B13153700FD662B /* pofAccel.h */,
@@ -600,6 +604,8 @@
 				C9DCA5081C05F11700554E71 /* pofDepthTest.h */,
 				C93BB6CB1B13153700FD662B /* pofFbo.cc */,
 				C93BB6CC1B13153700FD662B /* pofFbo.h */,
+				C9ED7F761D7AC70E000FC356 /* pofFilm.cc */,
+				C9ED7F771D7AC70E000FC356 /* pofFilm.h */,
 				C93BB6CD1B13153700FD662B /* pofFont.cc */,
 				C93BB6CE1B13153700FD662B /* pofFont.h */,
 				C93BB6CF1B13153700FD662B /* pofFonts.cc */,
@@ -611,11 +617,13 @@
 				C93BB6D51B13153700FD662B /* pofImage.cc */,
 				C93BB6D61B13153700FD662B /* pofImage.h */,
 				C93BB6D71B13153700FD662B /* pofJSON.cc */,
-				C9ED7F7A1D7AC730000FC356 /* pofQuad.cc */,
-				C9ED7F7B1D7AC730000FC356 /* pofQuad.h */,
 				C93BB6D81B13153700FD662B /* pofJSON.h */,
+				C991912D1DC89B2A00433B4F /* pofPath.cc */,
+				C991912E1DC89B2A00433B4F /* pofPath.h */,
 				C9DCA50B1C05F12C00554E71 /* pofPlane.cc */,
 				C9DCA50C1C05F12C00554E71 /* pofPlane.h */,
+				C9ED7F7A1D7AC730000FC356 /* pofQuad.cc */,
+				C9ED7F7B1D7AC730000FC356 /* pofQuad.h */,
 				C93BB6D91B13153700FD662B /* pofRect.cc */,
 				C93BB6DA1B13153700FD662B /* pofRect.h */,
 				C93BB6DB1B13153700FD662B /* pofResetMatrix.cc */,
@@ -648,6 +656,7 @@
 				C93BB6F41B13153700FD662B /* pofWin.h */,
 				C93BB6F51B13153700FD662B /* pofXML.cc */,
 				C93BB6F61B13153700FD662B /* pofXML.h */,
+				C991912F1DC89B2A00433B4F /* version.cc */,
 				C93BB6F71B13153700FD662B /* version.h */,
 			);
 			path = src;
@@ -748,6 +757,7 @@
 				C93BB7041B13153700FD662B /* pofFbo.h in Headers */,
 				C93BB7101B13153700FD662B /* pofJSON.h in Headers */,
 				C93BB65F1B10BB1300FD662B /* core.h in Headers */,
+				C99191311DC89B2A00433B4F /* pofPath.h in Headers */,
 				C93BB6351B10BAF400FD662B /* zip.h in Headers */,
 				C93BB5D81B10BAA700FD662B /* ofxFontStash.h in Headers */,
 				C93BB6601B10BB1300FD662B /* unchecked.h in Headers */,
@@ -855,10 +865,12 @@
 				C93BB7291B13153800FD662B /* pofVisible.cc in Sources */,
 				C93BB71B1B13153700FD662B /* pofText.cc in Sources */,
 				C93BB7011B13153700FD662B /* pofColor.cc in Sources */,
+				C99191321DC89B2A00433B4F /* version.cc in Sources */,
 				C93BB7051B13153700FD662B /* pofFont.cc in Sources */,
 				C93BB7271B13153800FD662B /* pofUtil.cc in Sources */,
 				C93BB5D41B10BAA700FD662B /* stb_truetype.c in Sources */,
 				C93BB7251B13153800FD662B /* pofTranslate.cc in Sources */,
+				C99191301DC89B2A00433B4F /* pofPath.cc in Sources */,
 				C93BB7031B13153700FD662B /* pofFbo.cc in Sources */,
 				C93BB5D21B10BAA700FD662B /* fontstash.c in Sources */,
 				C9ED7F7C1D7AC730000FC356 /* pofQuad.cc in Sources */,
