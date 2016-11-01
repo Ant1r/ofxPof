@@ -3,27 +3,9 @@
 #   This file is where we make project specific configurations.
 ################################################################################
 
-ifndef PLATFORM_OS
-# determine from the uname if not defined manually
-PLATFORM_OS=$(shell uname -s)
-endif
-
-ifeq ($(PLATFORM_OS),Linux)
-APPNAME = pof.pd_linux
-PROJECT_CFLAGS = -fPIC
-PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs
-
-else ifeq ($(PLATFORM_OS),Darwin)
 APPNAME = pof.pd_darwin
 PROJECT_CFLAGS = -fPIC
 PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs
-
-# I imagine this is useless :
-else ifeq ($(PLATFORM_OS),Windows)
-APPNAME = pof.dll
-PROJECT_CFLAGS = -fPIC
-PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs
-endif
 
 PLATFORM_RUN_COMMAND = pd -path bin/ -lib pof -helppath ../help -open ../example/pd/pof_main.pd
 
