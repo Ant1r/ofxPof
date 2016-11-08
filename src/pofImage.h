@@ -15,7 +15,7 @@ class pofImage: public pofBase {
 			float w=0, float h=0, 
 			float xa=0, float ya=0, float sx=0, float sy=0, float sw=0, float sh=0, 
 			float istext=0):
-				pofBase(Class),file(NULL), displayedFile(NULL), savefile(NULL), grabfbo(NULL), width(w), height(h), 
+				pofBase(Class),file(NULL), displayedFile(NULL), /*savefile(NULL), grabfbo(NULL),*/ width(w), height(h), 
 				xanchor(xa), yanchor(ya), subx(sx), suby(sy), subwidth(sw), subheight(sh), 
 				image(NULL),reservedChanged(false), monitor(false),isTexture(istext!=0) 
 		{
@@ -26,9 +26,10 @@ class pofImage: public pofBase {
 		void Update(); // not real "update()" !
 		virtual void draw();
 		virtual void postdraw();
+		virtual void message(int  arc, t_atom *argv);
 		
 		void set(t_symbol *f);
-		void save(t_symbol *f);
+		//void save(t_symbol *f);
 		
 		void reserve(t_symbol *f);
 		void unreserve(t_symbol *f);
@@ -38,17 +39,18 @@ class pofImage: public pofBase {
 		static void release(void);
 		
 		t_symbol *file, *displayedFile;
-		t_symbol *savefile;
-		t_symbol *grabfbo;
+		//t_symbol *savefile;
+		//t_symbol *grabfbo;
 		
 		float width, height;	
 		float imWidth, imHeight;	
 		float xanchor, yanchor;
 		float subx, suby;
 		float subwidth, subheight;
-		ofPoint resize;
+		
+		/*ofPoint resize;
 		ofRectangle crop;
-		ofRectangle grab;
+		ofRectangle grab;*/
 		t_canvas *pdcanvas;
 		pofIm *image;
 		t_outlet *m_out2;

@@ -74,7 +74,6 @@ class pofIm{
 	void draw(float x, float y, float w, float h) {
 		if(!loaded) return;
 		
-		//mutex.lock(); // seems working without this...
 		if(im.isAllocated()) {
 			if(!im.isUsingTexture())
 			{
@@ -87,7 +86,6 @@ class pofIm{
             }
 			im.draw(x, y, w, h);
 		}
-		//mutex.unlock();
 	}
 		
 	void bind() {
@@ -109,14 +107,6 @@ class pofIm{
 	
 	void unbind() {
 		if(!loaded) return;
-		/*if(im.isAllocated()) {
-			if(!im.isUsingTexture())
-			{
-                im.setUseTexture(true);
-                im.update();
-            }
-			im.unbind();
-		}*/
 		im.unbind();
 	}
 		
@@ -184,7 +174,8 @@ void pofImLoader::threadedFunction() {
 //------------------------------------------//
 
 t_class *pofimage_class;
-t_symbol *s_set, *s_saved, *s_size, *s_monitor, *s_color;
+t_symbol *s_set, *s_saved, *s_size, *s_monitor, *s_color, 
+  *s_save, *s_clear, *s_resize, *s_setcolor, *s_grab, *s_grabfbo, *s_crop;
 
 void pofimage_set(void *x, t_symbol *f);
 
@@ -236,12 +227,6 @@ void pofimage_set(void *x, t_symbol *f)
 	px->set(f);
 }
 
-void pofimage_save(void *x, t_symbol *f)
-{
-	pofImage* px= (pofImage*)(((PdObject*)x)->parent);	
-	px->save(f);
-}
-
 void pofimage_reserve(void *x, t_symbol *f)
 {
 	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
@@ -269,35 +254,13 @@ static void pofimage_out(void *x, t_symbol *s, int argc, t_atom *argv)
     outlet_anything(px->m_out2, s, argc, argv);
 }
 
-void pofimage_setcolor(void *x, t_symbol *s, int argc, t_atom *argv)
-{
-	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
-	if(px->image == NULL) return;
-
-	t_float X=0.0, Y=0.0, R=0.0, G=0.0, B=0.0, A=1.0;
-	 	
-	if(argc>0) X = atom_getfloat(&argv[0]);
-	if(argc>1) Y = atom_getfloat(&argv[1]);
-	if(argc>2) R = atom_getfloat(&argv[2]);
-	if(argc>3) G = atom_getfloat(&argv[3]);
-	if(argc>4) B = atom_getfloat(&argv[4]);
-	if(argc>5) A = atom_getfloat(&argv[5]);
-	
-	ofImage *image = &px->image->im;
-	if(image && px->image->loaded) {
-		image->setColor(ofClamp(X, 0, image->getWidth()), ofClamp(Y, 0, image->getHeight()), 
-			ofColor(R*255.0, G*255.0, B*255.0, A*255.0));
-		px->image->needUpdate = true;
-	} 
-}
-
 void pofimage_getcolor(void *x, t_float X, t_float Y)
 {
 	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
 	if(px->image == NULL) return;
 	
 	ofImage *image = &px->image->im;
-	if(image && px->image->loaded) {
+	if(px->image->loaded) {
 		t_atom ap[4];
 		ofColor color = image->getColor(ofClamp(X, 0, image->getWidth()), ofClamp(Y, 0, image->getHeight()));
 		SETFLOAT(&ap[0], color.r/255.0);
@@ -308,60 +271,6 @@ void pofimage_getcolor(void *x, t_float X, t_float Y)
 	} 
 }
 
-void pofimage_resize(void *x, t_float W, t_float H)
-{
-	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
-	//if(px->image == NULL) return;
-	
-	/*ofImage *image = &px->image->im;
-	if(image && px->image->loaded) {
-		image->resize(W, H);
-		px->image->needUpdate = true;
-	}*/
-	px->resize.set(W, H);
-}
-
-void pofimage_crop(void *x, t_float X, t_float Y, t_float W, t_float H)
-{
-	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
-	/*if(px->image == NULL) return;
-	
-	ofImage *image = &px->image->im;
-	if(image && px->image->loaded) {
-		image->crop(X, Y, W, H);
-	}*/
-	px->crop.set(X, Y, W, H);
-}
-
-void pofimage_clear(void *x)
-{
-	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
-	if(px->image == NULL) return;
-	
-	ofImage *image = &px->image->im;
-	if(image && px->image->loaded) {
-		image->clear();
-	}
-}
-
-void pofimage_grab(void *x, t_float X, t_float Y, t_float W, t_float H)
-{
-	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
-	/*if(px->image == NULL) return;
-	
-	ofImage *image = &px->image->im;
-	if(image && px->image->loaded) {
-		image->grabScreen(X, Y, W, H);
-	}*/
-	px->grab.set(X, Y, W, H);
-}
-
-void pofimage_grabfbo(void *x, t_symbol *fbo, t_float attachmentPoint)
-{
-	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
-	px->grabfbo = fbo;
-}
-
 void pofImage::setup(void)
 {
 	//post("pofimage_setup");
@@ -370,21 +279,31 @@ void pofImage::setup(void)
 	s_size = gensym("size");
 	s_monitor = gensym("monitor");
 	s_color = gensym("color");
+	s_save = gensym("save");
+	s_clear = gensym("clear");
+	s_resize = gensym("resize");
+	s_setcolor = gensym("setcolor");
+	s_grab = gensym("grab");
+	s_grabfbo = gensym("grabfbo");
+	s_crop = gensym("crop");
+	
 	pofimage_class = class_new(gensym("pofimage"), (t_newmethod)pofimage_new, (t_method)pofimage_free,
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
 	POF_SETUP(pofimage_class);
 	class_addmethod(pofimage_class, (t_method)pofimage_set, s_set, A_SYMBOL, A_NULL);
-	class_addmethod(pofimage_class, (t_method)pofimage_save, gensym("save"), A_SYMBOL, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_reserve, gensym("reserve"), A_SYMBOL, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_unreserve, gensym("unreserve"), A_SYMBOL, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_monitor, gensym("setmonitor"), A_FLOAT, A_NULL);
-	class_addmethod(pofimage_class, (t_method)pofimage_setcolor, gensym("setcolor"), A_GIMME, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_getcolor, gensym("getcolor"), A_FLOAT, A_FLOAT, A_NULL);
-	class_addmethod(pofimage_class, (t_method)pofimage_resize, gensym("resize"), A_FLOAT, A_FLOAT, A_NULL);
-	class_addmethod(pofimage_class, (t_method)pofimage_crop, gensym("crop"), A_FLOAT, A_FLOAT, A_FLOAT, A_FLOAT, A_NULL);
-	class_addmethod(pofimage_class, (t_method)pofimage_clear, gensym("clear"), A_NULL);
-	class_addmethod(pofimage_class, (t_method)pofimage_grab, gensym("grab"), A_FLOAT, A_FLOAT, A_FLOAT, A_FLOAT, A_NULL);
-	class_addmethod(pofimage_class, (t_method)pofimage_grabfbo, gensym("grabfbo"), A_SYMBOL, A_DEFFLOAT, A_NULL);
+	
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("save"),    A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("setcolor"),A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("resize"),  A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("crop"),    A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("clear"),   A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("grab"),    A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("grabfbo"), A_GIMME, A_NULL);
+	
 	class_addmethod(pofimage_class, (t_method)pofimage_out, s_size, A_GIMME, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_out, s_monitor, A_GIMME, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_out, s_saved, A_GIMME, A_NULL);
@@ -406,7 +325,6 @@ void pofImage::Update()
 {
 	float w, h;
 	t_atom ap[4];
-
 
 	if(monitor) {
 		unsigned int len = imLoader->getLen();
@@ -442,38 +360,6 @@ void pofImage::Update()
 		} else w = h = 0;
 	} else w = h = 0;
 	
-
-	
-	if(resize.y && image && image->loaded) {
-		image->im.resize(resize.x, resize.y);
-		resize.y = 0;
-	}
-	if(crop.height && image && image->loaded) {
-		image->im.crop(crop.x, crop.y, crop.width, crop.height);
-		crop.set(0, 0, 0, 0);
-	}
-	if(grab.height && image && image->loaded) {
-		image->im.grabScreen(crop.x, crop.y, crop.width, crop.height);
-		grab.set(0, 0, 0, 0);
-	}
-	
-	if(image && (savefile!=NULL)) {
-		image->im.save(savefile->s_name);
-		SETSYMBOL(&ap[0], s_saved);
-		SETSYMBOL(&ap[1], savefile);
-		queueToSelfPd(2, ap);
-		savefile = NULL;
-	}
-	
-	if(image && grabfbo)
-	{
-		pofsubFbo* sub = pofsubFbo::get(grabfbo);
-		sub->fbo.readToPixels(image->im.getPixels());
-		pofsubFbo::let(sub);
-		grabfbo = NULL;
-		image->im.update();
-	}
-
 	if( (w != imWidth) || (h != imHeight) ) {
 		SETSYMBOL(&ap[0], s_size);
 		SETFLOAT(&ap[1], w);
@@ -483,7 +369,6 @@ void pofImage::Update()
 		imWidth = w;
 		imHeight = h;
 	}
-
 }
 
 void pofImage::draw()
@@ -516,11 +401,6 @@ void pofImage::postdraw()
 void pofImage::set(t_symbol *f)
 {
 	file = f ;//makefilename(f, pdcanvas);
-}
-
-void pofImage::save(t_symbol *f)
-{
-	savefile = f ;//makefilename(f, pdcanvas);
 }
 
 void pofImage::reserve(t_symbol *f)
@@ -557,13 +437,78 @@ void pofImage::unreserve(t_symbol *f)
 void pofImage::unreserveAll()
 {
 	std::list<pofIm*>::iterator it = reserved.begin();
-	int count;
 	
 	while(it != reserved.end()) {
-		count = pofIm::letImage(*it);
+		pofIm::letImage(*it);
 		it++;
 	}
 	
 	reserved.clear();
 }
+
+void pofImage::message(int argc, t_atom *argv)
+{
+	t_atom ap[4];
+
+	t_symbol *key = atom_getsymbol(argv); 
+	argv++; argc--;
+
+	if(image == NULL) return;
+
+	if(key == s_save) {
+		if(argc && argv->a_type == A_SYMBOL) {
+			t_symbol *filename = atom_getsymbol(argv);
+			image->im.save(filename->s_name);
+			SETSYMBOL(&ap[0], s_saved);
+			SETSYMBOL(&ap[1], filename);
+			queueToSelfPd(2, ap);
+		}
+	} 
+	else if(key == s_setcolor) {
+		if(argc < 6) return;
+		t_float X=0.0, Y=0.0, R=0.0, G=0.0, B=0.0, A=1.0;	 	
+		if(argc>0) X = atom_getfloat(&argv[0]);
+		if(argc>1) Y = atom_getfloat(&argv[1]);
+		if(argc>2) R = atom_getfloat(&argv[2]);
+		if(argc>3) G = atom_getfloat(&argv[3]);
+		if(argc>4) B = atom_getfloat(&argv[4]);
+		if(argc>5) A = atom_getfloat(&argv[5]);
+
+		if(image->loaded) {
+			image->im.setColor(ofClamp(X, 0, image->im.getWidth()-1), ofClamp(Y, 0, image->im.getHeight()-1), 
+				ofColor(R*255.0, G*255.0, B*255.0, A*255.0));
+			image->needUpdate = true;
+		} 
+	} 
+	else if(key == s_resize) {
+		if(argc < 1) return;
+		if(argc == 1) image->im.resize(atom_getfloat(&argv[0]), atom_getfloat(&argv[0]));
+		else image->im.resize(atom_getfloat(&argv[0]), atom_getfloat(&argv[1]));
+	} 
+	else if(key == s_crop) {
+		if(argc < 4) return;
+		image->im.crop(atom_getfloat(&argv[0]), atom_getfloat(&argv[1]), atom_getfloat(&argv[2]), atom_getfloat(&argv[3]));
+	} 
+	else if(key == s_grab) {
+		if(argc < 4) return;
+		image->im.grabScreen(atom_getfloat(&argv[0]), atom_getfloat(&argv[1]), atom_getfloat(&argv[2]), atom_getfloat(&argv[3]));
+	}
+	else if(key == s_clear) {
+		float R = 0, G = 0, B = 0, A = 0;
+		if(argc > 0) R = atom_getfloat(&argv[0]);
+		if(argc > 1) G = atom_getfloat(&argv[1]);
+		if(argc > 2) B = atom_getfloat(&argv[2]);
+		if(argc > 3) A = atom_getfloat(&argv[3]);
+		image->im.resize(1, 1);
+		image->im.setColor(0, 0, ofColor(R*255.0, G*255.0, B*255.0, A*255.0));
+		image->im.resize(imWidth, imHeight);
+	}
+	else if(key == s_grabfbo) {
+		if(argc < 1 || argv->a_type != A_SYMBOL) return;
+		pofsubFbo* sub = pofsubFbo::get(atom_getsymbol(argv));
+		sub->fbo.readToPixels(image->im.getPixels());
+		pofsubFbo::let(sub);
+		image->needUpdate = true;
+	}
+}  
 
