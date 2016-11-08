@@ -35,6 +35,9 @@ class pofBase {
 			
 			pofobjs.push_back(this);
 			needBuild = true;
+			
+			tmpToGUIclock = clock_new(&(pdobj->x_obj), (t_method)tryQueueTmpToGUI);
+			
 			unlock();
 		}
 		
@@ -58,6 +61,7 @@ class pofBase {
 		virtual bool hasUpdate(){ return false;}
 		virtual void draw() {}
 		virtual void postdraw() {} // called after objects bellow have been drawn
+		virtual void message(int argc, t_atom *argv) {} // process incoming message from Pd side
 		
 		//virtual void keyPressed(int key);
 		//virtual void keyReleased(int key);
@@ -88,6 +92,17 @@ class pofBase {
 		
 		// Messaging :
 		void queueToSelfPd(int argc, t_atom *argv); // prefix by selfname then queue to pd.
+		void queueToGUI(t_symbol *s, int argc, t_atom *argv); // queue to tmpGUI, then call tryQueueTmpToGUI.
+		static void tellGUI(void* x, t_symbol *s, int argc, t_atom *argv) // ready to use in class_addmethod
+		{
+	    pofBase* px = (pofBase*)(((PdObject*)x)->parent);
+      px->queueToGUI(s, argc, argv);
+    }
+
+		static void tryQueueTmpToGUI(void *x); // try_lock toGUImutex then copy tmpQueue to toGUIQueue, 
+		                                       // else retry after delay(0).
+		t_binbuf *dequeueToGUI(); // to be used by GUI; returns the next binbuf in the queue (null if none);
+		                          // caller must free the binbuf after use.
 		
 		// data :
 		
@@ -96,6 +111,10 @@ class pofBase {
 		bool isBuilt;		
 		std::list<pofBase*> children, touchChildren;
 		t_symbol *s_self;
+		t_clock *tmpToGUIclock;
+		deque<t_binbuf*> toGUIQueue, tmpToGUIQueue;
+		ofMutex toGUImutex;
+		
 		// static :
 		
 		static std::list<pofBase*> pofobjs;
@@ -134,8 +153,8 @@ class pofBase {
 		static void sendToPd(t_binbuf *bb);
 		static void sendToPd(std::vector<Any> &vec);
 
-		static int dequeueToPd();
-		static int dequeueToPdVec();
+		static bool dequeueToPd();
+		static bool dequeueToPdVec();
 		static void backPressed();
 		
 		static void setString(const string& id, const string& value);

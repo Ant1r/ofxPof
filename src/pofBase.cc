@@ -67,6 +67,13 @@ void pofBase::tree_update()
 
 void pofBase::tree_draw()
 {
+	t_binbuf *bb;
+	
+	while(bb=dequeueToGUI()) {
+	  if(binbuf_getnatom(bb)) message(binbuf_getnatom(bb), binbuf_getvec(bb));
+	  binbuf_free(bb);
+	}
+	
 	draw();
 	
 	std::list<pofBase*>::iterator it = children.begin();
@@ -204,6 +211,56 @@ void pofBase::queueToSelfPd(int argc, t_atom *argv)
 	sendToPd(bb);
 }
 
+void pofBase::queueToGUI(t_symbol *s, int argc, t_atom *argv) // queue to tmpGUI, then call tryQueueTmpToGUI. 
+{
+	t_binbuf *bb = binbuf_new();
+	t_atom at;
+	
+	if(s) {
+	  SETSYMBOL(&at, s);
+	  binbuf_add(bb, 1, &at);
+	}
+	binbuf_add(bb, argc, argv);
+	
+	tmpToGUIQueue.push_back(bb);
+ 	tryQueueTmpToGUI(&(pdobj->x_obj));
+}
+
+/*static*/ void pofBase::tryQueueTmpToGUI(void *x) // try_lock toGUImutex then copy tmpQueue to toGUIQueue, else delay(0).
+{
+  pofBase* px= (pofBase*)(((PdObject*)x)->parent);
+  
+  clock_unset(px->tmpToGUIclock);
+  
+  if(px->toGUImutex.try_lock()) {
+    while(true) {
+      if(px->tmpToGUIQueue.size()==0) {
+	      px->toGUImutex.unlock();	
+	      return;
+      }
+      t_binbuf *bb = px->tmpToGUIQueue.front();
+      px->tmpToGUIQueue.pop_front();
+      px->toGUIQueue.push_back(bb);
+    }
+  } else clock_delay(px->tmpToGUIclock, 0);
+}
+
+t_binbuf *pofBase::dequeueToGUI() // to be used by GUI; returns the next binbuf in the queue (null if none);
+{		                              // caller must free the binbuf after use.
+	toGUImutex.lock();
+	
+	if(toGUIQueue.size()==0) {
+	  toGUImutex.unlock();	
+	  return NULL;
+  }
+  
+  t_binbuf *bb = toGUIQueue.front();
+  toGUIQueue.pop_front();
+  
+	toGUImutex.unlock();
+	return bb;
+}
+
 //-------- static functions : ---------------
 	
 void pofBase::pof_build(void *x, t_symbol *s, int argc, t_atom *argv)
@@ -339,6 +396,7 @@ void dequeueToPdtick(void* nul)
 	clock_delay(pofBase::queueClock,2); //poll events every 2ms
 }
 
+
 t_symbol *makefilename(t_symbol *f, t_canvas *pdcanvas)
 {
 	char dirresult[512];
@@ -398,15 +456,15 @@ void pofBase::sendToPd(std::vector<Any> &vec)
 	sendToPd(args);
 }*/
 
-int pofBase::dequeueToPd()
+bool pofBase::dequeueToPd()
 {
 	t_binbuf *bb;
 	
-	if(!toPdMutex.try_lock()) return 0;
+	if(!toPdMutex.try_lock()) return false;
 	
 	if(toPdQueue.size()==0) {
 		toPdMutex.unlock();	
-		return 0;
+		return false;
 	}
 
 	bb = toPdQueue.front();
@@ -418,19 +476,19 @@ int pofBase::dequeueToPd()
 	binbuf_free(bb);
 	//unlock();
 	
-	return 1;
+	return true;
 }
 
-int pofBase::dequeueToPdVec()
+bool pofBase::dequeueToPdVec()
 {
 	
 	std::vector<Any> vec;
 	//toPdMutex.lock();
-	if(!toPdMutex.try_lock()) return 0;
+	if(!toPdMutex.try_lock()) return false;
 
 	if(toPdQueueVec.size()==0) {
 		toPdMutex.unlock();	
-		return 0;
+		return false;
 	}
 	
 	vec = toPdQueueVec.front();
