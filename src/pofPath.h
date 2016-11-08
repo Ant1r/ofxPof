@@ -18,6 +18,7 @@ class pofPath: public pofBase {
 		ofPath path;
 
 		virtual void draw();
+		virtual void message(int  arc, t_atom *argv);
 		static void setup(void);
 };
 
