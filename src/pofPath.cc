@@ -56,7 +56,7 @@ void pofpath_res(void *x, float res)
 void pofpath_tellGui(void *x, t_symbol *s, int argc, t_atom *argv)
 {
 	pofPath* px = (pofPath*)(((PdObject*)x)->parent);
-  px->queueToGUI(s, argc, argv);
+	px->queueToGUI(s, argc, argv);
 }
 
 void pofPath::setup(void)
@@ -72,7 +72,7 @@ void pofPath::setup(void)
 	pofpath_class = class_new(gensym("pofpath"), (t_newmethod)pofpath_new, (t_method)pofpath_free,
 		sizeof(PdObject), 0, A_NULL);
 	
-  class_addmethod(pofpath_class, (t_method)tellGUI, s_clear,  A_GIMME, A_NULL);
+	class_addmethod(pofpath_class, (t_method)tellGUI, s_clear,  A_GIMME, A_NULL);
 	class_addmethod(pofpath_class, (t_method)tellGUI, s_close,  A_GIMME, A_NULL);
 	class_addmethod(pofpath_class, (t_method)tellGUI, s_move,   A_GIMME, A_NULL);
 	class_addmethod(pofpath_class, (t_method)tellGUI, s_line,   A_GIMME, A_NULL);
@@ -95,42 +95,42 @@ void pofPath::draw()
 
 float getNextFloat(int &argc, t_atom *&argv, float def = 0)
 {
-  float f = def;
-  if(argc>0) { 
-    if(argv->a_type == A_FLOAT) f = atom_getfloat(argv);
-    argv++; argc--;
-  }
-  return f;
+	float f = def;
+	if(argc>0) { 
+		if(argv->a_type == A_FLOAT) f = atom_getfloat(argv);
+		argv++; argc--;
+	}
+	return f;
 }
 
 void pofPath::message(int argc, t_atom *argv)
 {
-  t_symbol *key = atom_getsymbol(argv); 
-  argv++; argc--;
+	t_symbol *key = atom_getsymbol(argv); 
+	argv++; argc--;
   
-  if(key == s_clear) path.clear();
-  else if(key == s_close) path.close();
-  else if(key == s_move) 
-    path.moveTo(getNextFloat(argc, argv), getNextFloat(argc, argv), getNextFloat(argc, argv));
-  else if(key == s_line)
-      path.lineTo(getNextFloat(argc, argv), getNextFloat(argc, argv), getNextFloat(argc, argv));
-  else if(key == s_curve)
-      path.curveTo(getNextFloat(argc, argv), getNextFloat(argc, argv), getNextFloat(argc, argv));
-  else if(key == s_arc) {
-    float X=0, Y=0, Z=0, radiusX=0, radiusY=0, angleBegin=0, angleEnd=0;	
-    NEXT_FLOAT_ARG(X);
-    NEXT_FLOAT_ARG(Y);
-    NEXT_FLOAT_ARG(Z);
-    NEXT_FLOAT_ARG(radiusX);
-    NEXT_FLOAT_ARG(radiusY);
-    NEXT_FLOAT_ARG(angleBegin);
-    NEXT_FLOAT_ARG(angleEnd);
-    if(angleBegin > angleEnd) {
-	    float tmp = angleEnd;
-	    angleEnd = angleBegin;
-	    angleBegin = tmp;
-    }
-    path.arc(X, Y, Z, radiusX, radiusY, angleBegin, angleEnd);
-  }
+	if(key == s_clear) path.clear();
+	else if(key == s_close) path.close();
+	else if(key == s_move) 
+		path.moveTo(getNextFloat(argc, argv), getNextFloat(argc, argv), getNextFloat(argc, argv));
+	else if(key == s_line)
+		path.lineTo(getNextFloat(argc, argv), getNextFloat(argc, argv), getNextFloat(argc, argv));
+	else if(key == s_curve)
+		path.curveTo(getNextFloat(argc, argv), getNextFloat(argc, argv), getNextFloat(argc, argv));
+	else if(key == s_arc) {
+		float X=0, Y=0, Z=0, radiusX=0, radiusY=0, angleBegin=0, angleEnd=0;	
+		NEXT_FLOAT_ARG(X);
+		NEXT_FLOAT_ARG(Y);
+		NEXT_FLOAT_ARG(Z);
+		NEXT_FLOAT_ARG(radiusX);
+		NEXT_FLOAT_ARG(radiusY);
+		NEXT_FLOAT_ARG(angleBegin);
+		NEXT_FLOAT_ARG(angleEnd);
+		if(angleBegin > angleEnd) {
+			float tmp = angleEnd;
+			angleEnd = angleBegin;
+			angleBegin = tmp;
+		}
+		path.arc(X, Y, Z, radiusX, radiusY, angleBegin, angleEnd);
+	}
 }  
 
