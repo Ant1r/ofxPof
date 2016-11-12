@@ -8,7 +8,6 @@
 t_class *pofpath_class;
 static t_symbol *s_clear, *s_close, *s_move, *s_line, *s_curve, *s_arc; 
 
-#define NEXT_FLOAT_ARG(var) if(argc>0) { if(argv->a_type == A_FLOAT) var = atom_getfloat(argv); argv++; argc--; }
 
 void *pofpath_new(t_symbol *s)
 {
@@ -93,31 +92,36 @@ void pofPath::draw()
 	path.draw();
 }
 
-float getNextFloat(int &argc, t_atom *&argv, float def = 0)
-{
-	float f = def;
-	if(argc>0) { 
-		if(argv->a_type == A_FLOAT) f = atom_getfloat(argv);
-		argv++; argc--;
-	}
-	return f;
-}
+#define NEXT_FLOAT_ARG(var) if(argc>0) { if(argv->a_type == A_FLOAT) var = atom_getfloat(argv); argv++; argc--; }
 
 void pofPath::message(int argc, t_atom *argv)
 {
+	float X=0, Y=0, Z=0, radiusX=0, radiusY=0, angleBegin=0, angleEnd=0;	
+
 	t_symbol *key = atom_getsymbol(argv); 
 	argv++; argc--;
   
 	if(key == s_clear) path.clear();
 	else if(key == s_close) path.close();
-	else if(key == s_move) 
-		path.moveTo(getNextFloat(argc, argv), getNextFloat(argc, argv), getNextFloat(argc, argv));
-	else if(key == s_line)
-		path.lineTo(getNextFloat(argc, argv), getNextFloat(argc, argv), getNextFloat(argc, argv));
-	else if(key == s_curve)
-		path.curveTo(getNextFloat(argc, argv), getNextFloat(argc, argv), getNextFloat(argc, argv));
+	else if(key == s_move) {
+		NEXT_FLOAT_ARG(X);
+		NEXT_FLOAT_ARG(Y);
+		NEXT_FLOAT_ARG(Z);
+		path.moveTo(X, Y, Z);
+	}
+	else if(key == s_line) {
+		NEXT_FLOAT_ARG(X);
+		NEXT_FLOAT_ARG(Y);
+		NEXT_FLOAT_ARG(Z);
+		path.lineTo(X, Y, Z);
+	}
+	else if(key == s_curve) {
+		NEXT_FLOAT_ARG(X);
+		NEXT_FLOAT_ARG(Y);
+		NEXT_FLOAT_ARG(Z);
+		path.curveTo(X, Y, Z);
+	}
 	else if(key == s_arc) {
-		float X=0, Y=0, Z=0, radiusX=0, radiusY=0, angleBegin=0, angleEnd=0;	
 		NEXT_FLOAT_ARG(X);
 		NEXT_FLOAT_ARG(Y);
 		NEXT_FLOAT_ARG(Z);
