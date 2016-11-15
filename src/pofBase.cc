@@ -54,6 +54,7 @@ t_symbol *s_build;
 t_symbol *s_system;
 t_symbol *s_backpressed;
 std::map<t_symbol*,ofTexture *> pofBase::textures;
+int pofBase::watchdogCount = 0;
 
 void pofBase::tree_update()
 {
@@ -280,16 +281,8 @@ void pofBase::pof_build(void *x, t_symbol *s, int argc, t_atom *argv)
 
 void pofBase::updateAll() {
 	
-	/*if(doRender) {
-		lock();
-		std::list<pofBase*>::iterator it = pofobjs.begin();
-	
-		while(it != pofobjs.end()) {
-			(*it)->update();
-			it++;
-		}
-		unlock();
-	}*/
+    watchdogCount++; // increment watchdog count
+    
 	if(doRender) {
 		lock();
 		if(needBuild) buildAll();
@@ -381,7 +374,6 @@ void pofBase::backPressed()
 	t_binbuf *bb = binbuf_new();
 	t_atom at;
 
-	//SETSYMBOL(&at, s_self);
 	SETSYMBOL(&at, s_system);
 	binbuf_add(bb, 1, &at);
 	SETSYMBOL(&at, s_backpressed);
@@ -394,8 +386,8 @@ void dequeueToPdtick(void* nul)
 {
 	while(pofBase::dequeueToPd());
 	while(pofBase::dequeueToPdVec());
-	//(pofBase::dequeueToPd());
-	//(pofBase::dequeueToPdVec());
+
+	pofBase::watchdogCount = 0; // clear watchdog
 	clock_delay(pofBase::queueClock,2); //poll events every 2ms
 }
 

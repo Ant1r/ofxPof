@@ -125,6 +125,7 @@ class pofBase {
 		static deque<std::vector<Any> > toPdQueueVec;
 		static t_clock *queueClock;
 		static bool doRender;
+		static int watchdogCount;
 		
 		static ofTexture *currentTexture;
 		static std::map<t_symbol*,ofTexture *> textures;

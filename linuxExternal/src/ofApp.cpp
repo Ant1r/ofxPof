@@ -34,6 +34,10 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+	if(pofBase::watchdogCount > 10) { // watchdog test. not working... (pd still hangs when quit)
+		pofBase::release();
+		ofExit();
+	}
 	pofBase::updateAll();
 }
 
