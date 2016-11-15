@@ -27,7 +27,10 @@ class pofFilm: public pofBase {
 		
 		~pofFilm() {
 			if(name) pofBase::textures.erase(name);
-			if(player) delete player;
+			if(player) {
+				player->stop();
+				delete player;
+			}
 		}
 		
 		virtual void draw();
