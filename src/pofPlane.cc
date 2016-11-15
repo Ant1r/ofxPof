@@ -7,7 +7,7 @@
 
 t_class *pofplane_class;
 
-#define NEXT_FLOAT_ARG(var) if(argc>0) { if(argv->a_type == A_FLOAT) var = atom_getfloat(argv); argv++; argc--; }
+#define NEXT_FLOAT_ARG(var) if((argc>0) && (argv->a_type == A_FLOAT)) { var = atom_getfloat(argv); argv++; argc--; }
 
 void *pofplane_new(t_symbol *s, int argc, t_atom *argv)
 {
