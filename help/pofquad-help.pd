@@ -1,4 +1,4 @@
-#N canvas 652 75 562 573 10;
+#N canvas 654 75 562 573 10;
 #X declare -lib pof;
 #X obj 21 536 cnv 15 120 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
@@ -12,10 +12,6 @@
 #X text 7 3 Pof: Pd OpenFrameworks externals;
 #X obj 216 16 declare -lib pof;
 #X floatatom 100 131 5 0 0 0 - - -, f 5;
-#X obj 364 109 pofwin;
-#X msg 364 83 normalizedtextcoords \$1;
-#X obj 364 62 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
-1;
 #X obj 38 152 pofrotate x;
 #X obj 38 543 pofquad 500 500;
 #X msg 73 246 res \$1 \$1;
@@ -23,10 +19,7 @@
 #X msg 144 218 40, f 4;
 #X msg 105 218 5;
 #X obj 38 91 pofhead;
-#X obj 38 183 pofimage img/bikers.jpg tex;
 #X text 11 57 pofquad : quad corners warping;
-#X obj 364 19 loadbang;
-#X msg 364 41 1;
 #X obj 291 178 t b f;
 #X msg 237 231 corner 0 \$1 \$2;
 #X obj 421 176 t b f;
@@ -41,23 +34,23 @@
 #X obj 235 346 pack -200 150;
 #X obj 326 309 t a;
 #X obj 291 161 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
--262144 -1 -1 -150 256;
+-262144 -1 -1 -115 256;
 #X obj 232 160 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
--262144 -1 -1 -200 256;
+-262144 -1 -1 -123 256;
 #X obj 421 159 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
--262144 -1 -1 -150 256;
+-262144 -1 -1 -118 256;
 #X obj 362 158 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
--262144 -1 -1 200 256;
+-262144 -1 -1 213 256;
 #X obj 283 291 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
--262144 -1 -1 150 256;
+-262144 -1 -1 75 256;
 #X obj 224 290 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
--262144 -1 -1 -200 256;
+-262144 -1 -1 -232 256;
 #X obj 419 289 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
 -262144 -1 -1 150 256;
 #X obj 360 288 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
--262144 -1 -1 200 256;
+-262144 -1 -1 274 256;
 #X msg 169 481 drawMesh \$1;
-#X obj 169 459 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 169 459 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 248 460 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
@@ -68,48 +61,47 @@
 #X msg 248 482 drawVertices \$1;
 #X msg 351 482 drawWireframe \$1;
 #X msg 459 481 drawFaces \$1;
-#X connect 7 0 11 1;
-#X connect 9 0 8 0;
+#X msg 123 151 resize 200 200;
+#X obj 38 183 pofimage img/bikers.jpg TEX;
+#X connect 7 0 8 1;
+#X connect 8 0 46 0;
 #X connect 10 0 9 0;
-#X connect 11 0 18 0;
-#X connect 13 0 12 0;
-#X connect 14 0 13 0;
-#X connect 15 0 13 0;
-#X connect 16 0 13 0;
-#X connect 17 0 11 0;
-#X connect 18 0 12 0;
-#X connect 20 0 21 0;
-#X connect 21 0 10 0;
-#X connect 22 0 26 0;
-#X connect 22 1 26 1;
-#X connect 23 0 34 0;
-#X connect 24 0 27 0;
-#X connect 24 1 27 1;
-#X connect 25 0 34 0;
-#X connect 26 0 23 0;
-#X connect 27 0 25 0;
-#X connect 28 0 33 0;
-#X connect 28 1 33 1;
-#X connect 29 0 32 0;
-#X connect 29 1 32 1;
-#X connect 30 0 34 0;
-#X connect 31 0 34 0;
-#X connect 32 0 31 0;
-#X connect 33 0 30 0;
-#X connect 34 0 12 0;
-#X connect 35 0 22 0;
+#X connect 11 0 10 0;
+#X connect 12 0 10 0;
+#X connect 13 0 10 0;
+#X connect 14 0 8 0;
+#X connect 16 0 20 0;
+#X connect 16 1 20 1;
+#X connect 17 0 28 0;
+#X connect 18 0 21 0;
+#X connect 18 1 21 1;
+#X connect 19 0 28 0;
+#X connect 20 0 17 0;
+#X connect 21 0 19 0;
+#X connect 22 0 27 0;
+#X connect 22 1 27 1;
+#X connect 23 0 26 0;
+#X connect 23 1 26 1;
+#X connect 24 0 28 0;
+#X connect 25 0 28 0;
+#X connect 26 0 25 0;
+#X connect 27 0 24 0;
+#X connect 28 0 9 0;
+#X connect 29 0 16 0;
+#X connect 30 0 20 0;
+#X connect 31 0 18 0;
+#X connect 32 0 21 0;
+#X connect 33 0 22 0;
+#X connect 34 0 27 0;
+#X connect 35 0 23 0;
 #X connect 36 0 26 0;
-#X connect 37 0 24 0;
-#X connect 38 0 27 0;
-#X connect 39 0 28 0;
-#X connect 40 0 33 0;
-#X connect 41 0 29 0;
-#X connect 42 0 32 0;
-#X connect 43 0 12 0;
-#X connect 44 0 43 0;
-#X connect 45 0 48 0;
-#X connect 46 0 49 0;
-#X connect 47 0 50 0;
-#X connect 48 0 12 0;
-#X connect 49 0 12 0;
-#X connect 50 0 12 0;
+#X connect 37 0 9 0;
+#X connect 38 0 37 0;
+#X connect 39 0 42 0;
+#X connect 40 0 43 0;
+#X connect 41 0 44 0;
+#X connect 42 0 9 0;
+#X connect 43 0 9 0;
+#X connect 44 0 9 0;
+#X connect 45 0 46 0;
+#X connect 46 0 9 0;

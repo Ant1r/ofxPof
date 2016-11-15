@@ -1,4 +1,4 @@
-#N canvas 591 127 627 517 10;
+#N canvas 592 125 592 517 10;
 #X declare -lib pof;
 #X obj 5 4 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -20,9 +20,6 @@
 #X obj 97 296 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X floatatom 124 114 5 0 0 0 - - -, f 5;
-#X obj 441 80 pofwin;
-#X obj 441 32 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
 #X obj 37 115 pofrotate x;
 #X obj 240 194 pofimage;
 #X text 14 59 poffilm : video player.;
@@ -32,9 +29,6 @@ but instead will be selected for texturing following 3d shapes \; see
 ;
 #X obj 297 194 pofplane;
 #X obj 37 470 poffilm 500 500;
-#X obj 405 13 loadbang;
-#X msg 441 54 normalizedtextcoords 0;
-#X msg 405 33 0;
 #X msg 205 347 speed \$1;
 #X msg 288 264 1;
 #X msg 435 322 goto \$1;
@@ -52,29 +46,25 @@ but instead will be selected for texturing following 3d shapes \; see
 #X msg 152 266 0.125;
 #X msg 317 264 1.5;
 #X floatatom 205 325 5 0 0 0 - - -, f 5;
-#X connect 5 0 17 0;
-#X connect 10 0 23 0;
-#X connect 12 0 23 0;
+#X connect 5 0 15 0;
+#X connect 10 0 21 0;
+#X connect 12 0 21 0;
 #X connect 13 0 12 0;
-#X connect 14 0 17 1;
-#X connect 16 0 25 0;
-#X connect 17 0 23 0;
-#X connect 24 0 26 0;
-#X connect 25 0 15 0;
-#X connect 26 0 16 0;
-#X connect 27 0 23 0;
-#X connect 28 0 42 0;
-#X connect 29 0 23 0;
-#X connect 30 0 29 0;
-#X connect 31 0 42 0;
-#X connect 32 0 42 0;
-#X connect 33 0 42 0;
-#X connect 34 0 23 1;
-#X connect 35 0 23 2;
-#X connect 36 0 10 0;
-#X connect 37 0 42 0;
-#X connect 38 0 42 0;
-#X connect 39 0 42 0;
-#X connect 40 0 42 0;
-#X connect 41 0 42 0;
-#X connect 42 0 27 0;
+#X connect 14 0 15 1;
+#X connect 15 0 21 0;
+#X connect 22 0 21 0;
+#X connect 23 0 37 0;
+#X connect 24 0 21 0;
+#X connect 25 0 24 0;
+#X connect 26 0 37 0;
+#X connect 27 0 37 0;
+#X connect 28 0 37 0;
+#X connect 29 0 21 1;
+#X connect 30 0 21 2;
+#X connect 31 0 10 0;
+#X connect 32 0 37 0;
+#X connect 33 0 37 0;
+#X connect 34 0 37 0;
+#X connect 35 0 37 0;
+#X connect 36 0 37 0;
+#X connect 37 0 22 0;

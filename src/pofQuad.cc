@@ -37,6 +37,7 @@ void pofquad_res(void *x, float resX, float resY)
 	pofQuad* px = (pofQuad*)(((PdObject*)x)->parent);
 	px->rows = resX;
 	px->columns = resY;
+	px->needUpdate = true;
 }
 
 void pofquad_corner(void *x, float num, float X, float Y, float Z)
@@ -44,6 +45,7 @@ void pofquad_corner(void *x, float num, float X, float Y, float Z)
 	pofQuad* px = (pofQuad*)(((PdObject*)x)->parent);
 	
 	if((num>=0)&&(num<=3)) px->corners[int(num)].set(X,Y,Z);
+	px->needUpdate = true;
 }
 
 void pofquad_drawMesh(void *x, float on)
@@ -90,22 +92,61 @@ void pofQuad::setup(void)
 }
 
 
-ofPoint ofxLerp(ofPoint start, ofPoint end, float amt) {
+static ofPoint ofxLerp(ofPoint start, ofPoint end, float amt) {
     return start + amt * (end - start);
 }
 
-int ofxIndex(float x, float y, float w) {
+static int ofxIndex(float x, float y, float w) {
     return y*w+x;
+}
+
+void pofQuad::Update() {
+	ofPoint lt=corners[0], rt=corners[1], rb=corners[2], lb=corners[3];
+	float tw = textureSize.x;
+	float th = textureSize.y;
+	
+	mesh.clear();
+	for (int x=0; x<=columns; x++) {
+		float f = float(x)/columns;
+		ofPoint vTop(ofxLerp(lt,rt,f));
+		ofPoint vBottom(ofxLerp(lb,rb,f));
+		ofPoint tTop(ofxLerp(ofPoint(0,0),ofPoint(tw,0),f));
+		ofPoint tBottom(ofxLerp(ofPoint(0,th),ofPoint(tw,th),f));
+        
+		for (int y=0; y<=rows; y++) {
+			float f = float(y)/rows;
+			ofPoint v = ofxLerp(vTop,vBottom,f);
+			mesh.addVertex(v);
+			mesh.addTexCoord(ofxLerp(tTop,tBottom,f));
+		}
+    }
+    
+	for (float y=0; y<rows; y++) {
+		for (float x=0; x<columns; x++) {
+			mesh.addTriangle(ofxIndex(x,y,columns+1), ofxIndex(x+1,y,columns+1), ofxIndex(x,y+1,columns+1));
+			mesh.addTriangle(ofxIndex(x+1,y,columns+1), ofxIndex(x+1,y+1,columns+1), ofxIndex(x,y+1,columns+1));
+		}
+	}
+    
+	needUpdate = false;
 }
 
 void pofQuad::draw() {
     //if(!pofBase::currentTexture) return;
-    
-    ofPoint lt=corners[0], rt=corners[1], rb=corners[2], lb=corners[3];
+    ofPoint newTexureSize = textureSize;
+	if(currentTexture != NULL) {
+		newTexureSize = ofPoint(currentTexture->getWidth(), currentTexture->getHeight());
+		if(newTexureSize != textureSize) needUpdate = true;
+		textureSize = newTexureSize;
+	}
+	
+	if(needUpdate) Update();
+	
+    /*ofPoint lt=corners[0], rt=corners[1], rb=corners[2], lb=corners[3];
     float tw = 1;
     float th = 1;
     
-    ofMesh mesh;
+	ofMesh mesh;
     
     for (int x=0; x<=columns; x++) {
         float f = float(x)/columns;
@@ -127,7 +168,7 @@ void pofQuad::draw() {
             mesh.addTriangle(ofxIndex(x,y,columns+1), ofxIndex(x+1,y,columns+1), ofxIndex(x,y+1,columns+1));
             mesh.addTriangle(ofxIndex(x+1,y,columns+1), ofxIndex(x+1,y+1,columns+1), ofxIndex(x,y+1,columns+1));
         }
-    }
+    }*/
     
     if (drawMesh) mesh.draw();
     if (drawVertices) mesh.drawVertices();

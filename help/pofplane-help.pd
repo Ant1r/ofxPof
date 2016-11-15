@@ -1,4 +1,4 @@
-#N canvas 493 497 589 427 10;
+#N canvas 493 331 575 305 10;
 #X declare -lib pof;
 #X obj 5 5 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -16,12 +16,6 @@
 ;
 #X text 31 79 Arguments : width height;
 #X obj 37 247 pofplane 200 200;
-#X obj 162 372 pofwin;
-#X msg 162 345 normalizedtextcoords \$1;
-#X obj 162 323 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X text 126 290 You must activate "normalized texture coordinates"
-for this to work:;
 #X text 14 58 pofplane : draw a (textured) plane.;
 #X obj 37 134 pofimage logo/pOf.png TEX;
 #X msg 66 174 res 2 2;
@@ -30,10 +24,8 @@ for this to work:;
 #X text 34 26 (c) Antoine Rousseau 2015;
 #X text 7 4 Pof: Pd OpenFrameworks externals;
 #X obj 216 17 declare -lib pof;
-#X connect 4 0 16 0;
+#X connect 4 0 12 0;
 #X connect 6 0 10 1;
 #X connect 7 0 10 2;
-#X connect 12 0 11 0;
-#X connect 13 0 12 0;
-#X connect 16 0 10 0;
-#X connect 17 0 10 0;
+#X connect 12 0 10 0;
+#X connect 13 0 10 0;

@@ -12,13 +12,17 @@ class pofPlane;
 class pofPlane: public pofBase {
 	public:
 		pofPlane(t_class *Class, float w, float h):
-			pofBase(Class),width(w), height(h)
+			pofBase(Class),width(w), height(h), resolution(6,4)
 		{ }
 
 		virtual void draw();
 		static void setup(void);
 		
 		float width, height;
+		ofPoint textureSize;
+		ofPoint resolution;
+		
+		ofPlanePrimitive plane;
 };
 
 

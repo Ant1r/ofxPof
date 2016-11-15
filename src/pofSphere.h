@@ -18,7 +18,10 @@ class pofSphere: public pofBase {
 		static void setup(void);
 		
 		float radius;
-		int resolution;	
+		int resolution;
+		
+		ofSpherePrimitive sphere;
+		ofPoint textureSize;
 };
 
 

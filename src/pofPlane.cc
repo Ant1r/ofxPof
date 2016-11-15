@@ -32,7 +32,8 @@ void pofplane_free(void *x)
 void pofplane_res(void *x, float resX, float resY)
 {
 	pofPlane* px = (pofPlane*)(((PdObject*)x)->parent);
-	ofSetPlaneResolution(resX, resY);
+	//ofSetPlaneResolution(resX, resY);
+	px->resolution.set(resX, resY);
 }
 
 void pofPlane::setup(void)
@@ -49,7 +50,17 @@ void pofPlane::draw()
 {
 	float h = height;
 	if(h==0) h = width;
-
-	ofDrawPlane(width, h);
+  
+	plane.set(width, h, resolution.x, resolution.y);
+  
+	ofPoint newTexureSize = textureSize;
+  
+	if(currentTexture != NULL) {
+		newTexureSize = ofPoint(currentTexture->getWidth(), currentTexture->getHeight());
+		if(newTexureSize != textureSize) plane.mapTexCoordsFromTexture(*currentTexture);
+		textureSize = newTexureSize;
+	}
+	plane.draw();
+	//ofDrawPlane(width, h);
 }
 

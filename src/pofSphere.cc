@@ -36,11 +36,23 @@ void pofSphere::setup(void)
 	POF_SETUP(pofsphere_class);
 }
 
+
 void pofSphere::draw()
 {
 	//ofEnableNormalizedTexCoords();
-	if(resolution) ofSetSphereResolution(resolution);
+	//if(resolution) ofSetSphereResolution(resolution);
+	if(resolution) sphere.setResolution(resolution);
+	sphere.setRadius(radius);
+	
+	ofPoint newTexureSize = textureSize;
+  
+	if(currentTexture != NULL) {
+		newTexureSize = ofPoint(currentTexture->getWidth(), currentTexture->getHeight());
+		if(newTexureSize != textureSize) sphere.mapTexCoordsFromTexture(*currentTexture);
+		textureSize = newTexureSize;
+	}
 
-    ofDrawSphere(radius);
+    sphere.draw();
+    //ofDrawSphere(radius);
     //ofDisableNormalizedTexCoords();
 }
