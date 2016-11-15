@@ -36,6 +36,7 @@
 #include "pofFilm.h"
 #include "pofQuad.h"
 #include "pofPath.h"
+#include "pofTexture.h"
 
 #include "version.h"
 
@@ -52,6 +53,7 @@ ofTexture *pofBase::currentTexture = NULL;
 t_symbol *s_build;
 t_symbol *s_system;
 t_symbol *s_backpressed;
+std::map<t_symbol*,ofTexture *> pofBase::textures;
 
 void pofBase::tree_update()
 {
@@ -69,7 +71,7 @@ void pofBase::tree_draw()
 {
 	t_binbuf *bb;
 	
-	while(bb=dequeueToGUI()) {
+	while((bb=dequeueToGUI()) != NULL) {
 	  if(binbuf_getnatom(bb)) message(binbuf_getnatom(bb), binbuf_getvec(bb));
 	  binbuf_free(bb);
 	}
@@ -305,6 +307,7 @@ void pofBase::updateAll() {
 void pofBase::drawAll(){
 	if(doRender) {
 		lock();
+		currentTexture = NULL;
 		if(needBuild) buildAll();
 		ofEnableAlphaBlending(); 
 		if(pofWin::win) pofWin::win->tree_draw();
@@ -421,6 +424,32 @@ t_symbol *makefilename(t_symbol *f, t_canvas *pdcanvas)
 	
 	if(fd > 0) return gensym((string(dirresult)+"/"+string(nameresult)).c_str());
 	else return f; // NULL
+}
+
+string makefilenameString(t_symbol *f, t_canvas *pdcanvas)
+{
+	char dirresult[512];
+	char *nameresult;
+	int fd;
+	
+	if(f->s_name[0] == '@' && f->s_name[1] == '[') {
+		char buf[256];
+		int i = 0;
+		char *in = f->s_name + 2;
+		while((*in) && (*in) != ']') buf[i++] = *in++;
+		if((*in) == ']') {
+			buf[i] = 0;
+			f = gensym( string(pofBase::getString(buf) + string(&f->s_name[i+3])).c_str());
+		}
+	}
+	
+	if(!strncmp(f->s_name, "http", strlen("http"))) return f->s_name;
+		
+	fd = canvas_open(pdcanvas, f->s_name, "",dirresult, &nameresult, 512, 0);
+	close(fd);
+	
+	if(fd > 0) return string(dirresult)+"/"+string(nameresult);
+	else return f->s_name; // NULL
 }
 
 void pofBase::reloadTextures()
@@ -583,6 +612,7 @@ void pofBase::setup() {
 	pofFilm::setup();
 	pofQuad::setup();
 	pofPath::setup();
+	pofTexture::setup();
 		
 	queueClock = clock_new(0,(t_method)dequeueToPdtick);
 	clock_delay(queueClock,100);

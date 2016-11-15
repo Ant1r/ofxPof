@@ -95,9 +95,9 @@ class pofBase {
 		void queueToGUI(t_symbol *s, int argc, t_atom *argv); // queue to tmpGUI, then call tryQueueTmpToGUI.
 		static void tellGUI(void* x, t_symbol *s, int argc, t_atom *argv) // ready to use in class_addmethod
 		{
-	    pofBase* px = (pofBase*)(((PdObject*)x)->parent);
-      px->queueToGUI(s, argc, argv);
-    }
+			pofBase* px = (pofBase*)(((PdObject*)x)->parent);
+			px->queueToGUI(s, argc, argv);
+		}
 
 		static void tryQueueTmpToGUI(void *x); // try_lock toGUImutex then copy tmpQueue to toGUIQueue, 
 		                                       // else retry after delay(0).
@@ -127,6 +127,7 @@ class pofBase {
 		static bool doRender;
 		
 		static ofTexture *currentTexture;
+		static std::map<t_symbol*,ofTexture *> textures;
 		
 		static void pof_build(void *x, t_symbol *s, int argc, t_atom *argv);
 		
@@ -162,7 +163,7 @@ class pofBase {
 };
 
 t_symbol *makefilename(t_symbol *f, t_canvas *pdcanvas);
-
+string makefilenameString(t_symbol *f, t_canvas *pdcanvas);
 
 #define POF_SETUP(CLASS) \
 	class_addmethod(CLASS, (t_method)pofBase::pof_build, gensym("pof_build"), A_GIMME, A_NULL);

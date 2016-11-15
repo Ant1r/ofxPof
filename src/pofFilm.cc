@@ -7,17 +7,22 @@
 
 t_class *poffilm_class;
 
-#define NEXT_FLOAT_ARG(var) if(argc>0) { if(argv->a_type == A_FLOAT) var = atom_getfloat(argv); argv++; argc--; }
+#define NEXT_FLOAT_ARG(var) if((argc>0)&&(argv->a_type == A_FLOAT)) { var = atom_getfloat(argv); argv++; argc--; }
 
 void *poffilm_new(t_symbol *s, int argc, t_atom *argv)
 {
     float w=0, h=0;
     t_float istexture=0;
+    t_symbol *name = NULL;
     
-    if((argc>0) && (argv->a_type == A_SYMBOL)) istexture = 1;
+    if((argc>0) && (argv->a_type == A_SYMBOL)) {
+    	istexture = 1;
+    	name = atom_getsymbol(argv);
+	}
     else {
         NEXT_FLOAT_ARG(w);
         NEXT_FLOAT_ARG(h);
+        if((argc>0) && (argv->a_type == A_SYMBOL)) name = atom_getsymbol(argv);
     }
     
     pofFilm* obj = new pofFilm(poffilm_class, w, h, istexture);
@@ -25,7 +30,8 @@ void *poffilm_new(t_symbol *s, int argc, t_atom *argv)
     if(!istexture){
         floatinlet_new(&obj->pdobj->x_obj, &obj->width);
         floatinlet_new(&obj->pdobj->x_obj, &obj->height);
-    }
+    } 
+    obj->name = name;
 
     obj->pdcanvas = canvas_getcurrent();
 
@@ -34,10 +40,7 @@ void *poffilm_new(t_symbol *s, int argc, t_atom *argv)
 
 void poffilm_free(void *x)
 {
-    pofFilm* px = (pofFilm*)(((PdObject*)x)->parent);
-
-	if(px->player) delete px->player;
-	
+    pofFilm* px = (pofFilm*)(((PdObject*)x)->parent);	
 	delete px;
 }
 
@@ -113,8 +116,9 @@ void pofFilm::draw()
 		player->loadMovie(makefilename(loadedFile, pdcanvas)->s_name/*loadedFile->s_name*/);
 #endif	
         setlocale(LC_ALL, "C"); // WHY DO I HAVE TO DO THAT ??????????? OF changes the locale when loading a video...
-                                          // Without this fix, on a french computer pd starts stringing floating numbers with a comma,
-                                          // e.g. "0,5" which breaks the communication with TclTk GUI and other network connected programs.
+                              // Without this fix, on a french computer pd starts stringing floating numbers with a comma,
+                              // e.g. "0,5" which breaks the communication with TclTk GUI and other network connected programs.
+		if(player&&name) pofBase::textures[name] = &player->getTexture();
 	}
 	
 	if(!player) return;
@@ -152,7 +156,11 @@ void pofFilm::draw()
 		    player->getTextureReference().bind();
 		    pofBase::currentTexture = &player->getTextureReference();
 		}
-		else player->draw(-width/2, -height/2, width, height);
+		else {
+			float h = height;
+			if(!h) h = width * player->getHeight() / player->getWidth(); 
+			player->draw(-width/2, -h/2, width, h);
+		}
 	}
 	//setlocale(LC_ALL, "C");
 }

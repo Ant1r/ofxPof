@@ -35,6 +35,9 @@ class pofFbo: public pofBase {
 		pofFbo(t_class *Class, float w=0, float h=0):pofBase(Class),width(w), height(h), update(true), clear(true) {
 		}
 		virtual ~pofFbo() {
+			lock();
+			if(sfbo) pofsubFbo::let(sfbo);
+			unlock();
 		}
 		
 		virtual void draw();

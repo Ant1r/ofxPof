@@ -14,14 +14,15 @@ class pofImage: public pofBase {
 		pofImage(t_class *Class, t_symbol *f=NULL, 
 			float w=0, float h=0, 
 			float xa=0, float ya=0, float sx=0, float sy=0, float sw=0, float sh=0, 
-			float istext=0):
-				pofBase(Class),file(NULL), displayedFile(NULL), /*savefile(NULL), grabfbo(NULL),*/ width(w), height(h), 
+			float istext=0, t_symbol *_name=NULL):
+				pofBase(Class),file(NULL), displayedFile(NULL), name(_name), width(w), height(h), 
 				xanchor(xa), yanchor(ya), subx(sx), suby(sy), subwidth(sw), subheight(sh), 
 				image(NULL),reservedChanged(false), monitor(false),isTexture(istext!=0) 
 		{
 				m_out2 = outlet_new(&(pdobj->x_obj), 0);
 		}
-		//virtual ~pofImage() { }
+		
+		~pofImage();
 
 		void Update(); // not real "update()" !
 		virtual void draw();
@@ -38,7 +39,7 @@ class pofImage: public pofBase {
 		static void setup(void);
 		static void release(void);
 		
-		t_symbol *file, *displayedFile;
+		t_symbol *file, *displayedFile, *name;
 		//t_symbol *savefile;
 		//t_symbol *grabfbo;
 		

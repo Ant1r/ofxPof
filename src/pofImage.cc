@@ -51,6 +51,7 @@ class pofIm{
 	
 	~pofIm() {
 		images.erase(file);
+		//pofBase::textures.erase(file);
 	}
 	
 	void doLoad(void) {
@@ -71,8 +72,24 @@ class pofIm{
 		}
 	}
 	
+	bool update() {
+		if(!(loaded && im.isAllocated())) return false;
+		
+		if(!im.isUsingTexture())
+		{
+            im.setUseTexture(true);
+            needUpdate = true;
+        }
+        if(needUpdate) {
+        	im.update();
+        	needUpdate = false;
+        }
+		return true;
+	}
+
+	
 	void draw(float x, float y, float w, float h) {
-		if(!loaded) return;
+		/*if(!loaded) return;
 		
 		if(im.isAllocated()) {
 			if(!im.isUsingTexture())
@@ -85,11 +102,12 @@ class pofIm{
             	needUpdate = false;
             }
 			im.draw(x, y, w, h);
-		}
+		}*/
+		if(update()) im.draw(x, y, w, h);
 	}
 		
 	void bind() {
-		if(!loaded) return;
+		/*if(!loaded) return;
 		if(im.isAllocated()) {
 			if(!im.isUsingTexture())
 			{
@@ -100,6 +118,10 @@ class pofIm{
             	im.update();
             	needUpdate = false;
             }
+			im.bind();
+			pofBase::currentTexture = &im.getTexture();
+		}*/
+		if(update()) {
 			im.bind();
 			pofBase::currentTexture = &im.getTexture();
 		}
@@ -179,29 +201,40 @@ t_symbol *s_set, *s_saved, *s_size, *s_monitor, *s_color,
 
 void pofimage_set(void *x, t_symbol *f);
 
+#define NEXT_FLOAT_ARG(var) if((argc>0)&&(argv->a_type == A_FLOAT)) { var = atom_getfloat(argv); argv++; argc--; }
+
 void *pofimage_new(t_symbol *sym,int argc, t_atom *argv)
 {
     t_symbol *file=NULL;
+    t_symbol *name = NULL;
     t_float w=0,h=0,xa=0,ya=0,sx=0,sy=0,sw=0,sh=0,istexture=0;
 
 	if(argc>0) file = atom_getsymbol(&argv[0]);
 
-    if((argc>1)&&(argv[1].a_type == A_SYMBOL)) istexture = 1;
-    else {
- 		if(argc>1) w = atom_getfloat(&argv[1]);
-		if(argc>2) h = atom_getfloat(&argv[2]);
-
-		if(argc>3) xa = atom_getfloat(&argv[3]);
-		if(argc>4) ya = atom_getfloat(&argv[4]);
-
-		if(argc>5) sx = atom_getfloat(&argv[5]);
-		if(argc>6) sy = atom_getfloat(&argv[6]);
-
-		if(argc>7) sw = atom_getfloat(&argv[7]);
-		if(argc>8) sh = atom_getfloat(&argv[8]);
+    if(argc>1) {
+		if(argv[1].a_type == A_SYMBOL) {
+			istexture = 1;
+			name = atom_getsymbol(&argv[1]); 
+		}
+		else {
+			argc--; argv++;
+			NEXT_FLOAT_ARG(w);
+			NEXT_FLOAT_ARG(h);
+		
+			NEXT_FLOAT_ARG(xa);
+			NEXT_FLOAT_ARG(ya);
+		
+			NEXT_FLOAT_ARG(sx);
+			NEXT_FLOAT_ARG(sy);
+		
+			NEXT_FLOAT_ARG(sw);
+			NEXT_FLOAT_ARG(sh);
+		
+			if((argc>0)&&(argv[0].a_type == A_SYMBOL)) name = atom_getsymbol(argv);
+		}
 	}
 	
-    pofImage* obj = new pofImage(pofimage_class, file, w, h, xa, ya, sx, sy, sw, sh, istexture);
+    pofImage* obj = new pofImage(pofimage_class, file, w, h, xa, ya, sx, sy, sw, sh, istexture, name);
     
     floatinlet_new(&obj->pdobj->x_obj, &obj->width);
     floatinlet_new(&obj->pdobj->x_obj, &obj->height);
@@ -216,7 +249,6 @@ void pofimage_free(void *x)
 {
 	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
 
-	if(px->image) pofIm::letImage(px->image);
 	px->unreserveAll();
 	delete px;
 }
@@ -321,11 +353,20 @@ void pofImage::release(void)
 	delete imLoaderHTTP;
 }
 
+pofImage::~pofImage() 
+{ 
+	lock();
+	if(name) pofBase::textures.erase(name); 
+	if(image) pofIm::letImage(image);
+	unlock();
+}
+
 void pofImage::Update()
 {
 	float w, h;
 	t_atom ap[4];
 
+	if(name) pofBase::textures.erase(name);
 	if(monitor) {
 		unsigned int len = imLoader->getLen();
 		unsigned int lenHTTP = imLoaderHTTP->getLen();
@@ -357,6 +398,8 @@ void pofImage::Update()
 			        OF_IMAGE_COLOR_ALPHA);
             w = image->im.getWidth();
 			h = image->im.getHeight();
+			if(name) pofBase::textures[name] = &image->im.getTexture();
+
 		} else w = h = 0;
 	} else w = h = 0;
 	

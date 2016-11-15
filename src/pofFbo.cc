@@ -13,15 +13,20 @@ pofsubFbo::pofsubFbo(t_symbol *n):refCount(1), name(n), width(0), height(0) {
 	sfbos[n] = this;
 	ofAddListener(pofBase::reloadTexturesEvent, this, &pofsubFbo::reloadTexture);
 	//ofAddListener(pofBase::unloadTexturesEvent, this, &pofsubFbo::unloadTexture);
+	pofBase::textures[name] = &fbo.getTexture();
 }
 	
 pofsubFbo::~pofsubFbo() {
 	sfbos.erase(name);
-	ofRemoveListener(pofBase::reloadTexturesEvent, this, &pofsubFbo::reloadTexture);
+	ofRemoveListener(pofBase::reloadTexturesEvent, this, &pofsubFbo::reloadTexture);	
 	//ofRemoveListener(pofBase::unloadTexturesEvent, this, &pofFbo::unloadTexture);
+	pofBase::textures.erase(name);
 }
 
-void pofsubFbo::reloadTexture(ofEventArgs & args) { fbo.allocate(width, height, GL_RGBA); }
+void pofsubFbo::reloadTexture(ofEventArgs & args) { 
+	fbo.allocate(width, height, GL_RGBA); 
+	pofBase::textures[name] = &fbo.getTexture();
+}
 
 pofsubFbo* pofsubFbo::get(t_symbol *name){
 	std::map<t_symbol*,pofsubFbo*>::iterator it;
@@ -52,6 +57,7 @@ void pofsubFbo::begin(float w, float h) {
 			fbo.allocate(width, height, GL_RGBA);
 	}
 	fbo.begin();
+	pofBase::textures[name] = &fbo.getTexture();
 }
 
 void pofsubFbo::end() {
@@ -99,7 +105,7 @@ void *poffbo_new(t_symbol *sym,int argc, t_atom *argv)
 void poffbo_free(void *x)
 {
 	pofFbo *px = (pofFbo*)(((PdObject*)x)->parent);
-	if(px->sfbo) pofsubFbo::let(px->sfbo);
+	//if(px->sfbo) pofsubFbo::let(px->sfbo);
 	delete px;
 }
 

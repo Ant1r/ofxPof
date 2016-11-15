@@ -21,10 +21,15 @@ class pofFilm: public pofBase {
 	public:
 		pofFilm(t_class *Class, float w, float h, float istext):
 			pofBase(Class), player(NULL), width(w), height(h), playing(0), actualPlaying(0), 
-			file(NULL), loadedFile(NULL),isTexture(istext!=0),
+			name(NULL), file(NULL), loadedFile(NULL),isTexture(istext!=0),
 			gotoFrame(-1), speed(1)
 		{ }
-
+		
+		~pofFilm() {
+			if(name) pofBase::textures.erase(name);
+			if(player) delete player;
+		}
+		
 		virtual void draw();
 		virtual void postdraw();
 		static void setup(void);
@@ -35,7 +40,7 @@ class pofFilm: public pofBase {
 		ofVideoPlayer *player;
 #endif
 		float width, height, playing, actualPlaying;
-		t_symbol *file, *loadedFile;
+		t_symbol *name, *file, *loadedFile;
 		bool isTexture;		
 		float gotoFrame;
 		float speed;
