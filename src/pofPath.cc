@@ -8,10 +8,19 @@
 t_class *pofpath_class;
 static t_symbol *s_clear, *s_close, *s_move, *s_line, *s_curve, *s_arc; 
 
+#define NEXT_FLOAT_ARG(var) if((argc>0) && (argv->a_type == A_FLOAT)) { var = atom_getfloat(argv); argv++; argc--; }
 
-void *pofpath_new(t_symbol *s)
+void pofpath_scale(void *x, float width, float height);
+
+void *pofpath_new(t_symbol *s, int argc, t_atom *argv)
 {
     pofPath* obj = new pofPath(pofpath_class);
+
+    float w=0, h=0;
+
+    NEXT_FLOAT_ARG(w);
+    NEXT_FLOAT_ARG(h);
+    pofpath_scale(obj->pdobj, w, h);
     
     return (void*) (obj->pdobj);
 }
@@ -52,6 +61,18 @@ void pofpath_res(void *x, float res)
 	px->path.setCircleResolution(res);
 }
 
+void pofpath_mesh(void *x, float mesh)
+{
+	pofPath* px = (pofPath*)(((PdObject*)x)->parent);
+	px->doMesh = (mesh != 0);
+}
+
+void pofpath_scale(void *x, float width, float height)
+{
+	pofPath* px = (pofPath*)(((PdObject*)x)->parent);
+	px->scale.set(width, height);
+}
+
 void pofpath_tellGui(void *x, t_symbol *s, int argc, t_atom *argv)
 {
 	pofPath* px = (pofPath*)(((PdObject*)x)->parent);
@@ -69,7 +90,7 @@ void pofPath::setup(void)
 	s_arc = gensym("arc");
 	
 	pofpath_class = class_new(gensym("pofpath"), (t_newmethod)pofpath_new, (t_method)pofpath_free,
-		sizeof(PdObject), 0, A_NULL);
+		sizeof(PdObject), 0, A_GIMME, A_NULL);
 	
 	class_addmethod(pofpath_class, (t_method)tellGUI, s_clear,  A_GIMME, A_NULL);
 	class_addmethod(pofpath_class, (t_method)tellGUI, s_close,  A_GIMME, A_NULL);
@@ -83,16 +104,28 @@ void pofPath::setup(void)
 	class_addmethod(pofpath_class, (t_method)pofpath_width, gensym("strokeWidth"), A_FLOAT, A_NULL);
 	class_addmethod(pofpath_class, (t_method)pofpath_filled, gensym("filled"), A_FLOAT, A_NULL);
 	class_addmethod(pofpath_class, (t_method)pofpath_res, gensym("res"), A_FLOAT, A_NULL);
+	class_addmethod(pofpath_class, (t_method)pofpath_mesh, gensym("mesh"), A_FLOAT, A_NULL);
+	class_addmethod(pofpath_class, (t_method)pofpath_scale, gensym("scale"), A_DEFFLOAT, A_DEFFLOAT, A_NULL);
 
 	POF_SETUP(pofpath_class);
 }
 
 void pofPath::draw()
 {
-	path.draw();
+	if(doMesh && (currentTexture != NULL)) {
+		ofMesh mesh = path.getTessellation();
+		ofPoint textureSize(currentTexture->getWidth(), currentTexture->getHeight());
+		if(scale.x && scale.y) for(auto & v: mesh.getVertices()){
+			mesh.addTexCoord(currentTexture->getCoordFromPoint(textureSize.x/scale.x*v.x + 
+					textureSize.x/2 ,textureSize.y/scale.y*v.y + textureSize.y/2 ) );
+		}
+		else for(auto & v: mesh.getVertices()){
+			mesh.addTexCoord(currentTexture->getCoordFromPoint(v.x + textureSize.x/2 ,v.y + textureSize.y/2 ) /*- textureSize/2*/ );
+		}
+		mesh.draw();
+	}
+	else path.draw();
 }
-
-#define NEXT_FLOAT_ARG(var) if(argc>0) { if(argv->a_type == A_FLOAT) var = atom_getfloat(argv); argv++; argc--; }
 
 void pofPath::message(int argc, t_atom *argv)
 {

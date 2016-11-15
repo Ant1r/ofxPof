@@ -12,10 +12,12 @@ class pofPath;
 class pofPath: public pofBase {
 	public:
 		pofPath(t_class *Class):
-			pofBase(Class)
+			pofBase(Class), doMesh(false)
 		{ }
 
 		ofPath path;
+		ofPoint scale;
+		bool doMesh;
 
 		virtual void draw();
 		virtual void message(int  arc, t_atom *argv);
