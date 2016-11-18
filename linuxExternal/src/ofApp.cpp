@@ -12,15 +12,29 @@ class MyThread : public ofThread {
 		//ofSetLogLevel(OF_LOG_VERBOSE);
 
 	    // start
+		/*ofAppGLFWWindow win;  
+		win.setMultiDisplayFullscreen(true); //this makes the fullscreen window span across all your monitors  
 
-		ofSetupOpenGL(600,300, OF_WINDOW);			// <-------- setup the GL context
+		ofSetupOpenGL(&win, 600,300, OF_WINDOW);  
+
+//		ofSetupOpenGL(600,300, OF_WINDOW);			// <-------- setup the GL context*/
+
 		// can be OF_WINDOW or OF_FULLSCREEN
+		ofGLFWWindowSettings settings;
+
+		settings.multiMonitorFullScreen = true;
+		settings.windowMode = OF_WINDOW;
+		settings.width = 600;
+		settings.height = 300;
+		ofCreateWindow(settings);
+
  		ofSetFrameRate(50);
  		ofRunApp(new ofApp());
 	} 
  
 };
 
+MyThread *GUIthread;
 //--------------------------------------------------------------
 void ofApp::exit(){
 	
@@ -50,7 +64,19 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	post("keyPressed %d", key);
+	if(key == 113) { // 'q'
+		pofBase::release();
+		post("pofBase released");
+		ofExit();
+		post("Pof exited");
+		GUIthread->waitForThread(true);
+		post("Pof thread stopped");
+		ofGetWindowPtr()->close();
+		post("window closed");
+		(GUIthread=new MyThread)->startThread(true);//, true);
+		post("pof restarted");
+	}
 }
 
 //--------------------------------------------------------------
@@ -115,7 +141,7 @@ extern "C" {
     /* this is called once at setup time, when this code is loaded into Pd. */
 	void pof_setup(void)
 	{
-		(new MyThread)->startThread(true);//, true);
+		(GUIthread=new MyThread)->startThread(true);//, true);
 		pofBase::setup();
 	}
 }
