@@ -41,7 +41,7 @@
 #include "version.h"
 
 std::list<pofBase*> pofBase::pofobjs;
-std::list<pofBase*> pofobjsToUpdate;
+std::list<pofBase*> pofBase::pofobjsToUpdate;
 ofMutex pofBase::globMutex;
 bool pofBase::needBuild = false;
 ofEvent<ofEventArgs> pofBase::reloadTexturesEvent, pofBase::unloadTexturesEvent;
@@ -50,11 +50,14 @@ deque<std::vector<Any> > pofBase::toPdQueueVec;
 t_clock *pofBase::queueClock;
 bool pofBase::doRender = true;
 ofTexture *pofBase::currentTexture = NULL;
-t_symbol *s_build;
-t_symbol *s_system;
-t_symbol *s_backpressed;
 std::map<t_symbol*,ofTexture *> pofBase::textures;
 int pofBase::watchdogCount = 0;
+
+static t_symbol *s_build;
+static t_symbol *s_system;
+static t_symbol *s_backpressed;
+static t_symbol *s_key;
+
 
 void pofBase::tree_update()
 {
@@ -278,6 +281,29 @@ void pofBase::pof_build(void *x, t_symbol *s, int argc, t_atom *argv)
 	obj->tree_build(parent);
 }
 
+void pofBase::buildAll() {
+	pofobjsToUpdate.clear();
+	
+	std::list<pofBase*>::iterator it = pofobjs.begin();
+	while(it != pofobjs.end()) {
+		(*it)->reset_tree();
+		if((*it)->hasUpdate()) pofobjsToUpdate.push_back(*it);
+		it++;
+	}
+	if(pofWin::win) {
+		std::list<pofHead*>::iterator it2 = pofHead::pofheads.begin();
+	
+		while(it2 != pofHead::pofheads.end()) {
+			(*it2)->tree_build(pofWin::win);
+			it2++;
+		}
+		pofWin::win->touchtree_build(NULL);
+	}
+	
+	needBuild = false;
+}
+
+//--------------------------------------------------------------
 
 void pofBase::updateAll() {
 	
@@ -307,31 +333,6 @@ void pofBase::drawAll(){
 		unlock();
 	}
     ofSetupScreen();
-}
-
-void pofBase::buildAll() {
-	pofobjsToUpdate.clear();
-	
-	std::list<pofBase*>::iterator it = pofobjs.begin();
-	while(it != pofobjs.end()) {
-		(*it)->reset_tree();
-		//if(&((*it)->update) != &pofBase::update) pofobjsToUpdate.push_back(*it);
-		if((*it)->hasUpdate()) pofobjsToUpdate.push_back(*it);
-		it++;
-	}
-	//cout<<"nb obj to update:"<<pofobjsToUpdate.size()<<endl;
-	if(pofWin::win) {
-		std::list<pofHead*>::iterator it2 = pofHead::pofheads.begin();
-	
-		while(it2 != pofHead::pofheads.end()) {
-			(*it2)->tree_build(pofWin::win);
-			it2++;
-		}
-
-		pofWin::win->touchtree_build(NULL);
-	}
-	
-	needBuild = false;
 }
 
 void pofBase::touchDownAll(int x, int y, int id) {
@@ -364,6 +365,28 @@ void pofBase::touchCancelAll() {
 	unlock();
 }
 
+void pofBase::keyPressed(int key){
+	t_atom at[3];
+	t_binbuf *bb = binbuf_new();
+
+	SETSYMBOL(&at[0], s_key);
+	SETFLOAT(&at[1], key);
+	SETFLOAT(&at[2], 1);
+	binbuf_add(bb, 3, at);	
+	sendToPd(bb);
+}
+
+void pofBase::keyReleased(int key){
+	t_atom at[3];
+	t_binbuf *bb = binbuf_new();
+
+	SETSYMBOL(&at[0], s_key);
+	SETFLOAT(&at[1], key);
+	SETFLOAT(&at[2], 0);
+	binbuf_add(bb, 3, at);	
+	sendToPd(bb);
+}
+
 void pofBase::windowResized(int w, int h)
 {
 	//pofWin::windowResizedAll(w,h);
@@ -381,6 +404,8 @@ void pofBase::backPressed()
 	
 	sendToPd(bb);
 }
+
+//--------------------------------------------------------------
 
 void dequeueToPdtick(void* nul)
 {
@@ -567,6 +592,7 @@ void pofBase::setup() {
 	s_build = gensym("pof_build");
 	s_system = gensym("SYSTEM");
 	s_backpressed = gensym("backPressed");
+	s_key = gensym("#pofkey");
 
   printVersionMessage();
     

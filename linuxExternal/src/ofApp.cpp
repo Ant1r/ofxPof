@@ -50,12 +50,12 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	pofBase::keyPressed(key);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+	pofBase::keyReleased(key);
 }
 
 //--------------------------------------------------------------

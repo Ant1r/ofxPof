@@ -117,7 +117,7 @@ class pofBase {
 		
 		// static :
 		
-		static std::list<pofBase*> pofobjs;
+		static std::list<pofBase*> pofobjs, pofobjsToUpdate;
 		static ofMutex globMutex;		
 		static bool needBuild;
 		static ofEvent<ofEventArgs> reloadTexturesEvent, unloadTexturesEvent;
@@ -143,6 +143,8 @@ class pofBase {
 		static void touchUpAll(int x, int y, int id);
 		//static void touchDoubleTapAll(int x, int y, int id); // if you want double tap, do it in the patch ;-)
 		static void touchCancelAll();
+		static void keyPressed(int key);
+		static void keyReleased(int key);
 
 		static void windowResized(int w, int h);
 		
