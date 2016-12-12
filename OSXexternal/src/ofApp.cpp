@@ -150,7 +150,7 @@ void pollEventsMethod(void* nul)
 {
     glfwPollEvents(); // REMOVE THE ONE IN ofAppGLFWWindow::display() !!
 
-    clock_delay(pollEventsClock,10); //poll events every 10ms
+    clock_delay(pollEventsClock,2); //poll events every 2ms
 }
 
 extern "C" {
