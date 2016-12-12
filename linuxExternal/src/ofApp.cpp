@@ -6,6 +6,17 @@
 #include "ofApp.h"
 #include "pofBase.h"
 
+//#include "ofAppGLFWWindow.h"
+
+#if (_MSC_VER)
+#include <GLFW/glfw3.h>
+#else
+#include "GLFW/glfw3.h"
+#endif
+
+t_clock *pollEventsClock;
+bool windowCreated = FALSE;
+
 class MyThread : public ofThread {
  
 	void threadedFunction() {
@@ -16,6 +27,7 @@ class MyThread : public ofThread {
 		ofSetupOpenGL(600,300, OF_WINDOW);			// <-------- setup the GL context
 		// can be OF_WINDOW or OF_FULLSCREEN
  		ofSetFrameRate(50);
+        //ofGetMainLoop()->pollEvents = 0; // YOU NEED TO MAKE "void (*pollEvents)(void)" PUBLIC !!!
  		ofRunApp(new ofApp());
 	} 
  
@@ -45,6 +57,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	windowCreated = TRUE;
 	pofBase::drawAll();
 }
 
@@ -110,6 +123,13 @@ void ofApp::touchUp(ofTouchEventArgs &touch){
 //--------------------------------------------------------------
 /*void ofApp::touchDoubleTap(ofTouchEventArgs &touch){
 }*/
+void pollEventsMethod(void* nul)
+{
+	if(windowCreated) {
+		glfwPollEvents(); // REMOVE THE ONE IN ofAppGLFWWindow::display() !!
+		clock_delay(pollEventsClock,2); //poll events every 2ms
+	} else clock_delay(pollEventsClock,100);
+}
 
 extern "C" {
     /* this is called once at setup time, when this code is loaded into Pd. */
@@ -117,6 +137,10 @@ extern "C" {
 	{
 		(new MyThread)->startThread(true);//, true);
 		pofBase::setup();
+		
+		pollEventsClock = clock_new(0,(t_method)pollEventsMethod);
+        clock_delay(pollEventsClock,100);
+
 	}
 }
 
