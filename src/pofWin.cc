@@ -41,29 +41,29 @@ void pofwin_window(void *x, t_float width, t_float height, t_float fullscreen)
 	if(height<1) height = 1;
 	
 #ifndef TARGET_ANDROID
-	pofBase::lock();
+	pofBase::treeMutex.lockW(); //avoid doing that during the draw
 
 	ofSetWindowShape((int)width,(int)height);
 	ofSetFullscreen(fullscreen!=0);
 	ofSetWindowShape((int)width,(int)height);
-	pofBase::unlock();
+	pofBase::treeMutex.unlockW();
 #endif
 }
 
 void pofwin_pos(void *x, t_float X, t_float Y)
 {
 	x=NULL; /* don't warn about unused variables */
-	pofBase::lock();
+	pofBase::treeMutex.lockW(); //avoid doing that during the draw
 	ofSetWindowPosition((int)X,(int)Y);
-	pofBase::unlock();
+	pofBase::treeMutex.unlockW();
 }
 
 void pofwin_cursor(void *x, t_float cursor)
 {
 	x=NULL; /* don't warn about unused variables */
-	pofBase::lock();
+	pofBase::treeMutex.lockW(); //avoid doing that during the draw
 	if(cursor!=0) ofShowCursor(); else ofHideCursor();
-	pofBase::unlock();
+	pofBase::treeMutex.unlockW();
 }
 
 void pofwin_out(void *x, t_symbol *s, int argc, t_atom *argv)

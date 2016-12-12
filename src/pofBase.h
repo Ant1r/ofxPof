@@ -18,44 +18,42 @@ typedef struct _PdObject {
 	t_float x_f;
 } PdObject;
 
+class RWmutex {
+  public:	
+	ofMutex R;
+	ofMutex W;
+	ofMutex W2;
+	int Rcount;
+	
+	RWmutex():Rcount(0){}
+	void lockR() {
+		R.lock();
+		Rcount++;
+		if(Rcount == 1) W.lock();
+		R.unlock();
+	}
+	void unlockR() {
+		R.lock();
+		Rcount--;
+		if(Rcount == 0) W.unlock();
+		R.unlock();
+	}
+	void lockW() {
+		W2.lock();
+		W.lock();
+	}
+	void unlockW() {
+		W.unlock();
+		W2.unlock();
+	}
+};
+
 class pofBase {
 	public:
-		pofBase(t_class *Class) { 
-			lock();
-			char selfname[16];
-
-			pdobj = (PdObject*)pd_new(Class);
-			pdobj->parent = (pofBase*) this;
-			
-			snprintf(selfname,16 , "pof%p", (void*)this);
-			s_self = gensym(selfname);
-			pd_bind(&pdobj->x_obj.ob_pd, s_self);
-			
-			m_out1 = outlet_new(&(pdobj->x_obj), 0);
-			
-			pofobjs.push_back(this);
-			needBuild = true;
-			
-			tmpToGUIclock = clock_new(&(pdobj->x_obj), (t_method)tryQueueTmpToGUI);
-			
-			unlock();
-		}
+		pofBase(t_class *Class);
 		
-		virtual ~pofBase() { 
-			lock();
-			pd_unbind(&pdobj->x_obj.ob_pd, s_self);
-			pofobjs.remove(this); 
-			if (m_out1) outlet_free(m_out1);
-			needBuild = true;
-			unlock();
-		}
-
-		void detach() {
-			lock();
-			pofobjs.remove(this); 
-			needBuild = true;
-			unlock();
-		}
+		virtual ~pofBase();
+		void detach();
 			
 		virtual void update() {}
 		virtual bool hasUpdate(){ return false;}
@@ -63,9 +61,6 @@ class pofBase {
 		virtual void postdraw() {} // called after objects bellow have been drawn
 		virtual void message(int argc, t_atom *argv) {} // process incoming message from Pd side
 		
-		//virtual void keyPressed(int key);
-		//virtual void keyReleased(int key);
-		//virtual void mouseMoved(int x, int y)  {}
 		virtual bool computeTouch(int &x, int &y) {return false;}
 		virtual bool isTouchable() {return false;}
 		virtual bool touchMoved(int x, int y, int id) {return false;}
@@ -118,7 +113,6 @@ class pofBase {
 		// static :
 		
 		static std::list<pofBase*> pofobjs, pofobjsToUpdate;
-		static ofMutex globMutex;		
 		static bool needBuild;
 		static ofEvent<ofEventArgs> reloadTexturesEvent, unloadTexturesEvent;
 		static deque<t_binbuf*> toPdQueue;
@@ -135,8 +129,17 @@ class pofBase {
 		static void buildAll();
 		static void updateAll();
 		static void drawAll();
-		static void lock() {globMutex.lock();}
-		static void unlock(){globMutex.unlock();}
+
+			//
+		/*static int Rcount;		
+		static ofMutex M_Lect;		
+		static ofMutex M_Red;
+		static ofMutex Red;		
+		static void lockLect();
+		static void unlockLect();
+		static void lockRed();
+		static void unlockRed();*/
+		static RWmutex treeMutex;
 		
 		static void touchDownAll(int x, int y, int id);
 		static void touchMovedAll(int x, int y, int id);

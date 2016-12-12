@@ -355,10 +355,10 @@ void pofImage::release(void)
 
 pofImage::~pofImage() 
 { 
-	lock();
+	pofBase::treeMutex.lockW();
 	if(name) pofBase::textures.erase(name); 
 	if(image) pofIm::letImage(image);
-	unlock();
+	pofBase::treeMutex.unlockW();
 }
 
 void pofImage::Update()
