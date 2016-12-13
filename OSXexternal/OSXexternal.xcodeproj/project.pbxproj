@@ -105,6 +105,8 @@
 		C93BB72F1B13153800FD662B /* version.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6F71B13153700FD662B /* version.h */; };
 		C93BB8391B19066700FD662B /* mac-osx-arrow-cursor-56.png.c in Sources */ = {isa = PBXBuildFile; fileRef = C93BB8381B19066700FD662B /* mac-osx-arrow-cursor-56.png.c */; };
 		C95F512D1B105CF700C8B17A /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C95F512C1B105CF700C8B17A /* ofApp.cpp */; };
+		C9768D2E1DFFF74100F185A0 /* pofTexture.cc in Sources */ = {isa = PBXBuildFile; fileRef = C9768D2C1DFFF74100F185A0 /* pofTexture.cc */; };
+		C9768D2F1DFFF74100F185A0 /* pofTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = C9768D2D1DFFF74100F185A0 /* pofTexture.h */; };
 		C99191301DC89B2A00433B4F /* pofPath.cc in Sources */ = {isa = PBXBuildFile; fileRef = C991912D1DC89B2A00433B4F /* pofPath.cc */; };
 		C99191311DC89B2A00433B4F /* pofPath.h in Headers */ = {isa = PBXBuildFile; fileRef = C991912E1DC89B2A00433B4F /* pofPath.h */; };
 		C99191321DC89B2A00433B4F /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = C991912F1DC89B2A00433B4F /* version.cc */; };
@@ -245,6 +247,8 @@
 		C95F512C1B105CF700C8B17A /* ofApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = "<group>"; };
 		C95F512E1B105CFC00C8B17A /* ofApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = "<group>"; };
 		C95F51311B10AB7000C8B17A /* OF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = OF.xcconfig; sourceTree = "<group>"; };
+		C9768D2C1DFFF74100F185A0 /* pofTexture.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofTexture.cc; sourceTree = "<group>"; };
+		C9768D2D1DFFF74100F185A0 /* pofTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofTexture.h; sourceTree = "<group>"; };
 		C991912D1DC89B2A00433B4F /* pofPath.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofPath.cc; sourceTree = "<group>"; };
 		C991912E1DC89B2A00433B4F /* pofPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofPath.h; sourceTree = "<group>"; };
 		C991912F1DC89B2A00433B4F /* version.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = version.cc; sourceTree = "<group>"; };
@@ -642,6 +646,8 @@
 				C93BB6E61B13153700FD662B /* pofTextbox.h */,
 				C93BB6E71B13153700FD662B /* pofTexts.cc */,
 				C93BB6E81B13153700FD662B /* pofTexts.h */,
+				C9768D2C1DFFF74100F185A0 /* pofTexture.cc */,
+				C9768D2D1DFFF74100F185A0 /* pofTexture.h */,
 				C93BB6E91B13153700FD662B /* pofTouch.cc */,
 				C93BB6EA1B13153700FD662B /* pofTouch.h */,
 				C93BB6EB1B13153700FD662B /* pofTouchable.cc */,
@@ -736,6 +742,7 @@
 				C9ED7F791D7AC70E000FC356 /* pofFilm.h in Headers */,
 				C93BB6631B10BB1300FD662B /* ofTextConverter.h in Headers */,
 				C93BB7281B13153800FD662B /* pofUtil.h in Headers */,
+				C9768D2F1DFFF74100F185A0 /* pofTexture.h in Headers */,
 				C93BB7081B13153700FD662B /* pofFonts.h in Headers */,
 				C93BB7061B13153700FD662B /* pofFont.h in Headers */,
 				C93BB7021B13153700FD662B /* pofColor.h in Headers */,
@@ -864,6 +871,7 @@
 				C93BB7231B13153800FD662B /* pofTouchable.cc in Sources */,
 				C93BB7291B13153800FD662B /* pofVisible.cc in Sources */,
 				C93BB71B1B13153700FD662B /* pofText.cc in Sources */,
+				C9768D2E1DFFF74100F185A0 /* pofTexture.cc in Sources */,
 				C93BB7011B13153700FD662B /* pofColor.cc in Sources */,
 				C99191321DC89B2A00433B4F /* version.cc in Sources */,
 				C93BB7051B13153700FD662B /* pofFont.cc in Sources */,
