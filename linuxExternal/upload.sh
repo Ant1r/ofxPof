@@ -3,25 +3,28 @@
 rm -rf pof/
 mkdir pof/
 
-echo copying help patches...
+echo ; echo copying help patches...
 cp -a ../help/* pof/
 cp ../LICENSE.txt pof/
 
-echo copying example patches...
+echo ; echo copying example patches...
 mkdir pof/example/
 cp -a ../example/pd/* pof/example/
 
 
-echo copying pof external...
+echo ; echo copying pof external...
 cp bin/pof.* pof/
 
 patchelf --set-rpath '$ORIGIN/libs' pof/pof.*
 
 mkdir pof/libs
-echo copying libs...
+echo ; echo copying libs...
 cp -a bin/libs/* pof/libs
 
-LIBS_TO_COPY="freeimage boost_filesystem boost_system openal gstreamer gstbase gstapp gstvideo sndfile GLEW openjpeg IlmImf  IlmThread Half Iex raw"
+LIBS_TO_COPY="freeimage boost_filesystem boost_system openal gstreamer gstbase gstapp gstvideo \
+	sndfile GLEW openjpeg IlmImf IlmThread Half Iex raw gpg-error gcrypt datrie graphite2 \
+	protobuf-lite mirprotobuf mircommon jbig lzma gomp lcms2 jasper jpegxr Xdmcp Xau orc \
+	jxrglue pcre mirclient atspi wayland-client wayland-egl bwayland-cursor Xfixes"
 
 for libtocopy in $LIBS_TO_COPY ; do 
 	libfile=`ldd bin/pof.* | grep lib${libtocopy} | cut -d' ' -f 3`
@@ -30,6 +33,10 @@ for libtocopy in $LIBS_TO_COPY ; do
 	patchelf --set-rpath '$ORIGIN' pof/libs/`basename $libfile`
 	done
 
+echo ; echo copying OF install_dependencies scripts...
+mkdir pof/scripts
+cp -a ../../../scripts/linux/*/ pof/scripts
+echo
 	
 POF_VERSION_MAJOR=`grep "define POF_VERSION_MAJOR" ../src/version.cc | cut -d' ' -f 3`
 POF_VERSION_MINOR=`grep "define POF_VERSION_MINOR" ../src/version.cc | cut -d' ' -f 3`
