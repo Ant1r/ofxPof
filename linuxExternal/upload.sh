@@ -38,14 +38,12 @@ mkdir pof/scripts
 cp -a ../../../scripts/linux/*/ pof/scripts
 echo
 	
-POF_VERSION_MAJOR=`grep "define POF_VERSION_MAJOR" ../src/version.cc | cut -d' ' -f 3`
-POF_VERSION_MINOR=`grep "define POF_VERSION_MINOR" ../src/version.cc | cut -d' ' -f 3`
-POF_VERSION_PATCH=`grep "define POF_VERSION_PATCH" ../src/version.cc | cut -d' ' -f 3`
+POF_VERSION=`strings pof/pof.* | grep "Pof: version" | cut -s -d' ' -f 4`
 
 if [ x$1 == xtest ] ; then
-	deken package --version ${POF_VERSION_MAJOR}.${POF_VERSION_MINOR}.${POF_VERSION_PATCH} pof
+	deken package --version ${POF_VERSION} pof
 else
-	deken upload --no-source-error --version ${POF_VERSION_MAJOR}.${POF_VERSION_MINOR}.${POF_VERSION_PATCH} pof
+	deken upload --no-source-error --version ${POF_VERSION} pof
 	rm -rf pof/
 fi
 

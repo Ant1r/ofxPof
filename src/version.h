@@ -1,4 +1,4 @@
 #pragma once
 
-const char* versionString();
+//const char* versionString();
 void printVersionMessage();
