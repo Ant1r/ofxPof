@@ -20,7 +20,7 @@ class pofFilm;
 class pofFilm: public pofBase {
 	public:
 		pofFilm(t_class *Class, float w, float h, float istext):
-			pofBase(Class), player(NULL), width(w), height(h), playing(0), actualPlaying(0), 
+			pofBase(Class), player(NULL), width(w), height(h), playing(0), actualPlaying(0),
 			name(NULL), file(NULL), loadedFile(NULL),isTexture(istext!=0),
 			gotoFrame(-1), speed(1)
 		{ }
@@ -28,7 +28,9 @@ class pofFilm: public pofBase {
 		~pofFilm() {
 			if(name) pofBase::textures.erase(name);
 			if(player) {
+#ifndef RASPI
 				player->stop();
+#endif
 				delete player;
 			}
 		}
@@ -48,6 +50,7 @@ class pofFilm: public pofBase {
 		float gotoFrame;
 		float speed;
 		t_canvas *pdcanvas;
+		t_outlet *m_out2;
 
 };
 

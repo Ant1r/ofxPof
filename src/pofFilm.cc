@@ -5,11 +5,12 @@
  */
 #include "pofFilm.h"
 
-t_class *poffilm_class;
+static t_class *poffilm_class;
 
 #define NEXT_FLOAT_ARG(var) if((argc>0)&&(argv->a_type == A_FLOAT)) { var = atom_getfloat(argv); argv++; argc--; }
+static t_symbol *s_size;
 
-void *poffilm_new(t_symbol *s, int argc, t_atom *argv)
+static void *poffilm_new(t_symbol *s, int argc, t_atom *argv)
 {
     float w=0, h=0;
     t_float istexture=0;
@@ -35,13 +36,22 @@ void *poffilm_new(t_symbol *s, int argc, t_atom *argv)
 
     obj->pdcanvas = canvas_getcurrent();
 
+	obj->m_out2 = outlet_new(&(obj->pdobj->x_obj), 0);
+
     return (void*) (obj->pdobj);
 }
 
-void poffilm_free(void *x)
+static void poffilm_free(void *x)
 {
     pofFilm* px = (pofFilm*)(((PdObject*)x)->parent);	
 	delete px;
+}
+
+static void poffilm_out(void *x, t_symbol *s, int argc, t_atom *argv)
+{
+    pofFilm* px = (pofFilm*)(((PdObject*)x)->parent);
+
+    outlet_anything(px->m_out2, s, argc, argv);
 }
 
 static void poffilm_load(void *x, t_symbol *f)
@@ -73,8 +83,10 @@ static void poffilm_speed(void *x, t_float s)
 void pofFilm::setup(void)
 {
 	//post("poffilm_setup");
+	s_size = gensym("size");
 	poffilm_class = class_new(gensym("poffilm"), (t_newmethod)poffilm_new, (t_method)poffilm_free,
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
+	class_addmethod(poffilm_class, (t_method)poffilm_out, s_size, A_GIMME, A_NULL);
 	class_addmethod(poffilm_class, (t_method)poffilm_load, gensym("load"), A_SYMBOL, A_NULL);
 	class_addmethod(poffilm_class, (t_method)poffilm_play, gensym("play"), A_FLOAT, A_NULL);
 	class_addmethod(poffilm_class, (t_method)poffilm_goto, gensym("goto"), A_FLOAT, A_NULL);
@@ -118,7 +130,16 @@ void pofFilm::draw()
         setlocale(LC_ALL, "C"); // WHY DO I HAVE TO DO THAT ??????????? OF changes the locale when loading a video...
                               // Without this fix, on a french computer pd starts stringing floating numbers with a comma,
                               // e.g. "0,5" which breaks the communication with TclTk GUI and other network connected programs.
-		if(player&&name) pofBase::textures[name] = &player->getTexture();
+		if(player) {
+			if(name) pofBase::textures[name] = &player->getTexture();
+			t_atom ap[4];
+			float w = player->getWidth(), h = player->getHeight(), len = player->getTotalNumFrames();
+			SETSYMBOL(&ap[0], s_size);
+			SETFLOAT(&ap[1], w);
+			SETFLOAT(&ap[2], h);
+			SETFLOAT(&ap[3], len);
+			queueToSelfPd(4, ap);
+		}
 	}
 	
 	if(!player) return;
