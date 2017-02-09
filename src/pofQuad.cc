@@ -102,8 +102,13 @@ static int ofxIndex(float x, float y, float w) {
 
 void pofQuad::Update() {
 	ofPoint lt=corners[0], rt=corners[1], rb=corners[2], lb=corners[3];
+#ifndef TARGET_OPENGLES
 	float tw = textureSize.x;
 	float th = textureSize.y;
+#else 
+	float tw = 1;
+	float th = 1;
+#endif
 	
 	mesh.clear();
 	for (int x=0; x<=columns; x++) {
