@@ -8,7 +8,7 @@
 static t_class *poffilm_class;
 
 #define NEXT_FLOAT_ARG(var) if((argc>0)&&(argv->a_type == A_FLOAT)) { var = atom_getfloat(argv); argv++; argc--; }
-static t_symbol *s_size;
+static t_symbol *s_size, *s_frame;
 
 static void *poffilm_new(t_symbol *s, int argc, t_atom *argv)
 {
@@ -84,9 +84,11 @@ void pofFilm::setup(void)
 {
 	//post("poffilm_setup");
 	s_size = gensym("size");
+	s_frame = gensym("frame");
 	poffilm_class = class_new(gensym("poffilm"), (t_newmethod)poffilm_new, (t_method)poffilm_free,
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
 	class_addmethod(poffilm_class, (t_method)poffilm_out, s_size, A_GIMME, A_NULL);
+	class_addmethod(poffilm_class, (t_method)poffilm_out, s_frame, A_GIMME, A_NULL);
 	class_addmethod(poffilm_class, (t_method)poffilm_load, gensym("load"), A_SYMBOL, A_NULL);
 	class_addmethod(poffilm_class, (t_method)poffilm_play, gensym("play"), A_FLOAT, A_NULL);
 	class_addmethod(poffilm_class, (t_method)poffilm_goto, gensym("goto"), A_FLOAT, A_NULL);
@@ -172,7 +174,17 @@ void pofFilm::draw()
 			actualPlaying = playing;
 			player->setPaused(!playing);
 		}	
-#endif		
+#endif	
+        int i = player->getCurrentFrame();
+        if(i != currentFrame) {
+            currentFrame = i;
+			t_atom ap[2];
+			float w = player->getWidth(), h = player->getHeight(), len = player->getTotalNumFrames();
+			SETSYMBOL(&ap[0], s_frame);
+			SETFLOAT(&ap[1], currentFrame);
+			queueToSelfPd(2, ap);
+        }   	
+		
 		if(isTexture) {
 		    player->getTextureReference().bind();
 		    pofBase::currentTexture = &player->getTextureReference();

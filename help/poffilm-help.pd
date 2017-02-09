@@ -1,4 +1,4 @@
-#N canvas 592 125 592 517 10;
+#N canvas 588 133 631 614 10;
 #X declare -lib pof;
 #X obj 5 4 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -13,7 +13,7 @@
 #X text 294 125 Inlet 2: width;
 #X text 294 138 Inlet 3: height;
 #X text 7 3 Pof: Pd OpenFrameworks externals;
-#X obj 216 16 declare -lib pof;
+#X obj 326 5 declare -lib pof;
 #X msg 72 248 load \$1;
 #X text 294 111 Inlet 1: load MOVIE.FILE;
 #X msg 97 321 play \$1;
@@ -27,7 +27,7 @@
 #X text 198 163 As a texture : [poffilm tex] image won't be drawn \,
 but instead will be selected for texturing following 3d shapes \; see
 ;
-#X obj 297 194 pofplane;
+#X obj 318 194 pofplane;
 #X obj 37 470 poffilm 500 500;
 #X msg 205 347 speed \$1;
 #X msg 288 264 1;
@@ -46,12 +46,19 @@ but instead will be selected for texturing following 3d shapes \; see
 #X msg 152 266 0.125;
 #X msg 317 264 1.5;
 #X floatatom 205 325 5 0 0 0 - - -, f 5;
+#X obj 139 540 unpack f f f;
+#X floatatom 139 562 5 0 0 3 width - -, f 5;
+#X floatatom 179 562 5 0 0 3 height - -, f 5;
+#X floatatom 233 562 5 0 0 3 nb_frames - -, f 5;
+#X obj 139 499 route size frame;
+#X floatatom 260 531 5 0 0 3 current_frame - -, f 5;
 #X connect 5 0 15 0;
 #X connect 10 0 21 0;
 #X connect 12 0 21 0;
 #X connect 13 0 12 0;
 #X connect 14 0 15 1;
 #X connect 15 0 21 0;
+#X connect 21 1 42 0;
 #X connect 22 0 21 0;
 #X connect 23 0 37 0;
 #X connect 24 0 21 0;
@@ -68,3 +75,8 @@ but instead will be selected for texturing following 3d shapes \; see
 #X connect 35 0 37 0;
 #X connect 36 0 37 0;
 #X connect 37 0 22 0;
+#X connect 38 0 39 0;
+#X connect 38 1 40 0;
+#X connect 38 2 41 0;
+#X connect 42 0 38 0;
+#X connect 42 1 43 0;

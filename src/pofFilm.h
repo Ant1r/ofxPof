@@ -21,6 +21,7 @@ class pofFilm: public pofBase {
 	public:
 		pofFilm(t_class *Class, float w, float h, float istext):
 			pofBase(Class), player(NULL), width(w), height(h), playing(0), actualPlaying(0),
+			currentFrame(0),
 			name(NULL), file(NULL), loadedFile(NULL),isTexture(istext!=0),
 			gotoFrame(-1), speed(1)
 		{ }
@@ -45,6 +46,7 @@ class pofFilm: public pofBase {
 		ofVideoPlayer *player;
 #endif
 		float width, height, playing, actualPlaying;
+		int currentFrame;
 		t_symbol *name, *file, *loadedFile;
 		bool isTexture;		
 		float gotoFrame;
