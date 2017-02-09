@@ -195,15 +195,15 @@ void pofImLoader::threadedFunction() {
 
 //------------------------------------------//
 
-t_class *pofimage_class;
-t_symbol *s_set, *s_saved, *s_size, *s_monitor, *s_color, 
+static t_class *pofimage_class;
+static t_symbol *s_set, *s_saved, *s_size, *s_monitor, *s_color, 
   *s_save, *s_clear, *s_resize, *s_setcolor, *s_grab, *s_grabfbo, *s_crop;
 
-void pofimage_set(void *x, t_symbol *f);
+static void pofimage_set(void *x, t_symbol *f);
 
 #define NEXT_FLOAT_ARG(var) if((argc>0)&&(argv->a_type == A_FLOAT)) { var = atom_getfloat(argv); argv++; argc--; }
 
-void *pofimage_new(t_symbol *sym,int argc, t_atom *argv)
+static void *pofimage_new(t_symbol *sym,int argc, t_atom *argv)
 {
     t_symbol *file=NULL;
     t_symbol *name = NULL;
@@ -245,7 +245,7 @@ void *pofimage_new(t_symbol *sym,int argc, t_atom *argv)
     return (void*) (obj->pdobj);
 }
 
-void pofimage_free(void *x)
+static void pofimage_free(void *x)
 {
 	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
 
@@ -253,19 +253,19 @@ void pofimage_free(void *x)
 	delete px;
 }
 
-void pofimage_set(void *x, t_symbol *f)
+static void pofimage_set(void *x, t_symbol *f)
 {
 	pofImage* px= (pofImage*)(((PdObject*)x)->parent);	
 	px->set(f);
 }
 
-void pofimage_reserve(void *x, t_symbol *f)
+static void pofimage_reserve(void *x, t_symbol *f)
 {
 	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
 	px->reserve(f);
 }
 
-void pofimage_unreserve(void *x, t_symbol *f)
+static void pofimage_unreserve(void *x, t_symbol *f)
 {
 	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
 
@@ -273,7 +273,7 @@ void pofimage_unreserve(void *x, t_symbol *f)
 	else px->unreserve(f);
 }
 
-void pofimage_monitor(void *x, t_float f)
+static void pofimage_monitor(void *x, t_float f)
 {
 	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
 	px->monitor = (f != 0);
@@ -286,7 +286,7 @@ static void pofimage_out(void *x, t_symbol *s, int argc, t_atom *argv)
     outlet_anything(px->m_out2, s, argc, argv);
 }
 
-void pofimage_getcolor(void *x, t_float X, t_float Y)
+static void pofimage_getcolor(void *x, t_float X, t_float Y)
 {
 	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
 	if(px->image == NULL) return;
