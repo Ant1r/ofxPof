@@ -37,6 +37,7 @@
 #include "pofQuad.h"
 #include "pofPath.h"
 #include "pofTexture.h"
+#include "pofShader.h"
 
 #include "version.h"
 
@@ -632,7 +633,7 @@ void pofBase::setup() {
 	s_backpressed = gensym("backPressed");
 	s_key = gensym("#pofkey");
 
-  printVersionMessage();
+	printVersionMessage();
     
 	pof_class = class_new(gensym("pof"), (t_newmethod)pof_new, 0, sizeof(PdObject), 0, A_NULL);
 	
@@ -669,6 +670,7 @@ void pofBase::setup() {
 	pofQuad::setup();
 	pofPath::setup();
 	pofTexture::setup();
+	pofShader::setup();
 		
 	queueClock = clock_new(0,(t_method)dequeueToPdtick);
 	clock_delay(queueClock,100);
