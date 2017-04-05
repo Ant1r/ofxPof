@@ -1,4 +1,4 @@
-#N canvas 410 131 967 607 10;
+#N canvas 412 125 967 607 10;
 #X declare -lib pof;
 #X msg 257 101 load shader/blur;
 #X msg 61 297 play \$1;
@@ -15,25 +15,25 @@
 #X obj 65 142 pofimage img/moon.jpg 500 im2;
 #X msg 270 124 load shader/blur.vert shader/blur.frag;
 #X obj 283 148 hsl 128 15 0.1 10 1 0 empty empty empty -2 -8 0 10 -262144
--1 -1 7000 1;
+-1 -1 0 1;
 #X obj 257 216 t a;
 #X obj 258 490 t a;
 #X obj 297 359 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -258113
--1 -1 7500 1;
-#X obj 295 322 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+-1 -1 0 1;
+#X obj 295 322 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 298 280 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 12700 1;
+-1 -1 12400 1;
 #X msg 295 299 f alpha \$1;
 #X msg 118 297 print;
 #X obj 294 445 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -128992
--1 -1 2400 1;
+-1 -1 7400 1;
 #X obj 292 406 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 435 404 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 5800 1;
+-1 -1 2100 1;
 #X obj 435 446 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 9600 1;
+-1 -1 2600 1;
 #X msg 258 256 load shader/colorEngine;
 #X msg 294 377 3f color 1 \$1 \$1;
 #X msg 295 339 f colorOn \$1;
@@ -42,13 +42,13 @@
 #X msg 432 464 f chromaFade \$1;
 #X msg 292 423 f chromaKeyOn \$1;
 #X obj 294 533 hsl 128 15 -1 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 4700 1;
+-1 -1 7100 1;
 #X msg 291 570 f brightness \$1;
 #X obj 291 496 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X msg 291 513 f bcsOn \$1;
 #X obj 431 532 hsl 128 15 1 8 1 0 empty empty empty -2 -8 0 10 -262144
--1 -1 12500 1;
+-1 -1 12700 1;
 #X msg 428 572 f contrast \$1;
 #X floatatom 428 552 5 0 0 0 - - -, f 5;
 #X floatatom 291 553 5 0 0 0 - - -, f 5;
@@ -78,6 +78,14 @@ POFTEXTURE, f 65;
 #X text 34 25 (c) Antoine Rousseau 2017;
 #X text 524 115 to the glsl uniform VAR \, which must be a sampler2D
 or sampler2DRect.;
+#X msg 645 223 2f distance \$1 \$1;
+#X floatatom 645 205 5 0 0 0 - - -, f 5;
+#X obj 648 186 hsl 128 15 0.001 0.2 1 0 empty empty empty -2 -8 0 10
+-262144 -1 -1 0 1;
+#X obj 622 254 t a;
+#X msg 622 158 load shader/blurES;
+#X text 531 157 GLES (raspi);
+#X msg 431 256 load shader/colorEngineES \, f alpha 1, f 26;
 #X connect 0 0 14 0;
 #X connect 1 0 46 0;
 #X connect 2 0 1 0;
@@ -117,3 +125,9 @@ or sampler2DRect.;
 #X connect 38 0 37 0;
 #X connect 39 0 33 0;
 #X connect 46 0 7 0;
+#X connect 58 0 61 0;
+#X connect 59 0 58 0;
+#X connect 60 0 59 0;
+#X connect 61 0 46 0;
+#X connect 62 0 61 0;
+#X connect 64 0 15 0;
