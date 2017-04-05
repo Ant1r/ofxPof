@@ -66,8 +66,10 @@ void pofShader::setup(void)
 
 void pofShader::draw()
 {
-	if(doShader) shader.begin();
-	sendUniforms();
+	if(doShader) {
+		shader.begin();
+		sendUniforms();
+	}
 }
 
 void pofShader::postdraw()
@@ -130,7 +132,11 @@ void pofShader::sendUniforms(){
 			shader.setUniform3f(it->first, it->second.f[0], it->second.f[1], it->second.f[2]);
 		} else if(it->second.type == GL_FLOAT_VEC4) {
 			shader.setUniform4f(it->first, it->second.f[0], it->second.f[1], it->second.f[2], it->second.f[3]);
-		} else if(it->second.type == GL_SAMPLER_2D || it->second.type == GL_SAMPLER_2D_RECT) {
+		} else if(it->second.type == GL_SAMPLER_2D 
+#ifndef TARGET_OPENGLES
+			|| it->second.type == GL_SAMPLER_2D_RECT
+#endif
+			) {
 			shader.setUniformTexture(it->first, *pofBase::textures[it->second.sym], (int)it->second.f[0]);
 		}
 	}
@@ -207,7 +213,10 @@ void pofShader::message(int argc, t_atom *argv)
 		if((argc < 3) || (argv->a_type != A_SYMBOL) || ((argv + 1)->a_type != A_SYMBOL)) return;
 		std::cout<<"set texture:"<<atom_getsymbol(argv)->s_name<<"->"<<atom_getsymbol(argv + 1)->s_name<<","<<atom_getfloat(argv + 2)<<endl;
 		if(uniforms[atom_getsymbol(argv)->s_name].type == GL_SAMPLER_2D
-		|| uniforms[atom_getsymbol(argv)->s_name].type == GL_SAMPLER_2D_RECT) {
+#ifndef TARGET_OPENGLES
+		|| uniforms[atom_getsymbol(argv)->s_name].type == GL_SAMPLER_2D_RECT
+#endif
+		) {
 			std::cout<<"set texture ok"<<endl;
 			uniforms[atom_getsymbol(argv)->s_name].sym = atom_getsymbol(argv + 1); // symbolic texture name
 			uniforms[atom_getsymbol(argv)->s_name].f[0] = atom_getfloat(argv + 2); // texture location

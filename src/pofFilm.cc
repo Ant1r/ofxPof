@@ -133,7 +133,7 @@ void pofFilm::draw()
                               // Without this fix, on a french computer pd starts stringing floating numbers with a comma,
                               // e.g. "0,5" which breaks the communication with TclTk GUI and other network connected programs.
 		if(player) {
-			if(name) pofBase::textures[name] = &player->getTexture();
+			if(name) pofBase::textures[name] = &player->getTextureReference();
 			t_atom ap[4];
 			float w = player->getWidth(), h = player->getHeight(), len = player->getTotalNumFrames();
 			SETSYMBOL(&ap[0], s_size);

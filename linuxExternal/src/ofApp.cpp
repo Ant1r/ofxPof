@@ -8,13 +8,22 @@
 
 //#include "ofAppGLFWWindow.h"
 
+#ifdef TARGET_LINUX_ARM
+#define RASPI
+#endif
+
+#ifndef RASPI
 #if (_MSC_VER)
 #include <GLFW/glfw3.h>
 #else
 #include "GLFW/glfw3.h"
 #endif
+#endif
 
+#ifndef RASPI
 t_clock *pollEventsClock;
+#endif
+
 bool windowCreated = FALSE;
 
 class MyThread : public ofThread {
@@ -23,8 +32,13 @@ class MyThread : public ofThread {
 		//ofSetLogLevel(OF_LOG_VERBOSE);
 
 	    // start
-
+#ifdef RASPI
+        ofGLESWindowSettings settings;
+        settings.glesVersion = 2;
+        ofCreateWindow(settings);
+#else
 		ofSetupOpenGL(600,300, OF_WINDOW);			// <-------- setup the GL context
+#endif
 		// can be OF_WINDOW or OF_FULLSCREEN
  		ofSetFrameRate(50);
         //ofGetMainLoop()->pollEvents = 0; // YOU NEED TO MAKE "void (*pollEvents)(void)" PUBLIC !!!
@@ -123,6 +137,7 @@ void ofApp::touchUp(ofTouchEventArgs &touch){
 //--------------------------------------------------------------
 /*void ofApp::touchDoubleTap(ofTouchEventArgs &touch){
 }*/
+#ifndef RASPI
 void pollEventsMethod(void* nul)
 {
 	if(windowCreated) {
@@ -130,6 +145,7 @@ void pollEventsMethod(void* nul)
 		clock_delay(pollEventsClock,2); //poll events every 2ms
 	} else clock_delay(pollEventsClock,100);
 }
+#endif
 
 extern "C" {
     /* this is called once at setup time, when this code is loaded into Pd. */
@@ -138,9 +154,10 @@ extern "C" {
 		(new MyThread)->startThread(true);//, true);
 		pofBase::setup();
 		
+#ifndef RASPI
 		pollEventsClock = clock_new(0,(t_method)pollEventsMethod);
         clock_delay(pollEventsClock,100);
-
+#endif
 	}
 }
 
