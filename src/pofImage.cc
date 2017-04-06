@@ -89,38 +89,10 @@ class pofIm{
 
 	
 	void draw(float x, float y, float w, float h) {
-		/*if(!loaded) return;
-		
-		if(im.isAllocated()) {
-			if(!im.isUsingTexture())
-			{
-                im.setUseTexture(true);
-                needUpdate = true;
-            }
-            if(needUpdate) {
-            	im.update();
-            	needUpdate = false;
-            }
-			im.draw(x, y, w, h);
-		}*/
 		if(update()) im.draw(x, y, w, h);
 	}
 		
 	void bind() {
-		/*if(!loaded) return;
-		if(im.isAllocated()) {
-			if(!im.isUsingTexture())
-			{
-                im.setUseTexture(true);
-                needUpdate = true;
-            }
-            if(needUpdate) {
-            	im.update();
-            	needUpdate = false;
-            }
-			im.bind();
-			pofBase::currentTexture = &im.getTexture();
-		}*/
 		if(update()) {
 			im.bind();
 			pofBase::currentTexture = &im.getTexture();
@@ -303,6 +275,65 @@ static void pofimage_getcolor(void *x, t_float X, t_float Y)
 	} 
 }
 
+static void pofimage_setcolors(void *x, t_symbol *s, int argc, t_atom *argv)
+{
+	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
+	t_atom ap[4];
+	int length;
+	// X Y NUM tableR tableG tableB tableA [offsetR offsetG offsetB offsetA]
+	if(argc < 6) return;
+	SETFLOAT(&ap[0], atom_getfloat(&argv[0]));
+	SETFLOAT(&ap[1], atom_getfloat(&argv[1]));
+	SETFLOAT(&ap[2], length = atom_getfloat(&argv[2]));
+	
+	if(argv[3].a_type != A_SYMBOL || argv[4].a_type != A_SYMBOL || argv[5].a_type != A_SYMBOL)
+		return;
+		
+	t_garray *R, *G, *B, *A;
+	int lenR, lenG, lenB, lenA;
+	int offsetR = 0, offsetG = 0, offsetB = 0, offsetA = 0;
+	t_word *vecR, *vecG, *vecB, *vecA = NULL;
+	
+	if (!(R = (t_garray *)pd_findbyclass(atom_getsymbol(&argv[3]), garray_class)))
+		error("%s: no such array", atom_getsymbol(&argv[3])->s_name);
+	else if (!garray_getfloatwords(R, &lenR, &vecR))
+		error("%s: bad template for tabdump", atom_getsymbol(&argv[3])->s_name);
+		
+	else if (!(G = (t_garray *)pd_findbyclass(atom_getsymbol(&argv[4]), garray_class)))
+		error("%s: no such array", atom_getsymbol(&argv[4])->s_name);
+	else if (!garray_getfloatwords(G, &lenG, &vecG))
+		error("%s: bad template for tabdump", atom_getsymbol(&argv[4])->s_name);
+		
+	else if (!(B = (t_garray *)pd_findbyclass(atom_getsymbol(&argv[5]), garray_class)))
+		error("%s: no such array", atom_getsymbol(&argv[5])->s_name);
+	else if (!garray_getfloatwords(B, &lenB, &vecB))
+		error("%s: bad template for tabdump", atom_getsymbol(&argv[5])->s_name);
+	else {
+		if(argc > 6 && argv[6].a_type == A_SYMBOL) {
+			if (!(A = (t_garray *)pd_findbyclass(atom_getsymbol(&argv[6]), garray_class)))
+				error("%s: no such array", atom_getsymbol(&argv[6])->s_name);
+			else if (!garray_getfloatwords(A, &lenA, &vecA))
+				error("%s: bad template for tabdump", atom_getsymbol(&argv[6])->s_name);
+			argc-- ;argv++;
+		}
+		if(argc > 6) offsetR = atom_getfloat(&argv[6]);
+		if(argc > 7) offsetG = atom_getfloat(&argv[7]);
+		if(argc > 8) offsetB = atom_getfloat(&argv[8]);
+		if(argc > 9) offsetA = atom_getfloat(&argv[9]);
+		
+		t_float *colors = (t_float *)getbytes(length * 4 * sizeof(t_float));
+		for(int i = 0 ; i < length ; i++) {
+			colors[4 * i      ] = (i + offsetR < lenR) ? vecR[i + offsetR].w_float : 0.0;
+			colors[(4 * i) + 1] = (i + offsetG < lenG) ? vecG[i + offsetG].w_float : 0.0;
+			colors[(4 * i) + 2] = (i + offsetB < lenB) ? vecB[i + offsetB].w_float : 0.0;
+			colors[(4 * i) + 3] = vecA && (i + offsetA < lenA) ? vecA[i + offsetA].w_float : 1.0;
+		}
+		ap[3].a_type=A_POINTER;
+		ap[3].a_w.w_gpointer=(t_gpointer *)colors;
+		pofBase::tellGUI(x, s_setcolor, 4, ap);
+	}
+}
+
 void pofImage::setup(void)
 {
 	//post("pofimage_setup");
@@ -327,14 +358,15 @@ void pofImage::setup(void)
 	class_addmethod(pofimage_class, (t_method)pofimage_unreserve, gensym("unreserve"), A_SYMBOL, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_monitor, gensym("setmonitor"), A_FLOAT, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_getcolor, gensym("getcolor"), A_FLOAT, A_FLOAT, A_NULL);
+	class_addmethod(pofimage_class, (t_method)pofimage_setcolors, gensym("setcolors"),	A_GIMME, A_NULL);
 	
-	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("save"),    A_GIMME, A_NULL);
-	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("setcolor"),A_GIMME, A_NULL);
-	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("resize"),  A_GIMME, A_NULL);
-	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("crop"),    A_GIMME, A_NULL);
-	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("clear"),   A_GIMME, A_NULL);
-	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("grab"),    A_GIMME, A_NULL);
-	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("grabfbo"), A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("save"),    	A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("setcolor"),	A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("resize"),  	A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("crop"),    	A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("clear"),   	A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("grab"),    	A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("grabfbo"), 	A_GIMME, A_NULL);
 	
 	class_addmethod(pofimage_class, (t_method)pofimage_out, s_size, A_GIMME, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_out, s_monitor, A_GIMME, A_NULL);
@@ -508,20 +540,43 @@ void pofImage::message(int argc, t_atom *argv)
 		}
 	} 
 	else if(key == s_setcolor) {
-		if(argc < 6) return;
-		t_float X=0.0, Y=0.0, R=0.0, G=0.0, B=0.0, A=1.0;	 	
-		if(argc>0) X = atom_getfloat(&argv[0]);
-		if(argc>1) Y = atom_getfloat(&argv[1]);
-		if(argc>2) R = atom_getfloat(&argv[2]);
-		if(argc>3) G = atom_getfloat(&argv[3]);
-		if(argc>4) B = atom_getfloat(&argv[4]);
-		if(argc>5) A = atom_getfloat(&argv[5]);
+		if(argc > 5) {
+			t_float X=0.0, Y=0.0, R=0.0, G=0.0, B=0.0, A=1.0;	 	
+			X = atom_getfloat(&argv[0]);
+			Y = atom_getfloat(&argv[1]);
+			R = atom_getfloat(&argv[2]);
+			G = atom_getfloat(&argv[3]);
+			B = atom_getfloat(&argv[4]);
+			A = atom_getfloat(&argv[5]);
 
-		if(image->loaded) {
-			image->im.setColor(ofClamp(X, 0, image->im.getWidth()-1), ofClamp(Y, 0, image->im.getHeight()-1), 
-				ofColor(R*255.0, G*255.0, B*255.0, A*255.0));
+			if(image->loaded) {
+				image->im.setColor(ofClamp(X, 0, image->im.getWidth()-1), ofClamp(Y, 0, image->im.getHeight()-1), 
+					ofColor(R*255.0, G*255.0, B*255.0, A*255.0));
+				image->needUpdate = true;
+			}
+		} else if(argc == 4 && argv[3].a_type == A_POINTER) {
+			unsigned int X = (int)atom_getfloat(&argv[0]);
+			unsigned int Y = (int)atom_getfloat(&argv[1]);
+			unsigned int length = (int)atom_getfloat(&argv[2]);
+			t_float *colors = (t_float *)argv[3].a_w.w_gpointer;
+			unsigned int i;
+			unsigned int W = image->im.getWidth();
+			unsigned int H = image->im.getHeight();
+			if(X >= W || Y >= H) return;
+			for(i = 0; i < length ; i++) {
+				image->im.setColor(X, Y, ofColor(
+					ofClamp(colors[4 * i], 0, 1) * 255.0, ofClamp(colors[4 * i + 1], 0, 1) * 255.0, 
+					ofClamp(colors[4 * i + 2], 0, 1) * 255.0, ofClamp(colors[4 * i + 3], 0, 1) * 255.0));
+				X++;
+				if(X >= W) {
+					X = 0;
+					Y++;
+					if(Y >= H) break;
+				}
+			}
+			freebytes(colors, 4 * length * sizeof(t_float));
 			image->needUpdate = true;
-		} 
+		}
 	} 
 	else if(key == s_resize) {
 		if(argc < 1) return;
