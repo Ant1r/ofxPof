@@ -123,6 +123,13 @@ void poffbo_clear(void *x, t_float c)
 	px->clear = (c!=0);
 }
 
+void poffbo_quality(void *x, t_float q)
+{
+	pofFbo *px = (pofFbo*)(((PdObject*)x)->parent);
+
+	px->quality = (q!=0);
+}
+
 void poffbo_set(void *x, t_symbol *name)
 {
 	pofFbo *px = (pofFbo*)(((PdObject*)x)->parent);
@@ -137,7 +144,8 @@ void pofFbo::setup(void)
 	poffbo_class = class_new(gensym("poffbo"), (t_newmethod)poffbo_new, (t_method)poffbo_free,
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
 	class_addfloat(poffbo_class, (t_method)poffbo_float);
-	class_addmethod(poffbo_class, (t_method)poffbo_clear, gensym("clear"), A_FLOAT, A_NULL);	
+	class_addmethod(poffbo_class, (t_method)poffbo_clear, gensym("clear"), A_FLOAT, A_NULL);
+	class_addmethod(poffbo_class, (t_method)poffbo_quality, gensym("quality"), A_FLOAT, A_NULL);
 	class_addmethod(poffbo_class, (t_method)poffbo_set, gensym("set"), A_SYMBOL, A_NULL);
 	POF_SETUP(poffbo_class);
 }
@@ -145,6 +153,8 @@ void pofFbo::setup(void)
 void pofFbo::draw()
 {
 	sfbo->begin(width, height);
+	if(!quality) sfbo->fbo.getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
+	else sfbo->fbo.getTexture().setTextureMinMagFilter(GL_LINEAR, GL_LINEAR);
 	if(update) {
 		if(clear) ofClear(255,255,255, 0);
 		ofTranslate(sfbo->width/2, sfbo->height/2);

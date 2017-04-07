@@ -32,7 +32,8 @@ class pofsubFbo	{
 
 class pofFbo: public pofBase {
 	public:
-		pofFbo(t_class *Class, float w=0, float h=0):pofBase(Class),width(w), height(h), update(true), clear(true) {
+		pofFbo(t_class *Class, float w=0, float h=0):
+			pofBase(Class),width(w), height(h), update(true), clear(true), quality(true) {
 		}
 		virtual ~pofFbo() {
 			treeMutex.lockW();
@@ -53,6 +54,7 @@ class pofFbo: public pofBase {
 		pofsubFbo *sfbo;
 		bool update;
 		bool clear;
+		bool quality;
 };
 
 
