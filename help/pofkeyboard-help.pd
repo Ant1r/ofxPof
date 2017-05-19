@@ -1,4 +1,4 @@
-#N canvas 525 411 485 311 10;
+#N canvas 523 415 485 311 10;
 #X declare -lib pof;
 #X floatatom 51 185 5 0 0 0 - - -, f 5;
 #X obj 51 153 unpack f f;
@@ -16,9 +16,9 @@
 0 1;
 #X obj 387 203 tgl 15 0 empty empty Shift_R -10 21 0 10 -262144 -1
 -1 0 1;
-#X obj 54 244 hsl 30 30 0 127 0 0 empty empty :y 0 15 0 20 -1 -1 -262144
-0 1;
-#N canvas 1 89 450 300 label 0;
+#X obj 54 244 hsl 30 30 0 127 0 0 empty empty empty 0 15 0 20 -1 -1
+-262144 0 1;
+#N canvas 1 93 450 300 label 0;
 #X obj 118 37 inlet;
 #X obj 210 181 outlet;
 #X obj 118 65 moses 32;
@@ -28,12 +28,16 @@
 #X text 220 109 reject backslash;
 #X obj 171 86 moses 123;
 #X msg 210 152 label :\$1;
+#X obj 320 129 loadbang;
+#X msg 320 150 label;
 #X connect 0 0 2 0;
 #X connect 2 1 7 0;
 #X connect 3 0 8 0;
 #X connect 4 1 3 0;
 #X connect 7 0 4 0;
 #X connect 8 0 1 0;
+#X connect 9 0 10 0;
+#X connect 10 0 1 0;
 #X restore 51 216 pd label;
 #X obj 51 131 r #pofkey;
 #X obj 197 132 r #pofkey;

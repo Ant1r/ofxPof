@@ -408,6 +408,7 @@ void pofBase::keyPressed(int key){
 	t_atom at[3];
 	t_binbuf *bb = binbuf_new();
 
+	if(!s_key->s_thing) return; // return if s_key is not bound (nobody listen...)
 	SETSYMBOL(&at[0], s_key);
 	SETFLOAT(&at[1], key);
 	SETFLOAT(&at[2], 1);
@@ -419,6 +420,7 @@ void pofBase::keyReleased(int key){
 	t_atom at[3];
 	t_binbuf *bb = binbuf_new();
 
+	if(!s_key->s_thing) return; // return if s_key is not bound (nobody listen...)
 	SETSYMBOL(&at[0], s_key);
 	SETFLOAT(&at[1], key);
 	SETFLOAT(&at[2], 0);
