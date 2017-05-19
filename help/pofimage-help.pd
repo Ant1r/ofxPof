@@ -1,4 +1,4 @@
-#N canvas 492 81 912 589 10;
+#N canvas 551 119 912 733 10;
 #X declare -lib pof;
 #X obj 5 4 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -10,18 +10,18 @@
 #X obj 32 527 cnv 15 180 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
 #X obj 38 91 pofhead;
-#X text 294 125 Inlet 2: width;
+#X text 349 85 Inlet 2: width;
 #X floatatom 118 504 5 0 0 0 - - -, f 5;
 #X floatatom 198 502 5 0 0 0 - - -, f 5;
-#X text 294 138 Inlet 3: height;
+#X text 349 98 Inlet 3: height;
 #X text 11 57 pofimage : draw an image from a file.;
 #X floatatom 198 607 5 0 0 0 - - -, f 5;
 #X floatatom 255 608 5 0 0 0 - - -, f 5;
 #X obj 198 587 unpack f f;
 #X text 196 621 get image size;
 #X msg 56 127 set img/pd.png;
-#X text 212 98 Arguments : file [width [height]];
-#X text 294 111 Inlet 1: set IMAGE.FILE;
+#X text 267 58 Arguments : file [width [height]];
+#X text 349 71 Inlet 1: set IMAGE.FILE;
 #X msg 63 150 set img/of.png;
 #X msg 73 170 set logo/pOf.png;
 #X obj 39 536 pofimage logo/pOf.png 200 0;
@@ -63,10 +63,10 @@
 #X connect 6 0 2 0;
 #X connect 7 0 1 0;
 #X restore 44 670 pd ALIAS_prefixed_path;
-#X text 198 163 As a texture : file TEX : then image won't be drawn
+#X text 253 123 As a texture : file TEX : then image won't be drawn
 \, but instead will be selected for texturing following 3d shapes \;
 see;
-#X obj 240 194 pofplane;
+#X obj 295 154 pofplane;
 #X msg 92 218 set https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/PofPlayer.jpg
 ;
 #X msg 110 356 reserve https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/PofPlayer.jpg
@@ -196,7 +196,7 @@ see;
 #X msg 559 302 setcolors;
 #X text 651 296 args: X Y len tabR tabG tabB [tabA] [offsetR offsetG
 offsetB], f 35;
-#N canvas 486 81 541 589 test_setcolors 1;
+#N canvas 482 89 541 589 test_setcolors 0;
 #X obj 21 345 outlet;
 #N canvas 0 50 450 250 (subpatch) 0;
 #X array tabR 100 float 3;
@@ -215,16 +215,14 @@ offsetB], f 35;
 #X restore 271 29 graph;
 #N canvas 0 50 450 250 (subpatch) 0;
 #X array tabG 100 float 3;
-#A 0 0 0 0.02 0.0599999 0.11 0.16 0.22 0.27 0.32 0.36 0.41 0.44 0.5
-0.579999 0.659999 0.739999 0.799999 0.859999 0.919999 0.969999 0.999999
-0.999999 0.989999 0.969999 0.739999 0.679999 0.579999 0.42 0.29 0.23
-0.18 0.14 0.0699999 0.0599999 0.05 0.04 0.04 0.0599999 0.11 0.14 0.2
-0.28 0.35 0.44 0.549999 0.629999 0.699999 0.849999 0.949999 1.01 1.01
-1.01 0.989999 0.959999 0.909999 0.779999 0.649999 0.48 0.33 0.0899999
-0.05 0.03 0.02 0.03 0.04 0.05 0.0699999 0.0899999 0.11 0.19 0.27 0.41
-0.539999 0.639999 0.719999 0.769999 0.989999 1.01 1.01 1.01 1.01 0.999999
-0.969999 0.909999 0.819999 0.759999 0.689999 0.569999 0.45 0.38 0.26
-0.14 0.05 0.02 0 0.00999999 0.02 0.02 0.03 0.22;
+#A 0 0 0 0.02 0.0599999 0.11 0.16 0.22 0.27 0.32 0.35 0.37 0.39 0.41
+0.43 0.44 0.46 0.47 0.48 0.49 0.88 0.73 0.67 0.66 0.65 0.76 0.75 0.74
+0.72 0.69 0.68 0.67 0.65 0.64 0.63 0.62 0.61 0.61 0.6 0.59 0.58 0.57
+0.56 0.55 0.55 0.54 0.54 0.52 0.52 0.51 0.5 0.5 0.49 0.48 0.46 0.44
+0.43 0.42 0.41 0.39 0.38 0.37 0.35 0.34 0.32 0.31 0.29 0.27 0.25 0.22
+0.21 0.19 0.19 0.17 0.17 0.18 0.18 0.18 0.19 0.2 0.23 0.24 0.26 0.969999
+0.909999 0.819999 0.759999 0.689999 0.569999 0.45 0.38 0.26 0.14 0.05
+0.02 0 0.00999999 0.02 0.02 0.03 0.22;
 #X coords 0 1 100 0 200 100 1 0 0;
 #X restore 271 150 graph;
 #N canvas 0 50 450 250 (subpatch) 0;
@@ -265,6 +263,7 @@ offsetB], f 35;
 #X connect 7 0 0 0;
 #X connect 8 0 0 0;
 #X restore 566 321 pd test_setcolors;
+#X obj 362 154 poftexture;
 #X connect 5 0 20 0;
 #X connect 7 0 20 1;
 #X connect 8 0 20 2;
