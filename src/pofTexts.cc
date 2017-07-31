@@ -11,7 +11,7 @@ static t_symbol *s_out, *s_size;
 
 void *poftexts_new(t_symbol *font, t_float size, t_float xanchor, t_float yanchor, /*t_float space,*/ t_float spacing)
 {
-    if(spacing == 0) spacing = 1;
+    //if(spacing == 0) spacing = 1;
     if(size < 1) size = 1;
     pofTexts* obj = new pofTexts(poftexts_class, font, size, xanchor, yanchor, /*space,*/ spacing);
     obj->pdcanvas = canvas_getcurrent();
@@ -80,6 +80,13 @@ void poftexts_spacing(void *x, t_float spacing)
 	px->mustUpdate = true;
 }
 
+void poftexts_center(void *x, t_float center)
+{
+	pofTexts* px= (pofTexts*)(((PdObject*)x)->parent);
+	px->center = (center != 0) ;
+	px->mustUpdate = true;
+}
+
 void poftexts_width(void *x, t_float w)
 {
 	pofTexts* px= (pofTexts*)(((PdObject*)x)->parent);
@@ -141,7 +148,8 @@ void pofTexts::setup(void)
 	class_addmethod(poftexts_class, (t_method)poftexts_set, gensym("set"), A_SYMBOL, A_NULL);
 	class_addmethod(poftexts_class, (t_method)poftexts_size, gensym("size"), A_FLOAT, A_NULL);
 	class_addmethod(poftexts_class, (t_method)poftexts_anchor, gensym("anchor"), A_FLOAT, A_DEFFLOAT, A_NULL);
-	class_addmethod(poftexts_class, (t_method)poftexts_spacing, gensym("spacing"), /*A_FLOAT,*/ A_FLOAT, A_NULL);
+	class_addmethod(poftexts_class, (t_method)poftexts_spacing, gensym("spacing"), A_FLOAT, A_NULL);
+	class_addmethod(poftexts_class, (t_method)poftexts_center, gensym("center"), A_FLOAT, A_NULL);
 	class_addmethod(poftexts_class, (t_method)poftexts_out, s_out, A_GIMME, A_NULL);
 	class_addmethod(poftexts_class, (t_method)poftexts_width, gensym("width"), A_FLOAT, A_NULL);
 	class_addmethod(poftexts_class, (t_method)poftexts_lineHeight, gensym("lineheight"), A_FLOAT, A_NULL);
@@ -171,55 +179,39 @@ void pofTexts::draw()
 		mutex.unlock();
 		update = true;
 		
-		offont->drawMultiLineColumn(copyStr,	/*string*/
+		lines = offont->computeMultiLines(	str,	/*string*/
 									size,		/*size*/
-									0, 0,		/*where*/
 									width,		/*column width*/
 									numLines,	/*get back the number of lines*/
-									true,		/* if true, we wont draw (just get bbox back) */
-									0,			/* max number of lines to draw, crop after that */
-									true,		/*get the final text formatting (by adding \n's) in the supplied string;
-												 BE ARWARE that using TRUE in here will modify your supplied string! */
 									&wordsWereCropped /* this bool will b set to true if the box was to small to fit all text*/
 								 );
-		
-		lines = ofSplitString(copyStr, "\n");
-		totalLines = lines.size();
+								 
+		totalLines = numLines;//lines.size();
 	}
 
 	if(update || clipChanged) {
 		clipChanged = false;
 		update = true;
-		computedStr = "";
-			if(totalLines > lineOffset) for(int i = lineOffset; i < totalLines; i++) {
-				if(i !=0) computedStr += "\n";
-				computedStr += lines[i];
-				if(maxLines != 0 && (i-lineOffset+1) >= maxLines ) break;
-			}
-		bound = offont->drawMultiLineColumn(computedStr,			/*string*/
-											size,	/*size*/
-											0, 0,		/*where*/
-											/*width*/1e6, /*column width*/
-											numLines,	/*get back the number of lines*/
-											true,		/* if true, we wont draw (just get bbox back) */
-											/*maxLines*/0,			/* max number of lines to draw, crop after that */
-											false,		/*get the final text formatting (by adding \n's) in the supplied string;
-														 BE ARWARE that using TRUE in here will modify your supplied string! */
-											&wordsWereCropped /* this bool will b set to true if the box was to small to fit all text*/
-										 );
+		bound = offont->drawMultiLines( lines,			/*lines*/
+										size,	/*size*/
+										0, 0,		/*where*/
+										width/*1e6*/, /*column width*/
+										numLines,	/*get back the number of lines*/
+										true,		/* if true, we wont draw (just get bbox back) */
+										maxLines/*0*/,			/* max number of lines to draw, crop after that */
+										center, lineOffset
+									 );
 	}	
-	
-	offont->drawMultiLineColumn(computedStr,			/*string*/
-								size,	/*size*/
-								bound.width*(-xanchor-1)/2 - bound.x,bound.height*(yanchor-1)/2 - bound.y,	/*where*/
-								/*width*/1e6, /*column width*/
-								numLines,	/*get back the number of lines*/
-								false,		/* if true, we wont draw (just get bbox back) */
-								/*maxLines*/0,			/* max number of lines to draw, crop after that */
-								false,		/*get the final text formatting (by adding \n's) in the supplied string;
-											 BE ARWARE that using TRUE in here will modify your supplied string! */
-								&wordsWereCropped /* this bool will b set to true if the box was to small to fit all text*/
-							 );
+
+	offont->drawMultiLines( lines,	/*lines*/
+							size,	/*size*/
+							bound.width*(-xanchor-1)/2 - bound.x,bound.height*(yanchor-1)/2 - bound.y,	/*where*/
+							width/*1e6*/, /*column width*/
+							numLines,	/*get back the number of lines*/
+							false,		/* if true, we wont draw (just get bbox back) */
+							maxLines/*0*/,			/* max number of lines to draw, crop after that */
+							center, lineOffset
+						 );
 
 	if((oldBound != bound)||update) {
 		oldBound = bound;	

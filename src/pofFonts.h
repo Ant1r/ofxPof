@@ -13,7 +13,7 @@ class pofFonts;
 class pofFonts: public pofBase {
 	public:
 		pofFonts(t_class *Class, t_symbol *_font, t_symbol *_fontfile):
-		 pofBase(Class),font(_font),fontfile(_fontfile),need_reload(true)
+		 pofBase(Class),offont(NULL),font(_font),fontfile(_fontfile),need_reload(true)
 		{
 			fonts[font]=this;
 			ofAddListener(pofBase::reloadTexturesEvent, this, &pofFonts::reloadTexture);
@@ -21,6 +21,7 @@ class pofFonts: public pofBase {
 		}
 		~pofFonts() { 
 			fonts.erase(font);
+			if(offont) delete offont;
 			ofRemoveListener(pofBase::reloadTexturesEvent, this, &pofFonts::reloadTexture);
 			ofRemoveListener(pofBase::unloadTexturesEvent, this, &pofFonts::unloadTexture);
 		}
@@ -33,7 +34,7 @@ class pofFonts: public pofBase {
 		
 		static void setup(void);
 		
-		ofxFontStash offont;
+		ofxFontStash *offont;
 		t_symbol *font;
 		t_symbol *fontfile;
 

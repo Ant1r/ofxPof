@@ -13,7 +13,7 @@ class pofTexts: public pofBase {
 	public:
 		pofTexts(t_class *Class, t_symbol *_font, float _size, float xanch=0, float yanch=0, float spacing=0):
 		 pofBase(Class),font(_font),size(_size), xanchor(xanch), yanchor(yanch), 
-		 width(1e6), lineHeight(1), letterSpacing(spacing), maxLines(0), lineOffset(0), totalLines(0) {
+		 width(1e6), lineHeight(1), letterSpacing(spacing), center(false), maxLines(0), lineOffset(0), totalLines(0) {
 			m_out2 = outlet_new(&(pdobj->x_obj), 0);
 		}
 		
@@ -38,6 +38,7 @@ class pofTexts: public pofBase {
 		
 		bool mustUpdate;
 		bool clipChanged;
+		bool center;
 		
 		ofMutex mutex;
 		t_canvas *pdcanvas;

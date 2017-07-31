@@ -53,8 +53,10 @@ void pofFonts::update()
 				  );					//lower res mipmaps wil bleed into each other*/
 
 
-		offont.clear();
-		offont.setup(file->s_name, //font file, ttf only
+		//offont.clear();
+		if(offont) delete offont;
+		offont = new ofxFontStash();
+		offont->setup(file->s_name, //font file, ttf only
 				  1.0					//lineheight percent
 				  );					//lower res mipmaps wil bleed into each other*/
 	}
@@ -66,7 +68,9 @@ void pofFonts::reloadTexture(ofEventArgs & args){
 }
 
 void pofFonts::unloadTexture(ofEventArgs & args){
-	offont.clear();
+	//offont.clear();
+	if(offont) delete offont;
+	offont = NULL;
 }
 
 //--------- static : ------------
@@ -86,6 +90,6 @@ ofxFontStash* pofFonts::getFont(t_symbol* font)
 	std::map<t_symbol*,pofFonts*>::iterator it;
 	
 	it = fonts.find(font);
-	if( (it != fonts.end()) && (it->second->offont.isLoaded()) ) return &(it->second->offont);
+	if( (it != fonts.end()) && (it->second->offont) && (it->second->offont->isLoaded()) ) return (it->second->offont);
 	else return NULL;
 }
