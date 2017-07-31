@@ -37,13 +37,11 @@
 #define OFX_FONT_STASH_LINE_HEIGHT_MULT	0.9
 
 #include "ofMain.h"
-#include "ofUTF8.h"
-#include "ofTextConverter.h"
 
 extern "C" {
 	#include "fontstash.h"
+	#include "stb_truetype.h"
 }
-
 
 class ofxFontStash{
 
@@ -53,7 +51,7 @@ class ofxFontStash{
 		~ofxFontStash();
 	
 		//call this to set your font file (.ttf, etc)
-		bool setup( string fontFile,
+		bool setup(string firstFontFile,
 				   float lineHeightPercent = 1.0f,
 				   int textureDimension = 512,	//texture atlas size, must be PowerOfTwo (512, 1024, 2048, etc)
 				   bool createMipMaps = false,	//create mipmaps for the texture atlasas; if you do
@@ -66,31 +64,79 @@ class ofxFontStash{
 				   float dpiScale = 1.0f		//character texture is rendered internally at this scale
 				   );
 
-		void clear(); // free textures
-		
+
+		//for multi-font; to use with drawMultiColumnFormatted  (wip)
+		void addFont(const std::string& fontFile);
+
 		//will draw text in one line, ignoring "\n"'s
-		void draw( string text, float size, float x, float y);
+		float draw( const string& text, float size, float x, float y);
 
 		//text with "\n" will produce line breaks
-		void drawMultiLine( string text, float fontSize, float x, float y );
+		//width only makes sense for align = OF_ALIGN_HORZ_CENTER - as it will center the text block to the rect defined by [x + width] 
+		ofRectangle drawMultiLine( const string& text, float fontSize, float x, float y, ofAlignHorz align = OF_ALIGN_HORZ_LEFT, float width = 0);
 
 		//fits text in a column of a certain width
 		//if you only want to find out the bbox size, send in dontDraw=true
 		//numLines will return the number of lines this has been split in
-		ofRectangle drawMultiLineColumn( string &text, float fontSize, float x, float y,
-											float columnWidth, int &numLines, bool dontDraw = false,
-											int maxLines = 0, bool giveBackNewLinedText = false,
-											bool * wordsWereTruncated = NULL );
+		ofRectangle drawMultiLineColumn(string &text,
+										float fontSize,
+										float x,
+										float y,
+										float columnWidth,
+										int &numLines,
+										bool dontDraw = false,
+										int maxLines = 0,
+										bool giveBackNewLinedText = false,
+										bool * wordsWereTruncated = NULL,
+										bool centered = false,
+										int firstLine = 0
+										);
+
+/**
+		drawMultiColumnFormatted() how to use:
+		add one of the following as a single word to change text font and color.
+
+		@id
+			to change font id -
+			@0 is the first font you setup fontstash with.
+			@1 is the second font you addedd with addFont()
+
+		#0x000000
+			to change font color, in hex
+
+		%scale
+			scale size
+			%1 will draw at the specified "size"
+			%3.3 will draw at 330% the "size"
+
+		>> be aware, a dpiScale !=1.0 wont work with this method.
+ 
+		example 1: "this is a #0x0000ff blue 0x000000 color"
+		example 2: "this is the @1 second @0 font, and this is the @2 third @0 font."
+		example 3: "the #0xff0000 red #0x000000 apple is on the @1 big @0 tree."
+		example 4: "this is %2.2 more than double %1 the size"
+**/
+
+		vector<string> computeMultiLines( string text, float size,
+											  float maxW, int &numLines, bool* wordsWereTruncated );
+
+		ofRectangle drawMultiLines( vector<string> &splitLines, float size, float x, float y,
+											  float maxW, int &numLines, bool dontDraw, int maxLines,
+											  bool centered, int firstLine);
+
+		ofVec2f drawMultiColumnFormatted(const string &text, float size, float columnWidth, bool topLeftAlign = false, bool dryrun = false);
+
+
+		float getFontHeight(float fontSize);
 
 		//if the text has newlines, it will be treated as if was called into drawMultiLine()
-		ofRectangle getBBox( string text, float size, float x, float y );
-		ofRectangle getBBox( string text, float size, float x, float y, float columnWidth );
-
-
+		ofRectangle getBBox( const string& text, float size, float x, float y, ofAlignHorz align = OF_ALIGN_HORZ_LEFT, float width = 0 );
+	
+	
 		//interleave drawBatch* calls between begin() and end()
 		void beginBatch();
-		void drawBatch( string text, float size, float x, float y);
-		void drawMultiLineBatch( string text, float size, float x, float y );
+		void drawBatch( const string& text, float size, float x, float y);
+		void drawMultiLineBatch( const string& text, float size, float x, float y );
 		void endBatch();
 
 		void setLineHeight(float percent);
@@ -98,7 +144,7 @@ class ofxFontStash{
 		void setKerning(bool enabled); //use ttf supplied kerning info at draw time or not
 		bool getKerning();
 
-		sth_stash* getStash(){return stash;}; //you probably dont need to mess with that
+		ofx_sth_stash* getStash(){return stash;}; //you probably dont need to mess with that
 		float getDpiScale(){return dpiScale;}
 		void setLodBias(float bias); //only makes sense when using mipmaps!
 
@@ -126,16 +172,28 @@ class ofxFontStash{
 
 		int					extraPadding; //used for mipmaps
 		float				lineHeight; // as percent, 1.0 would be normal
-		struct sth_stash*	stash;
-		int					stashFontID;
+		struct ofx_sth_stash*	stash;
+
+		int texDimension;
+		vector<int>			fontIds;
+//		int					stashFontID;
 		bool				batchDrawing;
 
 		//fill in a string
-		string walkAndFill(ofUTF8Ptr being, ofUTF8Ptr & iter, ofUTF8Ptr end);
+		//string walkAndFill(ofUTF8Ptr being, ofUTF8Ptr & iter, ofUTF8Ptr end);
+		string walkAndFill(const char * begin, const char *& iter, const char * end);
+
+		bool isFontCode(const std::string& str) { return str.length()==2 && str[0] == '@'; }
+		bool isColorCode(const std::string& str) { return str.length()==9 && str[0] == '#'; }
+		bool isScaleCode(const std::string& str) { return str[0] == '%'; }
     
         // ofTrueTypeFont parity attributes
         int					fontSize;
 		float				dpiScale;
+
+	
+		bool isSpace(unsigned int c);
+		bool isPunctuation(unsigned int c);
 };
 
 
