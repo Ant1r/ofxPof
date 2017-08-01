@@ -118,11 +118,12 @@ class ofxFontStash{
 **/
 
 		vector<string> computeMultiLines( string text, float size,
-											  float maxW, int &numLines, bool* wordsWereTruncated );
+											  float maxW, int &numLines, bool* wordsWereTruncated);
 
 		ofRectangle drawMultiLines( vector<string> &splitLines, float size, float x, float y,
 											  float maxW, int &numLines, bool dontDraw, int maxLines,
-											  bool centered, int firstLine);
+											  bool centered = 0, int firstLine = 0, 
+											  float underHeight = 0, float underWidth = 0, float underY = 0);
 
 		ofVec2f drawMultiColumnFormatted(const string &text, float size, float columnWidth, bool topLeftAlign = false, bool dryrun = false);
 

@@ -83,8 +83,17 @@ void poftexts_spacing(void *x, t_float spacing)
 void poftexts_center(void *x, t_float center)
 {
 	pofTexts* px= (pofTexts*)(((PdObject*)x)->parent);
-	px->center = (center != 0) ;
+	px->center = (center != 0);
 	px->mustUpdate = true;
+}
+
+void poftexts_under(void *x, t_float height, t_float width, t_float y)
+{
+	pofTexts* px= (pofTexts*)(((PdObject*)x)->parent);
+	px->underHeight = height;
+	px->underWidth = width;
+	px->underY = y;
+	//px->mustUpdate = true;
 }
 
 void poftexts_width(void *x, t_float w)
@@ -150,6 +159,7 @@ void pofTexts::setup(void)
 	class_addmethod(poftexts_class, (t_method)poftexts_anchor, gensym("anchor"), A_FLOAT, A_DEFFLOAT, A_NULL);
 	class_addmethod(poftexts_class, (t_method)poftexts_spacing, gensym("spacing"), A_FLOAT, A_NULL);
 	class_addmethod(poftexts_class, (t_method)poftexts_center, gensym("center"), A_FLOAT, A_NULL);
+	class_addmethod(poftexts_class, (t_method)poftexts_under, gensym("under"), A_FLOAT, A_DEFFLOAT, A_DEFFLOAT, A_NULL);
 	class_addmethod(poftexts_class, (t_method)poftexts_out, s_out, A_GIMME, A_NULL);
 	class_addmethod(poftexts_class, (t_method)poftexts_width, gensym("width"), A_FLOAT, A_NULL);
 	class_addmethod(poftexts_class, (t_method)poftexts_lineHeight, gensym("lineheight"), A_FLOAT, A_NULL);
@@ -210,7 +220,7 @@ void pofTexts::draw()
 							numLines,	/*get back the number of lines*/
 							false,		/* if true, we wont draw (just get bbox back) */
 							maxLines/*0*/,			/* max number of lines to draw, crop after that */
-							center, lineOffset
+							center, lineOffset, underHeight, underWidth, underY
 						 );
 
 	if((oldBound != bound)||update) {

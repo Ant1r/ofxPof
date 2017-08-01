@@ -484,9 +484,10 @@ vector<string> ofxFontStash::computeMultiLines( string text, float size,
 
 ofRectangle ofxFontStash::drawMultiLines( vector<string> &splitLines, float size, float x, float y,
 											  float maxW, int &numLines, bool dontDraw, int maxLines,
-											  bool centered, int firstLine){
+											  bool centered, int firstLine, float underHeight, float underWidth, float underY){
 	ofRectangle totalArea = ofRectangle(x,y,0,0);
-
+	//vector<ofRectangle> &linesRect;
+	
 	if (stash == NULL){
 		ofLogError("ofxFontStash") << "can't draw() without having been setup first!";
 		return totalArea;
@@ -515,8 +516,9 @@ ofRectangle ofxFontStash::drawMultiLines( vector<string> &splitLines, float size
 
 	for(int i = 0; i < linesToDraw; i++){
 		float yy = lineHeight * OFX_FONT_STASH_LINE_HEIGHT_MULT * size * i;
-		if(centered) lineWidths.push_back(getBBox(splitLines[i + firstLine], size, 0, 0).width);
+		lineWidths.push_back(getBBox(splitLines[i + firstLine], size, 0, 0).width);
 		ofRectangle bb = getBBox(splitLines[i + firstLine], size, x, y + yy);
+		//linesRect.push_back(bb);
 		//bb.setHeight(bb0.getHeight());
 		//#if OF_VERSION_MAJOR == 0 && OF_VERSION_MINOR >= 8
 		//totalArea = totalArea.getUnion( getBBox(splitLines[i + firstLine], size, x, y + yy));
@@ -540,6 +542,8 @@ ofRectangle ofxFontStash::drawMultiLines( vector<string> &splitLines, float size
 		if(!dontDraw){
 			ofPushMatrix();
 			ofTranslate(xOff, yy);
+			if(underHeight && splitLines[i + firstLine] != " ")
+				ofDrawRectangle(underWidth * -0.5, underY, 0, lineWidths[i] + underWidth, underHeight); 
 			drawBatch(splitLines[i + firstLine], size, 0, 0 );
 			ofPopMatrix();
 		}
@@ -788,7 +792,9 @@ string ofxFontStash::walkAndFill(const char * begin, const char *& iter, const c
 		unsigned int c = utf8::unchecked::next(i);
 		if (finalLine.empty() && c == 0x20)		// 0x20 UTF-8 space
 			continue;
-
+		if(i == end && c == 0x20){ // remove last space
+			break;
+		}
 		finalLine += toUTF8(c); // get the next unichar and iterate
 		if(i == end){
 			break;

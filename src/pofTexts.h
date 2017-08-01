@@ -13,7 +13,9 @@ class pofTexts: public pofBase {
 	public:
 		pofTexts(t_class *Class, t_symbol *_font, float _size, float xanch=0, float yanch=0, float spacing=0):
 		 pofBase(Class),font(_font),size(_size), xanchor(xanch), yanchor(yanch), 
-		 width(1e6), lineHeight(1), letterSpacing(spacing), center(false), maxLines(0), lineOffset(0), totalLines(0) {
+		 width(1e6), lineHeight(1), letterSpacing(spacing), center(false), 
+		 underHeight(0), underWidth(0), underY(0),
+		 maxLines(0), lineOffset(0), totalLines(0) {
 			m_out2 = outlet_new(&(pdobj->x_obj), 0);
 		}
 		
@@ -27,9 +29,12 @@ class pofTexts: public pofBase {
 		float xanchor; // -1=left 0=center 1=right
 		float yanchor; // -1=top 0=center 1=bottom
 		float width, lineHeight;
-		ofRectangle bound, oldBound;
-
 		float letterSpacing; // 1= normal
+		bool center;
+		float underHeight, underWidth, underY;
+		int maxLines, lineOffset, totalLines;
+		
+		ofRectangle bound, oldBound;
 		
 		string str, computedStr;
 		vector<string> lines;
@@ -38,11 +43,9 @@ class pofTexts: public pofBase {
 		
 		bool mustUpdate;
 		bool clipChanged;
-		bool center;
 		
 		ofMutex mutex;
 		t_canvas *pdcanvas;
-		int maxLines, lineOffset, totalLines;
 };
 
 
