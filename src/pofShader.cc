@@ -5,6 +5,12 @@
  */
 #include "pofShader.h"
 
+#ifndef TRUE
+#define TRUE 1
+#define FALSE 0
+#endif
+
+
 t_class *pofShader_class;
 static t_symbol *s_load, *s_play, *s_f, *s_2f, *s_3f, *s_4f, *s_tex, *s_print;
 
