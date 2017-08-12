@@ -609,7 +609,9 @@ void set_lod_bias(struct ofx_sth_stash* stash, float bias){
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, texture->id);
 			#ifndef TARGET_OPENGLES
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, bias);
+			#ifndef __ANDROID__
+						glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, bias);
+			#endif
 			#endif
 			glBindTexture(GL_TEXTURE_2D, 0);
 			glDisable(GL_TEXTURE_2D);
