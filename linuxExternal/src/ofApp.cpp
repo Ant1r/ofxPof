@@ -13,12 +13,11 @@
 #endif
 
 #ifndef RASPI
-#if (_MSC_VER)
-#include <GLFW/glfw3.h>
-#else
 #include "GLFW/glfw3.h"
 #endif
-#endif
+
+#include "m_imp.h"
+extern t_class *pofwin_class;
 
 #ifndef RASPI
 t_clock *pollEventsClock;
@@ -27,7 +26,7 @@ t_clock *pollEventsClock;
 bool windowCreated = FALSE;
 
 class MyThread : public ofThread {
- 
+
 	void threadedFunction() {
 		//ofSetLogLevel(OF_LOG_VERBOSE);
 
@@ -42,9 +41,16 @@ class MyThread : public ofThread {
 		// can be OF_WINDOW or OF_FULLSCREEN
  		ofSetFrameRate(50);
         //ofGetMainLoop()->pollEvents = 0; // YOU NEED TO MAKE "void (*pollEvents)(void)" PUBLIC !!!
+
+		string gstPluginsPath = string(pofwin_class->c_externdir->s_name) + "/libs/gstplugins";
+		if(ofFile(gstPluginsPath).exists()) {
+			//post("overwriting gst plugins dir: %s", gstPluginsPath.c_str());
+			setenv("GST_PLUGIN_PATH", gstPluginsPath.c_str(), 1);
+			setenv("GST_PLUGIN_SYSTEM_PATH", "", 1);
+		}
  		ofRunApp(new ofApp());
-	} 
- 
+	}
+
 };
 
 //--------------------------------------------------------------
@@ -153,7 +159,7 @@ extern "C" {
 	{
 		(new MyThread)->startThread(true);//, true);
 		pofBase::setup();
-		
+
 #ifndef RASPI
 		pollEventsClock = clock_new(0,(t_method)pollEventsMethod);
         clock_delay(pollEventsClock,100);
