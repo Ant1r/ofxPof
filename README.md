@@ -1,4 +1,4 @@
-![pOf-logo](http://metalu.net/IMG/png/pof-logo.png)
+![pOf-logo](https://github.com/Ant1r/ofxPof/blob/master/pOf-logo.png)
  
 **P**ureData + **O**pen**F**rameworks externals
 
