@@ -125,6 +125,8 @@
 		C9ED7F7C1D7AC730000FC356 /* pofQuad.cc in Sources */ = {isa = PBXBuildFile; fileRef = C9ED7F7A1D7AC730000FC356 /* pofQuad.cc */; };
 		C9ED7F7D1D7AC730000FC356 /* pofQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = C9ED7F7B1D7AC730000FC356 /* pofQuad.h */; };
 		C9ED7F7F1D7ACB1B000FC356 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9ED7F7E1D7ACB1B000FC356 /* AVFoundation.framework */; };
+		C9F0EE071F7250BC00095B75 /* pofShader.cc in Sources */ = {isa = PBXBuildFile; fileRef = C9F0EE051F7250BC00095B75 /* pofShader.cc */; };
+		C9F0EE081F7250BC00095B75 /* pofShader.h in Headers */ = {isa = PBXBuildFile; fileRef = C9F0EE061F7250BC00095B75 /* pofShader.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -267,6 +269,8 @@
 		C9ED7F7A1D7AC730000FC356 /* pofQuad.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofQuad.cc; sourceTree = "<group>"; };
 		C9ED7F7B1D7AC730000FC356 /* pofQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofQuad.h; sourceTree = "<group>"; };
 		C9ED7F7E1D7ACB1B000FC356 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		C9F0EE051F7250BC00095B75 /* pofShader.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofShader.cc; sourceTree = "<group>"; };
+		C9F0EE061F7250BC00095B75 /* pofShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofShader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -593,6 +597,8 @@
 		C93BB6BF1B13153700FD662B /* src */ = {
 			isa = PBXGroup;
 			children = (
+				C9F0EE051F7250BC00095B75 /* pofShader.cc */,
+				C9F0EE061F7250BC00095B75 /* pofShader.h */,
 				C93BB6C01B13153700FD662B /* m_pd.h */,
 				C93BB6C11B13153700FD662B /* pofAccel.cc */,
 				C93BB6C21B13153700FD662B /* pofAccel.h */,
@@ -749,6 +755,7 @@
 				C93BB7121B13153700FD662B /* pofRect.h in Headers */,
 				C93BB6FE1B13153700FD662B /* pofBase.h in Headers */,
 				C93BB5D31B10BAA700FD662B /* fontstash.h in Headers */,
+				C9F0EE081F7250BC00095B75 /* pofShader.h in Headers */,
 				C93BB6311B10BAF400FD662B /* mztools.h in Headers */,
 				C93BB7141B13153700FD662B /* pofResetMatrix.h in Headers */,
 				C93BB7161B13153700FD662B /* pofRotate.h in Headers */,
@@ -888,6 +895,7 @@
 				C93BB6761B10BB3B00FD662B /* jsoncpp.cpp in Sources */,
 				C93BB6341B10BAF400FD662B /* zip.c in Sources */,
 				C93BB5D71B10BAA700FD662B /* ofxFontStash.cpp in Sources */,
+				C9F0EE071F7250BC00095B75 /* pofShader.cc in Sources */,
 				C93BB8391B19066700FD662B /* mac-osx-arrow-cursor-56.png.c in Sources */,
 				C93BB71D1B13153700FD662B /* pofTextbox.cc in Sources */,
 				C9DCA50D1C05F12C00554E71 /* pofPlane.cc in Sources */,
