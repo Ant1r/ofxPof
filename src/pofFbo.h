@@ -28,6 +28,7 @@ class pofsubFbo	{
 	void begin(float w, float h);
 	void end();	
 	void draw(float w, float h);
+	void setQuality(bool quality);
 };
 
 class pofFbo: public pofBase {

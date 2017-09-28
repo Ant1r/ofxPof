@@ -68,9 +68,13 @@ void pofsubFbo::draw(float w, float h) {
 	if(fbo.isAllocated()) fbo.draw(-width/2,-height/2,width,height);
 }
 
+void pofsubFbo::setQuality(bool quality) {
+	if(!fbo.isAllocated()) return;
+	if(!quality) fbo.getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
+	else fbo.getTexture().setTextureMinMagFilter(GL_LINEAR, GL_LINEAR);
+}
 
 /*******************************************/
-
 
 void *poffbo_new(t_symbol *sym,int argc, t_atom *argv)
 {
@@ -153,8 +157,7 @@ void pofFbo::setup(void)
 void pofFbo::draw()
 {
 	sfbo->begin(width, height);
-	if(!quality) sfbo->fbo.getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
-	else sfbo->fbo.getTexture().setTextureMinMagFilter(GL_LINEAR, GL_LINEAR);
+	sfbo->setQuality(quality);
 	if(update) {
 		if(clear) ofClear(255,255,255, 0);
 		ofTranslate(sfbo->width/2, sfbo->height/2);
