@@ -72,4 +72,5 @@ exampleStandalone/bin/exampleStandalone_debug
 exampleStandalone/bin/libs
 exampleStandalone/obj
 
-
+#generated at build time:
+src/VERSION

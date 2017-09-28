@@ -3,8 +3,8 @@
 #   This file is where we make project specific configurations.
 ################################################################################
 
-POF_GITVERSION=$(shell git describe)
-
+POF_GITVERSION=$(shell git describe --abbrev=4)
+$(shell echo "#define POF_VERSION $(POF_GITVERSION)" > ../src/VERSION)
 $(shell touch ../src/version.cc)
 
 ifndef PLATFORM_OS 
@@ -24,7 +24,8 @@ ifeq ($(PLATFORM_OS),Linux)
 	else 
 		APPNAME = pof.l_i386
 	endif	
-	PROJECT_CFLAGS = -fPIC -DPOF_VERSION="$(POF_GITVERSION)"
+	#PROJECT_CFLAGS = -fPIC -DPOF_VERSION="$(POF_GITVERSION)"
+	PROJECT_CFLAGS = -fPIC -DINCLUDE_VERSION_FILE
 	PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs
 	#PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath="./libs:'$ORIGIN/libs'"
 endif

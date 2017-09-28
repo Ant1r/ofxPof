@@ -2,10 +2,12 @@
 # CONFIGURE PROJECT MAKEFILE (optional)
 #   This file is where we make project specific configurations.
 ################################################################################
-POF_GITVERSION=$(shell git describe)
+POF_GITVERSION=$(shell git describe --abbrev=4)
+$(shell echo "#define POF_VERSION $(POF_GITVERSION)" > ../src/VERSION)
+$(shell touch ../src/version.cc)
 
 APPNAME = pof.pd_darwin
-PROJECT_CFLAGS = -fPIC -DPOF_VERSION="$(POF_GITVERSION)"
+PROJECT_CFLAGS = -fPIC -DINCLUDE_VERSION_FILE
 PROJECT_LDFLAGS = -rdynamic -shared -Wl,-rpath=./libs
 
 PLATFORM_RUN_COMMAND = pd -path bin/ -lib pof -helppath ../help -open ../example/pd/pof_main.pd

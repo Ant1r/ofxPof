@@ -1,6 +1,10 @@
 #include "version.h"
 #include "m_pd.h"
 
+#ifdef INCLUDE_VERSION_FILE
+#include "VERSION"
+#endif
+
 #define STRINGIFY2(x) #x
 #define STRINGIFY(x) STRINGIFY2(x)
 
