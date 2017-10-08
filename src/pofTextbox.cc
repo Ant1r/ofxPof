@@ -87,7 +87,11 @@ void pofTextbox::update()
 	
 	needShow = false;
 	needSend = true;	
-	answer = ofSystemTextBoxDialog(question, defAnswer);
+#ifndef TARGET_LINUX	
+    answer = ofSystemTextBoxDialog(question, defAnswer);
+#else
+    answer = defAnswer;
+#endif
 	//answer = ofSystemTextBoxDialog("", "");
 #ifndef TARGET_ANDROID
 	t_atom ap[2];
