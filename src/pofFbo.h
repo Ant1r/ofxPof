@@ -13,6 +13,7 @@ class pofsubFbo	{
 	t_symbol *name;
 	public:
 	float width, height;
+	GLint format;
 	
 	ofFbo fbo;
 	
@@ -25,7 +26,7 @@ class pofsubFbo	{
 	static pofsubFbo* get(t_symbol *name);			
 	static void let(pofsubFbo *sfbo);
 	
-	void begin(float w, float h);
+	void begin(float w, float h, GLint _format);
 	void end();	
 	void draw(float w, float h);
 	void setQuality(bool quality);
@@ -33,8 +34,8 @@ class pofsubFbo	{
 
 class pofFbo: public pofBase {
 	public:
-		pofFbo(t_class *Class, float w=0, float h=0):
-			pofBase(Class),width(w), height(h), update(true), clear(true), quality(true) {
+		pofFbo(t_class *Class, float w=0, float h=0, GLint _format=0):
+			pofBase(Class),width(w), height(h), format(_format), update(true), clear(true), quality(true) {
 		}
 		virtual ~pofFbo() {
 			treeMutex.lockW();
@@ -52,10 +53,12 @@ class pofFbo: public pofBase {
 		static void setup(void);
 		
 		float width, height;
+		GLint format;
 		pofsubFbo *sfbo;
 		bool update;
 		bool clear;
 		bool quality;
+		ofColor tmpColor;
 };
 
 

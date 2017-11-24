@@ -9,11 +9,12 @@ t_class *poffbo_class;
 
 std::map<t_symbol*,pofsubFbo*> pofsubFbo::sfbos;
 
-pofsubFbo::pofsubFbo(t_symbol *n):refCount(1), name(n), width(0), height(0) {
+pofsubFbo::pofsubFbo(t_symbol *n):refCount(1), name(n), width(0), height(0), format(GL_RGBA) {
 	sfbos[n] = this;
 	ofAddListener(pofBase::reloadTexturesEvent, this, &pofsubFbo::reloadTexture);
 	//ofAddListener(pofBase::unloadTexturesEvent, this, &pofsubFbo::unloadTexture);
-	pofBase::textures[name] = &fbo.getTexture();
+
+	//pofBase::textures[name] = &fbo.getTexture();
 }
 	
 pofsubFbo::~pofsubFbo() {
@@ -24,7 +25,7 @@ pofsubFbo::~pofsubFbo() {
 }
 
 void pofsubFbo::reloadTexture(ofEventArgs & args) { 
-	fbo.allocate(width, height, GL_RGBA); 
+	fbo.allocate(width, height, format); 
 	pofBase::textures[name] = &fbo.getTexture();
 }
 
@@ -45,7 +46,7 @@ void pofsubFbo::let(pofsubFbo *sfbo) {
 	if(!--sfbo->refCount) delete sfbo;
 }
 
-void pofsubFbo::begin(float w, float h) {
+void pofsubFbo::begin(float w, float h, GLint _format) {
     if(w < 0) w = 0;
 	if(h < 0) h = 0;
 	
@@ -53,8 +54,13 @@ void pofsubFbo::begin(float w, float h) {
 	if(h != 0) height = h;
 	
 	if(width != 0 && height != 0) {
-		if( (!fbo.isAllocated()) || (fbo.getWidth() != width) || (fbo.getHeight() != height))
-			fbo.allocate(width, height, GL_RGBA);
+		if( (!fbo.isAllocated()) || 
+		(fbo.getWidth() != width) || (fbo.getHeight() != height) || (_format && (format != _format)) 
+		) {
+			if(_format) format = _format;
+			fbo.allocate(width, height, format /*GL_RGBA*/);
+			cerr<<"(re)allocating fbo, format = "<<format<<endl;
+		}
 	}
 	fbo.begin();
 	pofBase::textures[name] = &fbo.getTexture();
@@ -95,7 +101,7 @@ void *poffbo_new(t_symbol *sym,int argc, t_atom *argv)
     	}
     }
     
-    pofFbo* obj = new pofFbo(poffbo_class, w, h);
+    pofFbo* obj = new pofFbo(poffbo_class, w, h, 0/*GL_RGBA*/);
     
     if(name == NULL) name = obj->s_self;
     	
@@ -142,6 +148,15 @@ void poffbo_set(void *x, t_symbol *name)
 	px->sfbo = pofsubFbo::get(name);
 }
 
+void poffbo_format(void *x, t_symbol *formatString)
+{
+	pofFbo *px = (pofFbo*)(((PdObject*)x)->parent);
+	
+	if(!strcmp(formatString->s_name, "RGB")) px->format = GL_RGB4;
+	else if(!strcmp(formatString->s_name, "RGBA")) px->format = GL_RGBA;
+	else if(!strcmp(formatString->s_name, "RGBA16")) px->format = GL_RGBA16;
+}
+
 void pofFbo::setup(void)
 {
 	//post("poffbo_setup");
@@ -151,22 +166,27 @@ void pofFbo::setup(void)
 	class_addmethod(poffbo_class, (t_method)poffbo_clear, gensym("clear"), A_FLOAT, A_NULL);
 	class_addmethod(poffbo_class, (t_method)poffbo_quality, gensym("quality"), A_FLOAT, A_NULL);
 	class_addmethod(poffbo_class, (t_method)poffbo_set, gensym("set"), A_SYMBOL, A_NULL);
+	class_addmethod(poffbo_class, (t_method)poffbo_format, gensym("format"), A_SYMBOL, A_NULL);
 	POF_SETUP(poffbo_class);
 }
 
 void pofFbo::draw()
 {
-	sfbo->begin(width, height);
+	sfbo->begin(width, height, format);
 	sfbo->setQuality(quality);
-	if(update) {
-		if(clear) ofClear(255,255,255, 0);
-		ofTranslate(sfbo->width/2, sfbo->height/2);
-	}
+	//if(update) {
+	if(clear) ofClear(255,255,255, 0);
+	ofTranslate(sfbo->width/2, sfbo->height/2);
+	tmpColor = ofGetStyle().color;
+	ofSetColor(255.0,255.0,255.0,255.0);
+
+	//}
 }
 
 void pofFbo::postdraw()
 {
 	sfbo->end();
+	ofSetColor(tmpColor);
 	sfbo->draw(width, height);
 }
 
