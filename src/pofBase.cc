@@ -62,12 +62,12 @@ static t_symbol *s_key;
 
 pofBase::pofBase(t_class *Class) { 
 	treeMutex.lockW();
-	char selfname[16];
+	char selfname[32];
 
 	pdobj = (PdObject*)pd_new(Class);
 	pdobj->parent = (pofBase*) this;
 	
-	snprintf(selfname,16 , "pof%p", (void*)this);
+	snprintf(selfname,32 , "pof%p", (void*)this);
 	s_self = gensym(selfname);
 	pd_bind(&pdobj->x_obj.ob_pd, s_self);
 	
