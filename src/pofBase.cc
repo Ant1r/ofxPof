@@ -219,6 +219,7 @@ void pofBase::tree_build(pofBase *parent)
 	ap.a_type=A_POINTER;
 	ap.a_w.w_gpointer=(t_gpointer *)this;
 	outlet_anything(m_out1, s_build, 1, &ap);
+	isBuilt = false;
 }
 
 bool pofBase::touchtree_build(pofBase *parent)
