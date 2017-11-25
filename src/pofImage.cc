@@ -604,7 +604,7 @@ void pofImage::message(int argc, t_atom *argv)
 	else if(key == s_grabfbo) {
 		if(argc < 1 || argv->a_type != A_SYMBOL) return;
 		pofsubFbo* sub = pofsubFbo::get(atom_getsymbol(argv));
-		sub->fbo.readToPixels(image->im.getPixels());
+		sub->fbo->readToPixels(image->im.getPixels());
 		pofsubFbo::let(sub);
 		image->needUpdate = true;
 	}

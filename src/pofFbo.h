@@ -15,7 +15,7 @@ class pofsubFbo	{
 	float width, height;
 	GLint format;
 	
-	ofFbo fbo;
+	ofFbo *fbo;
 	
 	pofsubFbo(t_symbol *n);	
 	~pofsubFbo();

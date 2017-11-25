@@ -10,6 +10,7 @@ t_class *poffbo_class;
 std::map<t_symbol*,pofsubFbo*> pofsubFbo::sfbos;
 
 pofsubFbo::pofsubFbo(t_symbol *n):refCount(1), name(n), width(0), height(0), format(GL_RGBA) {
+	fbo = new ofFbo();
 	sfbos[n] = this;
 	ofAddListener(pofBase::reloadTexturesEvent, this, &pofsubFbo::reloadTexture);
 	//ofAddListener(pofBase::unloadTexturesEvent, this, &pofsubFbo::unloadTexture);
@@ -22,11 +23,12 @@ pofsubFbo::~pofsubFbo() {
 	ofRemoveListener(pofBase::reloadTexturesEvent, this, &pofsubFbo::reloadTexture);	
 	//ofRemoveListener(pofBase::unloadTexturesEvent, this, &pofFbo::unloadTexture);
 	pofBase::textures.erase(name);
+	delete fbo;
 }
 
 void pofsubFbo::reloadTexture(ofEventArgs & args) { 
-	fbo.allocate(width, height, format); 
-	pofBase::textures[name] = &fbo.getTexture();
+	fbo->allocate(width, height, format); 
+	pofBase::textures[name] = &fbo->getTexture();
 }
 
 pofsubFbo* pofsubFbo::get(t_symbol *name){
@@ -50,34 +52,37 @@ void pofsubFbo::begin(float w, float h, GLint _format) {
     if(w < 0) w = 0;
 	if(h < 0) h = 0;
 	
-	if(w != 0) width = w;
-	if(h != 0) height = h;
+	if(w != 0) width = (int)w;
+	if(h != 0) height = (int)h;
+
 	
 	if(width != 0 && height != 0) {
-		if( (!fbo.isAllocated()) || 
-		(fbo.getWidth() != width) || (fbo.getHeight() != height) || (_format && (format != _format)) 
-		) {
-			if(_format) format = _format;
-			fbo.allocate(width, height, format /*GL_RGBA*/);
-			cerr<<"(re)allocating fbo, format = "<<format<<endl;
+		if(_format && (format != _format)) {
+			delete fbo;
+			fbo = new ofFbo();
+			format = _format;
+		}
+		if( (!fbo->isAllocated()) || (fbo->getWidth() != width) || (fbo->getHeight() != height) )
+		{
+			fbo->allocate(width, height, format /*GL_RGBA*/);
 		}
 	}
-	fbo.begin();
-	pofBase::textures[name] = &fbo.getTexture();
+	fbo->begin();
+	pofBase::textures[name] = &fbo->getTexture();
 }
 
 void pofsubFbo::end() {
-	fbo.end();
+	fbo->end();
 }
 
 void pofsubFbo::draw(float w, float h) {
-	if(fbo.isAllocated()) fbo.draw(-width/2,-height/2,width,height);
+	if(fbo->isAllocated()) fbo->draw(-width/2, -height/2, width, height);
 }
 
 void pofsubFbo::setQuality(bool quality) {
-	if(!fbo.isAllocated()) return;
-	if(!quality) fbo.getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
-	else fbo.getTexture().setTextureMinMagFilter(GL_LINEAR, GL_LINEAR);
+	if(!fbo->isAllocated()) return;
+	if(!quality) fbo->getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
+	else fbo->getTexture().setTextureMinMagFilter(GL_LINEAR, GL_LINEAR);
 }
 
 /*******************************************/
@@ -152,7 +157,7 @@ void poffbo_format(void *x, t_symbol *formatString)
 {
 	pofFbo *px = (pofFbo*)(((PdObject*)x)->parent);
 	
-	if(!strcmp(formatString->s_name, "RGB")) px->format = GL_RGB4;
+	if(!strcmp(formatString->s_name, "RGB")) px->format = GL_RGB;
 	else if(!strcmp(formatString->s_name, "RGBA")) px->format = GL_RGBA;
 	else if(!strcmp(formatString->s_name, "RGBA16")) px->format = GL_RGBA16;
 }
