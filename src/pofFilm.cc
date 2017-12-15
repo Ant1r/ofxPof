@@ -106,7 +106,7 @@ void pofFilm::draw()
 
 #ifndef RASPI
 //	if(!player) player = new ofVideoPlayer;
-#endif		
+#endif
 	
 	if((file != NULL) && (file != loadedFile) ) {
 		loadedFile = file;
@@ -128,7 +128,7 @@ void pofFilm::draw()
 	    if(player) delete player;
 	    player = new ofVideoPlayer;
 		player->loadMovie(makefilename(loadedFile, pdcanvas)->s_name/*loadedFile->s_name*/);
-#endif	
+#endif
         setlocale(LC_ALL, "C"); // WHY DO I HAVE TO DO THAT ??????????? OF changes the locale when loading a video...
                               // Without this fix, on a french computer pd starts stringing floating numbers with a comma,
                               // e.g. "0,5" which breaks the communication with TclTk GUI and other network connected programs.
@@ -148,18 +148,18 @@ void pofFilm::draw()
 	
 #ifndef RASPI	
 	if(player->isLoaded()) {
+#ifndef TARGET_ANDROID
 		if(gotoFrame>= 0) {
 		    player->setFrame(gotoFrame);
 		    gotoFrame = -1;
 		    //setlocale(LC_ALL, currentLocale);
 		}
-		
 		if(speed > -1000) {
 		    player->setSpeed(speed);
 		    speed = -1000;
 		    //setlocale(LC_ALL, currentLocale);
 		}
-		
+#endif
 		if(playing != actualPlaying) {
 			actualPlaying = playing;
 			if(actualPlaying) player->play();
@@ -174,7 +174,9 @@ void pofFilm::draw()
 			actualPlaying = playing;
 			player->setPaused(!playing);
 		}	
-#endif	
+#endif
+
+#ifndef TARGET_ANDROID
         int i = player->getCurrentFrame();
         if(i != currentFrame) {
             currentFrame = i;
@@ -184,7 +186,7 @@ void pofFilm::draw()
 			SETFLOAT(&ap[1], currentFrame);
 			queueToSelfPd(2, ap);
         }   	
-		
+#endif
 		if(isTexture) {
 		    player->getTextureReference().bind();
 		    pofBase::currentTexture = &player->getTextureReference();
