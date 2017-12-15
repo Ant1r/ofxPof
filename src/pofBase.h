@@ -12,6 +12,11 @@ using namespace Poco;
 
 class pofBase;
 
+#ifndef TRUE
+#define TRUE 1
+#define FALSE 0
+#endif
+
 typedef struct _PdObject {
 	t_object x_obj;
 	pofBase* parent;
