@@ -125,7 +125,7 @@ void pofWin::setup(void)
 }
 
 //-------------------------------
-pofWin::pofWin(t_class *Class):pofBase(Class),init(true){
+pofWin::pofWin(t_class *Class):pofBase(Class),init(true), r(0), g(0), b(0){
 	//ofAddListener(ofEvents().windowResized,this,&pofWin::windowResized);
 }
 
@@ -139,12 +139,17 @@ void pofWin::windowResized(ofResizeEventArgs & resize){
 
 void pofWin::update()
 {
-	if(this==pofWin::win) ofBackground(r,g,b);
+	//if(this==pofWin::win) ofBackground(r,g,b);
 	if(init) {
 		ofAddListener(ofEvents().windowResized,this,&pofWin::windowResized);
 		windowResized(ofGetWindowWidth(),ofGetWindowHeight());
 		init = false;
 	}
+}
+
+void pofWin::draw()
+{
+	if(this==pofWin::win) ofClear(r,g,b);
 }
 
 bool pofWin::computeTouch(int &x, int &y)

@@ -20,6 +20,7 @@ class pofWin: public pofBase {
 		virtual void update();
 		virtual bool hasUpdate(){ return true;}
 		virtual bool computeTouch(int &x, int &y);
+		virtual void draw();
 		
 		void windowResized(int w, int h);
 
@@ -33,7 +34,6 @@ class pofWin: public pofBase {
 		
 		//static :
 		static void setup();
-		
 
 		static pofWin *win; // singleton master pofWin adress.
 };
