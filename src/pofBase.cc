@@ -323,7 +323,7 @@ void pofBase::pof_build(void *x, t_symbol *s, int argc, t_atom *argv)
 void pofBase::buildAll() {
 	treeMutex.lockW();
 	pofobjsToUpdate.clear();
-	
+
 	std::list<pofBase*>::iterator it = pofobjs.begin();
 	while(it != pofobjs.end()) {
 		(*it)->reset_tree();
@@ -350,13 +350,12 @@ void pofBase::updateAll() {
 	
     watchdogCount++; // increment watchdog count
     
+	if(needBuild) buildAll();
 	if(doRender) {
-		if(needBuild) buildAll();
 		treeMutex.lockR();
-		
 		std::list<pofBase*>::iterator it = pofobjsToUpdate.begin();
-	
-		while(it != pofobjsToUpdate.end()) {
+
+		if(!needBuild) while(it != pofobjsToUpdate.end()) {
 			(*it)->update();
 			it++;
 		}
@@ -368,8 +367,8 @@ void pofBase::drawAll(){
 	if(doRender) {
 		treeMutex.lockR();
 		currentTexture = NULL;
-		ofEnableAlphaBlending(); 
-		if(pofWin::win) pofWin::win->tree_draw();
+		ofEnableAlphaBlending();
+		if(pofWin::win && !needBuild) pofWin::win->tree_draw();
 		treeMutex.unlockR();
 	}
     ofSetupScreen();
