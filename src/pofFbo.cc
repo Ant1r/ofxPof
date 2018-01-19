@@ -159,7 +159,9 @@ void poffbo_format(void *x, t_symbol *formatString)
 	
 	if(!strcmp(formatString->s_name, "RGB")) px->format = GL_RGB;
 	else if(!strcmp(formatString->s_name, "RGBA")) px->format = GL_RGBA;
-	else if(!strcmp(formatString->s_name, "RGBA16")) px->format = GL_RGBA16;
+#ifdef GL_RGBA16
+    else if(!strcmp(formatString->s_name, "RGBA16")) px->format = GL_RGBA16;
+#endif
 }
 
 void pofFbo::setup(void)
