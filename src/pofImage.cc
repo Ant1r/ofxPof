@@ -87,23 +87,27 @@ class pofIm{
 		return true;
 	}
 
-	
+
 	void draw(float x, float y, float w, float h) {
 		if(update()) im.draw(x, y, w, h);
 	}
-		
+
+	void drawsub(float x, float y, float w, float h, float sx, float sy, float sw, float sh) {
+		if(update()) im.drawSubsection(x, y, w, h, sx, sy, sw, sh);
+	}
+
 	void bind() {
 		if(update()) {
 			im.bind();
 			pofBase::currentTexture = &im.getTexture();
 		}
 	}
-	
+
 	void unbind() {
 		if(!loaded) return;
 		im.unbind();
 	}
-		
+
 	static pofIm* getImage(t_symbol *file){
 		mutex.lock();
 		std::map<t_symbol*,pofIm*>::iterator it;
@@ -334,6 +338,15 @@ static void pofimage_setcolors(void *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
+static void pofimage_sub(void *x, t_float sx, t_float sy, t_float sw, t_float sh)
+{
+	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
+	px->subx = sx;
+	px->suby = sy;
+	px->subwidth = sw;
+	px->subheight = sh;
+}
+
 void pofImage::setup(void)
 {
 	//post("pofimage_setup");
@@ -359,6 +372,7 @@ void pofImage::setup(void)
 	class_addmethod(pofimage_class, (t_method)pofimage_monitor, gensym("setmonitor"), A_FLOAT, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_getcolor, gensym("getcolor"), A_FLOAT, A_FLOAT, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_setcolors, gensym("setcolors"),	A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)pofimage_sub, gensym("sub"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_NULL);
 	
 	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("save"),    	A_GIMME, A_NULL);
 	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("setcolor"),	A_GIMME, A_NULL);
@@ -449,21 +463,29 @@ void pofImage::Update()
 void pofImage::draw()
 {
 	float w = width, h = height;
-	
+	float sx = subx, sy = suby;
+	float sw = subwidth, sh = subheight;
+
 	Update();
-	
+
 	if(image && image->loaded) {
 		if(isTexture) image->bind();
-		else {	
+		else {
 			if(w == 0) {
 				if(h != 0) w = imWidth * h / imHeight;
 				else w = imWidth;
 			}
 			if(h == 0) {
 				if(w != 0) h = imHeight * w / imWidth;
-				else h = imHeight; 
+				else h = imHeight;
 			}
-			image->draw(0, 0, w, h);
+			if(sw != 0 && sh != 0) {
+				if(sx < 0) sx += imWidth;
+				if(sy < 0) sy += imHeight;
+				if(sw < 0) sw += imWidth;
+				if(sh < 0) sh += imHeight;
+				image->drawsub(0, 0, w, h, sx, sy, sw, sh);
+			} else image->draw(0, 0, w, h);
 		}
 	}
 }
