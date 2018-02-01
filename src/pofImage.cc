@@ -479,11 +479,11 @@ void pofImage::draw()
 				if(w != 0) h = imHeight * w / imWidth;
 				else h = imHeight;
 			}
-			if(sw != 0 && sh != 0) {
+			if(sw != 0 || sh != 0 || sx != 0 || sy != 0) {
 				if(sx < 0) sx += imWidth;
 				if(sy < 0) sy += imHeight;
-				if(sw < 0) sw += imWidth;
-				if(sh < 0) sh += imHeight;
+				if(sw <= 0) sw += imWidth;
+				if(sh <= 0) sh += imHeight;
 				image->drawsub(0, 0, w, h, sx, sy, sw, sh);
 			} else image->draw(0, 0, w, h);
 		}
