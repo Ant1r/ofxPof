@@ -5,15 +5,36 @@
  */
 #include "pofBlend.h"
 
+GLenum pofBlend::currentSrcFactor = GL_SRC_ALPHA;
+GLenum pofBlend::currentDestFactor = GL_ONE_MINUS_SRC_ALPHA;
+
 t_class *pofBlend_class;
 
-void pofBlend_float(void *x, t_float t);
-
-void *pofBlend_new(t_floatarg visible)
+static GLenum getFactor(t_symbol *factor)
 {
-    pofBlend* obj = new pofBlend(pofBlend_class,visible);
-    
-    return (void*) (obj->pdobj);
+	if(factor == gensym("ONE")) return GL_ONE;
+	if(factor == gensym("SRC_COLOR")) return GL_SRC_COLOR;
+	if(factor == gensym("ONE_MINUS_SRC_COLOR")) return GL_ONE_MINUS_SRC_COLOR;
+	if(factor == gensym("SRC_ALPHA")) return GL_SRC_ALPHA;
+	if(factor == gensym("ONE_MINUS_SRC_ALPHA")) return GL_ONE_MINUS_SRC_ALPHA;
+	if(factor == gensym("DST_ALPHA")) return GL_DST_ALPHA;
+	if(factor == gensym("ONE_MINUS_DST_ALPHA")) return GL_ONE_MINUS_DST_ALPHA;
+	if(factor == gensym("DST_COLOR")) return GL_DST_COLOR;
+	if(factor == gensym("ONE_MINUS_DST_COLOR")) return GL_ONE_MINUS_DST_COLOR;
+	if(factor == gensym("SRC_ALPHA_SATURATE")) return GL_SRC_ALPHA_SATURATE;
+	return GL_ZERO;
+}   
+
+void *pofBlend_new(t_symbol *src, t_symbol *dest)
+{
+	pofBlend* obj = new pofBlend(pofBlend_class);
+	
+	if(getFactor(src) || getFactor(dest)) {
+		obj->srcFactor = getFactor(src);
+		obj->destFactor = getFactor(dest);
+	}		
+	
+	return (void*) (obj->pdobj);
 }
 
 void pofBlend_free(void *x)
@@ -21,20 +42,33 @@ void pofBlend_free(void *x)
 	delete (pofBlend*)(((PdObject*)x)->parent);
 }
 
+static void pofBlend_set(void *x, t_symbol *src, t_symbol *dest)
+{
+	pofBlend* px = (pofBlend*)(((PdObject*)x)->parent);
+	px->srcFactor = getFactor(src);
+	px->destFactor = getFactor(dest);
+}
+
 void pofBlend::setup(void)
 {
 	pofBlend_class = class_new(gensym("pofblend"), (t_newmethod)pofBlend_new, (t_method)pofBlend_free,
-		sizeof(PdObject), 0, A_NULL);
+		sizeof(PdObject), 0, A_DEFSYM, A_DEFSYM, A_NULL);
 	POF_SETUP(pofBlend_class);
-	//class_addfloat(pofBlend_class, (t_method)pofBlend_float);
+	class_addmethod(pofBlend_class, (t_method)pofBlend_set, gensym("set"), A_DEFSYM, A_DEFSYM, A_NULL);
 }
 
 void pofBlend::draw()
 {
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    lastSrcFactor = currentSrcFactor;
+    lastDestFactor = currentDestFactor;
+    currentSrcFactor = srcFactor;
+    currentDestFactor = destFactor;
+    glBlendFunc(currentSrcFactor, currentDestFactor);
 }
 
 void pofBlend::postdraw()
 {
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    currentSrcFactor = lastSrcFactor;
+    currentDestFactor = lastDestFactor;
+    glBlendFunc(currentSrcFactor, currentDestFactor);
 }

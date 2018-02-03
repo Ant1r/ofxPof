@@ -9,14 +9,20 @@
 
 class pofBlend: public pofBase {
 	public:
-		pofBlend(t_class *Class, float v0=0):pofBase(Class) {  }
+		pofBlend(t_class *Class):
+			pofBase(Class), srcFactor(GL_SRC_ALPHA), destFactor(GL_ONE_MINUS_SRC_ALPHA){  }
 
         virtual void draw();
         virtual void postdraw();
 		static void setup(void);
 		
-		int srcFactor;
-        int destFactor;
+		GLenum srcFactor;
+        GLenum destFactor;
+		GLenum lastSrcFactor;
+		GLenum lastDestFactor;
+
+		static GLenum currentSrcFactor;
+		static GLenum currentDestFactor;
 };
 
 
