@@ -372,6 +372,7 @@ void pofBase::drawAll(){
 		treeMutex.unlockR();
 	}
     ofSetupScreen();
+    ofSetBackgroundAuto(false);
 }
 
 void pofBase::touchDownAll(int x, int y, int id) {
@@ -586,7 +587,7 @@ bool pofBase::dequeueToPdVec()
 	//Any *any;
 	t_binbuf *bb = binbuf_new();
 	t_atom at;
-	unsigned int i, l = vec.size(); 
+	unsigned int i, l = (unsigned int)vec.size();
 	
 	for (i=0 ; i<l ; i++) {
 		Any *any = &vec[i];
