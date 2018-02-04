@@ -369,6 +369,8 @@ void pofBase::drawAll(){
 		treeMutex.lockR();
 		currentTexture = NULL;
 		ofEnableAlphaBlending();
+        pofBlend::currentSrcFactor = GL_SRC_ALPHA;
+        pofBlend::currentDestFactor = GL_ONE_MINUS_SRC_ALPHA;
 		if(pofWin::win && !needBuild) pofWin::win->tree_draw();
 		treeMutex.unlockR();
 	}
