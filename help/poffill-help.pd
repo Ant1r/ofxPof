@@ -1,0 +1,57 @@
+#N canvas 637 147 526 336 10;
+#X declare -lib pof;
+#X obj 5 4 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X obj 5 26 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#X obj 5 57 cnv 15 260 20 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X obj 12 91 pofhead;
+#X text 7 3 Pof: Pd OpenFrameworks externals;
+#X obj 216 16 declare -lib pof;
+#X text 34 25 (c) Antoine Rousseau 2018;
+#X text 295 68 Inlet 1: fill (0/1);
+#X obj 12 206 poffill;
+#X obj 30 183 tgl 15 0 empty empty fill 0 -7 0 10 -262144 -1 -1 0 1
+;
+#X obj 12 302 pofcirc 200 200 100;
+#X msg 72 184 linewidth \$1;
+#X floatatom 72 163 5 0 10 0 - - -, f 5;
+#X obj 12 139 pofscale 1 1;
+#X obj 84 114 hsl 128 15 1 5 0 0 empty empty scale1-5 -2 -8 0 10 -262144
+-1 -1 0 1;
+#X text 350 82 linewidth 0-10;
+#X text 153 198 if linewidth=0 \, then keep current one.;
+#X text 277 55 Arguments : [fill [linewidth]];
+#X text 153 184 linewidth is only valid when no-fill;
+#X text 9 59 poffill: draw shapes as outline or filled.;
+#X text 92 135 line width is in real pixels \; scaling don't change
+it.;
+#X obj 139 279 poftranslate 90;
+#X obj 12 279 poftranslate -70;
+#X obj 12 234 t a a a a, f 64;
+#X obj 393 257 poffill 1;
+#X obj 393 280 pofcolor 0 1 0 1;
+#X obj 266 258 poffill 0 4;
+#X obj 266 281 pofcolor 1 0 0 1;
+#X obj 266 302 pofrect 380 60 2;
+#X obj 393 303 pofrect 370 50;
+#X obj 139 302 pofrect 150 200 20;
+#X connect 3 0 13 0;
+#X connect 8 0 23 0;
+#X connect 9 0 8 0;
+#X connect 11 0 8 0;
+#X connect 12 0 11 0;
+#X connect 13 0 8 0;
+#X connect 14 0 13 1;
+#X connect 14 0 13 2;
+#X connect 21 0 30 0;
+#X connect 22 0 10 0;
+#X connect 23 0 22 0;
+#X connect 23 1 21 0;
+#X connect 23 2 26 0;
+#X connect 23 3 24 0;
+#X connect 24 0 25 0;
+#X connect 25 0 29 0;
+#X connect 26 0 27 0;
+#X connect 27 0 28 0;
