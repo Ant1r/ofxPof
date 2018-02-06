@@ -39,6 +39,7 @@
 #include "pofTexture.h"
 #include "pofShader.h"
 #include "pofBlend.h"
+#include "pofFill.h"
 
 #include "version.h"
 
@@ -678,6 +679,7 @@ void pofBase::setup() {
 	pofTexture::setup();
 	pofShader::setup();
     pofBlend::setup();
+    pofFill::setup();
 		
 	queueClock = clock_new(0,(t_method)dequeueToPdtick);
 	clock_delay(queueClock,100);
