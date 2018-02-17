@@ -55,7 +55,9 @@ void pofScale::setup(void)
 
 void pofScale::draw()
 {
-	vReal = v;
+	if(v.x && v.y && v.z) vReal = v;
+	else vReal = ofVec3f(1.0, 1.0, 1.0);
+	
 	ofScale(vReal.x, vReal.y, vReal.z);
 }
 
@@ -66,7 +68,9 @@ void pofScale::postdraw()
 
 bool pofScale::computeTouch(int &xx, int &yy)
 {
-	xx /= v.x;
-	yy /= v.y;
+	if(v.x && v.y && v.z) {
+		xx /= v.x;
+		yy /= v.y;
+	}
 	return true;
 }
