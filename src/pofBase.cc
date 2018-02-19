@@ -8,6 +8,8 @@
 #include "pofHead.h"
 #include "pofImage.h"
 #include "setupAll.h"
+#include "RWmutex.h"
+
 #include "version.h"
 
 std::list<pofBase*> pofBase::pofobjs;
