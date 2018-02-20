@@ -24,6 +24,7 @@ typedef struct _PdObject {
 } PdObject;
 
 class RWmutex;
+class EventDispatcher;
 
 class pofBase {
 	public:
@@ -107,16 +108,8 @@ class pofBase {
 		static void updateAll();
 		static void drawAll();
 
-			//
-		/*static int Rcount;		
-		static ofMutex M_Lect;		
-		static ofMutex M_Red;
-		static ofMutex Red;		
-		static void lockLect();
-		static void unlockLect();
-		static void lockRed();
-		static void unlockRed();*/
 		static RWmutex treeMutex;
+		static EventDispatcher dispatcher;
 		
 		static void touchDownAll(int x, int y, int id);
 		static void touchMovedAll(int x, int y, int id);
