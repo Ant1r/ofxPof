@@ -8,7 +8,7 @@
 
 static t_class *pofutil_class;
 static t_symbol *s_download, *s_out, *s_unzip, *s_done, *s_error;
-static t_symbol *s_rmfile,*s_rmdir,*s_mkdir,*s_renamedir;
+static t_symbol *s_rmfile,*s_rmdir,*s_mkdir,*s_renamedir,*s_movefile,*s_copyfile;
 
 
 static void *pofutil_new(void)
@@ -67,32 +67,6 @@ static void pofutil_time(void *x, t_symbol *s, int argc, t_atom *argv)
 	
 	outlet_anything(px->m_out1, gensym("time"), 1, &ap);
 }
-
-#if 0
-static void pofutil_rmfile(void *x, t_symbol *path)
-{
-	//pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
-	ofFile::removeFile(path->s_name, false);	
-}
-
-static void pofutil_rmdir(void *x, t_symbol *path)
-{
-	//pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
-	ofDirectory::removeDirectory(path->s_name, true, false);
-}
-
-static void pofutil_mkdir(void *x, t_symbol *path)
-{
-	//pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
-	ofDirectory::createDirectory(path->s_name, /*bool bRelativeToData=*/false, /*bool recursive=*/true);
-}
-
-static void pofutil_renamedir(void *x, t_symbol *path, t_symbol *newpath)
-{
-	//pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
-	ofDirectory(path->s_name).renameTo(newpath->s_name, /*bool bRelativeToData=*/false, /*bool overwrite=*/true);
-}
-#endif
 
 static void pofutil_exists(void *x, t_symbol *path)
 {
@@ -223,6 +197,22 @@ class pofSysThread : public ofThread {
 					false, 	// bRelativeToData
 					true)) 	//overwrite
 				SETSYMBOL(&at[2], s_done);
+			}
+		}
+		else if(command == s_movefile) {
+			if((argc>1) && (argv->a_type == A_SYMBOL) && ((argv+1)->a_type == A_SYMBOL)) {
+				if(ofFile(atom_getsymbol(argv)->s_name).moveTo(atom_getsymbol(argv+1)->s_name,
+						false,											// bRelativeToData
+						argc>2 ? atom_getfloat(argv+2) != 0 : false))	//overwrite
+					SETSYMBOL(&at[2], s_done);
+            }
+        }
+		else if(command == s_copyfile) {
+			if((argc>1) && (argv->a_type == A_SYMBOL) && ((argv+1)->a_type == A_SYMBOL)) {
+				if(ofFile(atom_getsymbol(argv)->s_name).copyTo(atom_getsymbol(argv+1)->s_name,
+						false,											// bRelativeToData
+						argc>2 ? atom_getfloat(argv+2) != 0 : false))	//overwrite
+					SETSYMBOL(&at[2], s_done);
 			}
 		}
 
@@ -544,7 +534,9 @@ void pofUtil::setup(void)
 	s_rmfile =  gensym("rmfile");
 	s_rmdir =  gensym("rmdir");
 	s_mkdir =  gensym("mkdir");
-	s_renamedir =  gensym("renamedir");
+    s_renamedir =  gensym("renamedir");
+    s_movefile =  gensym("movefile");
+	s_copyfile =  gensym("copyfile");
 	
 	pofutil_class = class_new(gensym("pofutil"), (t_newmethod)pofutil_new, (t_method)pofutil_free,
 		sizeof(PdObject), 0, A_NULL);
@@ -554,14 +546,13 @@ void pofUtil::setup(void)
 	class_addmethod(pofutil_class, (t_method)pofutil_getdatapath, gensym("getdatapath"), A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_time, gensym("time"), A_GIMME, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_dollarg, gensym("dollarg"), A_NULL);
-	//class_addmethod(pofutil_class, (t_method)pofutil_rmfile, gensym("rmfile"), A_SYMBOL, A_NULL);
-	//class_addmethod(pofutil_class, (t_method)pofutil_rmdir, s_rmdir, A_SYMBOL, A_NULL);
-	//class_addmethod(pofutil_class, (t_method)pofutil_mkdir, s_mkdir, A_SYMBOL, A_NULL);
-	//class_addmethod(pofutil_class, (t_method)pofutil_renamedir, s_renamedir, A_SYMBOL, A_SYMBOL, A_NULL);
+
 	class_addmethod(pofutil_class, (t_method)pofutil_thread, s_rmfile, A_GIMME, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_thread, s_rmdir, A_GIMME, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_thread, s_mkdir, A_GIMME, A_NULL);
-	class_addmethod(pofutil_class, (t_method)pofutil_thread, s_renamedir, A_GIMME, A_NULL);
+    class_addmethod(pofutil_class, (t_method)pofutil_thread, s_renamedir, A_GIMME, A_NULL);
+    class_addmethod(pofutil_class, (t_method)pofutil_thread, s_movefile, A_GIMME, A_NULL);
+	class_addmethod(pofutil_class, (t_method)pofutil_thread, s_copyfile, A_GIMME, A_NULL);
 	
 	class_addmethod(pofutil_class, (t_method)pofutil_listdir, gensym("listdir"), A_GIMME, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_exists, gensym("exists"), A_SYMBOL, A_NULL);

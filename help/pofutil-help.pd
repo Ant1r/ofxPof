@@ -8,15 +8,15 @@
 #X obj 14 65 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
 #X text 20 65 pofutil : various utilities.;
-#N canvas 697 116 466 447 file_utils 0;
+#N canvas 664 159 518 599 file_utils 0;
 #X msg 22 14 getdir;
-#X obj 22 375 pofutil;
+#X obj 22 511 pofutil;
 #X msg 56 165 rmfile /tmp/file_to_delete;
 #X msg 45 73 listdir /;
 #X msg 53 104 exists /;
 #X text 112 73 list directory;
 #X text 107 104 test if file exists/isDirectory/isFile;
-#X obj 22 404 print;
+#X obj 22 540 print;
 #X msg 56 209 mkdir /tmp/test_dir;
 #X msg 57 236 rmdir /tmp/test_dir;
 #X msg 33 45 getdatapath;
@@ -24,12 +24,21 @@
 #X text 64 11 get path of current patch directory;
 #X msg 56 280 renamedir /tmp/test_dir /tmp/test_dir-renamed;
 #X msg 57 309 renamedir /tmp/test_dir-renamed /tmp/test_dir;
-#X text 64 404 async out : [command] done/error [error_code];
+#X text 64 540 async out : [command] done/error [error_code];
 #X text 182 208 make directory (async);
 #X text 182 234 remove directory (async);
 #X text 334 280 rename dir (async);
 #X text 334 307 rename back (async);
 #X text 219 163 remove file (async);
+#X msg 64 429 copyfile /tmp/test1 /tmp/test3, f 32;
+#X msg 64 449 copyfile /tmp/test1 /tmp/test3 1;
+#X msg 64 359 movefile /tmp/test1 /tmp/test2;
+#X text 269 430 copy file (async);
+#X text 256 358 move file (async);
+#X text 174 376 CAUTION: movefile unconditionally OVERLOADS the destination
+file (seems to be OF bug), f 43;
+#X text 269 451 optional 3rd arg = 'overload' (defaults false), f
+29;
 #X connect 0 0 1 0;
 #X connect 1 0 7 0;
 #X connect 2 0 1 0;
@@ -40,6 +49,9 @@
 #X connect 10 0 1 0;
 #X connect 13 0 1 0;
 #X connect 14 0 1 0;
+#X connect 21 0 1 0;
+#X connect 22 0 1 0;
+#X connect 23 0 1 0;
 #X restore 28 103 pd file_utils;
 #N canvas 599 618 663 360 string_utils 0;
 #X obj 23 186 pofutil;
