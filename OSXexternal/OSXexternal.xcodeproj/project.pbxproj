@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C90854C120455C2B0044332F /* pofFill.cc in Sources */ = {isa = PBXBuildFile; fileRef = C90854BC20455C2B0044332F /* pofFill.cc */; };
+		C90854C220455C2B0044332F /* pofFill.h in Headers */ = {isa = PBXBuildFile; fileRef = C90854BD20455C2B0044332F /* pofFill.h */; };
+		C90854C320455C2B0044332F /* RWmutex.h in Headers */ = {isa = PBXBuildFile; fileRef = C90854BE20455C2B0044332F /* RWmutex.h */; };
+		C90854C420455C2B0044332F /* setupAll.cc in Sources */ = {isa = PBXBuildFile; fileRef = C90854BF20455C2B0044332F /* setupAll.cc */; };
+		C90854C520455C2B0044332F /* setupAll.h in Headers */ = {isa = PBXBuildFile; fileRef = C90854C020455C2B0044332F /* setupAll.h */; };
 		C93BB5871B10BA7200FD662B /* ofxAccelerometer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C93BB5851B10BA7200FD662B /* ofxAccelerometer.cpp */; };
 		C93BB5881B10BA7200FD662B /* ofxAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB5861B10BA7200FD662B /* ofxAccelerometer.h */; };
 		C93BB5D21B10BAA700FD662B /* fontstash.c in Sources */ = {isa = PBXBuildFile; fileRef = C93BB5C91B10BAA700FD662B /* fontstash.c */; };
@@ -147,6 +152,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C90854BC20455C2B0044332F /* pofFill.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofFill.cc; sourceTree = "<group>"; };
+		C90854BD20455C2B0044332F /* pofFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofFill.h; sourceTree = "<group>"; };
+		C90854BE20455C2B0044332F /* RWmutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWmutex.h; sourceTree = "<group>"; };
+		C90854BF20455C2B0044332F /* setupAll.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = setupAll.cc; sourceTree = "<group>"; };
+		C90854C020455C2B0044332F /* setupAll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = setupAll.h; sourceTree = "<group>"; };
+		C90854C6204567CF0044332F /* VERSION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VERSION; sourceTree = "<group>"; };
 		C93BB5581B10B46E00FD662B /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
 		C93BB5851B10BA7200FD662B /* ofxAccelerometer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAccelerometer.cpp; sourceTree = "<group>"; };
 		C93BB5861B10BA7200FD662B /* ofxAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxAccelerometer.h; sourceTree = "<group>"; };
@@ -235,7 +246,7 @@
 		C93BB6EC1B13153700FD662B /* pofTouchable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofTouchable.h; sourceTree = "<group>"; };
 		C93BB6ED1B13153700FD662B /* pofTranslate.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofTranslate.cc; sourceTree = "<group>"; };
 		C93BB6EE1B13153700FD662B /* pofTranslate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofTranslate.h; sourceTree = "<group>"; };
-		C93BB6EF1B13153700FD662B /* pofUtil.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofUtil.cc; sourceTree = "<group>"; };
+		C93BB6EF1B13153700FD662B /* pofUtil.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofUtil.cc; sourceTree = "<group>"; usesTabs = 1; };
 		C93BB6F01B13153700FD662B /* pofUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofUtil.h; sourceTree = "<group>"; };
 		C93BB6F11B13153700FD662B /* pofVisible.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofVisible.cc; sourceTree = "<group>"; };
 		C93BB6F21B13153700FD662B /* pofVisible.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofVisible.h; sourceTree = "<group>"; };
@@ -597,8 +608,7 @@
 		C93BB6BF1B13153700FD662B /* src */ = {
 			isa = PBXGroup;
 			children = (
-				C9F0EE051F7250BC00095B75 /* pofShader.cc */,
-				C9F0EE061F7250BC00095B75 /* pofShader.h */,
+				C90854C6204567CF0044332F /* VERSION */,
 				C93BB6C01B13153700FD662B /* m_pd.h */,
 				C93BB6C11B13153700FD662B /* pofAccel.cc */,
 				C93BB6C21B13153700FD662B /* pofAccel.h */,
@@ -614,6 +624,8 @@
 				C9DCA5081C05F11700554E71 /* pofDepthTest.h */,
 				C93BB6CB1B13153700FD662B /* pofFbo.cc */,
 				C93BB6CC1B13153700FD662B /* pofFbo.h */,
+				C90854BC20455C2B0044332F /* pofFill.cc */,
+				C90854BD20455C2B0044332F /* pofFill.h */,
 				C9ED7F761D7AC70E000FC356 /* pofFilm.cc */,
 				C9ED7F771D7AC70E000FC356 /* pofFilm.h */,
 				C93BB6CD1B13153700FD662B /* pofFont.cc */,
@@ -644,6 +656,8 @@
 				C93BB6E01B13153700FD662B /* pofScale.h */,
 				C93BB6E11B13153700FD662B /* pofScope.cc */,
 				C93BB6E21B13153700FD662B /* pofScope.h */,
+				C9F0EE051F7250BC00095B75 /* pofShader.cc */,
+				C9F0EE061F7250BC00095B75 /* pofShader.h */,
 				C9DCA50F1C05F13E00554E71 /* pofSphere.cc */,
 				C9DCA5101C05F13E00554E71 /* pofSphere.h */,
 				C93BB6E31B13153700FD662B /* pofText.cc */,
@@ -668,6 +682,9 @@
 				C93BB6F41B13153700FD662B /* pofWin.h */,
 				C93BB6F51B13153700FD662B /* pofXML.cc */,
 				C93BB6F61B13153700FD662B /* pofXML.h */,
+				C90854BE20455C2B0044332F /* RWmutex.h */,
+				C90854BF20455C2B0044332F /* setupAll.cc */,
+				C90854C020455C2B0044332F /* setupAll.h */,
 				C991912F1DC89B2A00433B4F /* version.cc */,
 				C93BB6F71B13153700FD662B /* version.h */,
 			);
@@ -754,6 +771,7 @@
 				C93BB7021B13153700FD662B /* pofColor.h in Headers */,
 				C93BB7121B13153700FD662B /* pofRect.h in Headers */,
 				C93BB6FE1B13153700FD662B /* pofBase.h in Headers */,
+				C90854C520455C2B0044332F /* setupAll.h in Headers */,
 				C93BB5D31B10BAA700FD662B /* fontstash.h in Headers */,
 				C9F0EE081F7250BC00095B75 /* pofShader.h in Headers */,
 				C93BB6311B10BAF400FD662B /* mztools.h in Headers */,
@@ -766,6 +784,7 @@
 				C93BB7221B13153800FD662B /* pofTouch.h in Headers */,
 				C93BB62F1B10BAF400FD662B /* ioapi.h in Headers */,
 				C93BB65B1B10BB1300FD662B /* core.h in Headers */,
+				C90854C220455C2B0044332F /* pofFill.h in Headers */,
 				C93BB71A1B13153700FD662B /* pofScope.h in Headers */,
 				C93BB6671B10BB1300FD662B /* ofUTF8.h in Headers */,
 				C93BB7041B13153700FD662B /* pofFbo.h in Headers */,
@@ -774,6 +793,7 @@
 				C99191311DC89B2A00433B4F /* pofPath.h in Headers */,
 				C93BB6351B10BAF400FD662B /* zip.h in Headers */,
 				C93BB5D81B10BAA700FD662B /* ofxFontStash.h in Headers */,
+				C90854C320455C2B0044332F /* RWmutex.h in Headers */,
 				C93BB6601B10BB1300FD662B /* unchecked.h in Headers */,
 				C93BB72E1B13153800FD662B /* pofXML.h in Headers */,
 				C93BB7001B13153700FD662B /* pofCirc.h in Headers */,
@@ -788,6 +808,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C95F51261B0F8AAE00C8B17A /* Build configuration list for PBXNativeTarget "pof" */;
 			buildPhases = (
+				C90854C7204568A90044332F /* ShellScript */,
 				C95F511E1B0F8AAE00C8B17A /* Sources */,
 				C95F511F1B0F8AAE00C8B17A /* Frameworks */,
 				C95F51201B0F8AAE00C8B17A /* Headers */,
@@ -851,6 +872,19 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		C90854C7204568A90044332F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT\nexport POF_GITVERSION=`git describe --abbrev=4`\necho \"#define POF_VERSION $POF_GITVERSION\" > ../src/VERSION\ntouch ../src/version.cc\n";
+		};
 		C92493611C328D7A00C309A2 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -896,6 +930,7 @@
 				C93BB6341B10BAF400FD662B /* zip.c in Sources */,
 				C93BB5D71B10BAA700FD662B /* ofxFontStash.cpp in Sources */,
 				C9F0EE071F7250BC00095B75 /* pofShader.cc in Sources */,
+				C90854C120455C2B0044332F /* pofFill.cc in Sources */,
 				C93BB8391B19066700FD662B /* mac-osx-arrow-cursor-56.png.c in Sources */,
 				C93BB71D1B13153700FD662B /* pofTextbox.cc in Sources */,
 				C9DCA50D1C05F12C00554E71 /* pofPlane.cc in Sources */,
@@ -905,6 +940,7 @@
 				C93BB72D1B13153800FD662B /* pofXML.cc in Sources */,
 				C93BB7171B13153700FD662B /* pofScale.cc in Sources */,
 				C93BB6FF1B13153700FD662B /* pofCirc.cc in Sources */,
+				C90854C420455C2B0044332F /* setupAll.cc in Sources */,
 				C93BB6FB1B13153700FD662B /* pofBang.cc in Sources */,
 				C93BB7151B13153700FD662B /* pofRotate.cc in Sources */,
 				C93BB6781B10BB3B00FD662B /* ofxJSONElement.cpp in Sources */,
@@ -1164,7 +1200,10 @@
 				OF_CORE_FRAMEWORKS = "-framework Accelerate -framework AGL -framework AppKit -framework ApplicationServices -framework AudioToolbox -framework AVFoundation -framework Cocoa -framework CoreAudio -framework CoreFoundation -framework CoreMedia -framework CoreServices -framework CoreVideo -framework IOKit -framework OpenGL -framework QuartzCore -framework QuickTime -framework QTKit -framework GLUT";
 				OF_CORE_LIBS = "$(LIB_POCO) $(LIB_TESS) $(LIB_GLEW) $(LIB_CAIRO1) $(LIB_CAIRO2) $(LIB_CAIRO3) $(LIB_FMODEX) $(LIB_RTAUDIO) $(LIB_OPENSSL1) $(LIB_OPENSSL2) $(LIB_GLFW) $(LIB_FREEIMAGE) $(LIB_FREETYPE) $(LIB_BOOST_FS) $(LIB_BOOST_SYSTEM) ";
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = "-DPD";
+				OTHER_CFLAGS = (
+					"-DPD",
+					"-DINCLUDE_VERSION_FILE",
+				);
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
@@ -1204,7 +1243,10 @@
 				OF_CORE_FRAMEWORKS = "-framework Accelerate -framework AGL -framework AppKit -framework ApplicationServices -framework AudioToolbox -framework AVFoundation -framework Cocoa -framework CoreAudio -framework CoreFoundation -framework CoreMedia -framework CoreServices -framework CoreVideo -framework IOKit -framework OpenGL -framework QuartzCore -framework QuickTime -framework QTKit -framework GLUT";
 				OF_CORE_LIBS = "$(LIB_POCO) $(LIB_TESS) $(LIB_GLEW) $(LIB_CAIRO1) $(LIB_CAIRO2) $(LIB_CAIRO3) $(LIB_FMODEX) $(LIB_RTAUDIO) $(LIB_OPENSSL1) $(LIB_OPENSSL2) $(LIB_GLFW) $(LIB_FREEIMAGE) $(LIB_FREETYPE) $(LIB_BOOST_FS) $(LIB_BOOST_SYSTEM) ";
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = "-DPD";
+				OTHER_CFLAGS = (
+					"-DPD",
+					"-DINCLUDE_VERSION_FILE",
+				);
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
