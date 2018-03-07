@@ -39,6 +39,7 @@
 #include "pofTexture.h"
 #include "pofShader.h"
 #include "pofFill.h"
+#include "pofLayer.h"
 
 
 void setupAll() {
@@ -76,6 +77,7 @@ void setupAll() {
 	pofPath::setup();
 	pofTexture::setup();
 	pofShader::setup();
-    pofFill::setup();
+	pofFill::setup();
+	pofLayer::setup();
 }
 

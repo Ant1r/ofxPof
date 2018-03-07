@@ -1,4 +1,4 @@
-#N canvas 604 97 487 339 10;
+#N canvas 594 87 487 339 10;
 #X declare -lib pof;
 #X obj 9 12 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -23,6 +23,8 @@ for lower tree.;
 #X text 15 64 pofvisible : show or hide.;
 #X obj 220 24 declare -lib pof;
 #X text 11 11 Pof: Pd OpenFrameworks externals;
+#X obj 325 279 poflayer;
+#X text 50 280 note: [pofvisible] also has another use \, see;
 #X connect 5 0 9 0;
 #X connect 9 0 12 0;
 #X connect 13 0 9 0;

@@ -5,20 +5,22 @@
  */
 #pragma once
 
-#include "pofTouchable.h"
+#include "pofBase.h"
 
-class pofVisible;
-
-class pofVisible: public pofTouchable {
+class pofLayer: public pofBase {
 	public:
-		pofVisible(t_class *Class, float v0=0):pofTouchable(Class, v0),visible(v0), layer(NULL) {  }
+		pofLayer(t_class *Class):
+			pofBase(Class){  }
 
-		virtual void tree_draw();
-		
+		virtual void draw();
+		virtual void postdraw();
 		static void setup(void);
 		
-		float visible;
 		t_symbol *layer;
+		t_symbol *lastLayer;
+		
+		static t_symbol *currentLayer;
+		static void initFrame(ofEventArgs & args);
 };
 
 
