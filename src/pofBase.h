@@ -23,35 +23,7 @@ typedef struct _PdObject {
 	t_float x_f;
 } PdObject;
 
-class RWmutex {
-  public:	
-	ofMutex R;
-	ofMutex W;
-	ofMutex W2;
-	int Rcount;
-	
-	RWmutex():Rcount(0){}
-	void lockR() {
-		R.lock();
-		Rcount++;
-		if(Rcount == 1) W.lock();
-		R.unlock();
-	}
-	void unlockR() {
-		R.lock();
-		Rcount--;
-		if(Rcount == 0) W.unlock();
-		R.unlock();
-	}
-	void lockW() {
-		W2.lock();
-		W.lock();
-	}
-	void unlockW() {
-		W.unlock();
-		W2.unlock();
-	}
-};
+class RWmutex;
 
 class pofBase {
 	public:

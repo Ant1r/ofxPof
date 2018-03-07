@@ -62,15 +62,15 @@ Carthage/Build
 *~
 pof.zip
 
+*/obj
+
 linuxExternal/bin/pof*
-linuxExternal/obj
 linuxExternal/pof*
 OSXexternal/pof*
 
 exampleStandalone/bin/exampleStandalone
 exampleStandalone/bin/exampleStandalone_debug
 exampleStandalone/bin/libs
-exampleStandalone/obj
 
 #generated at build time:
 src/VERSION

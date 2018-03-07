@@ -6,6 +6,7 @@
 #pragma once
 
 #include "pofBase.h"
+#include "RWmutex.h"
 
 class pofsubFbo	{
 	static std::map<t_symbol*,pofsubFbo*> sfbos;
