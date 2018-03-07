@@ -92,6 +92,7 @@ class pofBase {
 		static std::list<pofBase*> pofobjs, pofobjsToUpdate;
 		static bool needBuild;
 		static ofEvent<ofEventArgs> reloadTexturesEvent, unloadTexturesEvent;
+		static ofEvent<ofEventArgs> initFrameEvent;
 		static deque<t_binbuf*> toPdQueue;
 		static deque<std::vector<Any> > toPdQueueVec;
 		static t_clock *queueClock;

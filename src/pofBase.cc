@@ -17,6 +17,7 @@ std::list<pofBase*> pofBase::pofobjsToUpdate;
 RWmutex pofBase::treeMutex;
 bool pofBase::needBuild = false;
 ofEvent<ofEventArgs> pofBase::reloadTexturesEvent, pofBase::unloadTexturesEvent;
+ofEvent<ofEventArgs> pofBase::initFrameEvent;
 deque<t_binbuf*> pofBase::toPdQueue;
 deque<std::vector<Any> > pofBase::toPdQueueVec;
 t_clock *pofBase::queueClock;
@@ -336,6 +337,8 @@ void pofBase::updateAll() {
 void pofBase::drawAll(){
 	if(doRender) {
 		treeMutex.lockR();
+		ofEventArgs voidEventArgs;
+		ofNotifyEvent(initFrameEvent, voidEventArgs);
 		currentTexture = NULL;
 		ofEnableAlphaBlending();
 		if(pofWin::win && !needBuild) pofWin::win->tree_draw();
