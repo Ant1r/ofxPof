@@ -183,7 +183,13 @@ void pofBase::tree_build(pofBase *parent)
 		return;
 	}
 	
-	if(parent) parent->children.push_back(this);
+	if(parent) {
+		// add this to parent's children:
+		std::list<pofBase*>::iterator findIter =
+			std::find(parent->children.begin(), parent->children.end(), this);
+		if(findIter == parent->children.end()) // don't add this twice
+			parent->children.push_back(this);
+	}
 	isBuilt = true;
 	
 	t_atom ap;
