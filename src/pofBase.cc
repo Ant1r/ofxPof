@@ -205,6 +205,9 @@ bool pofBase::touchtree_build(pofBase *parent)
 	pofBase *newparent = parent;
 	bool touchable = isTouchable();
 	static int x=0, y=0;
+
+	if(isBuilt) return false;
+
 	if((parent == NULL) || computeTouch(x, y)) newparent = this;
 
 	while(it != children.end()) {
@@ -214,7 +217,7 @@ bool pofBase::touchtree_build(pofBase *parent)
 		}
 		it++;
 	}
-	
+	isBuilt = true;
 	return touchable;
 }
 
@@ -314,6 +317,7 @@ void pofBase::buildAll() {
 			(*it2)->tree_build(pofWin::win);
 			it2++;
 		}
+
 		pofWin::win->touchtree_build(NULL);
 	}
 	
