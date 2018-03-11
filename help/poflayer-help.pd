@@ -1,4 +1,4 @@
-#N canvas 785 113 464 529 10;
+#N canvas 916 107 464 529 10;
 #X declare -lib pof;
 #X obj 9 177 cnv 15 130 80 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -37,7 +37,7 @@
 #X floatatom 188 212 5 0 0 0 - - -, f 5;
 #X obj 159 398 pofvisible Layer2;
 #X obj 12 395 pofvisible Layer1;
-#X obj 171 378 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 181 375 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 12 275 t a;
 #X obj 12 355 t a a, f 25;
@@ -51,6 +51,8 @@
 #X obj 249 471 pofvisible LAYER 1;
 #X text 236 492 =;
 #X obj 249 493 pofvisible 1 LAYER;
+#X msg 179 335 layer Layer2;
+#X msg 179 353 layer Layer3;
 #X connect 8 0 16 0;
 #X connect 16 0 17 0;
 #X connect 16 1 18 0;
@@ -69,3 +71,5 @@
 #X connect 30 0 19 0;
 #X connect 31 0 28 0;
 #X connect 31 1 27 0;
+#X connect 41 0 27 0;
+#X connect 42 0 27 0;

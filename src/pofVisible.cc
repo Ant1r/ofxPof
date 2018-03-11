@@ -8,9 +8,9 @@
 
 t_class *pofvisible_class;
 
-void pofvisible_float(void *x, t_float t);
+static void pofvisible_float(void *x, t_float t);
 
-void *pofvisible_new(t_symbol *sym,int argc, t_atom *argv)
+static void *pofvisible_new(t_symbol *sym,int argc, t_atom *argv)
 {
 	float visible = 0;
 	t_symbol *layer = NULL;
@@ -33,12 +33,12 @@ void *pofvisible_new(t_symbol *sym,int argc, t_atom *argv)
 	return (void*) (obj->pdobj);
 }
 
-void pofvisible_free(void *x)
+static void pofvisible_free(void *x)
 {
 	delete (pofVisible*)(((PdObject*)x)->parent);
 }
 
-void pofvisible_float(void *x, t_float t)
+static void pofvisible_float(void *x, t_float t)
 {
 	pofVisible *px = (pofVisible*)(((PdObject*)x)->parent);
 	
@@ -46,6 +46,11 @@ void pofvisible_float(void *x, t_float t)
 	px->visible = px->touchable;
 }
 
+static void pofvisible_layer(void *x, t_symbol *newlayer)
+{
+	pofVisible* px = (pofVisible*)(((PdObject*)x)->parent);
+	px->layer = newlayer;
+}
 
 void pofVisible::setup(void)
 {
@@ -54,6 +59,7 @@ void pofVisible::setup(void)
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
 	POF_SETUP(pofvisible_class);
 	class_addfloat(pofvisible_class, (t_method)pofvisible_float);
+	class_addmethod(pofvisible_class, (t_method)pofvisible_layer, gensym("layer"), A_SYMBOL, A_NULL);
 }
 
 void pofVisible::tree_draw()
