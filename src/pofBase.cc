@@ -295,9 +295,9 @@ void pofBase::pof_build(void *x, t_symbol *s, int argc, t_atom *argv)
 	
 	if (argc==1 && argv->a_type==A_POINTER) {
 		parent = (pofBase *)argv->a_w.w_gpointer;
+		obj->tree_build(parent);
 	}
 	
-	obj->tree_build(parent);
 }
 
 void pofBase::buildAll() {
