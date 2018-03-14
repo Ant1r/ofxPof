@@ -348,15 +348,15 @@ void pofBase::drawAll(){
 }
 
 void pofBase::touchDownAll(int x, int y, int id) {
-	dispatcher.pushEvent(EventDispatcher::DOWN, x, y, id);
+	dispatcher.pushEvent(EventData::DOWN, x, y, id);
 }
 
 void pofBase::touchMovedAll(int x, int y, int id) {	
-	dispatcher.pushEvent(EventDispatcher::MOVE, x, y, id);
+	dispatcher.pushEvent(EventData::MOVE, x, y, id);
 }
 
 void pofBase::touchUpAll(int x, int y, int id) {
-	dispatcher.pushEvent(EventDispatcher::UP, x, y, id);
+	dispatcher.pushEvent(EventData::UP, x, y, id);
 }
 
 /*void pofBase::touchDoubleTapAll(int x, int y, int id) {
@@ -366,7 +366,7 @@ void pofBase::touchUpAll(int x, int y, int id) {
 }*/
 
 void pofBase::touchCancelAll() {
-	dispatcher.pushEvent(EventDispatcher::CANCEL);
+	dispatcher.pushEvent(EventData::CANCEL);
 }
 
 void pofBase::keyPressed(int key){
