@@ -8,7 +8,7 @@
 #include "pofWin.h"
 #include "RWmutex.h"
 
-void EventDispatcher::pushEvent(eventType type, int x, int y, int id)
+void EventDispatcher::pushEvent(EventData::eventType type, int x, int y, int id)
 {
 	mutex.lock();
 	queue.push_back(EventData(type, x, y, id));
@@ -24,10 +24,10 @@ void EventDispatcher::popEvents()
 		EventData data = queue.front();
 		queue.pop_front();
 		if(pofWin::win) switch(data.type) {
-			case DOWN: pofWin::win->tree_touchDown(data.x, data.y, data.id); break;
-			case UP: pofWin::win->tree_touchUp(data.x, data.y, data.id); break;
-			case MOVE: pofWin::win->tree_touchMoved(data.x, data.y, data.id); break;
-			case CANCEL: pofWin::win->tree_touchCancel(); break;
+            case EventData::DOWN: pofWin::win->tree_touchDown(data.x, data.y, data.id); break;
+			case EventData::UP: pofWin::win->tree_touchUp(data.x, data.y, data.id); break;
+			case EventData::MOVE: pofWin::win->tree_touchMoved(data.x, data.y, data.id); break;
+			case EventData::CANCEL: pofWin::win->tree_touchCancel(); break;
 			default: break;
 		}
 	}		
