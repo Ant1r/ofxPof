@@ -9,12 +9,14 @@
 #include "pofImage.h"
 #include "setupAll.h"
 #include "RWmutex.h"
+#include "EventDispatcher.h"
 
 #include "version.h"
 
 std::list<pofBase*> pofBase::pofobjs;
 std::list<pofBase*> pofBase::pofobjsToUpdate;
 RWmutex pofBase::treeMutex;
+EventDispatcher pofBase::dispatcher;
 bool pofBase::needBuild = false;
 ofEvent<ofEventArgs> pofBase::reloadTexturesEvent, pofBase::unloadTexturesEvent;
 ofEvent<ofEventArgs> pofBase::initFrameEvent;
@@ -371,21 +373,15 @@ void pofBase::drawAll() {
 }
 
 void pofBase::touchDownAll(int x, int y, int id) {
-	treeMutex.lockR();
-	if(pofWin::win) pofWin::win->tree_touchDown(x, y, id);	
-	treeMutex.unlockR();
+	dispatcher.pushEvent(EventDispatcher::DOWN, x, y, id);
 }
 
 void pofBase::touchMovedAll(int x, int y, int id) {	
-	treeMutex.lockR();
-	if(pofWin::win) pofWin::win->tree_touchMoved(x, y, id);	
-	treeMutex.unlockR();
+	dispatcher.pushEvent(EventDispatcher::MOVE, x, y, id);
 }
 
 void pofBase::touchUpAll(int x, int y, int id) {
-	treeMutex.lockR();
-	if(pofWin::win) pofWin::win->tree_touchUp(x, y, id);
-	treeMutex.unlockR();
+	dispatcher.pushEvent(EventDispatcher::UP, x, y, id);
 }
 
 /*void pofBase::touchDoubleTapAll(int x, int y, int id) {
@@ -395,9 +391,7 @@ void pofBase::touchUpAll(int x, int y, int id) {
 }*/
 
 void pofBase::touchCancelAll() {
-	treeMutex.lockR();
-	if(pofWin::win) pofWin::win->tree_touchCancel();
-	treeMutex.unlockR();
+	dispatcher.pushEvent(EventDispatcher::CANCEL);
 }
 
 void pofBase::keyPressed(int key){
@@ -446,6 +440,7 @@ void pofBase::backPressed()
 
 void dequeueToPdtick(void* nul)
 {
+	pofBase::dispatcher.popEvents();
 	while(pofBase::dequeueToPd());
 	while(pofBase::dequeueToPdVec());
 
