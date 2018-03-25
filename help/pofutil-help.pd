@@ -1,4 +1,4 @@
-#N canvas 199 361 377 265 10;
+#N canvas 199 442 377 265 10;
 #X declare -lib pof;
 #X obj 14 12 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -8,7 +8,23 @@
 #X obj 14 65 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
 #X text 20 65 pofutil : various utilities.;
-#N canvas 664 159 518 599 file_utils 0;
+#N canvas 664 159 546 599 file_utils 0;
+#X obj 248 477 cnv 15 45 15 empty empty empty 20 12 0 14 -257985 -66577
+0;
+#X obj 290 159 cnv 15 45 20 empty empty empty 20 12 0 14 -257985 -66577
+0;
+#X obj 271 205 cnv 15 45 20 empty empty empty 20 12 0 14 -257985 -66577
+0;
+#X obj 282 231 cnv 15 45 20 empty empty empty 20 12 0 14 -257985 -66577
+0;
+#X obj 399 278 cnv 15 45 20 empty empty empty 20 12 0 14 -257985 -66577
+0;
+#X obj 405 304 cnv 15 45 20 empty empty empty 20 12 0 14 -257985 -66577
+0;
+#X obj 313 356 cnv 15 45 20 empty empty empty 20 12 0 14 -257985 -66577
+0;
+#X obj 328 428 cnv 15 45 20 empty empty empty 20 12 0 14 -257985 -66577
+0;
 #X msg 22 14 getdir;
 #X obj 22 511 pofutil;
 #X msg 56 165 rmfile /tmp/file_to_delete;
@@ -16,7 +32,7 @@
 #X msg 53 104 exists /;
 #X text 112 73 list directory;
 #X text 107 104 test if file exists/isDirectory/isFile;
-#X obj 22 540 print;
+#X obj 22 552 print;
 #X msg 56 209 mkdir /tmp/test_dir;
 #X msg 57 236 rmdir /tmp/test_dir;
 #X msg 33 45 getdatapath;
@@ -24,7 +40,7 @@
 #X text 64 11 get path of current patch directory;
 #X msg 56 280 renamedir /tmp/test_dir /tmp/test_dir-renamed;
 #X msg 57 309 renamedir /tmp/test_dir-renamed /tmp/test_dir;
-#X text 64 540 async out : [command] done/error [error_code];
+#X text 64 552 async out : [command] done/error [error_code];
 #X text 182 208 make directory (async);
 #X text 182 234 remove directory (async);
 #X text 334 280 rename dir (async);
@@ -39,21 +55,32 @@
 file (seems to be OF bug), f 43;
 #X text 269 451 optional 3rd arg = 'overload' (defaults false), f
 29;
-#X connect 0 0 1 0;
-#X connect 1 0 7 0;
-#X connect 2 0 1 0;
-#X connect 3 0 1 0;
-#X connect 4 0 1 0;
-#X connect 8 0 1 0;
-#X connect 9 0 1 0;
-#X connect 10 0 1 0;
-#X connect 13 0 1 0;
-#X connect 14 0 1 0;
-#X connect 21 0 1 0;
-#X connect 22 0 1 0;
-#X connect 23 0 1 0;
+#X msg 65 479 sync 1;
+#X msg 121 479 sync 0;
+#X text 166 479 sync 1: force "async" operations to run in Pd thread
+\, i.e. the patch will hang until operation is finished., f 53;
+#X text 192 522 Use:;
+#X obj 223 523 pofutil sync;
+#X text 166 504 sync 0: return to default asynchronous (=threaded)
+behavior., f 61;
+#X text 305 523 to default "sync=1";
+#X connect 8 0 9 0;
+#X connect 9 0 15 0;
+#X connect 10 0 9 0;
+#X connect 11 0 9 0;
+#X connect 12 0 9 0;
+#X connect 16 0 9 0;
+#X connect 17 0 9 0;
+#X connect 18 0 9 0;
+#X connect 21 0 9 0;
+#X connect 22 0 9 0;
+#X connect 29 0 9 0;
+#X connect 30 0 9 0;
+#X connect 31 0 9 0;
+#X connect 36 0 9 0;
+#X connect 37 0 9 0;
 #X restore 28 103 pd file_utils;
-#N canvas 599 618 663 360 string_utils 0;
+#N canvas 599 515 663 360 string_utils 0;
 #X obj 23 186 pofutil;
 #X obj 23 214 print;
 #X msg 23 29 dirbaseext /tmp/path/test.txt;
