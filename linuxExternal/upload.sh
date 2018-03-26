@@ -60,10 +60,12 @@ echo
 	
 POF_VERSION=`strings pof/pof.* | grep "Pof: version" | cut -s -d' ' -f 4`
 
+rm *${POF_VERSION}*dek*
+
 if [ x$1 == xtest ] ; then
-	deken package --version ${POF_VERSION} pof
+	deken package --objects ../pof.dek.txt --version ${POF_VERSION} pof
 else
-	deken upload --no-source-error --version ${POF_VERSION} pof
+	deken upload --objects ../pof.dek.txt --no-source-error --version ${POF_VERSION} pof
 	rm -rf pof/
 fi
 
