@@ -1,37 +1,37 @@
-pofimage	preload/load/modifiy/display an image
-poffill	DEKEN GENERATED
-pofxml	DEKEN GENERATED
-pofquad	DEKEN GENERATED
-pofplane	DEKEN GENERATED
-poffilm	DEKEN GENERATED
-poftouchable	DEKEN GENERATED
-pofshader	DEKEN GENERATED
-poftouch	DEKEN GENERATED
-pofaccel	DEKEN GENERATED
-pofpath	DEKEN GENERATED
-pofvisible	DEKEN GENERATED
-poffont	DEKEN GENERATED
-pofutil	DEKEN GENERATED
-poftranslate	DEKEN GENERATED
-pofhead	DEKEN GENERATED
-poffonts	DEKEN GENERATED
-pofresetmatrix	DEKEN GENERATED
-pofbang	DEKEN GENERATED
-poflayer	DEKEN GENERATED
-pofcirc	DEKEN GENERATED
-pofcolor	DEKEN GENERATED
-poftext	DEKEN GENERATED
-pofrotate	DEKEN GENERATED
-poftexts	DEKEN GENERATED
-pofscope	DEKEN GENERATED
-pofwin	DEKEN GENERATED
-pofsphere	DEKEN GENERATED
-poffbo	DEKEN GENERATED
-pofrect	DEKEN GENERATED
-pofdepthtest	DEKEN GENERATED
-poftextbox	DEKEN GENERATED
-pofscale	DEKEN GENERATED
-pofkeyboard	DEKEN GENERATED
-poftexture	DEKEN GENERATED
-pofgetmatrix	DEKEN GENERATED
-pofjson	DEKEN GENERATED
+pofimage		pre-load/load/modify/display an image
+poffill			draw filled or outlined
+pofxml			load/create/parse/edit/save XML files
+pofquad			texture quad warping
+pofplane		textured rectangle
+poffilm			movie player
+poftouchable	block or transmit touch events to subsequent objects
+pofshader		GLSL shader
+poftouch		multi-touch management
+pofaccel		receive accelerometer events
+pofpath			draw parametrized path
+pofvisible		draw or hide subsequent objects
+poffont			load ttf fonts 
+pofutil			miscellaneous utilities (among which file utils, file downloader...)
+poftranslate	3d translation
+pofhead			start drawing chain
+poffonts		load ttf font (FontStash version)
+pofresetmatrix	reset transformation (translate/rotate/scale) matrix
+pofbang			get a bang each frame
+poflayer		multiplex multiple layers 
+pofcirc			draw a circle or ellipse
+pofcolor		manipulate following objects color
+poftext			draw text
+pofrotate		rotate following tree
+poftexts		draw text (FontStash version, buffered multi-line, optionally underlined)
+pofscope		signal visualization 
+pofwin			control global POF properties
+pofsphere		draw textured sphere
+poffbo			GL framebuffer
+pofrect			draw (rounded) rectangle
+pofdepthtest	allow depth test when drawing subsequent objects
+poftextbox		text entry from user (mobile platform only)
+pofscale		rescale subsequent objects
+pofkeyboard		get keys events
+poftexture		retrieve a previously computed texture
+pofgetmatrix	request current transformation (translate/rotate/scale) matrix
+pofjson			download/load/parse JSON files
