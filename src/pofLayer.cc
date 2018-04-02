@@ -6,7 +6,7 @@
 #include "pofLayer.h"
 
 t_symbol *pofLayer::currentLayer = NULL;
-
+static t_symbol *s_none = NULL;
 t_class *pofLayer_class;
 
 static void *pofLayer_new(t_symbol *_layer)
@@ -31,6 +31,8 @@ static void pofLayer_layer(void *x, t_symbol *newlayer)
 
 void pofLayer::setup(void)
 {
+	s_none = gensym("");
+	
 	pofLayer_class = class_new(gensym("poflayer"), (t_newmethod)pofLayer_new, (t_method)pofLayer_free,
 		sizeof(PdObject), 0, A_DEFSYM, A_NULL);
 	POF_SETUP(pofLayer_class);
@@ -52,5 +54,5 @@ void pofLayer::postdraw()
 
 void pofLayer::initFrame(ofEventArgs & args)
 {
-	currentLayer = NULL;
+	currentLayer = s_none;
 }
