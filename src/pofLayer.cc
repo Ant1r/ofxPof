@@ -34,7 +34,7 @@ void pofLayer::setup(void)
 	pofLayer_class = class_new(gensym("poflayer"), (t_newmethod)pofLayer_new, (t_method)pofLayer_free,
 		sizeof(PdObject), 0, A_DEFSYM, A_NULL);
 	POF_SETUP(pofLayer_class);
-	class_addmethod(pofLayer_class, (t_method)pofLayer_layer, gensym("layer"), A_SYMBOL, A_NULL);
+	class_addmethod(pofLayer_class, (t_method)pofLayer_layer, gensym("layer"), A_DEFSYM, A_NULL);
 
 	ofAddListener(pofBase::initFrameEvent, &pofLayer::initFrame);
 }

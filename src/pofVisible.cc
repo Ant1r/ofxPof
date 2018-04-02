@@ -52,6 +52,12 @@ static void pofvisible_layer(void *x, t_symbol *newlayer)
 	px->layer = newlayer;
 }
 
+static void pofvisible_nolayer(void *x)
+{
+	pofVisible* px = (pofVisible*)(((PdObject*)x)->parent);
+	px->layer = NULL;
+}
+
 void pofVisible::setup(void)
 {
 	//post("pofvisible_setup");
@@ -59,7 +65,8 @@ void pofVisible::setup(void)
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
 	POF_SETUP(pofvisible_class);
 	class_addfloat(pofvisible_class, (t_method)pofvisible_float);
-	class_addmethod(pofvisible_class, (t_method)pofvisible_layer, gensym("layer"), A_SYMBOL, A_NULL);
+	class_addmethod(pofvisible_class, (t_method)pofvisible_layer, gensym("layer"), A_DEFSYM, A_NULL);
+	class_addmethod(pofvisible_class, (t_method)pofvisible_nolayer, gensym("nolayer"), A_NULL);
 }
 
 void pofVisible::tree_draw()
