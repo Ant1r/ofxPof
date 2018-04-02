@@ -13,6 +13,8 @@
 
 #include "version.h"
 
+#define BUILD_BY_PD
+
 std::list<pofBase*> pofBase::pofobjs;
 std::list<pofBase*> pofBase::pofobjsToUpdate;
 RWmutex pofBase::treeMutex;
@@ -334,6 +336,7 @@ void pofBase::updateAll() {
 }
 
 void pofBase::drawAll() {
+#ifndef BUILD_BY_PD
 	static bool finalNeedBuild = false;
 
 	if(finalNeedBuild || needBuild) {
@@ -348,28 +351,32 @@ void pofBase::drawAll() {
 			buildAll();
 		}
 	}
-	else if(doRender) {
-		treeMutex.lockR();
-		// update objects needing it:
-		std::list<pofBase*>::iterator it = pofobjsToUpdate.begin();
-		if(!needBuild) while(it != pofobjsToUpdate.end()) {
-			(*it)->update();
-			it++;
-		}
+#endif
 
-		// init frame:
-		ofEventArgs voidEventArgs;
-		ofNotifyEvent(initFrameEvent, voidEventArgs);
-
-		// draw everything:
-		currentTexture = NULL;
-		ofEnableAlphaBlending();
-		if(pofWin::win && !needBuild) pofWin::win->tree_draw();
-
-		treeMutex.unlockR();
-	}
     ofSetupScreen();
     ofSetBackgroundAuto(false);
+
+	if(doRender) {
+		treeMutex.lockR();
+		if(!needBuild) {
+			// update objects needing it:
+			std::list<pofBase*>::iterator it = pofobjsToUpdate.begin();
+			while(it != pofobjsToUpdate.end()) {
+				(*it)->update();
+				it++;
+			}
+
+			// init frame:
+			ofEventArgs voidEventArgs;
+			ofNotifyEvent(initFrameEvent, voidEventArgs);
+
+			// draw everything:
+			currentTexture = NULL;
+			ofEnableAlphaBlending();
+			if(pofWin::win) pofWin::win->tree_draw();
+		}
+		treeMutex.unlockR();
+	}
 }
 
 void pofBase::touchDownAll(int x, int y, int id) {
@@ -437,12 +444,21 @@ void pofBase::backPressed()
 }
 
 //--------------------------------------------------------------
+int buildCount = 0;
 
 void dequeueToPdtick(void* nul)
 {
 	pofBase::dispatcher.popEvents();
 	while(pofBase::dequeueToPd());
 	while(pofBase::dequeueToPdVec());
+
+#ifdef BUILD_BY_PD
+	if(pofBase::needBuild) {
+		pofBase::buildAll();
+		buildCount++;
+		//post("buildCount = %d\n", buildCount);
+	}
+#endif
 
 	pofBase::watchdogCount = 0; // clear watchdog
 	clock_delay(pofBase::queueClock,2); //poll events every 2ms
