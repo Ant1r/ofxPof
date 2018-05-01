@@ -12,7 +12,8 @@ static void pofvisible_float(void *x, t_float t);
 
 static void *pofvisible_new(t_symbol *sym,int argc, t_atom *argv)
 {
-	float visible = 0;
+	bool visible = false;
+	bool forceTouchable = false;
 	t_symbol *layer = NULL;
  
 	pofVisible* obj = new pofVisible(pofvisible_class,visible);
@@ -21,13 +22,20 @@ static void *pofvisible_new(t_symbol *sym,int argc, t_atom *argv)
 		layer = atom_getsymbol(argv); argc--; argv++;
 		visible = 1; // visible defaults to 1 when layer is given		
 		if(argc && argv->a_type == A_FLOAT) {
-			visible = atom_getfloat(argv);
+			visible = atom_getfloat(argv); argc--; argv++;
+			if(argc && argv->a_type == A_FLOAT) forceTouchable = atom_getfloat(argv) != 0;
 		}
 	} else if(argc && argv->a_type == A_FLOAT) {
 		visible = atom_getfloat(argv); argc--; argv++;
+		if(argc && argv->a_type == A_FLOAT) {
+			forceTouchable = atom_getfloat(argv) != 0;
+			argc--; argv++;
+		}
 		if(argc && argv->a_type == A_SYMBOL) layer = atom_getsymbol(argv);
 	}
 
+	obj->forceTouchable = forceTouchable;
+	
 	pofvisible_float((void*) (obj->pdobj), visible);
 	obj->layer = layer;
 	return (void*) (obj->pdobj);
@@ -42,8 +50,16 @@ static void pofvisible_float(void *x, t_float t)
 {
 	pofVisible *px = (pofVisible*)(((PdObject*)x)->parent);
 	
-	px->touchable = (t!=0);
-	px->visible = px->touchable;
+	px->visible = t!=0;
+	px->touchable = px->visible || px->forceTouchable;
+}
+
+static void pofvisible_forceTouchable(void *x, t_float t)
+{
+	pofVisible *px = (pofVisible*)(((PdObject*)x)->parent);
+	
+	px->forceTouchable = t!=0;
+	px->touchable = px->visible || px->forceTouchable;
 }
 
 static void pofvisible_layer(void *x, t_symbol *newlayer)
@@ -65,6 +81,7 @@ void pofVisible::setup(void)
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
 	POF_SETUP(pofvisible_class);
 	class_addfloat(pofvisible_class, (t_method)pofvisible_float);
+	class_addmethod(pofvisible_class, (t_method)pofvisible_forceTouchable, gensym("forceTouchable"), A_DEFFLOAT, A_NULL);
 	class_addmethod(pofvisible_class, (t_method)pofvisible_layer, gensym("layer"), A_DEFSYM, A_NULL);
 	class_addmethod(pofvisible_class, (t_method)pofvisible_nolayer, gensym("nolayer"), A_NULL);
 }
