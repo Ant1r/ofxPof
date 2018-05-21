@@ -8,7 +8,8 @@
 static t_class *poffilm_class;
 
 #define NEXT_FLOAT_ARG(var) if((argc>0)&&(argv->a_type == A_FLOAT)) { var = atom_getfloat(argv); argv++; argc--; }
-static t_symbol *s_size, *s_frame;
+static t_symbol *s_size, *s_frame, *s_load, *s_play, *s_goto, *s_speed, *s_useOMX;
+
 
 static void *poffilm_new(t_symbol *s, int argc, t_atom *argv)
 {
@@ -54,6 +55,7 @@ static void poffilm_out(void *x, t_symbol *s, int argc, t_atom *argv)
     outlet_anything(px->m_out2, s, argc, argv);
 }
 
+#if 0
 static void poffilm_load(void *x, t_symbol *f)
 {
     pofFilm* px = (pofFilm*)(((PdObject*)x)->parent);
@@ -79,20 +81,34 @@ static void poffilm_speed(void *x, t_float s)
     pofFilm* px = (pofFilm*)(((PdObject*)x)->parent);
     px->speed = s;  
 }
+#endif
 
 void pofFilm::setup(void)
 {
 	//post("poffilm_setup");
 	s_size = gensym("size");
 	s_frame = gensym("frame");
+	s_load = gensym("load");
+	s_play = gensym("play");
+	s_goto = gensym("goto");
+	s_speed = gensym("speed");
+	s_useOMX = gensym("useOMX");
+	
 	poffilm_class = class_new(gensym("poffilm"), (t_newmethod)poffilm_new, (t_method)poffilm_free,
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
 	class_addmethod(poffilm_class, (t_method)poffilm_out, s_size, A_GIMME, A_NULL);
 	class_addmethod(poffilm_class, (t_method)poffilm_out, s_frame, A_GIMME, A_NULL);
-	class_addmethod(poffilm_class, (t_method)poffilm_load, gensym("load"), A_SYMBOL, A_NULL);
+	/*class_addmethod(poffilm_class, (t_method)poffilm_load, gensym("load"), A_SYMBOL, A_NULL);
 	class_addmethod(poffilm_class, (t_method)poffilm_play, gensym("play"), A_FLOAT, A_NULL);
 	class_addmethod(poffilm_class, (t_method)poffilm_goto, gensym("goto"), A_FLOAT, A_NULL);
 	class_addmethod(poffilm_class, (t_method)poffilm_speed, gensym("speed"), A_FLOAT, A_NULL);
+	class_addmethod(poffilm_class, (t_method)poffilm_useomx, gensym("useOMX"), A_FLOAT, A_NULL);*/
+	class_addmethod(poffilm_class, (t_method)tellGUI, s_load,    	A_GIMME, A_NULL);
+	class_addmethod(poffilm_class, (t_method)tellGUI, s_play,    	A_GIMME, A_NULL);
+	class_addmethod(poffilm_class, (t_method)tellGUI, s_goto,    	A_GIMME, A_NULL);
+	class_addmethod(poffilm_class, (t_method)tellGUI, s_speed,    	A_GIMME, A_NULL);
+	class_addmethod(poffilm_class, (t_method)tellGUI, s_useOMX,    	A_GIMME, A_NULL);
+
 	POF_SETUP(poffilm_class);
 }
 
@@ -100,108 +116,194 @@ void pofFilm::setup(void)
 
 void pofFilm::draw()
 {
+	int i;
 	float h = height;
 	//char* currentLocale = setlocale(LC_ALL, NULL); // pointer to store current locale
 	if(h==0) h = width;
 
-#ifndef RASPI
-//	if(!player) player = new ofVideoPlayer;
-#endif
-	
-	if((file != NULL) && (file != loadedFile) ) {
-		loadedFile = file;
-		actualPlaying = 0;
-#ifdef RASPI
-	    if(player) delete player;
-		player = new ofxOMXPlayer;
-		ofxOMXPlayerSettings settings;
-	    settings.videoPath = makefilename(loadedFile, pdcanvas)->s_name;//loadedFile->s_name;
-	    //settings.useHDMIForAudio = true;	//default true
-	    settings.enableTexture = true;		//default true
-	    settings.enableLooping = true;		//default true
-	    settings.enableAudio = false;		//default true, save resources by disabling
-        player->setup(settings);
-		//string *f = new string(loadedFile->s_name);
-		//player->load(*f);
-		 
-#else
-	    if(player) delete player;
-	    player = new ofVideoPlayer;
-		player->loadMovie(makefilename(loadedFile, pdcanvas)->s_name/*loadedFile->s_name*/);
-#endif
-        setlocale(LC_ALL, "C"); // WHY DO I HAVE TO DO THAT ??????????? OF changes the locale when loading a video...
-                              // Without this fix, on a french computer pd starts stringing floating numbers with a comma,
-                              // e.g. "0,5" which breaks the communication with TclTk GUI and other network connected programs.
-		if(player) {
-			if(name) pofBase::textures[name] = &player->getTextureReference();
-			t_atom ap[4];
-			float w = player->getWidth(), h = player->getHeight(), len = player->getTotalNumFrames();
-			SETSYMBOL(&ap[0], s_size);
-			SETFLOAT(&ap[1], w);
-			SETFLOAT(&ap[2], h);
-			SETFLOAT(&ap[3], len);
-			queueToSelfPd(4, ap);
-		}
+	if(player) {
+		if(name) pofBase::textures[name] = &player->getTextureReference();
+		t_atom ap[4];
+		float w = player->getWidth(), h = player->getHeight(), len = player->getTotalNumFrames();
+		SETSYMBOL(&ap[0], s_size);
+		SETFLOAT(&ap[1], w);
+		SETFLOAT(&ap[2], h);
+		SETFLOAT(&ap[3], len);
+		queueToSelfPd(4, ap);
 	}
-	
-	if(!player) return;
-	
-#ifndef RASPI	
-	if(player->isLoaded()) {
-#ifndef TARGET_ANDROID
-		if(gotoFrame>= 0) {
-		    player->setFrame(gotoFrame);
-		    gotoFrame = -1;
-		    //setlocale(LC_ALL, currentLocale);
-		}
-		if(speed > -1000) {
-		    player->setSpeed(speed);
-		    speed = -1000;
-		    //setlocale(LC_ALL, currentLocale);
-		}
+#ifdef RASPI
+	if(omxplayer) {
+		if(name) pofBase::textures[name] = &omxplayer->getTextureReference();
+		t_atom ap[4];
+		float w = omxplayer->getWidth(), h = omxplayer->getHeight(), len = omxplayer->getTotalNumFrames();
+		SETSYMBOL(&ap[0], s_size);
+		SETFLOAT(&ap[1], w);
+		SETFLOAT(&ap[2], h);
+		SETFLOAT(&ap[3], len);
+		queueToSelfPd(4, ap);
+	}
 #endif
-		if(playing != actualPlaying) {
-			actualPlaying = playing;
-			if(actualPlaying) player->play();
-			else player->stop();
-			//setlocale(LC_ALL, currentLocale);
-		}	
-		player->update();
-		
+	
+#ifdef RASPI
+	if(useOMX) {
+		if(!omxplayer) return;
+	} else {
+		if(!player) return;
+	}
 #else
-    if(player->getIsOpen()) {
-		if(playing != actualPlaying) {
-			actualPlaying = playing;
-			player->setPaused(!playing);
-		}	
+	if(!player) return;
 #endif
+	
 
 #ifndef TARGET_ANDROID
-        int i = player->getCurrentFrame();
-        if(i != currentFrame) {
-            currentFrame = i;
-			t_atom ap[2];
-			float w = player->getWidth(), h = player->getHeight(), len = player->getTotalNumFrames();
-			SETSYMBOL(&ap[0], s_frame);
-			SETFLOAT(&ap[1], currentFrame);
-			queueToSelfPd(2, ap);
-        }   	
+#ifdef RASPI
+	if(useOMX) i = omxplayer->getCurrentFrame();
+	else
 #endif
-		if(isTexture) {
-		    player->getTextureReference().bind();
-		    pofBase::currentTexture = &player->getTextureReference();
-		}
-		else {
-			float h = height;
+		i = player->getCurrentFrame();
+
+    if(i != currentFrame) {
+        currentFrame = i;
+		t_atom ap[2];
+		//float w = player->getWidth(), h = player->getHeight(), len = player->getTotalNumFrames();
+		SETSYMBOL(&ap[0], s_frame);
+		SETFLOAT(&ap[1], currentFrame);
+		queueToSelfPd(2, ap);
+    }   	
+#endif // #ifndef TARGET_ANDROID
+	if(isTexture) {
+#ifdef RASPI
+		if(useOMX) {
+			omxplayer->getTextureReference().bind();
+	    	pofBase::currentTexture = &omxplayer->getTextureReference();
+	    } else
+#else 
+		if(1)
+#endif
+	    {
+			player->getTextureReference().bind();
+			pofBase::currentTexture = &player->getTextureReference();
+	    }
+	}
+	else {
+		float h = height;
+#ifdef RASPI
+		if(useOMX) {
+			if(!h) h = width * omxplayer->getHeight() / omxplayer->getWidth(); 
+			omxplayer->draw(-width/2, -h/2, width, h);
+		} else
+#endif
+		{
 			if(!h) h = width * player->getHeight() / player->getWidth(); 
 			player->draw(-width/2, -h/2, width, h);
 		}
 	}
-	//setlocale(LC_ALL, "C");
 }
 
 void pofFilm::postdraw()
 {
-	if(isTexture && (player!=NULL)) player->getTextureReference().unbind();
+#ifdef RASPI
+	if(useOMX) {
+		if(isTexture && (omxplayer!=NULL)) omxplayer->getTextureReference().unbind();
+	} else
+#else 
+	if(1)
+#endif
+	{
+		if(isTexture && (player!=NULL)) player->getTextureReference().unbind();
+	}
 }
 
+void pofFilm::load()
+{
+	if((file != NULL) /*&& (file != loadedFile)*/ ) {
+		//loadedFile = file;
+		playing = 0;
+		if(player) {
+			delete player;
+			player = NULL;
+		}
+#ifdef RASPI
+		if(omxplayer) {
+			delete omxplayer;
+			omxplayer = NULL;
+		}
+		
+		if(useOMX) {
+			omxplayer = new ofxOMXPlayer;
+			ofxOMXPlayerSettings settings;
+			settings.videoPath = makefilename(file, pdcanvas)->s_name;//loadedFile->s_name;
+			//settings.useHDMIForAudio = true;	//default true
+			settings.enableTexture = true;		//default true
+			settings.enableLooping = true;		//default true
+			settings.enableAudio = false;		//default true, save resources by disabling
+		    omxplayer->setup(settings);
+			//string *f = new string(loadedFile->s_name);
+			//player->load(*f);
+		} else {
+#endif
+			player = new ofVideoPlayer;
+			player->loadMovie(makefilename(file, pdcanvas)->s_name/*loadedFile->s_name*/);
+#ifdef RASPI
+		}
+#endif
+
+        setlocale(LC_ALL, "C"); // WHY DO I HAVE TO DO THAT ??????????? OF changes the locale when loading a video...
+                              // Without this fix, on a french computer pd starts stringing floating numbers with a comma,
+                              // e.g. "0,5" which breaks the communication with TclTk GUI and other network connected programs.
+	}
+}
+
+void pofFilm::message(int argc, t_atom *argv)
+{
+	//t_atom ap[4];
+
+	t_symbol *key = atom_getsymbol(argv); 
+	argv++; argc--;
+
+	if(key == s_load) {
+		if(argc && argv->a_type == A_SYMBOL) {
+			file = atom_getsymbol(argv);
+			load();
+		}
+	}
+	else if(key == s_play) {
+		playing = atom_getfloat(argv);
+#ifdef RASPI
+		if(useOMX) {
+			if(omxplayer && omxplayer->getIsOpen() && (omxplayer->isPaused() == playing)) 
+				omxplayer->setPaused(!playing);
+		} else
+#endif
+		{
+			if(player && player->isLoaded()){
+				if(playing) player->play();
+				else player->stop();
+			}
+		}
+	}
+	else if(key == s_useOMX) {
+#ifdef RASPI
+		useOMX = atom_getfloat(argv);
+		//player = NULL;
+		//omxplayer = NULL;
+		load();
+#endif
+	}
+#ifndef TARGET_ANDROID
+	else if(key == s_goto) {
+#ifdef RASPI
+		if(useOMX) return;
+#endif
+		gotoFrame = atom_getfloat(argv);
+		if(player && player->isLoaded()) player->setFrame(gotoFrame);
+	}
+	else if(key == s_speed) {
+#ifdef RASPI
+		if(useOMX) return;
+#endif
+		speed = atom_getfloat(argv);
+		if(player && player->isLoaded()) player->setSpeed(speed);
+	}
+#endif // #ifndef TARGET_ANDROID			
+}
