@@ -33,7 +33,7 @@ class MyThread : public ofThread {
 	    // start
 #ifdef RASPI
         ofGLESWindowSettings settings;
-        settings.glesVersion = 2;
+        settings.glesVersion = 1;
         ofCreateWindow(settings);
 #else
 		ofSetupOpenGL(600,300, OF_WINDOW);			// <-------- setup the GL context
