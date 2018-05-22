@@ -120,8 +120,9 @@ void pofFilm::draw()
 	float h = height;
 	//char* currentLocale = setlocale(LC_ALL, NULL); // pointer to store current locale
 	if(h==0) h = width;
-
+	
 	if(player) {
+		player->update();
 		if(name) pofBase::textures[name] = &player->getTextureReference();
 		t_atom ap[4];
 		float w = player->getWidth(), h = player->getHeight(), len = player->getTotalNumFrames();
