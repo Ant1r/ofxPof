@@ -13,28 +13,29 @@ void EventDispatcher::pushEvent(EventData::eventType type, int x, int y, int id)
 	mutex.lock();
 	queue.push_back(EventData(type, x, y, id));
 	mutex.unlock();
+	if(!pofBase::pdProcessesTouchEvents) popEvents();
 }
 
 void EventDispatcher::popEvents()
 {
-	if(!mutex.try_lock()) return;
-
-	if(!queue.empty()) {
-		pofBase::treeMutex.lockR();
-		while(!queue.empty()) {
-			EventData data = queue.front();
-			queue.pop_front();
-			if(pofWin::win) switch(data.type) {
-		        case EventData::DOWN: pofWin::win->tree_touchDown(data.x, data.y, data.id); break;
-				case EventData::UP: pofWin::win->tree_touchUp(data.x, data.y, data.id); break;
-				case EventData::MOVE: pofWin::win->tree_touchMoved(data.x, data.y, data.id); break;
-				case EventData::CANCEL: pofWin::win->tree_touchCancel(); break;
-				default: break;
-			}
+	while(mutex.try_lock()) {
+		if(queue.empty()) {
+			mutex.unlock();
+			return;
 		}
+		EventData data = queue.front();
+		queue.pop_front();
+		mutex.unlock();
+		
+		pofBase::treeMutex.lockR();
+		if(pofWin::win) switch(data.type) {
+	        case EventData::DOWN: pofWin::win->tree_touchDown(data.x, data.y, data.id); break;
+			case EventData::UP: pofWin::win->tree_touchUp(data.x, data.y, data.id); break;
+			case EventData::MOVE: pofWin::win->tree_touchMoved(data.x, data.y, data.id); break;
+			case EventData::CANCEL: pofWin::win->tree_touchCancel(); break;
+			default: break;
+		}		
 		pofBase::treeMutex.unlockR();
-	}
-
-	mutex.unlock();
+	}	
 }
 

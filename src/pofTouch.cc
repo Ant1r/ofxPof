@@ -112,8 +112,9 @@ void pofTouch::Send(t_symbol *s, int n, float f1, float f2, float f3)
 	if(n>1) { SETFLOAT(&ap[count], f2); count++; }
 	if(n>2) { SETFLOAT(&ap[count], f3); count++; }
 	
-	//queueToSelfPd(count, ap);
-	poftouch_anything(pdobj, s, count -1, &ap[1]);
+	if(pofBase::pdProcessesTouchEvents)
+		poftouch_anything(pdobj, s, count -1, &ap[1]);
+	else queueToSelfPd(count, ap);
 }
 
 bool pofTouch::touchMoved(int x, int y, int id)

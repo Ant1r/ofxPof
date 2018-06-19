@@ -26,6 +26,7 @@ deque<t_binbuf*> pofBase::toPdQueue;
 deque<std::vector<Any> > pofBase::toPdQueueVec;
 t_clock *pofBase::queueClock;
 bool pofBase::doRender = true;
+bool pofBase::pdProcessesTouchEvents = true;
 ofTexture *pofBase::currentTexture = NULL;
 std::map<t_symbol*,ofTexture *> pofBase::textures;
 int pofBase::watchdogCount = 0;
@@ -448,7 +449,7 @@ int buildCount = 0;
 
 void dequeueToPdtick(void* nul)
 {
-	pofBase::dispatcher.popEvents();
+	if(pofBase::pdProcessesTouchEvents) pofBase::dispatcher.popEvents();
 	while(pofBase::dequeueToPd());
 	while(pofBase::dequeueToPdVec());
 
