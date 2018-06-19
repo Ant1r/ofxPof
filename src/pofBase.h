@@ -100,6 +100,7 @@ class pofBase {
 		static bool doRender;
 		static int watchdogCount;
 		static bool pdProcessesTouchEvents;
+		static int touchdownCount;
 		
 		static ofTexture *currentTexture;
 		static std::map<t_symbol*,ofTexture *> textures;

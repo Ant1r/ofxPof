@@ -30,6 +30,7 @@ bool pofBase::pdProcessesTouchEvents = true;
 ofTexture *pofBase::currentTexture = NULL;
 std::map<t_symbol*,ofTexture *> pofBase::textures;
 int pofBase::watchdogCount = 0;
+int pofBase::touchdownCount = 0;
 
 static t_symbol *s_build;
 static t_symbol *s_system;
@@ -128,6 +129,9 @@ bool pofBase::tree_touchDown(int x, int y, int id)
 
 	while(it != touchChildren.begin()) {
 		it--;
+#ifdef DEBUG_TOUCH
+		touchdownCount++;
+#endif
 		if((*it)->tree_touchDown(x, y, id)) return true;
 	}
 	

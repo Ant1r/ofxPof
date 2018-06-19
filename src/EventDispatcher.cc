@@ -29,7 +29,15 @@ void EventDispatcher::popEvents()
 		
 		pofBase::treeMutex.lockR();
 		if(pofWin::win) switch(data.type) {
-	        case EventData::DOWN: pofWin::win->tree_touchDown(data.x, data.y, data.id); break;
+	        case EventData::DOWN: 
+#ifdef DEBUG_TOUCH
+	        	pofBase::touchdownCount = 0;
+#endif
+	        	pofWin::win->tree_touchDown(data.x, data.y, data.id);
+#ifdef DEBUG_TOUCH
+	        	ofLogNotice("touchdownCount") << pofBase::touchdownCount;
+#endif
+	        	break;
 			case EventData::UP: pofWin::win->tree_touchUp(data.x, data.y, data.id); break;
 			case EventData::MOVE: pofWin::win->tree_touchMoved(data.x, data.y, data.id); break;
 			case EventData::CANCEL: pofWin::win->tree_touchCancel(); break;
