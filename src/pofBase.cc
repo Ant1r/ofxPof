@@ -26,7 +26,7 @@ deque<t_binbuf*> pofBase::toPdQueue;
 deque<std::vector<Any> > pofBase::toPdQueueVec;
 t_clock *pofBase::queueClock;
 bool pofBase::doRender = true;
-bool pofBase::pdProcessesTouchEvents = true;
+bool pofBase::pdProcessesTouchEvents = false;
 ofTexture *pofBase::currentTexture = NULL;
 std::map<t_symbol*,ofTexture *> pofBase::textures;
 int pofBase::watchdogCount = 0;
