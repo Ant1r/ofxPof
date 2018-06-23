@@ -614,14 +614,13 @@ void pofImage::message(int argc, t_atom *argv)
 		image->im.grabScreen(atom_getfloat(&argv[0]), atom_getfloat(&argv[1]), atom_getfloat(&argv[2]), atom_getfloat(&argv[3]));
 	}
 	else if(key == s_clear) {
-		float R = 0, G = 0, B = 0, A = 0;
+		float R = 0, G = 0, B = 0, A = 1;
 		if(argc > 0) R = atom_getfloat(&argv[0]);
 		if(argc > 1) G = atom_getfloat(&argv[1]);
 		if(argc > 2) B = atom_getfloat(&argv[2]);
 		if(argc > 3) A = atom_getfloat(&argv[3]);
-		image->im.resize(1, 1);
-		image->im.setColor(0, 0, ofColor(R*255.0, G*255.0, B*255.0, A*255.0));
-		image->im.resize(imWidth, imHeight);
+		image->im.setColor(ofColor(R*255.0, G*255.0, B*255.0, A*255.0));
+		image->needUpdate = true;
 	}
 	else if(key == s_grabfbo) {
 		if(argc < 1 || argv->a_type != A_SYMBOL) return;
