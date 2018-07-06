@@ -75,14 +75,26 @@ static void pofutil_exists(void *x, t_symbol *path)
 {
 	pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
 	ofFile file(path->s_name);
-	
-	t_atom at;
-	if(!file.exists()) SETSYMBOL(&at, gensym("no"));
-	else if(file.isDirectory()) SETSYMBOL(&at, gensym("dir"));
-	else if(file.isFile()) SETSYMBOL(&at, gensym("file"));
-	else SETSYMBOL(&at, gensym("other")); // ??
-	
-	outlet_anything(px->m_out1, gensym("exists"), 1, &at);
+	t_atom at[4];
+
+	if(!file.exists()) {
+		SETSYMBOL(&at[0], gensym("no"));
+		outlet_anything(px->m_out1, gensym("exists"), 1, at);
+		return;
+	}
+
+	if(file.isDirectory()) SETSYMBOL(&at[0], gensym("dir"));
+	else if(file.isFile()) SETSYMBOL(&at[0], gensym("file"));
+	else SETSYMBOL(&at[0], gensym("other")); // ??
+
+	SETFLOAT(&at[1], std::filesystem::last_write_time(file) / 86400); // days from 1970
+	SETFLOAT(&at[2], std::filesystem::last_write_time(file) % 86400); // seconds in the day
+    
+	if(file.isFile()) {
+		SETFLOAT(&at[3], file.getSize());
+		outlet_anything(px->m_out1, gensym("exists"), 4, at);
+	}
+	else outlet_anything(px->m_out1, gensym("exists"), 3, at);
 }
 
 static void pofutil_dollarg(void *x)
