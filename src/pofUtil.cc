@@ -75,11 +75,25 @@ static void pofutil_exists(void *x, t_symbol *path)
 {
 	pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
 	ofFile file(path->s_name);
+	t_atom at;
+
+	if(!file.exists()) SETSYMBOL(&at, gensym("no"));
+	else if(file.isDirectory()) SETSYMBOL(&at, gensym("dir"));
+	else if(file.isFile()) SETSYMBOL(&at, gensym("file"));
+	else SETSYMBOL(&at, gensym("other")); // ??
+
+	outlet_anything(px->m_out1, gensym("exists"), 1, &at);
+}
+
+static void pofutil_fileinfo(void *x, t_symbol *path)
+{
+	pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
+	ofFile file(path->s_name);
 	t_atom at[4];
 
 	if(!file.exists()) {
-		SETSYMBOL(&at[0], gensym("no"));
-		outlet_anything(px->m_out1, gensym("exists"), 1, at);
+		SETSYMBOL(&at[0], gensym("error"));
+		outlet_anything(px->m_out1, gensym("fileinfo"), 1, at);
 		return;
 	}
 
@@ -92,9 +106,9 @@ static void pofutil_exists(void *x, t_symbol *path)
     
 	if(file.isFile()) {
 		SETFLOAT(&at[3], file.getSize());
-		outlet_anything(px->m_out1, gensym("exists"), 4, at);
+		outlet_anything(px->m_out1, gensym("fileinfo"), 4, at);
 	}
-	else outlet_anything(px->m_out1, gensym("exists"), 3, at);
+	else outlet_anything(px->m_out1, gensym("fileinfo"), 3, at);
 }
 
 static void pofutil_dollarg(void *x)
@@ -589,6 +603,7 @@ void pofUtil::setup(void)
 	
 	class_addmethod(pofutil_class, (t_method)pofutil_listdir, gensym("listdir"), A_GIMME, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_exists, gensym("exists"), A_SYMBOL, A_NULL);
+	class_addmethod(pofutil_class, (t_method)pofutil_fileinfo, gensym("fileinfo"), A_SYMBOL, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_dirbaseext, gensym("dirbaseext"), A_SYMBOL, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_setstring, gensym("setstring"), A_SYMBOL, A_SYMBOL, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_stringfind, gensym("stringfind"), A_SYMBOL, A_SYMBOL, A_NULL);
