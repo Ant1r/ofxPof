@@ -31,11 +31,13 @@ class pofScope: public pofBase {
 		
 		float width, height;
 		int bufLen; // nb samples to draw
-		float bufIndex;
+		int bufCount;
+		int bufIndex;
 		float min, max;
 		float *minBuf, *maxBuf;
 		int curWidth;
 		bool compute;
+		bool once;
 		ofMutex Mutex;		
 };
 

@@ -13,8 +13,9 @@ class pofSysThread;
 
 class pofUtil: public pofBase {
 	public:
-		pofUtil(t_class *Class):pofBase(Class),fileDownloader(NULL), unzipper(NULL), systhread(NULL) {
-		}
+		pofUtil(t_class *Class):
+			pofBase(Class),fileDownloader(NULL), unzipper(NULL), systhread(NULL), sync(false) 
+		{}
 				
 		static void setup(void);
 		
@@ -25,6 +26,7 @@ class pofUtil: public pofBase {
 		pofFileDownloader *fileDownloader;
 		pofUnzipper *unzipper;
 		pofSysThread *systhread;
+		bool sync; // do the file operations synchronously = "instantly"
 };
 
 

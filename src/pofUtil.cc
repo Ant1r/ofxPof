@@ -11,12 +11,15 @@ static t_symbol *s_download, *s_out, *s_unzip, *s_done, *s_error;
 static t_symbol *s_rmfile,*s_rmdir,*s_mkdir,*s_renamedir,*s_movefile,*s_copyfile;
 
 
-static void *pofutil_new(void)
+static void *pofutil_new(t_symbol *s, int argc, t_atom *argv)
 {
     pofUtil* obj = new pofUtil(pofutil_class);
     
 	canvas_getargs(&obj->pargc, &obj->pargv);
     obj->pdcanvas = canvas_getcurrent();
+
+	if((argv->a_type == A_SYMBOL)&&(atom_getsymbol(argv) == gensym("sync")))
+		obj->sync = true;
 
     return (void*) (obj->pdobj);
 }
@@ -72,14 +75,40 @@ static void pofutil_exists(void *x, t_symbol *path)
 {
 	pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
 	ofFile file(path->s_name);
-	
 	t_atom at;
+
 	if(!file.exists()) SETSYMBOL(&at, gensym("no"));
 	else if(file.isDirectory()) SETSYMBOL(&at, gensym("dir"));
 	else if(file.isFile()) SETSYMBOL(&at, gensym("file"));
 	else SETSYMBOL(&at, gensym("other")); // ??
-	
+
 	outlet_anything(px->m_out1, gensym("exists"), 1, &at);
+}
+
+static void pofutil_fileinfo(void *x, t_symbol *path)
+{
+	pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
+	ofFile file(path->s_name);
+	t_atom at[4];
+
+	if(!file.exists()) {
+		SETSYMBOL(&at[0], gensym("error"));
+		outlet_anything(px->m_out1, gensym("fileinfo"), 1, at);
+		return;
+	}
+
+	if(file.isDirectory()) SETSYMBOL(&at[0], gensym("dir"));
+	else if(file.isFile()) SETSYMBOL(&at[0], gensym("file"));
+	else SETSYMBOL(&at[0], gensym("other")); // ??
+
+	SETFLOAT(&at[1], std::filesystem::last_write_time(file) / 86400); // days from 1970
+	SETFLOAT(&at[2], std::filesystem::last_write_time(file) % 86400); // seconds in the day
+    
+	if(file.isFile()) {
+		SETFLOAT(&at[3], file.getSize());
+		outlet_anything(px->m_out1, gensym("fileinfo"), 4, at);
+	}
+	else outlet_anything(px->m_out1, gensym("fileinfo"), 3, at);
 }
 
 static void pofutil_dollarg(void *x)
@@ -137,6 +166,69 @@ static void pofutil_dirbaseext(void *x, t_symbol *file)
 	outlet_anything(px->m_out1, gensym("dirbaseext"), 3, at);
 }
 
+static void pofutil_fileops(void *x, t_symbol *command, int argc, t_atom *argv, bool sync)
+{
+	pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
+	float errcode = 0;
+	
+	t_atom at[4];
+	SETSYMBOL(&at[0], s_out);
+	SETSYMBOL(&at[1], command);
+	SETSYMBOL(&at[2], s_error);
+	SETFLOAT(&at[3], errcode);
+
+	if(command == s_rmfile) {
+		if((argc>0) && (argv->a_type == A_SYMBOL)) {
+			if(ofFile::removeFile(atom_getsymbol(argv)->s_name, 
+				false)) // bRelativeToData
+			SETSYMBOL(&at[2], s_done);
+		}
+	}
+	else if(command == s_rmdir) {
+		if((argc>0) && (argv->a_type == A_SYMBOL)) {
+			if(ofDirectory::removeDirectory(atom_getsymbol(argv)->s_name, 
+				true, 		//deleteIfNotEmpty
+				false)) 	// bRelativeToData
+			SETSYMBOL(&at[2], s_done);
+		}
+	}
+	else if(command == s_mkdir) {
+		if((argc>0) && (argv->a_type == A_SYMBOL)) {
+			if(ofDirectory::createDirectory(atom_getsymbol(argv)->s_name, 
+				false, 	// bRelativeToData
+				true))	// recursive
+			SETSYMBOL(&at[2], s_done);
+		}
+	}
+	else if(command == s_renamedir) {
+		if((argc>1) && (argv->a_type == A_SYMBOL) && ((argv+1)->a_type == A_SYMBOL)) {
+			if(ofDirectory(atom_getsymbol(argv)->s_name).renameTo(atom_getsymbol(argv+1)->s_name, 
+				false, 	// bRelativeToData
+				true)) 	//overwrite
+			SETSYMBOL(&at[2], s_done);
+		}
+	}
+	else if(command == s_movefile) {
+		if((argc>1) && (argv->a_type == A_SYMBOL) && ((argv+1)->a_type == A_SYMBOL)) {
+			if(ofFile(atom_getsymbol(argv)->s_name).moveTo(atom_getsymbol(argv+1)->s_name,
+					false,											// bRelativeToData
+					argc>2 ? atom_getfloat(argv+2) != 0 : false))	//overwrite
+				SETSYMBOL(&at[2], s_done);
+        }
+    }
+	else if(command == s_copyfile) {
+		if((argc>1) && (argv->a_type == A_SYMBOL) && ((argv+1)->a_type == A_SYMBOL)) {
+			if(ofFile(atom_getsymbol(argv)->s_name).copyTo(atom_getsymbol(argv+1)->s_name,
+					false,											// bRelativeToData
+					argc>2 ? atom_getfloat(argv+2) != 0 : false))	//overwrite
+				SETSYMBOL(&at[2], s_done);
+		}
+	}
+
+	if(sync) pofutil_out(x, NULL, 3, at + 1);
+	else px->queueToSelfPd(4, at);
+}
+
 //--------------------- sys thread (for asynchronous operations : mkdir rmdir renamedir rmfile...) ----------------
 class pofSysThread : public ofThread {
 	public :
@@ -157,67 +249,11 @@ class pofSysThread : public ofThread {
 	}
 	
 	void threadedFunction(){
-		float errcode = 0;
 		running = true;
 		int argc = binbuf_getnatom(binbuf);
 		t_atom *argv = binbuf_getvec(binbuf);
 		
-		t_atom at[4];
-		SETSYMBOL(&at[0], s_out);
-		SETSYMBOL(&at[1], command);
-		SETSYMBOL(&at[2], s_error);
-		SETFLOAT(&at[3], errcode);
-
-		if(command == s_rmfile) {
-			if((argc>0) && (argv->a_type == A_SYMBOL)) {
-				if(ofFile::removeFile(atom_getsymbol(argv)->s_name, 
-					false)) // bRelativeToData
-				SETSYMBOL(&at[2], s_done);
-			}
-		}
-		else if(command == s_rmdir) {
-			if((argc>0) && (argv->a_type == A_SYMBOL)) {
-				if(ofDirectory::removeDirectory(atom_getsymbol(argv)->s_name, 
-					true, 		//deleteIfNotEmpty
-					false)) 	// bRelativeToData
-				SETSYMBOL(&at[2], s_done);
-			}
-		}
-		else if(command == s_mkdir) {
-			if((argc>0) && (argv->a_type == A_SYMBOL)) {
-				if(ofDirectory::createDirectory(atom_getsymbol(argv)->s_name, 
-					false, 	// bRelativeToData
-					true))	// recursive
-				SETSYMBOL(&at[2], s_done);
-			}
-		}
-		else if(command == s_renamedir) {
-			if((argc>1) && (argv->a_type == A_SYMBOL) && ((argv+1)->a_type == A_SYMBOL)) {
-				if(ofDirectory(atom_getsymbol(argv)->s_name).renameTo(atom_getsymbol(argv+1)->s_name, 
-					false, 	// bRelativeToData
-					true)) 	//overwrite
-				SETSYMBOL(&at[2], s_done);
-			}
-		}
-		else if(command == s_movefile) {
-			if((argc>1) && (argv->a_type == A_SYMBOL) && ((argv+1)->a_type == A_SYMBOL)) {
-				if(ofFile(atom_getsymbol(argv)->s_name).moveTo(atom_getsymbol(argv+1)->s_name,
-						false,											// bRelativeToData
-						argc>2 ? atom_getfloat(argv+2) != 0 : false))	//overwrite
-					SETSYMBOL(&at[2], s_done);
-            }
-        }
-		else if(command == s_copyfile) {
-			if((argc>1) && (argv->a_type == A_SYMBOL) && ((argv+1)->a_type == A_SYMBOL)) {
-				if(ofFile(atom_getsymbol(argv)->s_name).copyTo(atom_getsymbol(argv+1)->s_name,
-						false,											// bRelativeToData
-						argc>2 ? atom_getfloat(argv+2) != 0 : false))	//overwrite
-					SETSYMBOL(&at[2], s_done);
-			}
-		}
-
-		((pofUtil*)obj)->queueToSelfPd(4,at);
-		
+		pofutil_fileops(obj, command, argc, argv, false);
 		running = false;
 		return;
     }
@@ -228,17 +264,27 @@ static void pofutil_thread(void *x, t_symbol *s, int argc, t_atom *argv)
 	t_atom at;
 	pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
 
-	if(px->systhread != NULL && px->systhread->running) {
-		error("pofutil %s : async thread is already running !", s->s_name);
-		SETSYMBOL(&at, gensym("error_running"));
-		outlet_anything(px->m_out1, s, 1, &at);
-		return;
+	if(px->sync) pofutil_fileops(x, s, argc, argv, true);
+	else {
+		if(px->systhread != NULL && px->systhread->running) {
+			error("pofutil %s : async thread is already running !", s->s_name);
+			SETSYMBOL(&at, gensym("error_running"));
+			outlet_anything(px->m_out1, s, 1, &at);
+			return;
+		}
+
+		if(px->systhread) delete px->systhread;
+
+		px->systhread = new pofSysThread(x, s, argc, argv);
+		px->systhread->startThread();
 	}
+}
 
-	if(px->systhread) delete px->systhread;
-
-	px->systhread = new pofSysThread(px, s, argc, argv);
-	px->systhread->startThread();	
+static void pofutil_sync(void *x, t_float sync)
+{
+	pofUtil* px= (pofUtil*)(((PdObject*)x)->parent);
+	if(sync != 0) px->sync = true;
+	else px->sync = false;
 }
 
 //----------------- Unzip ------------------------
@@ -539,7 +585,7 @@ void pofUtil::setup(void)
 	s_copyfile =  gensym("copyfile");
 	
 	pofutil_class = class_new(gensym("pofutil"), (t_newmethod)pofutil_new, (t_method)pofutil_free,
-		sizeof(PdObject), 0, A_NULL);
+		sizeof(PdObject), 0, A_GIMME, A_NULL);
 
 	class_addmethod(pofutil_class, (t_method)pofutil_out, s_out, A_GIMME, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_getdir, gensym("getdir"), A_NULL);
@@ -553,9 +599,11 @@ void pofUtil::setup(void)
     class_addmethod(pofutil_class, (t_method)pofutil_thread, s_renamedir, A_GIMME, A_NULL);
     class_addmethod(pofutil_class, (t_method)pofutil_thread, s_movefile, A_GIMME, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_thread, s_copyfile, A_GIMME, A_NULL);
+	class_addmethod(pofutil_class, (t_method)pofutil_sync, gensym("sync"), A_FLOAT, A_NULL);
 	
 	class_addmethod(pofutil_class, (t_method)pofutil_listdir, gensym("listdir"), A_GIMME, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_exists, gensym("exists"), A_SYMBOL, A_NULL);
+	class_addmethod(pofutil_class, (t_method)pofutil_fileinfo, gensym("fileinfo"), A_SYMBOL, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_dirbaseext, gensym("dirbaseext"), A_SYMBOL, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_setstring, gensym("setstring"), A_SYMBOL, A_SYMBOL, A_NULL);
 	class_addmethod(pofutil_class, (t_method)pofutil_stringfind, gensym("stringfind"), A_SYMBOL, A_SYMBOL, A_NULL);

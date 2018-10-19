@@ -11,13 +11,17 @@ class pofVisible;
 
 class pofVisible: public pofTouchable {
 	public:
-		pofVisible(t_class *Class, float v0=0):pofTouchable(Class, v0),visible(v0) {  }
+		pofVisible(t_class *Class, bool v0 = false, bool fT0 = false):
+			pofTouchable(Class, v0),visible(v0), forceTouchable(fT0), layer(NULL) 
+			{}
 
 		virtual void tree_draw();
 		
 		static void setup(void);
 		
-		float visible;
+		bool visible;
+		bool forceTouchable;
+		t_symbol *layer;
 };
 
 

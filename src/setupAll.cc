@@ -40,6 +40,7 @@
 #include "pofShader.h"
 #include "pofFill.h"
 #include "pofBlend.h"
+#include "pofLayer.h"
 
 
 void setupAll() {
@@ -78,5 +79,7 @@ void setupAll() {
 	pofTexture::setup();
 	pofShader::setup();
 	pofBlend::setup();
+	pofFill::setup();
+	pofLayer::setup();
 }
 

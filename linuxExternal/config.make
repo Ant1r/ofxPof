@@ -20,7 +20,9 @@ ifeq ($(PLATFORM_OS),Linux)
 	ifeq ($(ISARM),yes)
 		APPNAME = pof.l_arm
 	else ifeq ($(IS64BIT),yes)
-		APPNAME = pof.l_ia64
+# don't use .l_ia64 anymore; we'll use .l_amd64 once Pd is ready to. 
+#		APPNAME = pof.l_ia64 : 
+		APPNAME = pof.pd_linux
 	else 
 		APPNAME = pof.l_i386
 	endif	

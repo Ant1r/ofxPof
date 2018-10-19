@@ -7,23 +7,31 @@
 #include "pofWin.h"
 #include "pofHead.h"
 #include "pofImage.h"
+#include "pofBlend.h"
 #include "setupAll.h"
 #include "RWmutex.h"
+#include "EventDispatcher.h"
 
 #include "version.h"
+
+#define BUILD_BY_PD
 
 std::list<pofBase*> pofBase::pofobjs;
 std::list<pofBase*> pofBase::pofobjsToUpdate;
 RWmutex pofBase::treeMutex;
+EventDispatcher pofBase::dispatcher;
 bool pofBase::needBuild = false;
 ofEvent<ofEventArgs> pofBase::reloadTexturesEvent, pofBase::unloadTexturesEvent;
+ofEvent<ofEventArgs> pofBase::initFrameEvent;
 deque<t_binbuf*> pofBase::toPdQueue;
 deque<std::vector<Any> > pofBase::toPdQueueVec;
 t_clock *pofBase::queueClock;
 bool pofBase::doRender = true;
+bool pofBase::pdProcessesTouchEvents = false;
 ofTexture *pofBase::currentTexture = NULL;
 std::map<t_symbol*,ofTexture *> pofBase::textures;
 int pofBase::watchdogCount = 0;
+int pofBase::touchdownCount = 0;
 
 static t_symbol *s_build;
 static t_symbol *s_system;
@@ -122,6 +130,9 @@ bool pofBase::tree_touchDown(int x, int y, int id)
 
 	while(it != touchChildren.begin()) {
 		it--;
+#ifdef DEBUG_TOUCH
+		touchdownCount++;
+#endif
 		if((*it)->tree_touchDown(x, y, id)) return true;
 	}
 	
@@ -182,7 +193,13 @@ void pofBase::tree_build(pofBase *parent)
 		return;
 	}
 	
-	if(parent) parent->children.push_back(this);
+	if(parent) {
+		// add this to parent's children:
+		std::list<pofBase*>::iterator findIter =
+			std::find(parent->children.begin(), parent->children.end(), this);
+		if(findIter == parent->children.end()) // don't add this twice
+			parent->children.push_back(this);
+	}
 	isBuilt = true;
 	
 	t_atom ap;
@@ -198,6 +215,9 @@ bool pofBase::touchtree_build(pofBase *parent)
 	pofBase *newparent = parent;
 	bool touchable = isTouchable();
 	static int x=0, y=0;
+
+	if(isBuilt) return false;
+
 	if((parent == NULL) || computeTouch(x, y)) newparent = this;
 
 	while(it != children.end()) {
@@ -207,7 +227,7 @@ bool pofBase::touchtree_build(pofBase *parent)
 		}
 		it++;
 	}
-	
+	isBuilt = true;
 	return touchable;
 }
 
@@ -285,9 +305,9 @@ void pofBase::pof_build(void *x, t_symbol *s, int argc, t_atom *argv)
 	
 	if (argc==1 && argv->a_type==A_POINTER) {
 		parent = (pofBase *)argv->a_w.w_gpointer;
+		obj->tree_build(parent);
 	}
 	
-	obj->tree_build(parent);
 }
 
 void pofBase::buildAll() {
@@ -307,6 +327,7 @@ void pofBase::buildAll() {
 			(*it2)->tree_build(pofWin::win);
 			it2++;
 		}
+
 		pofWin::win->touchtree_build(NULL);
 	}
 	
@@ -317,52 +338,65 @@ void pofBase::buildAll() {
 //--------------------------------------------------------------
 
 void pofBase::updateAll() {
-	
     watchdogCount++; // increment watchdog count
-    
-	if(needBuild) buildAll();
+}
+
+void pofBase::drawAll() {
+#ifndef BUILD_BY_PD
+	static bool finalNeedBuild = false;
+
+	if(finalNeedBuild || needBuild) {
+		if(needBuild) {				// don't build now
+			treeMutex.lockW();
+			finalNeedBuild = true;
+			needBuild = false;
+			treeMutex.unlockW();
+		}
+		else if(finalNeedBuild) {	// wait nothing more to build
+			finalNeedBuild = 0;
+			buildAll();
+		}
+	}
+#endif
+
+    ofSetupScreen();
+    ofSetBackgroundAuto(false);
+
 	if(doRender) {
 		treeMutex.lockR();
-		std::list<pofBase*>::iterator it = pofobjsToUpdate.begin();
+		if(!needBuild) {
+			// update objects needing it:
+			std::list<pofBase*>::iterator it = pofobjsToUpdate.begin();
+			while(it != pofobjsToUpdate.end()) {
+				(*it)->update();
+				it++;
+			}
 
-		if(!needBuild) while(it != pofobjsToUpdate.end()) {
-			(*it)->update();
-			it++;
+			// init frame:
+			ofEventArgs voidEventArgs;
+			ofNotifyEvent(initFrameEvent, voidEventArgs);
+
+			// draw everything:
+			currentTexture = NULL;
+			ofEnableAlphaBlending();
+			pofBlend::currentSrcFactor = GL_SRC_ALPHA;
+			pofBlend::currentDestFactor = GL_ONE_MINUS_SRC_ALPHA;
+			if(pofWin::win) pofWin::win->tree_draw();
 		}
 		treeMutex.unlockR();
 	}
 }
 
-void pofBase::drawAll(){
-	if(doRender) {
-		treeMutex.lockR();
-		currentTexture = NULL;
-		ofEnableAlphaBlending();
-        pofBlend::currentSrcFactor = GL_SRC_ALPHA;
-        pofBlend::currentDestFactor = GL_ONE_MINUS_SRC_ALPHA;
-		if(pofWin::win && !needBuild) pofWin::win->tree_draw();
-		treeMutex.unlockR();
-	}
-    ofSetupScreen();
-    ofSetBackgroundAuto(false);
-}
-
 void pofBase::touchDownAll(int x, int y, int id) {
-	treeMutex.lockR();
-	if(pofWin::win) pofWin::win->tree_touchDown(x, y, id);	
-	treeMutex.unlockR();
+	dispatcher.pushEvent(EventData::DOWN, x, y, id);
 }
 
 void pofBase::touchMovedAll(int x, int y, int id) {	
-	treeMutex.lockR();
-	if(pofWin::win) pofWin::win->tree_touchMoved(x, y, id);	
-	treeMutex.unlockR();
+	dispatcher.pushEvent(EventData::MOVE, x, y, id);
 }
 
 void pofBase::touchUpAll(int x, int y, int id) {
-	treeMutex.lockR();
-	if(pofWin::win) pofWin::win->tree_touchUp(x, y, id);
-	treeMutex.unlockR();
+	dispatcher.pushEvent(EventData::UP, x, y, id);
 }
 
 /*void pofBase::touchDoubleTapAll(int x, int y, int id) {
@@ -372,9 +406,7 @@ void pofBase::touchUpAll(int x, int y, int id) {
 }*/
 
 void pofBase::touchCancelAll() {
-	treeMutex.lockR();
-	if(pofWin::win) pofWin::win->tree_touchCancel();
-	treeMutex.unlockR();
+	dispatcher.pushEvent(EventData::CANCEL);
 }
 
 void pofBase::keyPressed(int key){
@@ -420,11 +452,21 @@ void pofBase::backPressed()
 }
 
 //--------------------------------------------------------------
+int buildCount = 0;
 
 void dequeueToPdtick(void* nul)
 {
+	if(pofBase::pdProcessesTouchEvents) pofBase::dispatcher.popEvents();
 	while(pofBase::dequeueToPd());
 	while(pofBase::dequeueToPdVec());
+
+#ifdef BUILD_BY_PD
+	if(pofBase::needBuild) {
+		pofBase::buildAll();
+		buildCount++;
+		//post("buildCount = %d\n", buildCount);
+	}
+#endif
 
 	pofBase::watchdogCount = 0; // clear watchdog
 	clock_delay(pofBase::queueClock,2); //poll events every 2ms

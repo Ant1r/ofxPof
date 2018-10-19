@@ -1,0 +1,82 @@
+#N canvas 916 107 464 529 10;
+#X declare -lib pof;
+#X obj 9 177 cnv 15 130 80 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X obj 148 179 cnv 15 130 80 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X obj 6 271 cnv 15 100 70 empty empty empty 20 12 0 14 -257985 -66577
+0;
+#X obj 4 380 cnv 15 130 60 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X obj 149 381 cnv 15 130 60 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X obj 5 4 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X obj 5 26 cnv 15 200 20 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#X obj 5 57 cnv 15 330 20 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X obj 12 119 pofhead;
+#X text 7 3 Pof: Pd OpenFrameworks externals;
+#X obj 216 16 declare -lib pof;
+#X text 34 25 (c) Antoine Rousseau 2018;
+#X obj 12 419 pofcirc 200 200 100;
+#X text 9 59 poflayer: multiplex multiple layers on the same tree;
+#X text 139 94 Arguments : layer_name;
+#X text 157 106 Inlet 1: layer new_layer_name;
+#X obj 12 140 t a a, f 24;
+#X obj 12 186 poflayer Layer1;
+#X obj 12 319 poftranslate;
+#X msg 172 143 layer Layer2;
+#X msg 172 161 layer Layer3;
+#X obj 159 421 pofrect 150 200 10;
+#X obj 153 233 poftranslate 120 0;
+#X obj 12 232 poftranslate -120 0;
+#X floatatom 58 297 5 0 0 0 - - -, f 5;
+#X floatatom 188 212 5 0 0 0 - - -, f 5;
+#X obj 159 398 pofvisible Layer2;
+#X obj 12 395 pofvisible Layer1;
+#X obj 181 375 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 12 275 t a;
+#X obj 12 355 t a a, f 25;
+#X text 281 206 <- per-layer pre-processing;
+#X text 282 287 <- common processing;
+#X text 287 390 <- per-layer rendering;
+#X obj 129 472 pofvisible LAYER;
+#X text 91 454 note: [pofvisible LAYER] is "visible" by default i.e.:
+, f 48;
+#X text 236 470 =;
+#X obj 249 471 pofvisible LAYER 1;
+#X text 236 492 =;
+#X obj 249 493 pofvisible 1 LAYER;
+#X msg 179 316 layer Layer2;
+#X msg 179 334 layer Layer3;
+#X msg 180 354 layer;
+#X msg 258 161 layer;
+#X obj 153 186 poflayer Layer2;
+#X msg 271 357 nolayer;
+#X text 267 329 "nolayer" disable layer filtering:, f 18;
+#X connect 8 0 16 0;
+#X connect 16 0 17 0;
+#X connect 16 1 44 0;
+#X connect 17 0 23 0;
+#X connect 18 0 30 0;
+#X connect 19 0 44 0;
+#X connect 20 0 44 0;
+#X connect 22 0 29 0;
+#X connect 23 0 29 0;
+#X connect 24 0 18 2;
+#X connect 25 0 22 1;
+#X connect 26 0 21 0;
+#X connect 27 0 12 0;
+#X connect 28 0 26 0;
+#X connect 29 0 18 0;
+#X connect 30 0 27 0;
+#X connect 30 1 26 0;
+#X connect 40 0 26 0;
+#X connect 41 0 26 0;
+#X connect 42 0 26 0;
+#X connect 43 0 44 0;
+#X connect 44 0 22 0;
+#X connect 45 0 26 0;

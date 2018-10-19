@@ -55,6 +55,8 @@
 #X obj 333 202 poftexture;
 #X text 221 175 image won't be drawn \, but instead will be selected
 for texturing following 3d shapes \; see, f 46;
+#X msg 103 367 useOMX 1;
+#X msg 111 400 useOMX 0;
 #X connect 5 0 15 0;
 #X connect 10 0 19 0;
 #X connect 12 0 19 0;
@@ -83,3 +85,5 @@ for texturing following 3d shapes \; see, f 46;
 #X connect 36 2 39 0;
 #X connect 40 0 36 0;
 #X connect 40 1 41 0;
+#X connect 48 0 19 0;
+#X connect 49 0 19 0;

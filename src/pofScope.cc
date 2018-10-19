@@ -16,7 +16,10 @@ void *pofscope_new(t_floatarg w,t_floatarg h, t_float len)
     
     obj->bufLen = len;
     if(obj->bufLen < w) obj->bufLen = int(w);
-    
+
+    obj->bufCount = 0;
+	obj->bufIndex = 0;
+
     return (void*) (obj->pdobj);
 }
 
@@ -35,11 +38,16 @@ void pofscope_buflen(void *x, float len)
 	if(px->bufLen < 1) px->bufLen = 1;
 }
 
-void pofscope_compute(void *x, float comp)
+void pofscope_compute(void *x, float comp, float once)
 {
 	pofScope* px = (pofScope*)(((PdObject*)x)->parent);
 	
 	px->compute = (comp != 0);
+	px->once = (once != 0);
+	if(px->once) {
+		px->bufCount = 0;
+		//post("once");
+	}
 }
 
 static t_int *pofscope_perform(t_int *w)
@@ -54,16 +62,26 @@ static t_int *pofscope_perform(t_int *w)
     
     if (px->compute) while (n--)
     {   
+        if (!px->compute) break;
         t_sample f = *in++;
-        int i = int(px->bufIndex);
+        int i = px->bufIndex = ((float)px->bufCount / px->bufLen) * W;
         int oldi = i;
+        
         if(f > px->maxBuf[i]) px->maxBuf[i % W] = f;
         if(f < px->minBuf[i]) px->minBuf[i % W] = f;
 
-        px->bufIndex += (((float)W) / px->bufLen);
-        while(px->bufIndex > W) px->bufIndex -= W;
-
-        i = int(px->bufIndex);
+        px->bufCount++;
+        //px->bufIndex += (((float)W) / px->bufLen);
+        /*while(px->bufIndex > W) {
+        	if(px->once) px->compute = 0;
+        	px->bufIndex -= W;
+        }*/
+        if(px->bufCount >= px->bufLen) {
+        	if(px->once) px->compute = 0;
+        	px->bufCount = px->bufCount % px->bufLen;
+        }
+        
+		i = ((float)px->bufCount / px->bufLen) * W;
 		if(oldi != i) px->maxBuf[i % W] = px->minBuf[i % W] = f;
 	}
    
@@ -84,7 +102,7 @@ void pofScope::setup(void)
 		sizeof(PdObject), 0, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_NULL);
 	POF_SETUP(pofscope_class);
 	class_addmethod(pofscope_class, (t_method)pofscope_buflen, gensym("buflen"), A_FLOAT, A_NULL);
-	class_addmethod(pofscope_class, (t_method)pofscope_compute, gensym("compute"), A_FLOAT, A_NULL);
+	class_addmethod(pofscope_class, (t_method)pofscope_compute, gensym("compute"), A_FLOAT, A_DEFFLOAT, A_NULL);
     CLASS_MAINSIGNALIN(pofscope_class, PdObject, x_f);
     class_addmethod(pofscope_class, (t_method)pofscope_dsp, gensym("dsp"), A_NULL);
 

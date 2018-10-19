@@ -67,6 +67,14 @@ void pofwin_cursor(void *x, t_float cursor)
 	pofBase::treeMutex.unlockW();
 }
 
+void pofwin_pdProcessesTouchEvents(void *x, t_float val)
+{
+	x=NULL; /* don't warn about unused variables */
+	pofBase::treeMutex.lockW(); //avoid doing that during the draw
+	pofBase::pdProcessesTouchEvents = (val!=0);
+	pofBase::treeMutex.unlockW();
+}
+
 void pofwin_out(void *x, t_symbol *s, int argc, t_atom *argv)
 {
 	pofWin* px= (pofWin*)(((PdObject*)x)->parent);
@@ -120,6 +128,8 @@ void pofWin::setup(void)
 	class_addmethod(pofwin_class, (t_method)pofwin_normalizedtextcoords, gensym("normalizedtextcoords"), A_FLOAT,0);
 	class_addmethod(pofwin_class, (t_method)pofwin_build, gensym("build"), A_NULL);
 	class_addfloat(pofwin_class, pofwin_float);
+	
+	class_addmethod(pofwin_class, (t_method)pofwin_pdProcessesTouchEvents, gensym("pdProcessesTouchEvents"), A_FLOAT,0);
 
 	//POF_SETUP(pofwin_class);
 	if(pofWin::win == NULL) pofWin::win = new pofWin(pofwin_class);

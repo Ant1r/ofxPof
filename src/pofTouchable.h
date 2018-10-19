@@ -13,9 +13,6 @@ class pofTouchable: public pofBase {
 	public:
 		pofTouchable(t_class *Class, float t0=0):pofBase(Class),touchable(t0!=0),realTouchable(t0!=0) {  }
 
-		virtual void update();
-		virtual bool hasUpdate(){ return true;}
-		
 		virtual bool tree_touchMoved(int x, int y, int id);
 		virtual bool tree_touchDown(int x, int y, int id);
 		virtual bool tree_touchUp(int x, int y, int id);
