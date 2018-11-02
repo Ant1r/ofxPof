@@ -72,6 +72,17 @@ class pofIm{
 		}
 	}
 	
+	void reload() {
+		loaded = false;
+		doLoad();
+	}
+
+	void loadfile(t_symbol *file) {
+		if( (!strncmp(file->s_name, "http", strlen("http"))) || ofFile(file->s_name).exists())
+            im.load(file->s_name);
+		preloaded = loaded = true;
+	}
+
 	bool update() {
 		if(!(loaded && im.isAllocated())) return false;
 		
@@ -173,7 +184,7 @@ void pofImLoader::threadedFunction() {
 
 static t_class *pofimage_class;
 static t_symbol *s_set, *s_saved, *s_size, *s_monitor, *s_color, 
-  *s_save, *s_clear, *s_resize, *s_setcolor, *s_grab, *s_grabfbo, *s_crop;
+  *s_save, *s_clear, *s_resize, *s_setcolor, *s_grab, *s_grabfbo, *s_crop, *s_reload, *s_loadfile;
 
 static void pofimage_set(void *x, t_symbol *f);
 
@@ -362,6 +373,8 @@ void pofImage::setup(void)
 	s_grab = gensym("grab");
 	s_grabfbo = gensym("grabfbo");
 	s_crop = gensym("crop");
+	s_reload = gensym("reload");
+	s_loadfile = gensym("loadfile");
 	
 	pofimage_class = class_new(gensym("pofimage"), (t_newmethod)pofimage_new, (t_method)pofimage_free,
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
@@ -381,6 +394,8 @@ void pofImage::setup(void)
 	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("clear"),   	A_GIMME, A_NULL);
 	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("grab"),    	A_GIMME, A_NULL);
 	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("grabfbo"), 	A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("reload"),    A_GIMME, A_NULL);
+	class_addmethod(pofimage_class, (t_method)tellGUI, gensym("loadfile"), 	A_GIMME, A_NULL);
 	
 	class_addmethod(pofimage_class, (t_method)pofimage_out, s_size, A_GIMME, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_out, s_monitor, A_GIMME, A_NULL);
@@ -627,6 +642,14 @@ void pofImage::message(int argc, t_atom *argv)
 		pofsubFbo* sub = pofsubFbo::get(atom_getsymbol(argv));
 		sub->fbo->readToPixels(image->im.getPixels());
 		pofsubFbo::let(sub);
+		image->needUpdate = true;
+	}
+	else if(key == s_reload) {
+		image->reload();
+	}
+	else if(key == s_loadfile) {
+		if(argc < 1 || argv->a_type != A_SYMBOL) return;
+		image->loadfile(atom_getsymbol(argv));
 		image->needUpdate = true;
 	}
 }  

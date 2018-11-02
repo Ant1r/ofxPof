@@ -1,4 +1,4 @@
-#N canvas 501 102 911 700 10;
+#N canvas 501 102 919 773 10;
 #X declare -lib pof;
 #X obj 5 4 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -7,27 +7,27 @@
 #X text 34 25 (c) Antoine Rousseau 2014;
 #X obj 5 57 cnv 15 240 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 32 527 cnv 15 180 30 empty empty empty 20 12 0 14 -261682 -66577
+#X obj 32 577 cnv 15 180 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
 #X obj 38 91 pofhead;
 #X text 349 85 Inlet 2: width;
-#X floatatom 118 504 5 0 0 0 - - -, f 5;
-#X floatatom 198 502 5 0 0 0 - - -, f 5;
+#X floatatom 118 554 5 0 0 2 width - -;
+#X floatatom 198 552 5 0 0 2 height - -;
 #X text 349 98 Inlet 3: height;
 #X text 11 57 pofimage : draw an image from a file.;
-#X floatatom 198 607 5 0 0 0 - - -, f 5;
-#X floatatom 255 608 5 0 0 0 - - -, f 5;
-#X obj 198 587 unpack f f;
-#X text 196 621 get image size;
+#X floatatom 198 657 5 0 0 0 - - -;
+#X floatatom 255 658 5 0 0 0 - - -;
+#X obj 198 637 unpack f f;
+#X text 196 671 get image size;
 #X msg 56 127 set img/pd.png;
 #X text 267 58 Arguments : file [width [height]];
 #X text 349 71 Inlet 1: set IMAGE.FILE;
 #X msg 63 150 set img/of.png;
 #X msg 73 170 set logo/pOf.png;
-#X obj 39 536 pofimage logo/pOf.png 200 0;
-#X text 239 505 if width = 0 \, respect ratio (and use height).;
-#X text 239 517 if height = 0 \, respect ratio (and use width).;
-#X text 239 532 if height = 0 and width = 0 \, use file dimensions.
+#X obj 39 586 pofimage logo/pOf.png 200 0;
+#X text 239 555 if width = 0 \, respect ratio (and use height).;
+#X text 239 567 if height = 0 \, respect ratio (and use width).;
+#X text 239 582 if height = 0 and width = 0 \, use file dimensions.
 ;
 #X msg 110 461 unreserve _all_;
 #X msg 83 192 set img/moon.jpg;
@@ -39,11 +39,11 @@
 #X obj 681 109 route monitor;
 #X msg 688 62 setmonitor 1;
 #X obj 688 43 loadbang;
-#X floatatom 681 182 5 0 0 1 images_to_load_from_disk - -, f 5;
-#X floatatom 715 167 5 0 0 1 images_to_load_from_web - -, f 5;
+#X floatatom 681 182 5 0 0 1 images_to_load_from_disk - -;
+#X floatatom 715 167 5 0 0 1 images_to_load_from_web - -;
 #X obj 636 43 pofhead;
 #X obj 681 130 unpack f f f;
-#X floatatom 750 150 5 0 0 1 images_loaded - -, f 5;
+#X floatatom 750 150 5 0 0 1 images_loaded - -;
 #N canvas 118 576 442 212 ALIAS_prefixed_path 0;
 #X obj 34 61 pofutil;
 #X msg 34 40 setstring img_dir img/;
@@ -62,7 +62,7 @@
 #X connect 5 0 4 0;
 #X connect 6 0 2 0;
 #X connect 7 0 1 0;
-#X restore 44 670 pd ALIAS_prefixed_path;
+#X restore 44 720 pd ALIAS_prefixed_path;
 #X text 253 123 As a texture : file TEX : then image won't be drawn
 \, but instead will be selected for texturing following 3d shapes \;
 see;
@@ -161,15 +161,15 @@ see;
 #X connect 34 0 21 1;
 #X connect 35 0 22 1;
 #X connect 36 0 16 1;
-#X restore 66 572 pd draw;
+#X restore 66 622 pd draw;
 #X msg 559 259 setcolor 10 10 1 1 1 1;
 #X msg 559 342 getcolor 10 10;
-#X obj 288 596 unpack f f f f;
-#X floatatom 288 662 5 0 0 1 r - -, f 5;
-#X floatatom 315 646 5 0 0 1 v - -, f 5;
-#X floatatom 342 631 5 0 0 1 b - -, f 5;
-#X floatatom 369 616 5 0 0 1 a - -, f 5;
-#X text 293 579 getcolor return:;
+#X obj 288 646 unpack f f f f;
+#X floatatom 288 712 5 0 0 1 r - -;
+#X floatatom 315 696 5 0 0 1 v - -;
+#X floatatom 342 681 5 0 0 1 b - -;
+#X floatatom 369 666 5 0 0 1 a - -;
+#X text 293 629 getcolor return:;
 #X obj 558 212 pofutil;
 #X msg 558 190 getdir;
 #X msg 558 234 save \$1/logo/poftrashed.png;
@@ -177,10 +177,10 @@ see;
 #X msg 560 372 crop 1 1 100 100;
 #X msg 558 422 grab 10 10 100 100;
 #X msg 560 393 resize 100 100;
-#X obj 198 564 route size color saved;
-#X symbolatom 417 638 10 0 0 3 saved - -, f 10;
-#X obj 417 616 symbol;
-#X obj 418 674 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X obj 198 614 route size color saved;
+#X symbolatom 417 688 10 0 0 3 saved - -;
+#X obj 417 666 symbol;
+#X obj 418 724 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X text 737 234 save to disk;
 #X text 708 279 args: x y r g b a;
@@ -268,16 +268,21 @@ offsetB], f 35;
 #X obj 631 537 t b f;
 #X obj 669 537 t b f;
 #X msg 559 586 sub \$1 \$2 \$3 \$4;
-#X floatatom 559 516 5 0 0 0 - - -, f 5;
-#X floatatom 593 516 5 0 0 0 - - -, f 5;
-#X floatatom 631 517 5 0 0 0 - - -, f 5;
-#X floatatom 669 517 5 0 0 0 - - -, f 5;
+#X floatatom 559 516 5 0 0 0 - - -;
+#X floatatom 593 516 5 0 0 0 - - -;
+#X floatatom 631 517 5 0 0 0 - - -;
+#X floatatom 669 517 5 0 0 0 - - -;
 #X text 670 372 crop x0 y0 width heigth (destructive);
 #X text 662 392 resize witdh height (destructive);
 #X text 663 586 draw subsection: sub x y width height;
 #X msg 603 481 clear 0 0.5 0.5 1;
 #X text 715 481 clear (solid black) or set all pixels to RGBA, f 23
 ;
+#X msg 559 612 reload;
+#X text 602 612 reload initial image file (immediate at next frame)
+;
+#X msg 559 633 loadfile /tmp/imagefile.png;
+#X text 570 649 load image file (immediate at next frame);
 #X connect 5 0 20 0;
 #X connect 7 0 20 1;
 #X connect 8 0 20 2;
@@ -342,3 +347,5 @@ offsetB], f 35;
 #X connect 89 0 84 0;
 #X connect 90 0 85 0;
 #X connect 94 0 20 0;
+#X connect 96 0 20 0;
+#X connect 98 0 20 0;
