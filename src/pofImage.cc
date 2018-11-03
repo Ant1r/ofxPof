@@ -651,6 +651,7 @@ void pofImage::message(int argc, t_atom *argv)
 	}
 	else if(key == s_reload) {
 		image->reload();
+        image->needUpdate = true;
 	}
 	else if(key == s_loadfile) {
 		if(argc < 1 || argv->a_type != A_SYMBOL) return;
@@ -660,7 +661,7 @@ void pofImage::message(int argc, t_atom *argv)
     else if(key == s_settype) {
         if(argc < 1 || argv->a_type != A_SYMBOL) return;
         t_symbol *sym = atom_getsymbol(argv);
-        if(sym == s_RGB) { image->im.setImageType(OF_IMAGE_COLOR); post("converted to RGB");}
+        if(sym == s_RGB) image->im.setImageType(OF_IMAGE_COLOR);
         else if(sym == s_RGBA) image->im.setImageType(OF_IMAGE_COLOR_ALPHA);
         else if(sym == s_GRAY) image->im.setImageType(OF_IMAGE_GRAYSCALE);
         image->needUpdate = true;
