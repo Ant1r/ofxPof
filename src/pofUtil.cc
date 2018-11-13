@@ -210,6 +210,8 @@ static void pofutil_fileops(void *x, t_symbol *command, int argc, t_atom *argv, 
 	}
 	else if(command == s_movefile) {
 		if((argc>1) && (argv->a_type == A_SYMBOL) && ((argv+1)->a_type == A_SYMBOL)) {
+			if(((argc<3) || (atom_getfloat(argv+2) == 0)) && ofFile::doesFileExist(atom_getsymbol(argv+1)->s_name, false))
+				goto end; // error:don't overwrite
 			if(ofFile(atom_getsymbol(argv)->s_name).moveTo(atom_getsymbol(argv+1)->s_name,
 					false,											// bRelativeToData
 					argc>2 ? atom_getfloat(argv+2) != 0 : false))	//overwrite
@@ -226,6 +228,8 @@ static void pofutil_fileops(void *x, t_symbol *command, int argc, t_atom *argv, 
 		}
 	}
 
+	end:
+	
 	if(sync) pofutil_out(x, NULL, 3, at + 1);
 	else px->queueToSelfPd(4, at);
 }

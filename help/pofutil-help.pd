@@ -1,4 +1,4 @@
-#N canvas 143 286 377 265 10;
+#N canvas 143 313 377 265 10;
 #X declare -lib pof;
 #X obj 14 12 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -23,7 +23,7 @@
 0;
 #X obj 313 356 cnv 15 45 20 empty empty empty 20 12 0 14 -257985 -66577
 0;
-#X obj 328 428 cnv 15 45 20 empty empty empty 20 12 0 14 -257985 -66577
+#X obj 328 413 cnv 15 45 20 empty empty empty 20 12 0 14 -257985 -66577
 0;
 #X msg 22 14 getdir;
 #X obj 22 511 pofutil;
@@ -45,15 +45,11 @@
 #X text 334 280 rename dir (async);
 #X text 334 307 rename back (async);
 #X text 219 163 remove file (async);
-#X msg 64 429 copyfile /tmp/test1 /tmp/test3, f 32;
-#X msg 64 449 copyfile /tmp/test1 /tmp/test3 1;
+#X msg 64 414 copyfile /tmp/test1 /tmp/test3, f 32;
+#X msg 64 434 copyfile /tmp/test1 /tmp/test3 1;
 #X msg 64 359 movefile /tmp/test1 /tmp/test2;
-#X text 269 430 copy file (async);
+#X text 269 415 copy file (async);
 #X text 256 358 move file (async);
-#X text 174 376 CAUTION: movefile unconditionally OVERLOADS the destination
-file (seems to be OF bug), f 43;
-#X text 269 451 optional 3rd arg = 'overload' (defaults false), f
-29;
 #X msg 65 479 sync 1;
 #X msg 121 479 sync 0;
 #X text 166 479 sync 1: force "async" operations to run in Pd thread
@@ -66,17 +62,22 @@ behavior., f 61;
 #X msg 374 59 getdir;
 #X obj 374 78 pofutil;
 #X obj 374 116 pofutil;
-#X floatatom 480 205 7 0 0 3 days_from_1970 - -, f 7;
+#X floatatom 480 205 7 0 0 3 days_from_1970 - -;
 #X obj 374 137 unpack s s f f f, f 36;
-#X symbolatom 374 158 8 0 0 0 - - -, f 8;
-#X symbolatom 427 158 7 0 0 3 file/dir - -, f 7;
-#X floatatom 533 190 7 0 0 3 seconds_in_day - -, f 7;
-#X floatatom 587 158 7 0 0 3 size_in_bytes - -, f 7;
+#X symbolatom 374 158 8 0 0 0 - - -;
+#X symbolatom 427 158 7 0 0 3 file/dir - -;
+#X floatatom 533 190 7 0 0 3 seconds_in_day - -;
+#X floatatom 587 158 7 0 0 3 size_in_bytes - -;
 #X obj 374 40 loadbang;
 #X msg 374 97 fileinfo \$1/pofutil-help.pd;
 #X text 111 99 test if file exists/isDirectory/isFile \, see also [fileinfo(
 for more information:, f 42;
 #X text 341 191 last modification date:;
+#X text 266 375 optional 3rd arg = 'overwrite' (defaults false), f
+31;
+#X text 266 432 optional 3rd arg = 'overwrite' (defaults false), f
+31;
+#X msg 65 380 movefile /tmp/test1 /tmp/test2 1;
 #X connect 8 0 9 0;
 #X connect 9 0 14 0;
 #X connect 10 0 9 0;
@@ -90,18 +91,19 @@ for more information:, f 42;
 #X connect 28 0 9 0;
 #X connect 29 0 9 0;
 #X connect 30 0 9 0;
-#X connect 35 0 9 0;
-#X connect 36 0 9 0;
-#X connect 42 0 43 0;
-#X connect 43 0 52 0;
-#X connect 44 0 46 0;
-#X connect 46 0 47 0;
-#X connect 46 1 48 0;
-#X connect 46 2 45 0;
-#X connect 46 3 49 0;
-#X connect 46 4 50 0;
-#X connect 51 0 42 0;
-#X connect 52 0 44 0;
+#X connect 33 0 9 0;
+#X connect 34 0 9 0;
+#X connect 40 0 41 0;
+#X connect 41 0 50 0;
+#X connect 42 0 44 0;
+#X connect 44 0 45 0;
+#X connect 44 1 46 0;
+#X connect 44 2 43 0;
+#X connect 44 3 47 0;
+#X connect 44 4 48 0;
+#X connect 49 0 40 0;
+#X connect 50 0 42 0;
+#X connect 55 0 9 0;
 #X restore 28 103 pd file_utils;
 #N canvas 599 515 663 360 string_utils 0;
 #X obj 23 186 pofutil;
