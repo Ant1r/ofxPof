@@ -218,9 +218,10 @@ static void pofutil_fileops(void *x, t_symbol *command, int argc, t_atom *argv, 
     }
 	else if(command == s_copyfile) {
 		if((argc>1) && (argv->a_type == A_SYMBOL) && ((argv+1)->a_type == A_SYMBOL)) {
-			if(ofFile(atom_getsymbol(argv)->s_name).copyTo(atom_getsymbol(argv+1)->s_name,
+			if((ofFile(atom_getsymbol(argv)->s_name) == ofFile(atom_getsymbol(argv+1)->s_name)) // silently skip if same path
+			|| (ofFile(atom_getsymbol(argv)->s_name).copyTo(atom_getsymbol(argv+1)->s_name,
 					false,											// bRelativeToData
-					argc>2 ? atom_getfloat(argv+2) != 0 : false))	//overwrite
+					argc>2 ? atom_getfloat(argv+2) != 0 : false)))	//overwrite
 				SETSYMBOL(&at[2], s_done);
 		}
 	}
