@@ -266,6 +266,13 @@ ofRectangle ofxFontStash::drawMultiLineColumn( string & _text, float size, float
 		
         while(iter < stop) {
 
+			// remove any leading spaces:
+			while((iter == lineStart) && isSpace(*iter) && (iter < stop)) {
+				iter++;
+				lineStart = iter;
+			}
+			if(iter == stop) break;
+			
 			unsigned int c = utf8::unchecked::next(iter); // get the next unichar and iterate
 			if ( isSpace(c) ){
 				foundSpace = true;
@@ -295,9 +302,9 @@ ofRectangle ofxFontStash::drawMultiLineColumn( string & _text, float size, float
 						splitLines.push_back(finalLine);
 						if(centered) lineWidths.push_back(getBBox(finalLine, size, 0, 0).width);
 						// Edge case where if max width is met and first character is space
-						if(!(utf8::unchecked::next(lineStart) == 0x20)){
+						//if(!(utf8::unchecked::next(lineStart) == 0x20)){
 							iter = lastSpace;
-						}
+						//}
 					}else{
 						splitLines.push_back(thisLine);
 						if(centered) lineWidths.push_back(r.width);
@@ -431,8 +438,15 @@ vector<string> ofxFontStash::computeMultiLines( string text, float size,
 	
     while(iter < stop) {
 
+		// remove any leading spaces:
+		while((iter == lineStart) && isSpace(*iter) && (iter < stop)) {
+			iter++;
+			lineStart = iter;
+		}
+		if(iter == stop) break;
+		
 		unsigned int c = utf8::unchecked::next(iter); // get the next unichar and iterate
-		if ( isSpace(c) ){
+		if ( isSpace(c) /*&& (iter != lineStart + 1)*/){
 			foundSpace = true;
 			lastSpace = iter;
 		}
@@ -441,7 +455,6 @@ vector<string> ofxFontStash::computeMultiLines( string text, float size,
 		}
 
 		thisLine += toUTF8(c);
-
 		if ( getBBox(thisLine.c_str(), size, 0,0).width > maxW || foundNewLine ) { //we went too far, lets jump back to our closest space
 			if(foundNewLine){
 				if (thisLine == "\n"){ //if the whole line is only \n, replace with a space to avoid weird things
@@ -455,9 +468,7 @@ vector<string> ofxFontStash::computeMultiLines( string text, float size,
 				if (foundSpace){
 					string finalLine = walkAndFill(lineStart, iter, lastSpace);
 					splitLines.push_back(finalLine);
-					if(!(utf8::unchecked::next(lineStart) == 0x20)){
-						iter = lastSpace;
-					}
+					iter = lastSpace;
 				}else{
 					splitLines.push_back(thisLine);
 					if(wordsWereTruncated){
