@@ -194,15 +194,16 @@ ofRectangle ofxFontStash::drawMultiLine( const string& _text, float size, float 
 			ofx_sth_begin_draw(stash);
 			{
 			
-				float yy = size * lineHeight * OFX_FONT_STASH_LINE_HEIGHT_MULT * line * dpiScale;
+				//float yy = size * lineHeight * OFX_FONT_STASH_LINE_HEIGHT_MULT * line * dpiScale;
 				float minDiffX = FLT_MAX;
-				for(int i = 0; i < lines.size(); i++){
+				for(unsigned int i = 0; i < lines.size(); i++){
 					float dx = 0;
 					float x = 0;
 					switch (align) {
 						case OF_ALIGN_HORZ_LEFT: break;
 						case OF_ALIGN_HORZ_RIGHT: x = maxW - widths[i]; break;
 						case OF_ALIGN_HORZ_CENTER: x = (maxW - widths[i]) * 0.5; break;
+						default: break;
 					}
 					if(minDiffX > x) minDiffX = x;
 					ofx_sth_draw_text(stash,
@@ -257,7 +258,7 @@ ofRectangle ofxFontStash::drawMultiLineColumn( string & _text, float size, float
 
 		const char * iter = text.c_str();
 		const char * lineStart = iter;
-		const char * lastSpace;
+		const char * lastSpace = iter;
 		const char * stop = text.c_str() + text.length();
 
         string thisLine = "";
@@ -429,7 +430,7 @@ vector<string> ofxFontStash::computeMultiLines( string text, float size,
 
 	const char * iter = text.c_str();
 	const char * lineStart = iter;
-	const char * lastSpace;
+	const char * lastSpace = iter;
 	const char * stop = text.c_str() + text.length();
 
     string thisLine = "";
@@ -606,11 +607,11 @@ ofVec2f ofxFontStash::drawMultiColumnFormatted(const string &_text, float size, 
 	// first, calculate the sizes of all the words
 	//
 	vector<std::string> lines = ofSplitString(localText, "\n");
-	for (int i=0; i<lines.size(); i++) {
+	for (unsigned int i=0; i<lines.size(); i++) {
 
 		vector<std::string> words = ofSplitString(lines[i], " ");
 
-		for (int j=0; j<words.size(); j++) {
+		for (unsigned int j=0; j<words.size(); j++) {
 
 			// handle '@' code to change font id
 			if (isFontCode(words[j])) {
@@ -674,7 +675,7 @@ ofVec2f ofxFontStash::drawMultiColumnFormatted(const string &_text, float size, 
 		ofx_sth_begin_draw(stash);
 	}
 
-	for (int i=0; i<allWords.size(); i++) {
+	for (unsigned int i=0; i<allWords.size(); i++) {
 
 		// do we need to jump a line?
 		if ((drawPointer.x + wordSizes[i].x > columnWidth ||
@@ -774,7 +775,6 @@ void ofxFontStash::drawBatch( const string& text, float size, float x, float y){
 void ofxFontStash::drawMultiLineBatch( const string& text, float size, float x, float y ){
 	if (stash != NULL){
 		if(batchDrawing){
-			float dx = 0;
 			stringstream ss(text);
 			string s;
 			int line = 0;
@@ -863,11 +863,9 @@ ofRectangle ofxFontStash::getBBox( const string& text, float size, float xx, flo
 		stringstream ss(text);
 		string s;
 		int line = 0;
-		float totalH = 0;
 		vector<ofRectangle> rects;
 		while ( getline(ss, s, '\n') ) {
 			
-			float dx = 0;
 			float w, h, x, y;
 			ofx_sth_dim_text( stash, fontIds[0], size / dpiScale, s.c_str(), &x, &y, &w, &h);
 			float w2, x2;
@@ -895,7 +893,7 @@ ofRectangle ofxFontStash::getBBox( const string& text, float size, float xx, flo
 
 		if(line > 1){ //if multiline
 			totalArea.y -= rects[0].height;
-			for(int i = 0; i < rects.size(); i++){
+			for(unsigned int i = 0; i < rects.size(); i++){
 				#if OF_VERSION_MAJOR == 0 && OF_VERSION_MINOR >= 8
 				totalArea = totalArea.getUnion(rects[i]);	//TODO
 				#endif
