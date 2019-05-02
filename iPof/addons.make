@@ -1,6 +1,4 @@
-ofxAccelerometer
+ofxJSON
 ofxPd
 ofxPof
-ofxJSON
-ofxUnicode
 ofxZipPass
