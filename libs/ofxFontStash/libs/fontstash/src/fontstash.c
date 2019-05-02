@@ -544,7 +544,7 @@ static struct ofx_sth_glyph* get_glyph(struct ofx_sth_stash* stash, struct ofx_s
 		if(stash->hasMipMap > 0){
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 8); //TODO check for hw support!
-			#if defined(__ANDROID__) || defined(TARGET_OPENGLES) || defined(TARGET_RASPBERRY_PI)
+			#if defined(__ANDROID__) || defined(TARGET_OPENGLES) || defined(TARGET_RASPBERRY_PI) || defined(TARGET_OS_IOS)
 				// OpenGLES 1.0 does not support the following.
 			#else
 //			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -0.0); //shoot for sharper test
@@ -610,7 +610,9 @@ void set_lod_bias(struct ofx_sth_stash* stash, float bias){
 			glBindTexture(GL_TEXTURE_2D, texture->id);
 			#ifndef TARGET_OPENGLES
 			#ifndef __ANDROID__
+            #ifdef GL_TEXTURE_LOD_BIAS
 						glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, bias);
+            #endif
 			#endif
 			#endif
 			glBindTexture(GL_TEXTURE_2D, 0);
