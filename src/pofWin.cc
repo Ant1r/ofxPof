@@ -41,7 +41,7 @@ void pofwin_window(void *x, t_float width, t_float height, t_float fullscreen)
 	if(width<1) width = 1;
 	if(height<1) height = 1;
 	
-#ifndef TARGET_ANDROID
+#if (!defined(TARGET_ANDROID) && !defined(TARGET_OS_IOS))
 	pofBase::treeMutex.lockW(); //avoid doing that during the draw
 
 	ofSetWindowShape((int)width,(int)height);
