@@ -71,6 +71,8 @@ The "help" folder contains the help patches for every Pof objects. If this folde
 
 ![pofplayer](https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/PofPlayer.jpg) ![not_a_patch](https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/ThisIsNotAPatch.jpg) ![circles](https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/Circles.jpg) ![sampler](https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/Sampler.png) ![soft](https://raw.githubusercontent.com/Ant1r/ofxPof/master/screenshots/Soft.jpg)
 
+[![Pof tutorial](https://img.youtube.com/vi/qSCkY2VyPdc/0.jpg)](https://www.youtube.com/watch?v=qSCkY2VyPdc&list=PL535YD-F8RseIW5dua-vYKLlrcJC1cPlW)
+
 Also there will be some Pof tutorials on [metalu.net](http://metalu.net/ressources-techniques/pure-data/pof-pd-openframeworks) one of these days.
 
 ---------
