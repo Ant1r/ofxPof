@@ -35,8 +35,8 @@ void poftouch_draw(void *x, t_float d)
 
 void poftouch_dont_capture(void *x, t_float nc)
 {
-	((pofTouch*)(((PdObject*)x)->parent))->capture = (nc==0);
-	((pofTouch*)(((PdObject*)x)->parent))->dynamic = (nc==2);
+	((pofTouch*)(((PdObject*)x)->parent))->capture = (nc==0) || (nc==3);
+	((pofTouch*)(((PdObject*)x)->parent))->dynamic = (nc>=2);
 }
 
 void poftouch_multi(void *x, t_float m)

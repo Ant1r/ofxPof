@@ -11,8 +11,8 @@
 0;
 #X obj 43 83 pofhead;
 #X text 178 386 Inlet 2: width;
-#X floatatom 89 376 5 0 0 0 - - -, f 5;
-#X floatatom 136 375 5 0 0 0 - - -, f 5;
+#X floatatom 89 376 5 0 0 0 - - -;
+#X floatatom 136 375 5 0 0 0 - - -;
 #X text 178 401 Inlet 3: height;
 #X text 11 59 poftouch : send touch events.;
 #X obj 43 405 poftouch 200 200;
@@ -26,28 +26,28 @@
 1;
 #X msg 81 165 draw \$1;
 #X obj 27 503 unpack f f f;
-#X floatatom 27 532 5 0 0 3 x - -, f 5;
-#X floatatom 61 532 5 0 0 3 y - -, f 5;
-#X floatatom 96 532 5 0 0 3 touch_id - -, f 5;
+#X floatatom 27 532 5 0 0 3 x - -;
+#X floatatom 61 532 5 0 0 3 y - -;
+#X floatatom 96 532 5 0 0 3 touch_id - -;
 #X obj 213 503 unpack f f f;
-#X floatatom 213 532 5 0 0 3 x - -, f 5;
-#X floatatom 247 532 5 0 0 3 y - -, f 5;
-#X floatatom 282 532 5 0 0 3 touch_id - -, f 5;
+#X floatatom 213 532 5 0 0 3 x - -;
+#X floatatom 247 532 5 0 0 3 y - -;
+#X floatatom 282 532 5 0 0 3 touch_id - -;
 #X obj 353 504 unpack f f f;
-#X floatatom 353 533 5 0 0 3 x - -, f 5;
-#X floatatom 387 533 5 0 0 3 y - -, f 5;
-#X floatatom 422 533 5 0 0 3 touch_id - -, f 5;
+#X floatatom 353 533 5 0 0 3 x - -;
+#X floatatom 387 533 5 0 0 3 y - -;
+#X floatatom 422 533 5 0 0 3 touch_id - -;
 #X obj 450 502 bng 15 250 50 0 empty empty cancel 17 7 0 10 -262144
 -1 -1;
 #X text 139 80 Touch events travel from the bottom to the top of the
 tree (while drawing goes from the top to the bottom).;
 #X text 130 164 draw : draw a rectangle of the same dimensions.;
-#X text 142 249 multi : when touchdown has been detected \, continue
+#X text 143 260 multi : when touchdown has been detected \, continue
 to listen to other touch id events (only useful for multitouch apps).
 ;
 #X text 178 420 Outlet 2: down|move|up x y id;
 #X text 238 434 cancel 0;
-#X text 183 190 dont_capture : let the touch events climb the tree
+#X text 186 193 dont_capture : let the touch events climb the tree
 even after touchdown has been detected.;
 #X text 140 106 Events emitted by a touch id (=finger) are captured
 by a poftouch from a touchdown inside of it \, until the touchup event
@@ -60,10 +60,8 @@ of this touch id.;
 #X msg 164 490 0;
 #X obj 136 517 tgl 30 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 83 195 hradio 15 1 0 3 empty empty empty 0 -8 0 10 -262144 -1
+#X obj 83 195 hradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144 -1
 -1 2;
-#X text 184 221 if dont_capture=2 \, dynamically test for enter/leave
-events.;
 #X obj 136 457 route down move up cancel enter leave;
 #X msg 508 499 1;
 #X msg 536 499 0;
@@ -73,10 +71,14 @@ events.;
 ;
 #X text 7 5 Pof: Pd OpenFrameworks externals;
 #X obj 216 18 declare -lib pof;
+#X text 184 221 - if dont_capture=2 \, dynamically test for enter/leave
+events., f 61;
+#X text 184 233 - if dont_capture=3 \, dynamically test for enter/leave
+events AND capture when entered or touched down.;
 #X connect 5 0 11 0;
 #X connect 7 0 11 1;
 #X connect 8 0 11 2;
-#X connect 11 1 47 0;
+#X connect 11 1 46 0;
 #X connect 13 0 11 0;
 #X connect 14 0 15 0;
 #X connect 15 0 11 0;
@@ -96,13 +98,13 @@ events.;
 #X connect 42 0 44 0;
 #X connect 43 0 44 0;
 #X connect 45 0 13 0;
-#X connect 47 0 18 0;
-#X connect 47 0 42 0;
-#X connect 47 1 22 0;
-#X connect 47 2 26 0;
-#X connect 47 2 43 0;
-#X connect 47 3 30 0;
-#X connect 47 4 48 0;
-#X connect 47 5 49 0;
-#X connect 48 0 50 0;
-#X connect 49 0 50 0;
+#X connect 46 0 18 0;
+#X connect 46 0 42 0;
+#X connect 46 1 22 0;
+#X connect 46 2 26 0;
+#X connect 46 2 43 0;
+#X connect 46 3 30 0;
+#X connect 46 4 47 0;
+#X connect 46 5 48 0;
+#X connect 47 0 49 0;
+#X connect 48 0 49 0;
