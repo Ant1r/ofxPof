@@ -167,7 +167,7 @@ bool pofTouch::touchUp(int x, int y, int id)
 			Send(s_up, 3, x, y, id);
 			active_id = -1;
 		}
-		return capture;
+		return (capture && !dynamic); // don't capture "up" event if was dynamically captured
 	} else return false;
 }
 
