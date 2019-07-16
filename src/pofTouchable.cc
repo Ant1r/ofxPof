@@ -24,12 +24,13 @@ void poftouchable_float(void *x, t_float t)
 {
 	pofTouchable *px = (pofTouchable*)(((PdObject*)x)->parent);
 	
-	if(t == 0) {
+	/*if(t == 0) {
 		pofBase::treeMutex.lockR();
 		px->tree_touchCancel();
 		pofBase::treeMutex.unlockR();
 	}
-	px->touchable = (t!=0);
+	px->touchable = (t!=0);*/
+	px->setTouchable(t!=0);
 }
 
 void pofTouchable::setup(void)
@@ -68,5 +69,15 @@ bool pofTouchable::tree_touchDoubleTap(int x, int y, int id)
 void pofTouchable::tree_touchCancel()
 {
 	if(touchable) pofBase::tree_touchCancel();
+}
+
+void pofTouchable::setTouchable(bool t)
+{
+	if(t == 0) {
+		pofBase::treeMutex.lockR();
+		tree_touchCancel();
+		pofBase::treeMutex.unlockR();
+	}
+	touchable = (t!=0);
 }
 

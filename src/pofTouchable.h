@@ -18,12 +18,14 @@ class pofTouchable: public pofBase {
 		virtual bool tree_touchUp(int x, int y, int id);
 		virtual bool tree_touchDoubleTap(int x, int y, int id);
 		virtual void tree_touchCancel();
-		
+
 		virtual bool computeTouch(int &x, int &y) {return true;}
-		
+
+		void setTouchable(bool t);
+
 		static void setup(void);
-		
-		bool touchable, realTouchable;	
+
+		bool touchable, realTouchable;
 };
 
 

@@ -51,7 +51,7 @@ static void pofvisible_float(void *x, t_float t)
 	pofVisible *px = (pofVisible*)(((PdObject*)x)->parent);
 	
 	px->visible = t!=0;
-	px->touchable = px->visible || px->forceTouchable;
+	px->setTouchable(px->visible || px->forceTouchable);
 }
 
 static void pofvisible_forceTouchable(void *x, t_float t)
@@ -59,7 +59,7 @@ static void pofvisible_forceTouchable(void *x, t_float t)
 	pofVisible *px = (pofVisible*)(((PdObject*)x)->parent);
 	
 	px->forceTouchable = t!=0;
-	px->touchable = px->visible || px->forceTouchable;
+	px->setTouchable(px->visible || px->forceTouchable);
 }
 
 static void pofvisible_layer(void *x, t_symbol *newlayer)
