@@ -99,12 +99,18 @@ class pofIm{
 	}
 
 
-	void draw(float x, float y, float w, float h) {
-		if(update()) im.draw(x, y, w, h);
+	void draw(float x, float y, float w, float h, bool quality) {
+		if(!update()) return;
+		if(!quality) im.getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
+		else im.getTexture().setTextureMinMagFilter(GL_LINEAR, GL_LINEAR);
+		im.draw(x, y, w, h);
 	}
 
-	void drawsub(float x, float y, float w, float h, float sx, float sy, float sw, float sh) {
-		if(update()) im.drawSubsection(x, y, w, h, sx, sy, sw, sh);
+	void drawsub(float x, float y, float w, float h, float sx, float sy, float sw, float sh, bool quality) {
+		if(!update()) return;
+		if(!quality) im.getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
+		else im.getTexture().setTextureMinMagFilter(GL_LINEAR, GL_LINEAR);
+		im.drawSubsection(x, y, w, h, sx, sy, sw, sh);
 	}
 
 	void bind() {
@@ -359,6 +365,12 @@ static void pofimage_sub(void *x, t_float sx, t_float sy, t_float sw, t_float sh
 	px->subheight = sh;
 }
 
+static void pofimage_quality(void *x, t_float q)
+{
+	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
+	px->quality = (q != 0);
+}
+
 void pofImage::setup(void)
 {
 	//post("pofimage_setup");
@@ -390,6 +402,7 @@ void pofImage::setup(void)
 	class_addmethod(pofimage_class, (t_method)pofimage_getcolor, gensym("getcolor"), A_FLOAT, A_FLOAT, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_setcolors, gensym("setcolors"),	A_GIMME, A_NULL);
 	class_addmethod(pofimage_class, (t_method)pofimage_sub, gensym("sub"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_NULL);
+	class_addmethod(pofimage_class, (t_method)pofimage_quality, gensym("quality"), A_FLOAT, A_NULL);
 	
 	class_addmethod(pofimage_class, (t_method)tellGUI, s_save,    	A_GIMME, A_NULL);
 	class_addmethod(pofimage_class, (t_method)tellGUI, s_setcolor,	A_GIMME, A_NULL);
@@ -504,8 +517,8 @@ void pofImage::draw()
 				if(sy < 0) sy += imHeight;
 				if(sw <= 0) sw += imWidth;
 				if(sh <= 0) sh += imHeight;
-				image->drawsub(0, 0, w, h, sx, sy, sw, sh);
-			} else image->draw(0, 0, w, h);
+				image->drawsub(0, 0, w, h, sx, sy, sw, sh, quality);
+			} else image->draw(0, 0, w, h, quality);
 		}
 	}
 }
