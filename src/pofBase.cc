@@ -658,6 +658,8 @@ void pofBase::setup() {
 		
 	queueClock = clock_new(0,(t_method)dequeueToPdtick);
 	clock_delay(queueClock,100);
+	
+	dispatcher.startThread();
 }
 
 void pofBase::release() {

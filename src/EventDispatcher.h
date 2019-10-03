@@ -18,7 +18,7 @@ public:
     type(_type), x(_x), y(_y), id(_id) {}
 };
 
-class EventDispatcher
+class EventDispatcher : public ofThread
 {
 	public:
 		// pushing events can be done from either side
@@ -28,5 +28,6 @@ class EventDispatcher
 	private:
 		deque<EventData> queue;
 		ofMutex mutex;
+		void threadedFunction();
 };
 

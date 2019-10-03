@@ -13,7 +13,6 @@ void EventDispatcher::pushEvent(EventData::eventType type, int x, int y, int id)
 	mutex.lock();
 	queue.push_back(EventData(type, x, y, id));
 	mutex.unlock();
-	if(!pofBase::pdProcessesTouchEvents) popEvents();
 }
 
 void EventDispatcher::popEvents()
@@ -45,5 +44,14 @@ void EventDispatcher::popEvents()
 		}		
 		pofBase::treeMutex.unlockR();
 	}	
+}
+
+void EventDispatcher::threadedFunction()
+{
+	while(isThreadRunning())
+	{
+		if(!pofBase::pdProcessesTouchEvents) popEvents();
+		sleep(10);
+	}
 }
 
