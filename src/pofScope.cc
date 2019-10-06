@@ -9,18 +9,18 @@ t_class *pofscope_class;
 
 void *pofscope_new(t_floatarg w,t_floatarg h, t_float len)
 {
-    pofScope* obj = new pofScope(pofscope_class, w, h, len);
-    
-    floatinlet_new(&obj->pdobj->x_obj, &obj->width);
-    floatinlet_new(&obj->pdobj->x_obj, &obj->height);
-    
-    obj->bufLen = len;
-    if(obj->bufLen < w) obj->bufLen = int(w);
+	pofScope* obj = new pofScope(pofscope_class, w, h, len);
 
-    obj->bufCount = 0;
+	floatinlet_new(&obj->pdobj->x_obj, &obj->width);
+	floatinlet_new(&obj->pdobj->x_obj, &obj->height);
+
+	obj->bufLen = len;
+	if(obj->bufLen < w) obj->bufLen = int(w);
+
+	obj->bufCount = 0;
 	obj->bufIndex = 0;
 
-    return (void*) (obj->pdobj);
+	return (void*) (obj->pdobj);
 }
 
 void pofscope_free(void *x)
@@ -32,7 +32,7 @@ void pofscope_free(void *x)
 void pofscope_buflen(void *x, float len)
 {
 	pofScope* px = (pofScope*)(((PdObject*)x)->parent);
-	
+
 	px->bufLen = len;
 	if(px->bufLen < px->width) px->bufLen = int(px->width);
 	if(px->bufLen < 1) px->bufLen = 1;
@@ -41,7 +41,7 @@ void pofscope_buflen(void *x, float len)
 void pofscope_compute(void *x, float comp, float once)
 {
 	pofScope* px = (pofScope*)(((PdObject*)x)->parent);
-	
+
 	px->compute = (comp != 0);
 	px->once = (once != 0);
 	if(px->once) {
@@ -52,47 +52,42 @@ void pofscope_compute(void *x, float comp, float once)
 
 static t_int *pofscope_perform(t_int *w)
 {
-    pofScope* px = (pofScope*)(((PdObject*)w[1])->parent);
-    t_sample *in = (t_sample *)(w[2]);
-    t_int n = *(t_int *)(w+3);
-        
-    //px->Mutex.lock();
-    
-    int W = px->curWidth;
-    
-    if (px->compute) while (n--)
-    {   
-        if (!px->compute) break;
-        t_sample f = *in++;
-        int i = px->bufIndex = ((float)px->bufCount / px->bufLen) * W;
-        int oldi = i;
-        
-        if(f > px->maxBuf[i]) px->maxBuf[i % W] = f;
-        if(f < px->minBuf[i]) px->minBuf[i % W] = f;
+	pofScope* px = (pofScope*)(((PdObject*)w[1])->parent);
+	t_sample *in = (t_sample *)(w[2]);
+	t_int n = *(t_int *)(w+3);
 
-        px->bufCount++;
-        //px->bufIndex += (((float)W) / px->bufLen);
-        /*while(px->bufIndex > W) {
-        	if(px->once) px->compute = 0;
-        	px->bufIndex -= W;
-        }*/
-        if(px->bufCount >= px->bufLen) {
-        	if(px->once) px->compute = 0;
-        	px->bufCount = px->bufCount % px->bufLen;
-        }
-        
+	px->Mutex.lock();
+
+	int W = px->curWidth;
+
+	if (px->compute) while (n--)
+	{
+		if (!px->compute) break;
+		t_sample f = *in++;
+		int i = px->bufIndex = ((float)px->bufCount / px->bufLen) * W;
+		int oldi = i;
+
+		if(f > px->maxBuf[i]) px->maxBuf[i % W] = f;
+		if(f < px->minBuf[i]) px->minBuf[i % W] = f;
+
+		px->bufCount++;
+		if(px->bufCount >= px->bufLen) {
+			if(px->once) px->compute = 0;
+			px->bufCount = px->bufCount % px->bufLen;
+		}
+
 		i = ((float)px->bufCount / px->bufLen) * W;
 		if(oldi != i) px->maxBuf[i % W] = px->minBuf[i % W] = f;
 	}
-   
-    //px->Mutex.unlock();
-    
+
+	px->Mutex.unlock();
+
 	return (w + 4);
 }
 
 static void pofscope_dsp(void *x, t_signal **sp)
 {
-    dsp_add(pofscope_perform, 3, x, sp[0]->s_vec, sp[0]->s_n);
+	dsp_add(pofscope_perform, 3, x, sp[0]->s_vec, sp[0]->s_n);
 }
 
 void pofScope::setup(void)
@@ -103,17 +98,16 @@ void pofScope::setup(void)
 	POF_SETUP(pofscope_class);
 	class_addmethod(pofscope_class, (t_method)pofscope_buflen, gensym("buflen"), A_FLOAT, A_NULL);
 	class_addmethod(pofscope_class, (t_method)pofscope_compute, gensym("compute"), A_FLOAT, A_DEFFLOAT, A_NULL);
-    CLASS_MAINSIGNALIN(pofscope_class, PdObject, x_f);
-    class_addmethod(pofscope_class, (t_method)pofscope_dsp, gensym("dsp"), A_NULL);
-
+	CLASS_MAINSIGNALIN(pofscope_class, PdObject, x_f);
+	class_addmethod(pofscope_class, (t_method)pofscope_dsp, gensym("dsp"), A_NULL);
 }
 
 void pofScope::draw()
 {
 	int j;
-	
-    Mutex.lock();
+
 	if(curWidth != int(width)) {
+		Mutex.lock();
 		delete [] minBuf;
 		delete [] maxBuf;
 		if(width < 1) width = 1;
@@ -123,12 +117,11 @@ void pofScope::draw()
 		std::fill_n(minBuf, curWidth, 0);
 		std::fill_n(maxBuf, curWidth, 0);
 		bufIndex = 0;
+		Mutex.unlock();
 	}
-	
+
 	for(int i = 0; i < curWidth ; ++i) {
 		j = (int(i + bufIndex + 1))%curWidth;
 		ofRect(i - curWidth/2, minBuf[j] * height, 1, (maxBuf[j] - minBuf[j]) * height + 1);
 	}
-	Mutex.unlock();
-
 }
