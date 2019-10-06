@@ -50,6 +50,33 @@ void pofscope_compute(void *x, float comp, float once)
 	}
 }
 
+void pofscope_peaks(void *x, t_symbol *peakstab, float from, float length)
+{
+	pofScope* px = (pofScope*)(((PdObject*)x)->parent);
+
+	t_garray *peaksArray;
+	int peaksLen;
+
+	if (!(peaksArray = (t_garray *)pd_findbyclass(peakstab, garray_class)))
+		pd_error(x, "%s: no such array", peakstab->s_name);
+	else if (!garray_getfloatwords(peaksArray, &peaksLen, &px->peaksVec)) {
+		pd_error(x, "%s: bad template for tabdump", peakstab->s_name);
+		return;
+	}
+	if(from < 0) from = 0;
+	if(from >= peaksLen) from = peaksLen - 1;
+	if(length == 0) length = 1e10;
+	if((length + from) >= peaksLen) length = peaksLen - from - 1;
+	if(length < 0) length = 0;
+
+	px->peaksFrom = from;
+	px->peaksLen = length;
+
+	px->Mutex.lock();
+	px->readPeaks = true;
+	px->Mutex.unlock();
+}
+
 static t_int *pofscope_perform(t_int *w)
 {
 	pofScope* px = (pofScope*)(((PdObject*)w[1])->parent);
@@ -98,13 +125,25 @@ void pofScope::setup(void)
 	POF_SETUP(pofscope_class);
 	class_addmethod(pofscope_class, (t_method)pofscope_buflen, gensym("buflen"), A_FLOAT, A_NULL);
 	class_addmethod(pofscope_class, (t_method)pofscope_compute, gensym("compute"), A_FLOAT, A_DEFFLOAT, A_NULL);
+	class_addmethod(pofscope_class, (t_method)pofscope_peaks, gensym("peaks"), A_SYMBOL,
+		A_DEFFLOAT, A_DEFFLOAT, A_NULL);
 	CLASS_MAINSIGNALIN(pofscope_class, PdObject, x_f);
 	class_addmethod(pofscope_class, (t_method)pofscope_dsp, gensym("dsp"), A_NULL);
+}
+
+static void decodePeak(float data, float *min, float *max)
+{
+	*min = (((int)data)%2048 - 1024) / 1024.0;
+	*max = (((int)data)/2048 - 1024) / 1024.0;
 }
 
 void pofScope::draw()
 {
 	int j;
+	bool doReadPeaks;
+	t_word *pVec;
+	int pFrom;
+	int pLen;
 
 	if(curWidth != int(width)) {
 		Mutex.lock();
@@ -118,6 +157,31 @@ void pofScope::draw()
 		std::fill_n(maxBuf, curWidth, 0);
 		bufIndex = 0;
 		Mutex.unlock();
+	}
+
+	Mutex.lock();
+	if((doReadPeaks = readPeaks)) {
+		pVec = peaksVec;
+		pFrom = peaksFrom;
+		pLen = peaksLen;
+		readPeaks = false;
+	}
+	Mutex.unlock();
+
+	if(doReadPeaks) {
+		int j = 0, oldj = -1;
+		float min, max;
+		for(int i = 0; i < pLen ; ++i) {
+			j = (i * curWidth) / pLen;
+			if(j != oldj) {
+				decodePeak(pVec[i + pFrom].w_float, &minBuf[j], &maxBuf[j]);
+				oldj = j;
+			}
+			decodePeak(pVec[i + pFrom].w_float, &min, &max);
+			if(min < minBuf[j]) minBuf[j] = min;
+			if(max > maxBuf[j]) maxBuf[j] = max;
+			bufIndex = 0;
+		}
 	}
 
 	for(int i = 0; i < curWidth ; ++i) {

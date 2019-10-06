@@ -12,7 +12,8 @@ class pofScope;
 class pofScope: public pofBase {
 	public:
 		pofScope(t_class *Class, float w=0, float h=0, int len=0):pofBase(Class),width(w), height(h),
-																bufLen(len), bufIndex(0), compute(true)
+																bufLen(len), bufIndex(0), compute(true),
+																readPeaks(false)
 		{
 			curWidth = int(width);
 			minBuf = new float[curWidth];
@@ -38,7 +39,11 @@ class pofScope: public pofBase {
 		int curWidth;
 		bool compute;
 		bool once;
-		ofMutex Mutex;		
+		ofMutex Mutex;
+		bool readPeaks;
+		t_word *peaksVec;
+		int peaksFrom;
+		int peaksLen;
 };
 
 
