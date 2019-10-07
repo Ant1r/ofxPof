@@ -88,31 +88,31 @@ static t_int *pofscope_perform(t_int *w)
 	t_sample *in = (t_sample *)(w[2]);
 	t_int n = *(t_int *)(w+3);
 
-	px->Mutex.lock();
+	if (px->compute) {
+		px->Mutex.lock();
+		int W = px->curWidth;
+		while (n--)
+		{
+			if (!px->compute) break;
+			t_sample f = *in++;
+			int i = ((float)px->bufCount / px->bufLen) * W;
+			int oldi = i;
 
-	int W = px->curWidth;
+			px->bufIndex = i + 1;
+			if(f > px->maxBuf[i]) px->maxBuf[i % W] = f;
+			if(f < px->minBuf[i]) px->minBuf[i % W] = f;
 
-	if (px->compute) while (n--)
-	{
-		if (!px->compute) break;
-		t_sample f = *in++;
-		int i = px->bufIndex = ((float)px->bufCount / px->bufLen) * W;
-		int oldi = i;
+			px->bufCount++;
+			if(px->bufCount >= px->bufLen) {
+				if(px->once) px->compute = 0;
+				px->bufCount = px->bufCount % px->bufLen;
+			}
 
-		if(f > px->maxBuf[i]) px->maxBuf[i % W] = f;
-		if(f < px->minBuf[i]) px->minBuf[i % W] = f;
-
-		px->bufCount++;
-		if(px->bufCount >= px->bufLen) {
-			if(px->once) px->compute = 0;
-			px->bufCount = px->bufCount % px->bufLen;
+			i = ((float)px->bufCount / px->bufLen) * W;
+			if(oldi != i) px->maxBuf[i % W] = px->minBuf[i % W] = f;
 		}
-
-		i = ((float)px->bufCount / px->bufLen) * W;
-		if(oldi != i) px->maxBuf[i % W] = px->minBuf[i % W] = f;
+		px->Mutex.unlock();
 	}
-
-	px->Mutex.unlock();
 
 	return (w + 4);
 }
