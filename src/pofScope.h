@@ -42,8 +42,8 @@ class pofScope: public pofBase {
 		ofMutex Mutex;
 		bool readPeaks;
 		t_word *peaksVec;
-		int peaksFrom;
-		int peaksLen;
+		float peaksFrom;
+		float peaksLen;
 };
 
 

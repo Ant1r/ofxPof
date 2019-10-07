@@ -56,10 +56,11 @@ void pofscope_peaks(void *x, t_symbol *peakstab, float from, float length)
 
 	t_garray *peaksArray;
 	int peaksLen;
+	t_word *vec;
 
 	if (!(peaksArray = (t_garray *)pd_findbyclass(peakstab, garray_class)))
 		pd_error(x, "%s: no such array", peakstab->s_name);
-	else if (!garray_getfloatwords(peaksArray, &peaksLen, &px->peaksVec)) {
+	else if (!garray_getfloatwords(peaksArray, &peaksLen, &vec)) {
 		pd_error(x, "%s: bad template for tabdump", peakstab->s_name);
 		return;
 	}
@@ -69,10 +70,11 @@ void pofscope_peaks(void *x, t_symbol *peakstab, float from, float length)
 	if((length + from) >= peaksLen) length = peaksLen - from - 1;
 	if(length < 0) length = 0;
 
+	px->Mutex.lock();
+	px->peaksVec = vec;
 	px->peaksFrom = from;
 	px->peaksLen = length;
-
-	px->Mutex.lock();
+	px->compute = false;
 	px->readPeaks = true;
 	px->Mutex.unlock();
 }
@@ -142,8 +144,8 @@ void pofScope::draw()
 	int j;
 	bool doReadPeaks;
 	t_word *pVec;
-	int pFrom;
-	int pLen;
+	float pFrom;
+	float pLen;
 
 	if(curWidth != int(width)) {
 		Mutex.lock();
@@ -169,23 +171,41 @@ void pofScope::draw()
 	Mutex.unlock();
 
 	if(doReadPeaks) {
-		int j = 0, oldj = -1;
-		float min, max;
-		for(int i = 0; i < pLen ; ++i) {
-			j = (i * curWidth) / pLen;
-			if(j != oldj) {
-				decodePeak(pVec[i + pFrom].w_float, &minBuf[j], &maxBuf[j]);
-				oldj = j;
+		int i, j;
+		if(curWidth < pLen) {
+			float min, max;
+			int oldj = -1;
+			for(i = 0; i < pLen ; ++i) {
+				j = (i * curWidth) / pLen;
+				if(j != oldj) {
+					decodePeak(pVec[i + (int)pFrom].w_float, &minBuf[j], &maxBuf[j]);
+					oldj = j;
+				}
+				decodePeak(pVec[i + (int)pFrom].w_float, &min, &max);
+				if(min < minBuf[j]) minBuf[j] = min;
+				if(max > maxBuf[j]) maxBuf[j] = max;
+				bufIndex = 0;
 			}
-			decodePeak(pVec[i + pFrom].w_float, &min, &max);
-			if(min < minBuf[j]) minBuf[j] = min;
-			if(max > maxBuf[j]) maxBuf[j] = max;
-			bufIndex = 0;
+		} else {
+			float frac, ratio = pLen / (float)curWidth;
+			float min1, max1, min2, max2;
+			int oldi = -1;
+			for(j = 0; j < curWidth ; ++j) {
+				i = (int)((float)j * ratio + pFrom);
+				if(i != oldi) {
+					oldi = i;
+					decodePeak(pVec[i].w_float, &min1, &max1);
+					decodePeak(pVec[i + 1].w_float, &min2, &max2);
+				}
+				frac = ((float)j * ratio  + pFrom) - i;
+				minBuf[j] = (1 - frac) * min1 + frac * min2;
+				maxBuf[j] = (1 - frac) * max1 + frac * max2;
+			}
 		}
 	}
 
 	for(int i = 0; i < curWidth ; ++i) {
-		j = (int(i + bufIndex + 1))%curWidth;
+		j = (int(i + bufIndex /*+ 1*/))%curWidth;
 		ofRect(i - curWidth/2, minBuf[j] * height, 1, (maxBuf[j] - minBuf[j]) * height + 1);
 	}
 }
