@@ -56,14 +56,14 @@ void pofscope_peaks(void *x, t_symbol *peakstab, float from, float length)
 
 	t_garray *peaksArray;
 	int peaksLen;
-	t_word *vec;
+	t_word *vec = NULL;
 
 	if (!(peaksArray = (t_garray *)pd_findbyclass(peakstab, garray_class)))
 		pd_error(x, "%s: no such array", peakstab->s_name);
-	else if (!garray_getfloatwords(peaksArray, &peaksLen, &vec)) {
+	else if (!garray_getfloatwords(peaksArray, &peaksLen, &vec))
 		pd_error(x, "%s: bad template for tabdump", peakstab->s_name);
-		return;
-	}
+	if(!vec) return;
+
 	if(from < 0) from = 0;
 	if(from >= peaksLen) from = peaksLen - 1;
 	if(length == 0) length = 1e10;
