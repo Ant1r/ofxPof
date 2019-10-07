@@ -11,9 +11,9 @@ class pofScope;
 
 class pofScope: public pofBase {
 	public:
-		pofScope(t_class *Class, float w=0, float h=0, int len=0):pofBase(Class),width(w), height(h),
-																bufLen(len), bufIndex(0), compute(true),
-																readPeaks(false)
+		pofScope(t_class *Class, float w=0, float h=0, int len=0):
+			pofBase(Class),width(w), height(h),
+			bufLen(len), bufIndex(0), compute(false), readPeaks(false)
 		{
 			curWidth = int(width);
 			minBuf = new float[curWidth];

@@ -9,6 +9,9 @@ t_class *pofscope_class;
 
 void *pofscope_new(t_floatarg w,t_floatarg h, t_float len)
 {
+	if(w <= 0) w = 1;
+	if(len <= 0) len = 1;
+
 	pofScope* obj = new pofScope(pofscope_class, w, h, len);
 
 	floatinlet_new(&obj->pdobj->x_obj, &obj->width);
