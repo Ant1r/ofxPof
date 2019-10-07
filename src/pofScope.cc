@@ -188,7 +188,7 @@ void pofScope::draw()
 			}
 		} else {
 			float frac, ratio = pLen / (float)curWidth;
-			float min1, max1, min2, max2;
+			float min1 = 0, max1 = 0, min2 = 0, max2 = 0;
 			int oldi = -1;
 			for(j = 0; j < curWidth ; ++j) {
 				i = (int)((float)j * ratio + pFrom);
