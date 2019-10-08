@@ -13,7 +13,8 @@ class pofScope: public pofBase {
 	public:
 		pofScope(t_class *Class, float w=0, float h=0, int len=0):
 			pofBase(Class),width(w), height(h),
-			bufLen(len), bufIndex(0), compute(false), readPeaks(false)
+			bufLen(len), bufIndex(0), compute(false), readPeaks(false),
+			curve(0), stroke(1), fill(1), strokeColor(1,1,1,1), fillColor(1,1,1,1), strokeWidth(1)
 		{
 			curWidth = int(width);
 			minBuf = new float[curWidth];
@@ -44,6 +45,14 @@ class pofScope: public pofBase {
 		t_word *peaksVec;
 		float peaksFrom;
 		float peaksLen;
+		bool updateGUI;
+		bool curve;
+		bool stroke;
+		bool fill;
+		ofFloatColor strokeColor;
+		ofFloatColor fillColor;
+		float strokeWidth;
+		ofPath minpath, maxpath, fillpath;
 };
 
 

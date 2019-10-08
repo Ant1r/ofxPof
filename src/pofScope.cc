@@ -41,6 +41,43 @@ void pofscope_buflen(void *x, float len)
 	if(px->bufLen < 1) px->bufLen = 1;
 }
 
+void pofscope_strokeColor(void *x, float r, float g, float b, float a)
+{
+	pofScope* px = (pofScope*)(((PdObject*)x)->parent);
+	px->strokeColor = ofFloatColor(r, g, b, a);
+}
+
+void pofscope_fillColor(void *x, float r, float g, float b, float a)
+{
+	pofScope* px = (pofScope*)(((PdObject*)x)->parent);
+	px->fillColor = ofFloatColor(r, g, b, a);
+}
+
+void pofscope_curve(void *x, float v)
+{
+	pofScope* px = (pofScope*)(((PdObject*)x)->parent);
+	px->curve = v;
+}
+
+void pofscope_stroke(void *x, float v)
+{
+	pofScope* px = (pofScope*)(((PdObject*)x)->parent);
+	px->stroke = v;
+}
+
+void pofscope_fill(void *x, float v)
+{
+	pofScope* px = (pofScope*)(((PdObject*)x)->parent);
+	px->fill = v;
+	px->updateGUI = true;
+}
+
+void pofscope_strokeWidth(void *x, float w)
+{
+	pofScope* px = (pofScope*)(((PdObject*)x)->parent);
+	px->strokeWidth = w;
+}
+
 void pofscope_compute(void *x, float comp, float once)
 {
 	pofScope* px = (pofScope*)(((PdObject*)x)->parent);
@@ -111,6 +148,7 @@ static t_int *pofscope_perform(t_int *w)
 			i = ((float)px->bufCount / px->bufLen) * W;
 			if(oldi != i) px->maxBuf[i % W] = px->minBuf[i % W] = f;
 		}
+		px->updateGUI = true;
 		px->Mutex.unlock();
 	}
 
@@ -132,6 +170,19 @@ void pofScope::setup(void)
 	class_addmethod(pofscope_class, (t_method)pofscope_compute, gensym("compute"), A_FLOAT, A_DEFFLOAT, A_NULL);
 	class_addmethod(pofscope_class, (t_method)pofscope_peaks, gensym("peaks"), A_SYMBOL,
 		A_DEFFLOAT, A_DEFFLOAT, A_NULL);
+	class_addmethod(pofscope_class, (t_method)pofscope_curve, gensym("curve"),
+		A_DEFFLOAT, A_NULL);
+	class_addmethod(pofscope_class, (t_method)pofscope_stroke, gensym("stroke"),
+		A_DEFFLOAT, A_NULL);
+	class_addmethod(pofscope_class, (t_method)pofscope_fill, gensym("fill"),
+		A_DEFFLOAT, A_NULL);
+	class_addmethod(pofscope_class, (t_method)pofscope_strokeColor, gensym("strokeColor"),
+		A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_NULL);
+	class_addmethod(pofscope_class, (t_method)pofscope_fillColor, gensym("fillColor"),
+		A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_NULL);
+	class_addmethod(pofscope_class, (t_method)pofscope_strokeWidth, gensym("strokeWidth"),
+		A_DEFFLOAT, A_NULL);
+
 	CLASS_MAINSIGNALIN(pofscope_class, PdObject, x_f);
 	class_addmethod(pofscope_class, (t_method)pofscope_dsp, gensym("dsp"), A_NULL);
 }
@@ -161,6 +212,7 @@ void pofScope::draw()
 		std::fill_n(minBuf, curWidth, 0);
 		std::fill_n(maxBuf, curWidth, 0);
 		bufIndex = 0;
+		updateGUI = true;
 		Mutex.unlock();
 	}
 
@@ -170,6 +222,7 @@ void pofScope::draw()
 		pFrom = peaksFrom;
 		pLen = peaksLen;
 		readPeaks = false;
+		updateGUI = true;
 	}
 	Mutex.unlock();
 
@@ -207,8 +260,61 @@ void pofScope::draw()
 		}
 	}
 
-	for(int i = 0; i < curWidth ; ++i) {
-		j = (int(i + bufIndex /*+ 1*/))%curWidth;
-		ofRect(i - curWidth/2, minBuf[j] * height, 1, (maxBuf[j] - minBuf[j]) * height + 1);
+	if(updateGUI && curve) {
+		updateGUI = false;
+		minpath.clear();
+		maxpath.clear();
+		fillpath.clear();
+		minpath.setFilled(false);
+		maxpath.setFilled(false);
+		fillpath.setFilled(true);
+		#define MINPOS(i) i - curWidth/2.0, minBuf[int(i + bufIndex)%curWidth] * height
+		#define MAXPOS(i) (curWidth/2.0 - 1 - i), maxBuf[int(curWidth - 1 - i + bufIndex)%curWidth] * height
+		minpath.lineTo(MINPOS(0));
+		maxpath.lineTo(ofPoint(MAXPOS(0)) + ofPoint(1,0));
+		for(int i = 0; i < curWidth ; ++i) {
+			j = (int(i + bufIndex))%curWidth;
+			minpath.curveTo(MINPOS(i));
+			maxpath.curveTo(MAXPOS(i));
+		}
+		/*minpath.curveTo(curWidth/2, minBuf[int(curWidth - 1 + bufIndex)%curWidth] * height);
+		maxpath.curveTo(-curWidth/2, maxBuf[int(bufIndex)%curWidth] * height);
+		minpath.curveTo(curWidth/2, minBuf[int(curWidth - 1 + bufIndex)%curWidth] * height);
+		maxpath.curveTo(-curWidth/2, maxBuf[int(bufIndex)%curWidth] * height);*/
+		minpath.curveTo(ofPoint(MINPOS(curWidth - 1)) + ofPoint(1,0));
+		minpath.curveTo(ofPoint(MINPOS(curWidth - 1)) + ofPoint(1,0));
+		maxpath.curveTo(MAXPOS(curWidth - 1));
+		
+		if(fill) {
+			fillpath.append(minpath);
+			fillpath.lineTo(ofPoint(MAXPOS(0)) + ofPoint(1,0));
+			fillpath.append(maxpath);
+			fillpath.lineTo(MINPOS(0));
+			fillpath.close();
+		}
+	}
+
+	if(curve == 0) {
+		for(int i = 0; i < curWidth ; ++i) {
+			j = (int(i + bufIndex))%curWidth;
+			ofRect(i - curWidth/2.0, minBuf[j] * height, 1, (maxBuf[j] - minBuf[j]) * height + 1);
+		}
+	} else {
+		ofColor styleColor = ofGetStyle().color;
+		#define COLMULT(X, Y) ofColor(X.r * Y.r * 1.0, X.g * Y.g * 1.0, X.b * Y.b * 1.0, X.a * Y.a * 1.0)
+		if(fill) {
+			fillpath.setFillColor(COLMULT(styleColor, fillColor));
+			//fillpath.setFillColor(COLMULT(styleColor, fillColor));
+			fillpath.draw();
+		}
+		if(stroke) {
+			ofColor c = COLMULT(styleColor, strokeColor);
+			minpath.setStrokeColor(c);
+			maxpath.setStrokeColor(c);
+			minpath.setStrokeWidth(strokeWidth);
+			maxpath.setStrokeWidth(strokeWidth);
+			minpath.draw();
+			maxpath.draw();
+		}
 	}
 }
