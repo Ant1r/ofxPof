@@ -197,9 +197,9 @@ void pofScope::draw()
 {
 	int j;
 	bool doReadPeaks;
-	t_word *pVec;
-	float pFrom;
-	float pLen;
+	t_word *pVec = NULL;
+	float pFrom = 0;
+	float pLen = 0;
 
 	if(curWidth != int(width)) {
 		Mutex.lock();
@@ -268,22 +268,29 @@ void pofScope::draw()
 		minpath.setFilled(false);
 		maxpath.setFilled(false);
 		fillpath.setFilled(true);
-		#define MINPOS(i) i - curWidth/2.0, minBuf[int(i + bufIndex)%curWidth] * height
-		#define MAXPOS(i) (curWidth/2.0 - 1 - i), maxBuf[int(curWidth - 1 - i + bufIndex)%curWidth] * height
-		minpath.lineTo(MINPOS(0));
-		maxpath.lineTo(ofPoint(MAXPOS(0)) + ofPoint(1,0));
-		for(int i = 0; i < curWidth ; ++i) {
-			j = (int(i + bufIndex))%curWidth;
-			minpath.curveTo(MINPOS(i));
-			maxpath.curveTo(MAXPOS(i));
-		}
-		/*minpath.curveTo(curWidth/2, minBuf[int(curWidth - 1 + bufIndex)%curWidth] * height);
-		maxpath.curveTo(-curWidth/2, maxBuf[int(bufIndex)%curWidth] * height);
-		minpath.curveTo(curWidth/2, minBuf[int(curWidth - 1 + bufIndex)%curWidth] * height);
-		maxpath.curveTo(-curWidth/2, maxBuf[int(bufIndex)%curWidth] * height);*/
-		minpath.curveTo(ofPoint(MINPOS(curWidth - 1)) + ofPoint(1,0));
-		minpath.curveTo(ofPoint(MINPOS(curWidth - 1)) + ofPoint(1,0));
-		maxpath.curveTo(MAXPOS(curWidth - 1));
+		#define MINPOS(i) (i) - curWidth/2.0, minBuf[int((i) + bufIndex)%curWidth] * height
+		#define MAXPOS(i) (curWidth/2.0 - 1 - (i)), maxBuf[int(curWidth - 1 - (i) + bufIndex)%curWidth] * height
+        minpath.moveTo(MINPOS(0));
+		maxpath.moveTo(ofPoint(MAXPOS(0)) + ofPoint(1,0));
+        
+        if(curve == 1) {
+            for(int i = 0; i < curWidth ; ++i) {
+                j = (int(i + bufIndex))%curWidth;
+                minpath.curveTo(MINPOS(i));
+                maxpath.curveTo(MAXPOS(i));
+            }
+            minpath.curveTo(ofPoint(MINPOS(curWidth - 1)) + ofPoint(1,0));
+            minpath.curveTo(ofPoint(MINPOS(curWidth - 1)) + ofPoint(1,0));
+        } else {
+            for(int i = 0; i < curWidth ; ++i) {
+                j = (int(i + bufIndex))%curWidth;
+                minpath.lineTo(MINPOS(i));
+                maxpath.lineTo(MAXPOS(i));
+            }
+            minpath.lineTo(ofPoint(MINPOS(curWidth - 1)) + ofPoint(1,0));
+            minpath.lineTo(ofPoint(MINPOS(curWidth - 1)) + ofPoint(1,0));
+        }
+		maxpath.lineTo(MAXPOS(curWidth - 1.0));
 		
 		if(fill) {
 			fillpath.append(minpath);
@@ -304,7 +311,6 @@ void pofScope::draw()
 		#define COLMULT(X, Y) ofColor(X.r * Y.r * 1.0, X.g * Y.g * 1.0, X.b * Y.b * 1.0, X.a * Y.a * 1.0)
 		if(fill) {
 			fillpath.setFillColor(COLMULT(styleColor, fillColor));
-			//fillpath.setFillColor(COLMULT(styleColor, fillColor));
 			fillpath.draw();
 		}
 		if(stroke) {

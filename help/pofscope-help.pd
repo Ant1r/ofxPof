@@ -1,4 +1,4 @@
-#N canvas 864 88 415 724 10;
+#N canvas 156 86 480 724 10;
 #X declare -lib pof;
 #X obj 11 11 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -16,13 +16,13 @@
 #X obj 343 14 loadbang;
 #X msg 215 247 buflen \$1;
 #X obj 218 205 hsl 128 15 100 400000 1 0 empty empty empty -2 -8 0
-10 -262144 -1 -1 9300 1;
+10 -262144 -1 -1 0 1;
 #X floatatom 215 225 8 0 0 1 samples - -;
 #X floatatom 155 657 5 0 0 0 - - -;
 #X floatatom 93 657 5 0 0 0 - - -;
 #X text 17 63 pofscope : display the waveform of an audio signal.;
 #X msg 215 315 compute \$1;
-#X obj 215 290 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 215 290 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #N canvas 840 609 437 378 source 0;
 #X obj 52 309 outlet~;
@@ -314,8 +314,6 @@ frame.;
 #X obj 32 189 pofscale 1 1;
 #X floatatom 93 142 5 1 200 2 "subsample" - -;
 #X obj 32 326 pofcolor 1 1 1 1;
-#X obj 217 381 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
-1;
 #X msg 217 401 curve \$1;
 #X obj 218 454 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
@@ -325,20 +323,23 @@ frame.;
 #X msg 219 515 fill \$1;
 #X msg 221 626 fillColor 0 1 0 1;
 #X msg 220 565 strokeWidth \$1;
-#X text 236 380 draw rect/curve;
 #X text 217 435 only for curve mode:;
 #X msg 220 540 1;
 #X msg 248 540 2;
 #X msg 277 540 3;
 #X obj 32 114 t a a;
 #X obj 94 299 hsl 80 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 7900 1;
+-1 -1 0 1;
 #X obj 59 213 pofcolor 0.2 0.2 0.2 1;
 #X obj 59 237 pofrect 400 100;
 #X msg 93 446 400 \$1;
 #X obj 93 468 /;
 #X msg 221 597 strokeColor 1 0 0 1;
-#X connect 5 0 46 0;
+#X obj 217 380 hradio 15 1 0 3 empty empty empty 0 -8 0 10 -262144
+-1 -1 2;
+#X text 274 380 draw mode:;
+#X text 274 402 0:no_curve 1:curve 2:lined_curve;
+#X connect 5 0 44 0;
 #X connect 9 0 8 0;
 #X connect 10 0 19 0;
 #X connect 11 0 12 0;
@@ -355,24 +356,24 @@ frame.;
 #X connect 28 0 17 0;
 #X connect 30 0 32 0;
 #X connect 31 0 30 1;
-#X connect 31 0 50 0;
+#X connect 31 0 48 0;
 #X connect 32 0 19 0;
-#X connect 33 0 34 0;
-#X connect 34 0 19 0;
-#X connect 35 0 36 0;
-#X connect 36 0 19 0;
-#X connect 37 0 38 0;
+#X connect 33 0 19 0;
+#X connect 34 0 35 0;
+#X connect 35 0 19 0;
+#X connect 36 0 37 0;
+#X connect 37 0 19 0;
 #X connect 38 0 19 0;
 #X connect 39 0 19 0;
-#X connect 40 0 19 0;
-#X connect 43 0 40 0;
-#X connect 44 0 40 0;
-#X connect 45 0 40 0;
-#X connect 46 0 30 0;
-#X connect 46 1 48 0;
-#X connect 47 0 32 4;
+#X connect 41 0 39 0;
+#X connect 42 0 39 0;
+#X connect 43 0 39 0;
+#X connect 44 0 30 0;
+#X connect 44 1 46 0;
+#X connect 45 0 32 4;
+#X connect 46 0 47 0;
+#X connect 47 0 22 0;
 #X connect 48 0 49 0;
-#X connect 49 0 22 0;
-#X connect 50 0 51 0;
-#X connect 51 0 14 0;
-#X connect 52 0 19 0;
+#X connect 49 0 14 0;
+#X connect 50 0 19 0;
+#X connect 51 0 33 0;

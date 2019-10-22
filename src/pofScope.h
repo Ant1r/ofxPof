@@ -46,7 +46,7 @@ class pofScope: public pofBase {
 		float peaksFrom;
 		float peaksLen;
 		bool updateGUI;
-		bool curve;
+		int curve;
 		bool stroke;
 		bool fill;
 		ofFloatColor strokeColor;
