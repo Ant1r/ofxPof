@@ -23,15 +23,70 @@ for lower tree.;
 #X text 11 11 Pof: Pd OpenFrameworks externals;
 #X obj 325 319 poflayer;
 #X text 50 320 note: [pofvisible] also has another use \, see;
-#X text 199 133 Argument : [visible [forceTouchable]];
 #X text 199 146 Inlet 1 : float=visible: 1=draw 0=don't draw;
 #X text 261 159 forceTouchable 0/1: if 1 then pass touch events whether
 visible or not.;
 #X obj 81 184 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X msg 81 204 forceTouchable \$1;
+#X text 199 133 Argument : ["-once"] [visible [forceTouchable]];
+#N canvas 384 518 666 530 once_example 0;
+#X text 30 6 You can add "-once" to the arguments \, so that [pofvisible]
+only draws the next image after "1" has been sent to the first inlet.
+;
+#X text 29 47 In this case \, if you send "force" to the first inlet
+\, in addition to draw next frame \, every [pofvisible -once] in the
+subsequent chain will be triggered as well.;
+#X obj 66 148 pofhead;
+#X obj 66 169 pofvisible;
+#X obj 66 372 pofvisible -once;
+#X obj 66 393 pofcolor 1 0 0 1;
+#X obj 66 414 pofcirc 200;
+#X msg 400 271 1;
+#X obj 155 142 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 66 217 poffbo 400 300;
+#X msg 159 184 clear 0;
+#X obj 159 163 loadbang;
+#X obj 66 313 t a a a, f 47;
+#X obj 205 373 pofvisible -once;
+#X obj 345 369 pofvisible -once;
+#X obj 345 390 pofcolor 0 0 0 1;
+#X obj 345 411 pofrect 400 300;
+#X obj 205 394 pofcolor 1 1 1 1;
+#X obj 205 415 pofrect 50 300;
+#X msg 292 275 1;
+#X msg 185 281 1;
+#X obj 66 265 pofvisible -once;
+#X msg 215 214 1;
+#X msg 216 237 force;
+#X text 242 214 draw next frame;
+#X text 257 236 force this and every subsequent [pofvisible -once]
+to also draw next frame;
+#X connect 2 0 3 0;
+#X connect 3 0 9 0;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 7 0 14 0;
+#X connect 8 0 3 0;
+#X connect 9 0 21 0;
+#X connect 10 0 9 0;
+#X connect 11 0 10 0;
+#X connect 12 0 4 0;
+#X connect 12 1 13 0;
+#X connect 12 2 14 0;
+#X connect 13 0 17 0;
+#X connect 14 0 15 0;
+#X connect 15 0 16 0;
+#X connect 17 0 18 0;
+#X connect 19 0 13 0;
+#X connect 20 0 4 0;
+#X connect 21 0 12 0;
+#X connect 22 0 21 0;
+#X connect 23 0 21 0;
+#X restore 250 226 pd once_example;
 #X connect 5 0 7 0;
 #X connect 7 0 10 0;
 #X connect 11 0 7 0;
-#X connect 20 0 21 0;
-#X connect 21 0 7 0;
+#X connect 19 0 20 0;
+#X connect 20 0 7 0;
