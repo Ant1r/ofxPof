@@ -35,3 +35,4 @@ pofkeyboard		get keys events
 poftexture		retrieve a previously computed texture
 pofgetmatrix	request current transformation (translate/rotate/scale) matrix
 pofjson			download/load/parse JSON files
+pofonce			draw only one frame

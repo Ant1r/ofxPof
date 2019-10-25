@@ -23,6 +23,7 @@ EventDispatcher pofBase::dispatcher;
 bool pofBase::needBuild = false;
 ofEvent<ofEventArgs> pofBase::reloadTexturesEvent, pofBase::unloadTexturesEvent;
 ofEvent<ofEventArgs> pofBase::initFrameEvent;
+ofEvent<ofEventArgs> pofBase::rebuildEvent;
 deque<t_binbuf*> pofBase::toPdQueue;
 deque<std::vector<Any> > pofBase::toPdQueueVec;
 t_clock *pofBase::queueClock;
@@ -329,6 +330,8 @@ void pofBase::buildAll() {
 		}
 
 		pofWin::win->touchtree_build(NULL);
+		ofEventArgs voidEventArgs;
+		ofNotifyEvent(rebuildEvent, voidEventArgs);
 	}
 	
 	needBuild = false;

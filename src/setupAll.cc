@@ -41,6 +41,7 @@
 #include "pofFill.h"
 #include "pofBlend.h"
 #include "pofLayer.h"
+#include "pofOnce.h"
 
 
 void setupAll() {
@@ -81,5 +82,6 @@ void setupAll() {
 	pofBlend::setup();
 	pofFill::setup();
 	pofLayer::setup();
+	pofOnce::setup();
 }
 

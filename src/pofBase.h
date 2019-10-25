@@ -94,6 +94,7 @@ class pofBase {
 		static bool needBuild;
 		static ofEvent<ofEventArgs> reloadTexturesEvent, unloadTexturesEvent;
 		static ofEvent<ofEventArgs> initFrameEvent;
+		static ofEvent<ofEventArgs> rebuildEvent;
 		static deque<t_binbuf*> toPdQueue;
 		static deque<std::vector<Any> > toPdQueueVec;
 		static t_clock *queueClock;
