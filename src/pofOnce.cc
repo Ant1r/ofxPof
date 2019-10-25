@@ -88,6 +88,9 @@ bool pofOnce::oncetree_process()
 {
 	std::list<pofOnce*>::iterator it = onceChildren.begin();
 
+	final_force = false;
+	final_trigger = false;
+
 	if(force || continuousForce) {
 		final_force = true;
 		force = false;
@@ -100,7 +103,7 @@ bool pofOnce::oncetree_process()
 		if((*it)->oncetree_process()) final_trigger = 1;
 		it++;
 	}
-	return final_trigger;
+	return (final_trigger || final_force);
 }
 
 void pofOnce::initFrame(ofEventArgs & args)
