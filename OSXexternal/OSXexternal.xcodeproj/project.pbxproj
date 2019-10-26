@@ -133,6 +133,8 @@
 		C93BB72F1B13153800FD662B /* version.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6F71B13153700FD662B /* version.h */; };
 		C93BB8391B19066700FD662B /* mac-osx-arrow-cursor-56.png.c in Sources */ = {isa = PBXBuildFile; fileRef = C93BB8381B19066700FD662B /* mac-osx-arrow-cursor-56.png.c */; };
 		C95F512D1B105CF700C8B17A /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C95F512C1B105CF700C8B17A /* ofApp.cpp */; };
+		C9606FDB236442A6002E915F /* pofOnce.cc in Sources */ = {isa = PBXBuildFile; fileRef = C9606FD9236442A6002E915F /* pofOnce.cc */; };
+		C9606FDC236442A7002E915F /* pofOnce.h in Headers */ = {isa = PBXBuildFile; fileRef = C9606FDA236442A6002E915F /* pofOnce.h */; };
 		C9678B7420591A1F0081049F /* EventDispatcher.cc in Sources */ = {isa = PBXBuildFile; fileRef = C9678B7020591A1F0081049F /* EventDispatcher.cc */; };
 		C9678B7520591A1F0081049F /* EventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = C9678B7120591A1F0081049F /* EventDispatcher.h */; };
 		C9678B7620591A1F0081049F /* pofLayer.cc in Sources */ = {isa = PBXBuildFile; fileRef = C9678B7220591A1F0081049F /* pofLayer.cc */; };
@@ -312,6 +314,8 @@
 		C95F512C1B105CF700C8B17A /* ofApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = "<group>"; };
 		C95F512E1B105CFC00C8B17A /* ofApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = "<group>"; };
 		C95F51311B10AB7000C8B17A /* OF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = OF.xcconfig; sourceTree = "<group>"; };
+		C9606FD9236442A6002E915F /* pofOnce.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofOnce.cc; sourceTree = "<group>"; };
+		C9606FDA236442A6002E915F /* pofOnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofOnce.h; sourceTree = "<group>"; };
 		C9678B7020591A1F0081049F /* EventDispatcher.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventDispatcher.cc; sourceTree = "<group>"; };
 		C9678B7120591A1F0081049F /* EventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDispatcher.h; sourceTree = "<group>"; };
 		C9678B7220591A1F0081049F /* pofLayer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofLayer.cc; sourceTree = "<group>"; };
@@ -689,6 +693,8 @@
 		C93BB6BF1B13153700FD662B /* src */ = {
 			isa = PBXGroup;
 			children = (
+				C9606FD9236442A6002E915F /* pofOnce.cc */,
+				C9606FDA236442A6002E915F /* pofOnce.h */,
 				C9FA1473217A561A00243718 /* pofBlend.h */,
 				C9FA1471217A560D00243718 /* pofBlend.cc */,
 				C90854C6204567CF0044332F /* VERSION */,
@@ -893,6 +899,7 @@
 				C99191311DC89B2A00433B4F /* pofPath.h in Headers */,
 				C93BB5D81B10BAA700FD662B /* ofxFontStash.h in Headers */,
 				C90854C320455C2B0044332F /* RWmutex.h in Headers */,
+				C9606FDC236442A7002E915F /* pofOnce.h in Headers */,
 				C93BB6601B10BB1300FD662B /* unchecked.h in Headers */,
 				C93BB72E1B13153800FD662B /* pofXML.h in Headers */,
 				C904238B20E6190F00A8B48F /* crypt.h in Headers */,
@@ -997,7 +1004,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#install_name_tool -change ./libfmodex.dylib @loader_path/libfmodex.dylib  /Users/$USER/Library/Pd/pof/pof.pd_darwin\ninstall_name_tool -change ./libfmodex.dylib @loader_path/libfmodex.dylib  $BUILT_PRODUCTS_DIR/pof.pd_darwin\n";
+			shellScript = "#install_name_tool -change ./libfmodex.dylib @loader_path/libfmodex.dylib  /Users/$USER/Library/Pd/pof/pof.pd_darwin\ninstall_name_tool -change @executable_path/libfmodex.dylib @loader_path/libfmodex.dylib  $BUILT_PRODUCTS_DIR/pof.pd_darwin\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1052,6 +1059,7 @@
 				C93BB72D1B13153800FD662B /* pofXML.cc in Sources */,
 				C93BB7171B13153700FD662B /* pofScale.cc in Sources */,
 				C93BB6FF1B13153700FD662B /* pofCirc.cc in Sources */,
+				C9606FDB236442A6002E915F /* pofOnce.cc in Sources */,
 				C904239C20E61A3E00A8B48F /* gzlib.c in Sources */,
 				C904239620E61A3E00A8B48F /* crc32.c in Sources */,
 				C90854C420455C2B0044332F /* setupAll.cc in Sources */,
