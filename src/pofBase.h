@@ -36,6 +36,7 @@ class pofBase {
 		virtual void update() {}
 		virtual bool hasUpdate(){ return false;}
 		virtual void draw() {}
+		virtual int isBlockingDraw() {return -1;} // -1=never 0=no 1=yes
 		virtual void postdraw() {} // called after objects bellow have been drawn
 		virtual void message(int argc, t_atom *argv) {} // process incoming message from Pd side
 		

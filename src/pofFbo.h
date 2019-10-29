@@ -47,7 +47,8 @@ class pofFbo: public pofBase {
 		virtual void draw();
 		virtual void postdraw(); // called after objects bellow have been drawn
 		virtual void tree_draw();
-
+		virtual int isBlockingDraw() {return (update == 0);}
+		
 		virtual bool computeTouch(int &x, int &y) {return true;}
 		virtual bool tree_touchDown(int x, int y, int id); //select only inner touchdown
 		

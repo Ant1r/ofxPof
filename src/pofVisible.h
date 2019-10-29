@@ -15,6 +15,7 @@ class pofVisible: public pofTouchable {
 		~pofVisible();
 
 		virtual void tree_draw();
+		virtual int isBlockingDraw() {return !visible;}
 		
 		static void setup(void);
 		

@@ -9,7 +9,89 @@
 
 t_class *pofonce_class;
 bool pofOnce::FORCE_ONCE = false;
-std::list<pofOnce*> pofOnce::headOnces;
+//std::list<pofOnce*> pofOnce::headOnces;
+//std::list<pofBase*> heads;
+
+class pofBlocker;
+std::list<pofBlocker> heads;
+int frameCount;
+
+class pofBlocker {
+	pofBase *obj;
+	bool isOnce;
+	std::list<pofBlocker> children;
+
+	pofBlocker(pofBase* _obj) : obj(_obj) {
+		isOnce = (pd_class(&obj->pdobj->x_obj.ob_pd) == pofonce_class);
+	}
+
+	bool tree_process() {
+		//return false;
+		if(obj->isBlockingDraw() == 1) return false;
+		post("pofBlocker tree_process; %d children, isOnce:%d", children.size(), isOnce);
+		std::list<pofBlocker>::iterator it = children.begin();
+		bool childrenAskTrigger = false;
+		while(it != children.end()) {
+			//post("pofBlocker tree_process process child");
+			if((*it).tree_process()) childrenAskTrigger = 1;
+			it++;
+		}
+		if(isOnce) return ((pofOnce*)this)->process(childrenAskTrigger);
+		else return childrenAskTrigger;
+	}
+
+	public:
+	static void initFrame(ofEventArgs & args)
+	{
+		post("pofBlocker initFrame %d", frameCount);
+		frameCount++;
+		std::list<pofBlocker>::iterator it = heads.begin();
+		pofOnce::FORCE_ONCE = false;
+		while(it != heads.end()) {
+			(*it).tree_process();
+			it++;
+		}
+	}
+
+	static void pofbase_tree_build(pofBase* obj, pofBlocker* parent) {
+		std::list<pofBase*>::iterator it = obj->children.begin();
+		bool isBlocker = (obj->isBlockingDraw() != -1);
+		if(isBlocker) {
+			//pofBlocker blocker(obj);
+			pofBlocker * newparent;
+			if(parent) {
+				parent->children.push_back({obj});
+				newparent = &(parent->children.back());
+				post("pofBlocker: adding child number %d", parent->children.size());
+			}
+			else {
+				heads.push_back({obj});
+				newparent = &(heads.back());
+				post("pofBlocker: adding head number %d", heads.size());
+			}
+			if(newparent->isOnce) post("new pofBlocker isOnce");
+			parent = newparent;
+		}
+		while(it != obj->children.end()) {
+			pofbase_tree_build(*it, parent);
+			it++;
+		}
+	}
+
+	static void buildAll(ofEventArgs & args) {
+		post("pofBlocker buildAll");
+		frameCount = 0;
+		heads.clear();
+		if(pofWin::win) {
+			std::list<pofHead*>::iterator it = pofHead::pofheads.begin();
+	
+			while(it != pofHead::pofheads.end()) {
+				pofbase_tree_build((*it), NULL);
+				it++;
+			}
+		}
+	}
+};
 
 static void *pofonce_new(t_symbol *sym,int argc, t_atom *argv)
 {
@@ -59,8 +141,8 @@ void pofOnce::setup(void)
 	class_addbang(pofonce_class, (t_method)pofonce_bang);
 	class_addmethod(pofonce_class, (t_method)pofonce_force, gensym("force"), A_NULL);
 	class_addmethod(pofonce_class, (t_method)pofonce_continuousForce, gensym("continuousForce"), A_DEFFLOAT, A_NULL);
-	ofAddListener(pofBase::initFrameEvent, &pofOnce::initFrame);
-	ofAddListener(pofBase::rebuildEvent, &pofOnce::rebuild);
+	ofAddListener(pofBase::initFrameEvent, &pofBlocker::initFrame);
+	ofAddListener(pofBase::rebuildEvent, &pofBlocker::buildAll);
 }
 
 pofOnce::pofOnce(t_class *Class, bool continuousForce0): pofBase(Class),
@@ -84,7 +166,7 @@ void pofOnce::tree_draw()
 	FORCE_ONCE = tmp_force_once;
 }
 
-bool pofOnce::oncetree_process()
+/*bool pofOnce::oncetree_process()
 {
 	std::list<pofOnce*>::iterator it = onceChildren.begin();
 
@@ -104,19 +186,37 @@ bool pofOnce::oncetree_process()
 		it++;
 	}
 	return (final_trigger || final_force);
+}*/
+
+bool pofOnce::process(bool childrenAskTrigger)
+{
+	final_force = false;
+	final_trigger = false;
+
+	if(force || continuousForce) {
+		final_force = true;
+		force = false;
+	}
+	if(trigger) {
+		final_trigger = true;
+		trigger = false;
+	}
+	if(childrenAskTrigger) final_trigger = 1;
+	return (final_trigger || final_force);
 }
 
-void pofOnce::initFrame(ofEventArgs & args)
+/*void pofOnce::initFrame(ofEventArgs & args)
 {
-	std::list<pofOnce*>::iterator it = headOnces.begin();
+	//std::list<pofOnce*>::iterator it = headOnces.begin();
 	FORCE_ONCE = false;
 	while(it != headOnces.end()) {
 		(*it)->oncetree_process();
 		it++;
 	}
-}
+	//pofBlocker::processAll();
+}*/
 
-static bool pofbase_oncetree_build(pofBase* obj, pofOnce* parent)
+/*static bool pofbase_oncetree_build(pofBase* obj, pofOnce* parent)
 {
 	std::list<pofBase*>::iterator it = obj->children.begin();
 	pofOnce *newparent = parent;
@@ -142,9 +242,9 @@ static bool pofbase_oncetree_build(pofBase* obj, pofOnce* parent)
 	}
 	//isBuilt = true;
 	return isOnce;
-}
+}*/
 
-void pofOnce::rebuild(ofEventArgs & args)
+/*void pofOnce::rebuild(ofEventArgs & args)
 {
 	pofOnce::headOnces.clear();
 	if(pofWin::win) {
@@ -155,4 +255,4 @@ void pofOnce::rebuild(ofEventArgs & args)
 			it++;
 		}
 	}
-}
+}*/

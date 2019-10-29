@@ -29,7 +29,7 @@ to draw as well., f 44;
 #X obj 32 186 poffbo 400 300;
 #X msg 47 163 clear 0;
 #X obj 47 142 loadbang;
-#X obj 32 354 t a a a, f 47;
+#X obj 32 332 t a a a, f 47;
 #X obj 311 409 pofcolor 0 0 0 1;
 #X obj 311 430 pofrect 400 300;
 #X obj 171 413 pofcolor 1 1 1 1;
@@ -53,7 +53,7 @@ next frame;
 #X obj 362 476 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X obj 32 309 pofbang 1;
-#X obj 83 332 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+#X obj 96 312 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
 #X obj 171 454 pofbang 1;
 #X obj 222 477 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
@@ -70,6 +70,17 @@ persistent framebuffer \, and ask to draw only changing parts.;
 #X obj 473 287 pofonce -continuousForce;
 #X text 470 257 continuousForce can also be initialized at boot time:
 , f 29;
+#X obj 585 391 pofwin;
+#X msg 595 371 build;
+#X obj 171 362 pofvisible 1;
+#X obj 148 364 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 567 370 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 571 338 framerate 1;
+#X msg 111 161 clear 1;
+#X obj 671 273 loadbang;
+#X obj 621 305 del 100;
 #X connect 15 0 18 0;
 #X connect 16 0 17 0;
 #X connect 17 0 43 0;
@@ -77,7 +88,7 @@ persistent framebuffer \, and ask to draw only changing parts.;
 #X connect 19 0 18 0;
 #X connect 20 0 19 0;
 #X connect 21 0 34 0;
-#X connect 21 1 35 0;
+#X connect 21 1 53 0;
 #X connect 21 2 36 0;
 #X connect 22 0 23 0;
 #X connect 23 0 37 0;
@@ -101,3 +112,11 @@ persistent framebuffer \, and ask to draw only changing parts.;
 #X connect 46 0 33 0;
 #X connect 47 0 23 1;
 #X connect 47 0 30 0;
+#X connect 52 0 51 0;
+#X connect 53 0 35 0;
+#X connect 54 0 53 0;
+#X connect 55 0 51 0;
+#X connect 56 0 51 0;
+#X connect 57 0 18 0;
+#X connect 58 0 59 0;
+#X connect 59 0 56 0;
