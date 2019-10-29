@@ -13,7 +13,6 @@ class pofOnce : public pofBase{
 		~pofOnce();
 
 		virtual void tree_draw();
-		//bool oncetree_process();
 		bool process(bool childrenAskTrigger); // returns 'ask trigger'
 		virtual int isBlockingDraw() {return 0;}
 		
@@ -22,15 +21,10 @@ class pofOnce : public pofBase{
 		bool final_trigger;
 		bool final_force;
 		bool continuousForce;
-		//std::list<pofOnce*> onceChildren;
 
 		static void setup(void);
-		//static void initFrame(ofEventArgs & args);
-		//static void rebuild(ofEventArgs & args);
 
 		static bool FORCE_ONCE;
-		//static std::list<pofOnce*> headOnces;
-		//static std::list<pofBase*> heads;
 };
 
 
