@@ -10,6 +10,8 @@ std::map<t_symbol*,pofsubXML*> pofsubXML::xmls;
 static t_class *pofxml_class;
 static t_symbol *s_set, *s_add, *s_setattr, *s_addchild, *s_remove, *s_removeattr, *s_get, *s_gets;
 
+bool noreset = false;
+
 static void *pofxml_new(t_symbol *n)
 {
     pofXML* obj = new pofXML(pofxml_class, n);
@@ -92,8 +94,12 @@ static void pofxml_getnum(void *x, t_symbol *path)
 	pofXML* px= (pofXML*)(((PdObject*)x)->parent);
 	float num = 0;
 	
-	if(px->sxml->xml.exists(path->s_name) && px->sxml->xml.setTo(path->s_name)) num = px->sxml->xml.getNumChildren();
-	px->sxml->xml.reset();
+	if(noreset) {
+		num = px->sxml->xml.getNumChildren(path->s_name);
+	} else {
+		if(px->sxml->xml.exists(path->s_name) && px->sxml->xml.setTo(path->s_name)) num = px->sxml->xml.getNumChildren();
+		px->sxml->xml.reset();
+	}
 
 	outlet_float(px->m_out1, num);
 }
@@ -107,9 +113,14 @@ static void pofxml_remove(void *x, t_symbol *path)
 static void pofxml_removeattr(void *x, t_symbol *path)
 {
 	pofXML* px= (pofXML*)(((PdObject*)x)->parent);
-	if(px->sxml->xml.exists(path->s_name) && px->sxml->xml.setTo(path->s_name))
-		px->sxml->xml.removeAttributes();//(path->s_name);
-	px->sxml->xml.reset();
+	
+	if(noreset) {
+		px->sxml->xml.removeAttributes(path->s_name);
+	} else {
+		if(px->sxml->xml.exists(path->s_name) && px->sxml->xml.setTo(path->s_name))
+			px->sxml->xml.removeAttributes();
+		px->sxml->xml.reset();
+	}
 }
 
 static void pofxml_set(void *x, t_symbol *s,int argc, t_atom *argv)
@@ -117,7 +128,6 @@ static void pofxml_set(void *x, t_symbol *s,int argc, t_atom *argv)
 	if(argc < 2 || argv->a_type != A_SYMBOL) return;
 	
 	pofXML* px= (pofXML*)(((PdObject*)x)->parent);
-	t_binbuf *bb = binbuf_new();
 	char *buf;
 	int buflen;
 	t_symbol * attr = NULL;
@@ -127,6 +137,7 @@ static void pofxml_set(void *x, t_symbol *s,int argc, t_atom *argv)
 
  	if(!argc) return;
  	
+	t_binbuf *bb = binbuf_new();
 	t_symbol * name = atom_getsymbol(argv);
 	argc--; argv++;
 
@@ -162,21 +173,42 @@ static void pofxml_set(void *x, t_symbol *s,int argc, t_atom *argv)
 		if(argc) str += " ";
 	}
 	
-	if(px->sxml->xml.exists(path->s_name) && px->sxml->xml.setTo(path->s_name)) {
-		if(s == s_set) px->sxml->xml.setValue(name->s_name, str);
-		else if(s == s_add) px->sxml->xml.addValue(name->s_name, str, false);
+	if(noreset) {
+		string totalpath;
+		if(string(path->s_name) != ".") {
+			totalpath = string(path->s_name);
+			if(totalpath.back() != '/') totalpath += "/";
+		}
+		totalpath += string(name->s_name);
+		if(s == s_set) px->sxml->xml.setValue(totalpath, str);
+		else if(s == s_add) px->sxml->xml.addValue(totalpath, str, false);
 		else if(s == s_setattr) {
-			if(px->sxml->xml.setTo(name->s_name))
-				px->sxml->xml.setAttribute(attr->s_name, str);
-
+			totalpath += "/" + string(attr->s_name);
+			px->sxml->xml.setAttribute(totalpath, str);
 		}
 		else if(s == s_addchild) {
-			if(px->sxml->xml.addChild(name->s_name) && attr != NULL) {
-				px->sxml->xml.setAttribute(attr->s_name, str);
+			if(px->sxml->xml.addChild(totalpath) && attr != NULL) {
+				totalpath += "/" + string(attr->s_name);
+				px->sxml->xml.setAttribute(totalpath, str);
 			}
 		}
+	} else {
+		if(px->sxml->xml.exists(path->s_name) && px->sxml->xml.setTo(path->s_name)) {
+			if(s == s_set) px->sxml->xml.setValue(name->s_name, str);
+			else if(s == s_add) px->sxml->xml.addValue(name->s_name, str, false);
+			else if(s == s_setattr) {
+				if(px->sxml->xml.setTo(name->s_name))
+					px->sxml->xml.setAttribute(attr->s_name, str);
+
+			}
+			else if(s == s_addchild) {
+				if(px->sxml->xml.addChild(name->s_name) && attr != NULL) {
+					px->sxml->xml.setAttribute(attr->s_name, str);
+				}
+			}
+		}
+		px->sxml->xml.reset();
 	}
-	px->sxml->xml.reset();	
 	binbuf_free(bb);
 	freebytes(buf, buflen);
 }
@@ -195,6 +227,18 @@ static void pofxml_print(void *x)
 	
 	string s = px->sxml->xml.toString();
 	if(s.length()) post("xml %s: \n%s\n", px->name->s_name, s.c_str());
+}
+
+static void pofxml_noreset(void *x, t_float _noreset)
+{
+	noreset = (_noreset != 0);
+}
+
+static void pofxml_setto(void *x, t_symbol *path)
+{
+	pofXML* px= (pofXML*)(((PdObject*)x)->parent);
+	if (path || path->s_name) px->sxml->xml.setTo(path->s_name);
+	else px->sxml->xml.reset();
 }
 
 
@@ -227,6 +271,8 @@ void pofXML::setup(void)
 	class_addmethod(pofxml_class, (t_method)pofxml_removeattr, s_removeattr, A_SYMBOL, A_NULL);
 	class_addmethod(pofxml_class, (t_method)pofxml_clear, gensym("clear"), A_DEFSYMBOL, A_NULL);
 	class_addmethod(pofxml_class, (t_method)pofxml_print, gensym("print"), A_NULL);
+	class_addmethod(pofxml_class, (t_method)pofxml_noreset, gensym("noreset"), A_DEFFLOAT, A_NULL);
+	class_addmethod(pofxml_class, (t_method)pofxml_setto, gensym("setto"), A_SYMBOL, A_NULL);
 }
 
 
