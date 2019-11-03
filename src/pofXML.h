@@ -6,6 +6,7 @@
 #pragma once
 
 #include "pofBase.h"
+#include "pugixml.hpp"
 
 class pofsubXML {
 
@@ -14,14 +15,18 @@ class pofsubXML {
 	
 	static std::map<t_symbol*,pofsubXML*> xmls;
 
-	ofMutex mutex;
+	//ofMutex mutex;
 
 	public:
-	ofXml xml;
+	//ofXml xml;
+	pugi::xml_document doc;
+	pugi::xml_node node;
+	
 	bool loaded;
 	
 	pofsubXML(t_symbol *n):refCount(1), name(n), loaded(false){
-		xml.addChild("root");
+		//xml.addChild("root");
+		node = doc.root();
 		xmls[n] = this;
 	}
 	
@@ -30,20 +35,30 @@ class pofsubXML {
 	}
 	
 	bool load(t_symbol *file) {
-		mutex.lock();
-		if(xml.load(file->s_name)) {
+		//mutex.lock();
+		if(doc.load_file(ofToDataPath(file->s_name).c_str())) {
+			loaded = true;
+			node = doc.root();
+			return true;
+		} else return false;
+		
+		/*if(doc.load(file->s_name)) {
 			loaded = true;
 			try {
 				xml.reset();
 			} catch(...){};
-			mutex.unlock();
+			//mutex.unlock();
 			return true;
 		} else {
-			mutex.unlock();
+			//mutex.unlock();
 			return false;
-		}
+		}*/
 	}
-
+	
+	bool save(t_symbol *file) {
+		return doc.save_file(ofToDataPath(file->s_name).c_str());
+	}
+		
 	static pofsubXML* getXML(t_symbol *name){
 		std::map<t_symbol*,pofsubXML*>::iterator it;
 		it = xmls.find(name);
