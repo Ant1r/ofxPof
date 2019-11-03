@@ -48,7 +48,7 @@ static void pofxml_save(void *x, t_symbol *file)
 	
 	SETSYMBOL(&at, filename);
 	
-	if(filename&&px->sxml->save(filename)) outlet_anything(px->m_out1, gensym("saved"), 1, &at);
+	if(filename&&px->sxml->xml.save(filename->s_name)) outlet_anything(px->m_out1, gensym("saved"), 1, &at);
 	else outlet_anything(px->m_out1, gensym("error_saving"), 1, &at);
 }
 
@@ -65,10 +65,7 @@ static void pofxml_get(void *x, t_symbol *path)
 	pofXML* px= (pofXML*)(((PdObject*)x)->parent);
 	t_binbuf *bb = binbuf_new();
 	
-	//string s = px->sxml->xml.getValue(path->s_name);
-	pugi::xpath_node searchedNode = px->sxml->doc.select_node(path->s_name);
-	string s = searchedNode.node().name();
-	cout << "string: " << s <<endl;
+	string s = px->sxml->xml.getValue(path->s_name);
 	if(s.length()) {
 		binbuf_text(bb, (char*)s.c_str(), s.length());
 
@@ -80,44 +77,43 @@ static void pofxml_get(void *x, t_symbol *path)
 
 static void pofxml_gets(void *x, t_symbol *path)
 {
-	/*pofXML* px= (pofXML*)(((PdObject*)x)->parent);
+	pofXML* px= (pofXML*)(((PdObject*)x)->parent);
 	t_atom at;
 
 	string s = px->sxml->xml.getValue(path->s_name);
 	if(s.length()) {
 		SETSYMBOL(&at, gensym(s.c_str()));
 		outlet_anything(px->m_out1, s_gets, 1, &at);
-	}*/
+	}
 }
 
 static void pofxml_getnum(void *x, t_symbol *path)
 {
-	/*pofXML* px= (pofXML*)(((PdObject*)x)->parent);
+	pofXML* px= (pofXML*)(((PdObject*)x)->parent);
 	float num = 0;
 	
 	if(px->sxml->xml.exists(path->s_name) && px->sxml->xml.setTo(path->s_name)) num = px->sxml->xml.getNumChildren();
 	px->sxml->xml.reset();
 
-	outlet_float(px->m_out1, num);*/
+	outlet_float(px->m_out1, num);
 }
 
 static void pofxml_remove(void *x, t_symbol *path)
 {
-	/*pofXML* px= (pofXML*)(((PdObject*)x)->parent);
-	px->sxml->xml.remove(path->s_name);*/
+	pofXML* px= (pofXML*)(((PdObject*)x)->parent);
+	px->sxml->xml.remove(path->s_name);
 }
 
 static void pofxml_removeattr(void *x, t_symbol *path)
 {
-	/*pofXML* px= (pofXML*)(((PdObject*)x)->parent);
+	pofXML* px= (pofXML*)(((PdObject*)x)->parent);
 	if(px->sxml->xml.exists(path->s_name) && px->sxml->xml.setTo(path->s_name))
 		px->sxml->xml.removeAttributes();//(path->s_name);
-	px->sxml->xml.reset();*/
+	px->sxml->xml.reset();
 }
 
 static void pofxml_set(void *x, t_symbol *s,int argc, t_atom *argv)
 {
-#if 0	
 	if(argc < 2 || argv->a_type != A_SYMBOL) return;
 	
 	pofXML* px= (pofXML*)(((PdObject*)x)->parent);
@@ -183,27 +179,22 @@ static void pofxml_set(void *x, t_symbol *s,int argc, t_atom *argv)
 	px->sxml->xml.reset();	
 	binbuf_free(bb);
 	freebytes(buf, buflen);
-#endif
 }
 
 static void pofxml_clear(void *x, t_symbol *root)
 {
-	/*pofXML* px= (pofXML*)(((PdObject*)x)->parent);
+	pofXML* px= (pofXML*)(((PdObject*)x)->parent);
 	px->sxml->xml.clear();
 	if (!root || !*root->s_name) root = gensym("root");
-	px->sxml->xml.addChild(root->s_name);*/
+	px->sxml->xml.addChild(root->s_name);
 }
 
 static void pofxml_print(void *x)
 {
 	pofXML* px= (pofXML*)(((PdObject*)x)->parent);
-	std::stringstream strstr;
-	px->sxml->doc.print(strstr);
-	std::string line; 
-	post("XML %s:", px->name->s_name);
-	while (std::getline(strstr, line)) {
-		post("%s", line.c_str());
-	}
+	
+	string s = px->sxml->xml.toString();
+	if(s.length()) post("xml %s: \n%s\n", px->name->s_name, s.c_str());
 }
 
 

@@ -27,6 +27,7 @@
 #include "pofCirc.h"
 #include "pofUtil.h"
 #include "pofXML.h"
+#include "pofXMLP.h"
 #include "pofAccel.h"
 #include "pofTextbox.h"
 #include "pofJSON.h"
@@ -68,6 +69,7 @@ void setupAll() {
 	pofCirc::setup();
 	pofUtil::setup();
 	pofXML::setup();
+	pofXMLP::setup();
 	pofAccel::setup();
 	pofTextbox::setup();
 	pofJSON::setup();
