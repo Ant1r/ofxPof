@@ -8,7 +8,8 @@
 std::map<t_symbol*,pofsubXMLP*> pofsubXMLP::xmls;
 
 static t_class *pofxmlp_class;
-static t_symbol *s_set, *s_add, *s_setattr, *s_remove, *s_removeall, *s_removeattr, *s_get, *s_gets;
+static t_symbol *s_set, *s_add, *s_setattr, *s_remove, *s_removeall, *s_removeattr, *s_get, *s_gets, 
+	*s_addbefore, *s_addafter, *s_copy, *s_rename, *s_setto, *s_getpath;
 
 static void *pofxmlp_new(t_symbol *n)
 {
@@ -64,7 +65,21 @@ static void pofxmlp_setto(void *x, t_symbol *path)
 {
 	pofXMLP* px= (pofXMLP*)(((PdObject*)x)->parent);
 	try{
-		px->sxml->node = px->sxml->node.select_node(path->s_name).node();
+		if(*path->s_name == '/')
+			px->sxml->node = px->sxml->doc.select_node(path->s_name).node();
+		else px->sxml->node = px->sxml->node.select_node(path->s_name).node();
+	}catch(pugi::xpath_exception & e){
+		ofLogError() << e.what();
+	}
+}
+
+static void pofxmlp_getpath(void *x)
+{
+	pofXMLP* px= (pofXMLP*)(((PdObject*)x)->parent);
+	t_atom at;
+	try{
+		SETSYMBOL(&at, gensym(px->sxml->node.path().c_str()));
+		outlet_anything(px->m_out1, s_getpath, 1, &at);
 	}catch(pugi::xpath_exception & e){
 		ofLogError() << e.what();
 	}
@@ -83,11 +98,9 @@ static void pofxmlp_get(void *x, t_symbol *path, t_symbol *attr)
 		ofLogError() << e.what();
 	}
 	
-	if(s.length()) {
-		binbuf_text(bb, (char*)s.c_str(), s.length());
-		int natom = binbuf_getnatom(bb);
-		if(natom) outlet_anything(px->m_out1, s_get, natom, binbuf_getvec(bb));
-	}
+	binbuf_text(bb, (char*)s.c_str(), s.length());
+	int natom = binbuf_getnatom(bb);
+	outlet_anything(px->m_out1, s_get, natom, binbuf_getvec(bb));
 	binbuf_free(bb);
 }
 
@@ -102,10 +115,8 @@ static void pofxmlp_gets(void *x, t_symbol *path, t_symbol *attr)
 		for(auto n: px->sxml->node.select_nodes(path->s_name)) {
 			if(*attr->s_name) s = n.node().attribute(attr->s_name).as_string();
 			else s = n.node().text().as_string();
-			if(s.length()) {
-				SETSYMBOL(&at, gensym(s.c_str()));
-				binbuf_add(bb, 1, &at);
-			}
+			SETSYMBOL(&at, gensym(s.c_str()));
+			binbuf_add(bb, 1, &at);
 		}
 	}catch(pugi::xpath_exception & e){
 		ofLogError() << e.what();
@@ -174,15 +185,15 @@ static void pofxmlp_set(void *x, t_symbol *s,int argc, t_atom *argv)
 	t_symbol * path = atom_getsymbol(argv);
 	argc--; argv++;
 
- 	if(!argc) return;
- 	
- 	if((s == s_add || s == s_setattr) && argc > 0) {
- 		name = atom_getsymbol(argv);
- 		argc--; argv++;
- 	}
- 	
+	if(!argc) return;
+	
+	if((s == s_add || s == s_setattr || s == s_addafter || s == s_addbefore || s == s_rename) && argc > 0) {
+		name = atom_getsymbol(argv);
+		argc--; argv++;
+	}
+
 	t_binbuf *bb = binbuf_new();
- 	binbuf_add(bb, argc, argv);
+	binbuf_add(bb, argc, argv);
 	binbuf_gettext(bb, &buf, &buflen);
 
 	string str("");
@@ -193,16 +204,16 @@ static void pofxmlp_set(void *x, t_symbol *s,int argc, t_atom *argv)
 				sprintf(tbuf, "%g", argv->a_w.w_float);
 				str += tbuf;//to_string(argv->a_w.w_float); 
 				break;
-    		case A_SYMBOL: 
-    			str += argv->a_w.w_symbol->s_name; 
-    			break;
-    		default:;
-    		
+			case A_SYMBOL: 
+				str += argv->a_w.w_symbol->s_name; 
+				break;
+			default:;
+		
 		}
 		argc--; argv++;
 		if(argc) str += " ";
 	}
-	
+
 	pugi::xml_node node;
 	try{
 		node = px->sxml->node.select_node(path->s_name).node();
@@ -214,6 +225,17 @@ static void pofxmlp_set(void *x, t_symbol *s,int argc, t_atom *argv)
 		else if(s == s_setattr) {
 			node.remove_attribute(name->s_name);
 			node.append_attribute(name->s_name).set_value(str.c_str());
+		}
+		else if(s == s_addbefore) {
+			pugi::xml_node newchild = node.parent().insert_child_before(name->s_name, node);
+			if(str.length()) newchild.text().set(str.c_str());
+		}
+		else if(s == s_addafter) {
+			pugi::xml_node newchild = node.parent().insert_child_after(name->s_name, node);
+			if(str.length()) newchild.text().set(str.c_str());
+		}
+		else if(s == s_rename) {
+			node.set_name(name->s_name);
 		}
 	}catch(pugi::xpath_exception & e){
 		ofLogError() << e.what();
@@ -230,6 +252,14 @@ static void pofxmlp_clear(void *x, t_symbol *root)
 	px->sxml->doc.reset();
 	if (!*root->s_name) root = gensym("root");
 	px->sxml->doc.append_child(root->s_name);
+}
+
+static void pofxmlp_copy(void *x, t_symbol *srcxml)
+{
+	pofXMLP* px= (pofXMLP*)(((PdObject*)x)->parent);
+	pofsubXMLP *sxml = pofsubXMLP::getXML(srcxml);
+	px->sxml->doc.reset(sxml->doc);
+	pofsubXMLP::letXML(sxml);
 }
 
 static void pofxmlp_print(void *x, t_symbol *path)
@@ -254,6 +284,7 @@ void pofXMLP::setup(void)
 {
 	//post("pofxmlp_setup");
 	s_set = gensym("set");
+	s_rename = gensym("rename");
 	s_add = gensym("add");
 	s_remove = gensym("remove");
 	s_removeall = gensym("removeall");
@@ -261,6 +292,11 @@ void pofXMLP::setup(void)
 	s_get = gensym("get");
 	s_gets = gensym("gets");
 	s_setattr = gensym("setattr");
+	s_addbefore = gensym("add_before");
+	s_addafter = gensym("add_after");
+	s_copy =gensym("copy");
+	s_setto = gensym("setto");
+	s_getpath = gensym("getpath");
 	
 	pofxmlp_class = class_new(gensym("pofxmlp"), (t_newmethod)pofxmlp_new, (t_method)pofxmlp_free,
 		sizeof(PdObject), 0, A_SYMBOL, A_NULL);
@@ -268,15 +304,20 @@ void pofXMLP::setup(void)
 	class_addmethod(pofxmlp_class, (t_method)pofxmlp_load, gensym("load"), A_SYMBOL, A_NULL);
 	class_addmethod(pofxmlp_class, (t_method)pofxmlp_setxml, gensym("setxml"), A_SYMBOL, A_NULL);
 	class_addmethod(pofxmlp_class, (t_method)pofxmlp_save, gensym("save"), A_SYMBOL, A_NULL);
-	class_addmethod(pofxmlp_class, (t_method)pofxmlp_setto, gensym("setto"), A_SYMBOL, A_NULL);
+	class_addmethod(pofxmlp_class, (t_method)pofxmlp_setto, s_setto, A_SYMBOL, A_NULL);
+	class_addmethod(pofxmlp_class, (t_method)pofxmlp_getpath, s_getpath, A_NULL);
 	class_addmethod(pofxmlp_class, (t_method)pofxmlp_get, s_get, A_SYMBOL, A_DEFSYMBOL, A_NULL);
 	class_addmethod(pofxmlp_class, (t_method)pofxmlp_gets, s_gets, A_SYMBOL, A_DEFSYMBOL, A_NULL);
 	class_addmethod(pofxmlp_class, (t_method)pofxmlp_set, s_set, A_GIMME, A_NULL);
+	class_addmethod(pofxmlp_class, (t_method)pofxmlp_set, s_rename, A_GIMME, A_NULL);
 	class_addmethod(pofxmlp_class, (t_method)pofxmlp_set, s_add, A_GIMME, A_NULL);
+	class_addmethod(pofxmlp_class, (t_method)pofxmlp_set, s_addbefore, A_GIMME, A_NULL);
+	class_addmethod(pofxmlp_class, (t_method)pofxmlp_set, s_addafter, A_GIMME, A_NULL);
 	class_addmethod(pofxmlp_class, (t_method)pofxmlp_set, s_setattr, A_GIMME, A_NULL);
 	class_addmethod(pofxmlp_class, (t_method)pofxmlp_remove, s_remove, A_SYMBOL, A_SYMBOL, A_NULL);
 	class_addmethod(pofxmlp_class, (t_method)pofxmlp_removeall, s_removeall, A_SYMBOL, A_NULL);
 	class_addmethod(pofxmlp_class, (t_method)pofxmlp_removeattr, s_removeattr, A_SYMBOL, A_SYMBOL, A_NULL);
+	class_addmethod(pofxmlp_class, (t_method)pofxmlp_copy, s_copy, A_SYMBOL, A_NULL);
 	class_addmethod(pofxmlp_class, (t_method)pofxmlp_getnum, gensym("getnum"), A_SYMBOL, A_NULL);
 	class_addmethod(pofxmlp_class, (t_method)pofxmlp_clear, gensym("clear"), A_DEFSYMBOL, A_NULL);
 	class_addmethod(pofxmlp_class, (t_method)pofxmlp_print, gensym("print"), A_DEFSYMBOL, A_NULL);

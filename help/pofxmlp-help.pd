@@ -1,4 +1,4 @@
-#N canvas 295 177 362 304 10;
+#N canvas 330 343 362 304 10;
 #X declare -lib pof;
 #X obj 9 9 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -31,7 +31,7 @@
 #X connect 8 0 12 0;
 #X connect 12 0 7 0;
 #X restore 30 149 pd save/load;
-#N canvas 738 101 448 803 parse 0;
+#N canvas 728 91 448 803 parse 0;
 #X msg 23 16 load data/food.xml;
 #X obj 75 102 hradio 15 1 0 5 empty empty empty 0 -8 0 10 -262144 -1
 -1 1;
@@ -103,7 +103,7 @@
 #X connect 34 0 32 0;
 #X connect 35 0 23 0;
 #X restore 31 177 pd parse;
-#N canvas 984 359 668 490 edit 0;
+#N canvas 974 349 668 490 edit 0;
 #X msg 35 22 print;
 #X msg 59 58 clear;
 #X msg 69 81 clear MyRootName;
@@ -128,6 +128,7 @@
 #X msg 426 293 gets /root/object/type;
 #X symbolatom 427 368 10 0 0 0 - - -;
 #X msg 427 338 symbol \$1;
+#X msg 102 410 rename /root/object furniture;
 #X connect 0 0 8 0;
 #X connect 1 0 8 0;
 #X connect 2 0 8 0;
@@ -144,6 +145,7 @@
 #X connect 20 0 19 0;
 #X connect 21 0 19 0;
 #X connect 23 0 22 0;
+#X connect 24 0 8 0;
 #X restore 31 207 pd edit;
 #X text 129 108 Argument : reference_name;
 #X obj 220 21 declare -lib pof;
@@ -152,10 +154,10 @@
 #X text 14 62 pofxmlp : xml file utilities \, based on pugixml library
 , f 30;
 #X text 38 30 (c) Antoine Rousseau 2019;
-#N canvas 540 160 378 327 relative-xpath 0;
+#N canvas 706 376 655 398 relative-xpath 0;
 #X msg 76 48 load data/food.xml;
 #X msg 76 71 print;
-#X msg 76 99 setto /breakfast_menu/food[2];
+#X msg 91 97 setto /breakfast_menu/food[2];
 #X msg 77 197 print .;
 #X msg 76 124 gets description;
 #X msg 76 150 add . stock 5;
@@ -165,6 +167,17 @@
 #X obj 42 282 print relative;
 #X text 27 14 Using relative path is shorter and (should be) faster:
 ;
+#X msg 190 302 print /breakfast_menu/food[@id="hombr];
+#X msg 162 225 add_before //food[@id="hombr"] food added before hombr
+;
+#X msg 162 247 add_after //food[@id="hombr"] food added after hombr
+;
+#X msg 304 67 setto /breakfast_menu;
+#X msg 304 91 setto /breakfast_menu/food[2];
+#X msg 305 115 setto preceding-sibling::food[1];
+#X msg 305 135 setto following-sibling::food[1];
+#X msg 388 174 getpath;
+#X msg 306 155 gets . id;
 #X connect 0 0 8 0;
 #X connect 1 0 8 0;
 #X connect 2 0 8 0;
@@ -174,8 +187,17 @@
 #X connect 6 0 8 0;
 #X connect 7 0 8 0;
 #X connect 8 0 9 0;
+#X connect 11 0 8 0;
+#X connect 12 0 8 0;
+#X connect 13 0 8 0;
+#X connect 14 0 8 0;
+#X connect 15 0 8 0;
+#X connect 16 0 8 0;
+#X connect 17 0 8 0;
+#X connect 18 0 8 0;
+#X connect 19 0 8 0;
 #X restore 32 236 pd relative-xpath;
-#N canvas 369 599 363 223 change-reference 0;
+#N canvas 369 626 363 223 change-reference 0;
 #X msg 53 16 setxml testxml2;
 #X msg 61 37 setxml testxml;
 #X msg 78 76 print;
@@ -183,8 +205,10 @@
 #X msg 55 158 load data/simple.xml;
 #X obj 53 104 pofxmlp testxml;
 #X obj 55 179 pofxmlp testxml2;
+#X msg 132 76 copy testxml2;
 #X connect 0 0 5 0;
 #X connect 1 0 5 0;
 #X connect 2 0 5 0;
 #X connect 4 0 6 0;
+#X connect 7 0 5 0;
 #X restore 32 268 pd change-reference;
