@@ -24,7 +24,7 @@ meta:
 common:
 	# dependencies with other addons, a list of them separated by spaces 
 	# or use += in several lines
-	ADDON_DEPENDENCIES = ofxAccelerometer ofxJSON ofxZipPass
+	ADDON_DEPENDENCIES = ofxAccelerometer ofxJSON ofxZipPass ofxPoco
 
 #ifeq ($(LINUX_ARM),1)
 #WARNING : for RaspberryPI you have to manually uncomment the following line:

@@ -6,6 +6,7 @@
 #pragma once
 
 #include "pofBase.h"
+#include <ofxXmlPoco.h>
 
 class pofsubXML {
 
@@ -17,7 +18,7 @@ class pofsubXML {
 	ofMutex mutex;
 
 	public:
-	ofXml xml;
+	ofxXmlPoco xml;
 	bool loaded;
 	
 	pofsubXML(t_symbol *n):refCount(1), name(n), loaded(false){

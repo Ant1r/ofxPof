@@ -122,7 +122,7 @@ void pofQuad::Update() {
 			float f = float(y)/rows;
 			ofPoint v = ofxLerp(vTop,vBottom,f);
 			mesh.addVertex(v);
-			mesh.addTexCoord(ofxLerp(tTop,tBottom,f));
+			mesh.addTexCoord(glm::vec3(ofxLerp(tTop,tBottom,f)));
 		}
     }
     

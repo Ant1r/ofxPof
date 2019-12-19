@@ -25,7 +25,7 @@ t_clock *pollEventsClock;
 
 bool windowCreated = FALSE;
 
-class MyThread : public ofThread {
+class GUIThread : public ofThread {
 
 	void threadedFunction() {
 		//ofSetLogLevel(OF_LOG_VERBOSE);
@@ -53,15 +53,31 @@ class MyThread : public ofThread {
 
 };
 
+class TouchEventThread : public ofThread {
+
+	void threadedFunction() {
+		while(isThreadRunning()) {
+			if(windowCreated) glfwPollEvents();
+			sleep(5);
+		}
+	}
+};
+
+GUIThread appGUIthread;
+TouchEventThread appTouchEventThread;
 //--------------------------------------------------------------
 void ofApp::exit(){
-	
+	ofLogNotice("Pof: stopping TouchEvent thread:");
+	appTouchEventThread.waitForThread();
+	ofLogNotice("done");
+	//pofBase::release();
+	//ofExit();
 }
 
 //--------------------------------------------------------------
 void ofApp::setup(){
 	//ofRegisterTouchEvents(this);
-	ofSetEscapeQuitsApp(false);	
+	ofSetEscapeQuitsApp(false);
 }
 
 //--------------------------------------------------------------
@@ -144,25 +160,28 @@ void ofApp::touchUp(ofTouchEventArgs &touch){
 /*void ofApp::touchDoubleTap(ofTouchEventArgs &touch){
 }*/
 #ifndef RASPI
-void pollEventsMethod(void* nul)
+/*void pollEventsMethod(void* nul)
 {
 	if(windowCreated) {
 		glfwPollEvents(); // REMOVE THE ONE IN ofAppGLFWWindow::display() !!
 		clock_delay(pollEventsClock,2); //poll events every 2ms
 	} else clock_delay(pollEventsClock,100);
-}
+}*/
 #endif
 
 extern "C" {
     /* this is called once at setup time, when this code is loaded into Pd. */
 	void pof_setup(void)
 	{
-		(new MyThread)->startThread(true);//, true);
+		//(new GUIThread)->startThread(true);//, true);
+		appGUIthread.startThread();
 		pofBase::setup();
+		//(new TouchEventThread)->startThread(true);
+		appTouchEventThread.startThread(true);
 
 #ifndef RASPI
-		pollEventsClock = clock_new(0,(t_method)pollEventsMethod);
-        clock_delay(pollEventsClock,100);
+		//pollEventsClock = clock_new(0,(t_method)pollEventsMethod);
+        //clock_delay(pollEventsClock,100);
 #endif
 	}
 }
