@@ -1,4 +1,4 @@
-#N canvas 853 73 716 823 10;
+#N canvas 853 81 716 823 10;
 #X obj 283 56 adc~;
 #X floatatom 195 109 5 0 0 0 - - -;
 #X obj 368 306 pofcolor 0 1 0 1;
@@ -130,6 +130,8 @@
 #X obj 95 744 poftouch 345 80;
 #X obj 69 646 poftranslate 175 0;
 #X obj 117 342 poftranslate -175 0;
+#X obj 21 134 loadbang;
+#X msg 21 155 compute 1;
 #X connect 0 0 66 0;
 #X connect 1 0 39 1;
 #X connect 2 0 40 0;
@@ -274,3 +276,6 @@
 #X connect 127 1 19 0;
 #X connect 128 0 92 0;
 #X connect 129 0 93 0;
+#X connect 130 0 131 0;
+#X connect 131 0 53 0;
+#X connect 131 0 40 0;
