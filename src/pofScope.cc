@@ -95,23 +95,21 @@ void pofscope_peaks(void *x, t_symbol *peakstab, float from, float length)
 	pofScope* px = (pofScope*)(((PdObject*)x)->parent);
 
 	t_garray *peaksArray;
-	int peaksLen;
+	int peaksSize;
 	t_word *vec = NULL;
 
 	if (!(peaksArray = (t_garray *)pd_findbyclass(peakstab, garray_class)))
 		pd_error(x, "%s: no such array", peakstab->s_name);
-	else if (!garray_getfloatwords(peaksArray, &peaksLen, &vec))
+	else if (!garray_getfloatwords(peaksArray, &peaksSize, &vec))
 		pd_error(x, "%s: bad template for tabdump", peakstab->s_name);
 	if(!vec) return;
 
-	if(from < 0) from = 0;
-	if(from >= peaksLen) from = peaksLen - 1;
-	if(length == 0) length = 1e10;
-	if((length + from) >= peaksLen) length = peaksLen - from - 1;
+	if(length == 0) length = peaksSize - from - 1;
 	if(length < 0) length = 0;
 
 	px->Mutex.lock();
 	px->peaksVec = vec;
+	px->peaksSize = peaksSize;
 	px->peaksFrom = from;
 	px->peaksLen = length;
 	px->compute = false;
@@ -200,6 +198,7 @@ void pofScope::draw()
 	t_word *pVec = NULL;
 	float pFrom = 0;
 	float pLen = 0;
+	int pSize = 0;
 
 	if(curWidth != int(width)) {
 		Mutex.lock();
@@ -219,6 +218,7 @@ void pofScope::draw()
 	Mutex.lock();
 	if((doReadPeaks = readPeaks)) {
 		pVec = peaksVec;
+		pSize = peaksSize;
 		pFrom = peaksFrom;
 		pLen = peaksLen;
 		readPeaks = false;
@@ -226,6 +226,8 @@ void pofScope::draw()
 	}
 	Mutex.unlock();
 
+	#define PEAK_ZERO (1024.0 + (2048 * 1024.0))
+	#define getPeak(index) ((index) >= pSize ? PEAK_ZERO : (index) < 0 ? PEAK_ZERO : pVec[index].w_float)
 	if(doReadPeaks) {
 		int i, j;
 		if(curWidth < pLen) {
@@ -234,10 +236,10 @@ void pofScope::draw()
 			for(i = 0; i < pLen ; ++i) {
 				j = (i * curWidth) / pLen;
 				if(j != oldj) {
-					decodePeak(pVec[i + (int)pFrom].w_float, &minBuf[j], &maxBuf[j]);
+					decodePeak(getPeak(i + (int)pFrom), &minBuf[j], &maxBuf[j]);
 					oldj = j;
 				}
-				decodePeak(pVec[i + (int)pFrom].w_float, &min, &max);
+				decodePeak(getPeak(i + (int)pFrom), &min, &max);
 				if(min < minBuf[j]) minBuf[j] = min;
 				if(max > maxBuf[j]) maxBuf[j] = max;
 				bufIndex = 0;
@@ -250,8 +252,8 @@ void pofScope::draw()
 				i = (int)((float)j * ratio + pFrom);
 				if(i != oldi) {
 					oldi = i;
-					decodePeak(pVec[i].w_float, &min1, &max1);
-					decodePeak(pVec[i + 1].w_float, &min2, &max2);
+					decodePeak(getPeak(i), &min1, &max1);
+					decodePeak(getPeak(i + 1), &min2, &max2);
 				}
 				frac = ((float)j * ratio  + pFrom) - i;
 				minBuf[j] = (1 - frac) * min1 + frac * min2;
@@ -304,7 +306,7 @@ void pofScope::draw()
 	if(curve == 0) {
 		for(int i = 0; i < curWidth ; ++i) {
 			j = (int(i + bufIndex))%curWidth;
-			ofRect(i - curWidth/2.0, minBuf[j] * height, 1, (maxBuf[j] - minBuf[j]) * height + 1);
+			ofDrawRectangle(i - curWidth/2.0, minBuf[j] * height, 1, (maxBuf[j] - minBuf[j]) * height + 1);
 		}
 	} else {
 		ofColor styleColor = ofGetStyle().color;
