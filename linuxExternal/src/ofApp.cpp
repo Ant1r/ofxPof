@@ -5,6 +5,7 @@
  */
 #include "ofApp.h"
 #include "pofBase.h"
+#include "pofWin.h"
 
 //#include "ofAppGLFWWindow.h"
 
@@ -153,17 +154,30 @@ void pollEventsMethod(void* nul)
 }
 #endif
 
+void open_window()
+{
+	static bool opened = FALSE;
+	if(opened) return;
+	opened = TRUE;
+	(new MyThread)->startThread(true);//, true);
+#ifndef RASPI
+	pollEventsClock = clock_new(0,(t_method)pollEventsMethod);
+	clock_delay(pollEventsClock,100);
+#endif
+}
+
 extern "C" {
     /* this is called once at setup time, when this code is loaded into Pd. */
 	void pof_setup(void)
 	{
-		(new MyThread)->startThread(true);//, true);
+		//(new MyThread)->startThread(true);//, true);
+		pofWin::open = &open_window;
 		pofBase::setup();
 
-#ifndef RASPI
+/*#ifndef RASPI
 		pollEventsClock = clock_new(0,(t_method)pollEventsMethod);
         clock_delay(pollEventsClock,100);
-#endif
+#endif*/
 	}
 }
 

@@ -9,6 +9,8 @@
 t_class *pofwin_class;
 
 pofWin *pofWin::win = NULL;
+void(*pofWin::open)(void)=NULL;
+
 static t_symbol *s_out, *s_window;
 
 void *pofwin_new(void)
@@ -32,15 +34,24 @@ void pofwin_bang(void *x)
 {
     pofWin* px= (pofWin*)(((PdObject*)x)->parent);
 
+	if(px->init) return;
 	px->windowResized(ofGetWindowWidth(),ofGetWindowHeight());
+}
+
+void pofwin_open(void *x)
+{
+	pofWin* px= (pofWin*)(((PdObject*)x)->parent);
+
+	if(pofWin::open) pofWin::open();
 }
 
 void pofwin_window(void *x, t_float width, t_float height, t_float fullscreen)
 {
-	x=NULL; /* don't warn about unused variables */
+	pofWin* px= (pofWin*)(((PdObject*)x)->parent);
 	if(width<1) width = 1;
 	if(height<1) height = 1;
 	
+	if(px->init) return;
 #if (!defined(TARGET_ANDROID) && !(TARGET_OS_IOS))
 	pofBase::treeMutex.lockW(); //avoid doing that during the draw
 
@@ -53,7 +64,8 @@ void pofwin_window(void *x, t_float width, t_float height, t_float fullscreen)
 
 void pofwin_pos(void *x, t_float X, t_float Y)
 {
-	x=NULL; /* don't warn about unused variables */
+	pofWin* px= (pofWin*)(((PdObject*)x)->parent);
+	if(px->init) return;
 	pofBase::treeMutex.lockW(); //avoid doing that during the draw
 	ofSetWindowPosition((int)X,(int)Y);
 	pofBase::treeMutex.unlockW();
@@ -61,7 +73,8 @@ void pofwin_pos(void *x, t_float X, t_float Y)
 
 void pofwin_cursor(void *x, t_float cursor)
 {
-	x=NULL; /* don't warn about unused variables */
+	pofWin* px= (pofWin*)(((PdObject*)x)->parent);
+	if(px->init) return;
 	pofBase::treeMutex.lockW(); //avoid doing that during the draw
 	if(cursor!=0) ofShowCursor(); else ofHideCursor();
 	pofBase::treeMutex.unlockW();
@@ -69,7 +82,8 @@ void pofwin_cursor(void *x, t_float cursor)
 
 void pofwin_pdProcessesTouchEvents(void *x, t_float val)
 {
-	x=NULL; /* don't warn about unused variables */
+	pofWin* px= (pofWin*)(((PdObject*)x)->parent);
+	if(px->init) return;
 	pofBase::treeMutex.lockW(); //avoid doing that during the draw
 	pofBase::pdProcessesTouchEvents = (val!=0);
 	pofBase::treeMutex.unlockW();
@@ -92,13 +106,15 @@ void pofwin_background(void *x, t_float _r, t_float _g, t_float _b)
 
 void pofwin_framerate(void *x, t_float rate)
 {
+	pofWin* px= (pofWin*)(((PdObject*)x)->parent);
+	if(px->init) return;
 	ofSetFrameRate(rate);
-	x=NULL; /* don't warn about unused variables */
 }
 
 void pofwin_normalizedtextcoords(void *x, t_float enable)
 {
-	x=NULL; /* don't warn about unused variables */
+	pofWin* px= (pofWin*)(((PdObject*)x)->parent);
+	if(px->init) return;
 	if(enable != 0) ofEnableNormalizedTexCoords();
 	else ofDisableNormalizedTexCoords();
 }
@@ -127,6 +143,7 @@ void pofWin::setup(void)
 	class_addmethod(pofwin_class, (t_method)pofwin_pos, gensym("pos"), A_FLOAT, A_FLOAT, 0);
 	class_addmethod(pofwin_class, (t_method)pofwin_normalizedtextcoords, gensym("normalizedtextcoords"), A_FLOAT,0);
 	class_addmethod(pofwin_class, (t_method)pofwin_build, gensym("build"), A_NULL);
+	class_addmethod(pofwin_class, (t_method)pofwin_open, gensym("open"), A_NULL);
 	class_addfloat(pofwin_class, pofwin_float);
 	
 	class_addmethod(pofwin_class, (t_method)pofwin_pdProcessesTouchEvents, gensym("pdProcessesTouchEvents"), A_FLOAT,0);

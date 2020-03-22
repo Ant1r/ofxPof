@@ -36,6 +36,8 @@ class pofWin: public pofBase {
 		static void setup();
 
 		static pofWin *win; // singleton master pofWin adress.
+
+		static void(*open)(void);
 };
 
 
