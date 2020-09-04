@@ -41,7 +41,7 @@ class MyThread : public ofThread {
         //ofSetFrameRate(50);
         
        
-        ofGetMainLoop()->pollEvents = 0; // YOU NEED TO MAKE "void (*pollEvents)(void)" PUBLIC !!!
+        //ofGetMainLoop()->pollEvents = 0; // YOU NEED TO MAKE "void (*pollEvents)(void)" PUBLIC !!!
         
         ofRunApp(new ofApp());
         //while(1) usleep(10000);
