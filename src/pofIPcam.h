@@ -16,28 +16,32 @@ class pofIPcam: public pofBase {
 	public:
 		pofIPcam(t_class *Class, float w, float h, float istext):
 			pofBase(Class), 
-			width(w), height(h), isConnected(false),
+			cam(NULL), width(w), height(h), isConnected(false),
 			name(NULL), url(NULL), isTexture(istext!=0)
 		{
 		}
 		
 		~pofIPcam() {
-            cam.waitForDisconnect();
-            if(name) pofBase::textures.erase(name);
-        }
-		
+			if(cam) {
+				cam->waitForDisconnect();
+				delete cam;
+			}
+			if(name) pofBase::textures.erase(name);
+		}
+
 		virtual void draw();
 		virtual void postdraw();
 		virtual void message(int  arc, t_atom *argv); // from Pd to GUI
 		void connect();
 		void disconnect();
+		void createCam();
 		
 		static void setup(void);
-		
-		ofx::Video::IPVideoGrabber cam;
 
-        float width, height;
-        bool isConnected;
+		ofx::Video::IPVideoGrabber *cam;
+
+		float width, height;
+		bool isConnected;
 		t_symbol *name, *url;
 		bool isTexture;		
 		t_canvas *pdcanvas;

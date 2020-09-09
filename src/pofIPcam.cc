@@ -45,7 +45,6 @@ static void *pofIPcam_new(t_symbol *s, int argc, t_atom *argv)
 static void pofIPcam_free(void *x)
 {
 	pofIPcam* px = (pofIPcam*)(((PdObject*)x)->parent);
-	px->cam.waitForDisconnect();
 	delete px;
 }
 
@@ -82,43 +81,44 @@ void pofIPcam::draw()
 	float h = height;
 	if(h==0) h = width;
 	
-	cam.update();
-	if(!isConnected && cam.isConnected()) {
+	createCam();
+	cam->update();
+	if(!isConnected && cam->isConnected()) {
 		t_atom ap[4];
 		SETSYMBOL(&ap[0], s_connected);
 		SETFLOAT(&ap[1], 1);
 		queueToSelfPd(2, ap);
 		SETSYMBOL(&ap[0], s_size);
-		SETFLOAT(&ap[1], cam.getWidth());
-		SETFLOAT(&ap[2], cam.getHeight());
+		SETFLOAT(&ap[1], cam->getWidth());
+		SETFLOAT(&ap[2], cam->getHeight());
 		queueToSelfPd(3, ap);
 		isConnected = true;
 	}
 
-	if(name) pofBase::textures[name] = &cam.getTexture();
+	if(name) pofBase::textures[name] = &cam->getTexture();
 
 	if(isTexture) {
-		cam.getTexture().bind();
-		pofBase::currentTexture = &cam.getTexture();
+		cam->getTexture().bind();
+		pofBase::currentTexture = &cam->getTexture();
 	}
 	else {
 		float h = height;
-		if(!h) h = width * cam.getHeight() / cam.getWidth();
-		cam.draw(-width/2, -h/2, width, h);
+		if(!h) h = width * cam->getHeight() / cam->getWidth();
+		cam->draw(-width/2, -h/2, width, h);
 	}
 }
 
 void pofIPcam::postdraw()
 {
-	if(isTexture) cam.getTexture().unbind();
+	if(isTexture) cam->getTexture().unbind();
 }
 
 void pofIPcam::connect()
 {
 	if(url != NULL) {
 		disconnect();
-		cam.setURI(url->s_name);
-		cam.connect();
+		cam->setURI(url->s_name);
+		cam->connect();
 		url = NULL;
 	}
 }
@@ -126,8 +126,8 @@ void pofIPcam::connect()
 void pofIPcam::disconnect()
 {
 	if(isConnected) {
-		cam.waitForDisconnect();
-		cam.reset();
+		cam->waitForDisconnect();
+		cam->reset();
 		t_atom ap[3];
 		SETSYMBOL(&ap[0], s_connected);
 		SETFLOAT(&ap[1], 0);
@@ -135,12 +135,17 @@ void pofIPcam::disconnect()
 		isConnected = false;
 	}
 }
+void pofIPcam::createCam()
+{
+	if(!cam) cam = new ofx::Video::IPVideoGrabber();
+}
 
 void pofIPcam::message(int argc, t_atom *argv)
 {
 	t_symbol *key = atom_getsymbol(argv); 
 	argv++; argc--;
 
+	createCam();
 	if(key == s_connect) {
 		if(argc && argv->a_type == A_SYMBOL) {
 			url = atom_getsymbol(argv);
