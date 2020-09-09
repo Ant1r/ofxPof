@@ -29,7 +29,8 @@ class pofIPcam: public pofBase {
 		virtual void draw();
 		virtual void postdraw();
 		virtual void message(int  arc, t_atom *argv); // from Pd to GUI
-		void load();
+		void connect();
+		void disconnect();
 		
 		static void setup(void);
 		

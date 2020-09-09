@@ -300,6 +300,7 @@ void IPVideoGrabber::reset()
     mutex.lock();
     reconnectCount_a = 0;
     connectionFailure = false;
+    needsReconnect_a = false;
     mutex.unlock();
     //waitForDisconnect();
 }

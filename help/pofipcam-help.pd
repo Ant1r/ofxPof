@@ -1,4 +1,4 @@
-#N canvas 586 64 579 463 10;
+#N canvas 776 87 561 562 10;
 #X declare -lib pof;
 #X obj 5 4 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -7,44 +7,55 @@
 #X text 34 25 (c) Antoine Rousseau 2014;
 #X obj 5 57 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X obj 27 326 cnv 15 180 30 empty empty empty 20 12 0 14 -261682 -66577
+#X obj 27 419 cnv 15 180 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
 #X obj 37 109 pofhead;
 #X text 294 143 Inlet 2: width;
 #X text 294 156 Inlet 3: height;
 #X text 7 3 Pof: Pd OpenFrameworks externals;
 #X obj 326 5 declare -lib pof;
-#X msg 72 266 load \$1;
 #X text 294 129 Inlet 1: load MOVIE.FILE;
 #X floatatom 124 132 5 0 0 0 - - -;
 #X obj 37 133 pofrotate x;
 #X text 212 116 Arguments : [width [height]];
 #X obj 264 220 pofplane;
-#X floatatom 103 292 5 0 0 0 - - -;
-#X floatatom 151 295 5 0 0 0 - - -;
-#X floatatom 130 407 5 0 0 3 width - -;
-#X floatatom 187 407 5 0 0 3 height - -;
+#X floatatom 101 391 5 0 0 0 - - -;
+#X floatatom 149 394 5 0 0 0 - - -;
+#X floatatom 118 500 5 0 0 3 width - -;
+#X floatatom 175 500 5 0 0 3 height - -;
 #X obj 333 220 poftexture;
 #X text 221 193 image won't be drawn \, but instead will be selected
 for texturing following 3d shapes \; see, f 46;
-#X obj 37 331 pofipcam 500 500;
-#X msg 72 245 symbol http://rouewifi.local:8080/?action=stream;
-#X text 69 225 1:open the url;
-#X obj 130 360 route size;
-#X obj 130 385 unpack f f;
+#X msg 209 318 symbol http://rouewifi.local:8080/?action=stream;
+#X obj 118 478 unpack f f;
 #X text 198 180 As a texture : [pofipcam texture_name];
 #X text 14 59 pofipcam : IP camera grabber.;
 #X text 249 75 https://github.com/bakercp/ofxIpVideoGrabber;
 #X text 249 61 Thanks to Christopher Baker's IpVideoGrabber \, see:
 ;
-#X connect 5 0 13 0;
-#X connect 10 0 22 0;
-#X connect 12 0 13 1;
-#X connect 13 0 22 0;
-#X connect 16 0 22 1;
-#X connect 17 0 22 2;
-#X connect 22 1 25 0;
-#X connect 23 0 10 0;
-#X connect 25 0 26 0;
-#X connect 26 0 18 0;
-#X connect 26 1 19 0;
+#X msg 72 262 symbol http://195.200.199.8/axis-cgi/mjpg/video.cgi?resolution=320x240
+, f 71;
+#X msg 91 291 symbol http://107.1.228.34/axis-cgi/mjpg/video.cgi?resolution=320x240
+, f 70;
+#X obj 37 424 pofipcam 500 0;
+#X msg 72 327 connect \$1;
+#X msg 78 364 disconnect;
+#X text 68 243 connect to url:;
+#X obj 118 453 route size connected, f 30;
+#X obj 206 475 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X connect 5 0 12 0;
+#X connect 11 0 12 1;
+#X connect 12 0 29 0;
+#X connect 15 0 29 1;
+#X connect 16 0 29 2;
+#X connect 21 0 30 0;
+#X connect 22 0 17 0;
+#X connect 22 1 18 0;
+#X connect 27 0 30 0;
+#X connect 28 0 30 0;
+#X connect 29 1 33 0;
+#X connect 30 0 29 0;
+#X connect 31 0 29 0;
+#X connect 33 0 22 0;
+#X connect 33 1 34 0;
