@@ -44,7 +44,15 @@ void pofquad_corner(void *x, float num, float X, float Y, float Z)
 {
 	pofQuad* px = (pofQuad*)(((PdObject*)x)->parent);
 	
-	if((num>=0)&&(num<=3)) px->corners[int(num)].set(X,Y,Z);
+	if((num >= 0) && (num <= 3)) px->corners[int(num)].set(X, Y, Z);
+	px->needUpdate = true;
+}
+
+void pofquad_tcorner(void *x, float num, float U, float V)
+{
+	pofQuad* px = (pofQuad*)(((PdObject*)x)->parent);
+	
+	if((num >= 0) && (num <= 3)) px->tcorners[int(num)].set(U, V);
 	px->needUpdate = true;
 }
 
@@ -83,6 +91,7 @@ void pofQuad::setup(void)
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
 	class_addmethod(pofquad_class, (t_method)pofquad_res, gensym("res"), A_FLOAT, A_FLOAT, A_NULL );
 	class_addmethod(pofquad_class, (t_method)pofquad_corner, gensym("corner"), A_FLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_NULL );
+	class_addmethod(pofquad_class, (t_method)pofquad_tcorner, gensym("tcorner"), A_FLOAT, A_DEFFLOAT, A_DEFFLOAT, A_NULL );
 	class_addmethod(pofquad_class, (t_method)pofquad_drawMesh, gensym("drawMesh"), A_FLOAT, A_NULL );
 	class_addmethod(pofquad_class, (t_method)pofquad_drawVertices, gensym("drawVertices"), A_FLOAT, A_NULL );
 	class_addmethod(pofquad_class, (t_method)pofquad_drawWireframe, gensym("drawWireframe"), A_FLOAT, A_NULL );
@@ -101,7 +110,7 @@ static int ofxIndex(float x, float y, float w) {
 }
 
 void pofQuad::Update() {
-	ofPoint lt=corners[0], rt=corners[1], rb=corners[2], lb=corners[3];
+	ofPoint lt = corners[0], rt = corners[1], rb = corners[2], lb = corners[3];
 #ifndef TARGET_OPENGLES
 	float tw = textureSize.x;
 	float th = textureSize.y;
@@ -109,14 +118,18 @@ void pofQuad::Update() {
 	float tw = 1;
 	float th = 1;
 #endif
+	ofPoint tsize(tw, th);
+	ofPoint tlt = tcorners[0] * tsize, trt = tcorners[1] * tsize, trb = tcorners[2] * tsize, tlb = tcorners[3] * tsize;
 	
 	mesh.clear();
-	for (int x=0; x<=columns; x++) {
-		float f = float(x)/columns;
-		ofPoint vTop(ofxLerp(lt,rt,f));
-		ofPoint vBottom(ofxLerp(lb,rb,f));
-		ofPoint tTop(ofxLerp(ofPoint(0,0),ofPoint(tw,0),f));
-		ofPoint tBottom(ofxLerp(ofPoint(0,th),ofPoint(tw,th),f));
+	for (int x = 0; x <= columns; x++) {
+		float f = float(x) / columns;
+		ofPoint vTop(ofxLerp(lt, rt, f));
+		ofPoint vBottom(ofxLerp(lb, rb, f));
+		ofPoint tTop(ofxLerp(tlt, trt, f));
+		ofPoint tBottom(ofxLerp(tlb, trb, f));
+		//ofPoint tTop(ofxLerp(ofPoint(0,0),ofPoint(tw,0),f));
+		//ofPoint tBottom(ofxLerp(ofPoint(0,th),ofPoint(tw,th),f));
         
 		for (int y=0; y<=rows; y++) {
 			float f = float(y)/rows;
@@ -147,34 +160,6 @@ void pofQuad::draw() {
 	
 	if(needUpdate) Update();
 	
-    /*ofPoint lt=corners[0], rt=corners[1], rb=corners[2], lb=corners[3];
-    float tw = 1;
-    float th = 1;
-    
-	ofMesh mesh;
-    
-    for (int x=0; x<=columns; x++) {
-        float f = float(x)/columns;
-        ofPoint vTop(ofxLerp(lt,rt,f));
-        ofPoint vBottom(ofxLerp(lb,rb,f));
-        ofPoint tTop(ofxLerp(ofPoint(0,0),ofPoint(tw,0),f));
-        ofPoint tBottom(ofxLerp(ofPoint(0,th),ofPoint(tw,th),f));
-        
-        for (int y=0; y<=rows; y++) {
-            float f = float(y)/rows;
-            ofPoint v = ofxLerp(vTop,vBottom,f);
-            mesh.addVertex(v);
-            mesh.addTexCoord(ofxLerp(tTop,tBottom,f));
-        }
-    }
-    
-    for (float y=0; y<rows; y++) {
-        for (float x=0; x<columns; x++) {
-            mesh.addTriangle(ofxIndex(x,y,columns+1), ofxIndex(x+1,y,columns+1), ofxIndex(x,y+1,columns+1));
-            mesh.addTriangle(ofxIndex(x+1,y,columns+1), ofxIndex(x+1,y+1,columns+1), ofxIndex(x,y+1,columns+1));
-        }
-    }*/
-    
     if (drawMesh) mesh.draw();
     if (drawVertices) mesh.drawVertices();
     if (drawWireframe) mesh.drawWireframe();

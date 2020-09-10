@@ -43,6 +43,7 @@
 #include "pofBlend.h"
 #include "pofLayer.h"
 #include "pofOnce.h"
+#include "pofIPcam.h"
 
 
 void setupAll() {
@@ -85,5 +86,6 @@ void setupAll() {
 	pofFill::setup();
 	pofLayer::setup();
 	pofOnce::setup();
+    pofIPcam::setup();
 }
 
