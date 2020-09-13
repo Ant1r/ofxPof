@@ -9,9 +9,9 @@
 t_class *pofwin_class;
 
 pofWin *pofWin::win = NULL;
-void(*pofWin::open)(void)=NULL;
+void(*pofWin::open)(int argc, t_atom *argv)=NULL;
 
-static t_symbol *s_out, *s_window;
+static t_symbol *s_out, *s_window, *s_pos;
 
 void *pofwin_new(void)
 {
@@ -38,14 +38,14 @@ void pofwin_bang(void *x)
 	px->windowResized(ofGetWindowWidth(),ofGetWindowHeight());
 }
 
-void pofwin_open(void *x)
+void pofwin_open(void *x, t_symbol *s, int argc, t_atom *argv)
 {
 	pofWin* px= (pofWin*)(((PdObject*)x)->parent);
 
-	if(pofWin::open) pofWin::open();
+	if(pofWin::open) pofWin::open(argc, argv);
 }
 
-void pofwin_window(void *x, t_float width, t_float height, t_float fullscreen)
+/*void pofwin_window(void *x, t_float width, t_float height, t_float fullscreen)
 {
 	pofWin* px= (pofWin*)(((PdObject*)x)->parent);
 	if(width<1) width = 1;
@@ -60,16 +60,16 @@ void pofwin_window(void *x, t_float width, t_float height, t_float fullscreen)
 	ofSetWindowShape((int)width,(int)height);
 	pofBase::treeMutex.unlockW();
 #endif
-}
+}*/
 
-void pofwin_pos(void *x, t_float X, t_float Y)
+/*void pofwin_pos(void *x, t_float X, t_float Y)
 {
 	pofWin* px= (pofWin*)(((PdObject*)x)->parent);
 	if(px->init) return;
 	pofBase::treeMutex.lockW(); //avoid doing that during the draw
 	ofSetWindowPosition((int)X,(int)Y);
 	pofBase::treeMutex.unlockW();
-}
+}*/
 
 void pofwin_cursor(void *x, t_float cursor)
 {
@@ -125,22 +125,30 @@ void pofwin_build(void *x)
 	x=NULL; /* don't warn about unused variables */
 }
 
+void tellMainwin(void *x, t_symbol *s, int argc, t_atom *argv)
+{
+	pofWin::win->queueToGUI(s, argc, argv);
+}
+
 void pofWin::setup(void)
 {
 	//post("pofwin_setup");
 	s_window = gensym("window");
 	s_out = gensym("out");
+	s_pos = gensym("pos");
 	
 	pofwin_class = class_new(gensym("pofwin"), (t_newmethod)pofwin_new, (t_method)pofwin_free,
 		sizeof(PdObject), 0, (t_atomtype)0);
 
 	class_addbang(pofwin_class, (t_method)pofwin_bang);
-	class_addmethod(pofwin_class, (t_method)pofwin_window, s_window, A_FLOAT, A_FLOAT,A_DEFFLOAT,0);
 	class_addmethod(pofwin_class, (t_method)pofwin_out, s_out, A_GIMME, 0);
+	//class_addmethod(pofwin_class, (t_method)pofwin_window, s_window, A_FLOAT, A_FLOAT,A_DEFFLOAT,0);
+	//class_addmethod(pofwin_class, (t_method)pofwin_pos, gensym("pos"), A_FLOAT, A_FLOAT, 0);
+	class_addmethod(pofwin_class, (t_method)tellMainwin, s_window, A_GIMME, 0);
+	class_addmethod(pofwin_class, (t_method)tellMainwin, s_pos, A_GIMME, 0);
 	class_addmethod(pofwin_class, (t_method)pofwin_framerate, gensym("framerate"), A_FLOAT,0);
 	class_addmethod(pofwin_class, (t_method)pofwin_cursor, gensym("cursor"), A_FLOAT,0);
 	class_addmethod(pofwin_class, (t_method)pofwin_background, gensym("background"), A_FLOAT, A_FLOAT,A_FLOAT,0);
-	class_addmethod(pofwin_class, (t_method)pofwin_pos, gensym("pos"), A_FLOAT, A_FLOAT, 0);
 	class_addmethod(pofwin_class, (t_method)pofwin_normalizedtextcoords, gensym("normalizedtextcoords"), A_FLOAT,0);
 	class_addmethod(pofwin_class, (t_method)pofwin_build, gensym("build"), A_NULL);
 	class_addmethod(pofwin_class, (t_method)pofwin_open, gensym("open"), A_NULL);
@@ -197,6 +205,32 @@ void pofWin::windowResized(int w, int h)
 	SETFLOAT(&ap[3], h);
 
 	queueToSelfPd(4, ap);
+}
+
+void pofWin::message(int argc, t_atom *argv)
+{
+	t_symbol *key = atom_getsymbol(argv); 
+	argv++; argc--;
+
+	if(key == s_window) {
+		float width = atom_getfloat(argv);
+		float height = atom_getfloat(argv + 1);
+		float fullscreen = atom_getfloat(argv + 2);
+		
+		if(width<1) width = 1;
+		if(height<1) height = 1;
+	
+	#if (!defined(TARGET_ANDROID) && !(TARGET_OS_IOS))
+		ofSetWindowShape((int)width,(int)height);
+		ofSetFullscreen(fullscreen!=0);
+		ofSetWindowShape((int)width,(int)height);
+	#endif
+	}
+	else if(key == s_pos) {
+		float X = atom_getfloat(argv);
+		float Y = atom_getfloat(argv + 1);
+		ofSetWindowPosition((int)X,(int)Y);
+	}
 }
 
 

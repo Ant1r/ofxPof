@@ -1,4 +1,4 @@
-#N canvas 574 84 561 707 10;
+#N canvas 574 84 563 758 10;
 #X declare -lib pof;
 #X obj 19 15 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -8,46 +8,46 @@
 #X obj 19 68 cnv 15 200 20 empty empty empty 20 12 0 14 -261682 -66577
 0;
 #X text 28 69 pofwin : main window settings.;
-#X obj 21 522 cnv 15 80 30 empty empty empty 20 12 0 14 -261682 -66577
+#X obj 17 643 cnv 15 80 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
-#X msg 66 195 build;
-#X obj 27 601 pofwin;
-#X msg 81 286 framerate \$1;
-#X msg 27 119 window \$1 600 0;
-#X obj 30 99 hsl 128 15 0 500 0 0 empty empty empty -2 -8 0 10 -262144
+#X msg 96 245 build;
+#X obj 27 651 pofwin;
+#X msg 111 336 framerate \$1;
+#X msg 57 169 window \$1 600 0;
+#X obj 60 149 hsl 128 15 0 500 0 0 empty empty empty -2 -8 0 10 -262144
 -1 -1 0 1;
-#X msg 81 260 8;
-#X msg 111 261 25;
-#X msg 142 261 60;
-#X text 161 285 Set framerate.;
-#X obj 27 629 route window;
-#X obj 27 651 unpack f f;
-#X floatatom 27 676 5 0 0 0 - - -, f 5;
-#X floatatom 84 676 5 0 0 0 - - -, f 5;
-#X text 104 628 Get actual window size.;
-#X msg 106 408 background 0 0 0;
-#X msg 107 429 background 40 80 120;
-#X text 215 410 Set background color.;
-#X text 238 424 (R \, G \, B [0:255]);
-#X obj 110 468 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X msg 111 310 8;
+#X msg 141 311 25;
+#X msg 172 311 60;
+#X text 191 335 Set framerate.;
+#X obj 27 679 route window;
+#X obj 27 701 unpack f f;
+#X floatatom 27 726 5 0 0 0 - - -;
+#X floatatom 84 726 5 0 0 0 - - -;
+#X text 104 678 Get actual window size.;
+#X msg 136 458 background 0 0 0;
+#X msg 137 479 background 40 80 120;
+#X text 245 460 Set background color.;
+#X text 268 474 (R \, G \, B [0:255]);
+#X obj 140 518 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X text 131 466 bang : force send window size;
-#X text 106 178 Manually rebuild drawing tree (to be called when objects
+#X text 161 516 bang : force send window size;
+#X text 136 228 Manually rebuild drawing tree (to be called when objects
 have been connected or disconnected). Rebuild is done automatically
 when a pof object has been created or destroyed (but not when a pof
 object is connected/disconnected...).;
-#X msg 97 362 normalizedtextcoords \$1;
-#X obj 97 340 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X msg 127 412 normalizedtextcoords \$1;
+#X obj 127 390 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X text 119 332 Enable texture normalized (0-1) coordinates \, needed
+#X text 149 382 Enable texture normalized (0-1) coordinates \, needed
 to texture 3d objects.;
 #X obj 230 27 declare -lib pof;
 #X text 21 14 Pof: Pd OpenFrameworks externals;
-#X text 126 118 Set window size : window WIDHT HEIGHT [FULLSCREEN]
+#X text 156 168 Set window size : window WIDHT HEIGHT [FULLSCREEN]
 ;
-#X msg 112 525 pos \$1 100;
-#X obj 115 506 hsl 128 15 0 1500 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 1400 1;
+#X msg 142 575 pos \$1 100;
+#X obj 145 556 hsl 128 15 0 1500 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
 #N canvas 4 75 450 300 testfullscreen 0;
 #X obj 232 103 bng 15 250 50 0 empty empty empty 17 7 0 10 -260097
 -1 -1;
@@ -65,11 +65,15 @@ to texture 3d objects.;
 #X connect 4 0 6 0;
 #X connect 5 0 4 0;
 #X coords 0 -1 1 1 150 20 1 100 100;
-#X restore 35 142 pd testfullscreen;
-#X text 179 524 Set window position;
-#X msg 112 574 cursor \$1;
-#X obj 112 555 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X restore 65 192 pd testfullscreen;
+#X text 209 574 Set window position;
+#X msg 142 624 cursor \$1;
+#X obj 142 605 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
+#X msg 28 103 open;
+#X text 60 102 first open the pof window;
+#X msg 44 128 open noborder;
+#X text 135 127 caution!;
 #X connect 6 0 7 0;
 #X connect 7 0 15 0;
 #X connect 8 0 7 0;
@@ -91,3 +95,5 @@ to texture 3d objects.;
 #X connect 35 0 7 0;
 #X connect 37 0 7 0;
 #X connect 38 0 37 0;
+#X connect 39 0 7 0;
+#X connect 41 0 7 0;

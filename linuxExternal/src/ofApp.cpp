@@ -25,6 +25,7 @@ t_clock *pollEventsClock;
 #endif
 
 bool windowCreated = FALSE;
+bool windowNoBorder = false;
 
 class MyThread : public ofThread {
 
@@ -37,7 +38,12 @@ class MyThread : public ofThread {
         settings.glesVersion = 1;
         ofCreateWindow(settings);
 #else
-		ofSetupOpenGL(600,300, OF_WINDOW);			// <-------- setup the GL context
+//		ofSetupOpenGL(600,300, OF_WINDOW);			// <-------- setup the GL context
+		ofGLFWWindowSettings settings;
+		if(windowNoBorder) settings.decorated = false;
+		settings.width= 800;
+		settings.height= 600;
+		ofCreateWindow(settings);
 #endif
 		// can be OF_WINDOW or OF_FULLSCREEN
  		ofSetFrameRate(50);
@@ -154,11 +160,18 @@ void pollEventsMethod(void* nul)
 }
 #endif
 
-void open_window()
+void open_window(int argc, t_atom *argv)
 {
 	static bool opened = FALSE;
 	if(opened) return;
 	opened = TRUE;
+	while(argc)
+	{
+		if(argv->a_type == A_SYMBOL && atom_getsymbol(argv) == gensym("noborder"))
+			windowNoBorder = true;
+		argc--; argv++;
+	}
+
 	(new MyThread)->startThread(true);//, true);
 #ifndef RASPI
 	pollEventsClock = clock_new(0,(t_method)pollEventsMethod);
