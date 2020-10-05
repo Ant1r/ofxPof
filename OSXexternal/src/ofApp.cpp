@@ -5,6 +5,7 @@
  */
 #include "ofApp.h"
 #include "pofBase.h"
+#include "pofWin.h"
 //#include "ofAppGlutWindow.h"
 #include "ofAppGLFWWindow.h"
 
@@ -15,6 +16,9 @@
 #endif
 
 t_clock *pollEventsClock;
+
+bool windowCreated = false;
+bool windowNoBorder = false;
 
 extern const struct {
     unsigned int 	 width;
@@ -153,17 +157,45 @@ void pollEventsMethod(void* nul)
     clock_delay(pollEventsClock,2); //poll events every 2ms
 }
 
+void open_window(int argc, t_atom *argv)
+{
+    static bool opened = false;
+    if(opened) return;
+    opened = true;
+    while(argc)
+    {
+        if(argv->a_type == A_SYMBOL && atom_getsymbol(argv) == gensym("noborder")) {
+            windowNoBorder = true;
+            post("no border");
+        }
+        argc--; argv++;
+    }
+
+//    ofSetupOpenGL(600,300, OF_WINDOW);
+    ofGLFWWindowSettings settings;
+    if(windowNoBorder) settings.decorated = false;
+    settings.width= 800;
+    settings.height= 600;
+    ofCreateWindow(settings);
+
+    (new MyThread)->startThread();
+
+    pollEventsClock = clock_new(0,(t_method)pollEventsMethod);
+    clock_delay(pollEventsClock,100);
+}
+
 extern "C" {
     /* this is called once at setup time, when this code is loaded into Pd. */
     void pof_setup(void)
     {
         pofBase::setup();
 
-        ofSetupOpenGL(600,300, OF_WINDOW);
+        pofWin::open = &open_window;
+/*        ofSetupOpenGL(600,300, OF_WINDOW);
         (new MyThread)->startThread();
 
         pollEventsClock = clock_new(0,(t_method)pollEventsMethod);
-        clock_delay(pollEventsClock,100);
+        clock_delay(pollEventsClock,100);*/
     }
 }
 
