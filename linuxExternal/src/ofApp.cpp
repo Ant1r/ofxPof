@@ -24,7 +24,7 @@ extern t_class *pofwin_class;
 t_clock *pollEventsClock;
 #endif
 
-bool windowCreated = FALSE;
+bool windowCreated = false;
 bool windowNoBorder = false;
 
 class MyThread : public ofThread {
@@ -84,7 +84,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	windowCreated = TRUE;
+	windowCreated = true;
 	pofBase::drawAll();
 }
 
@@ -162,9 +162,9 @@ void pollEventsMethod(void* nul)
 
 void open_window(int argc, t_atom *argv)
 {
-	static bool opened = FALSE;
+	static bool opened = false;
 	if(opened) return;
-	opened = TRUE;
+	opened = true;
 	while(argc)
 	{
 		if(argv->a_type == A_SYMBOL && atom_getsymbol(argv) == gensym("noborder"))
