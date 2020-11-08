@@ -12,12 +12,12 @@ class pofBlend: public pofBase {
 		pofBlend(t_class *Class):
 			pofBase(Class), srcFactor(GL_SRC_ALPHA), destFactor(GL_ONE_MINUS_SRC_ALPHA){  }
 
-        virtual void draw();
-        virtual void postdraw();
+		virtual void draw();
+		virtual void postdraw();
 		static void setup(void);
 		
 		GLenum srcFactor;
-        GLenum destFactor;
+		GLenum destFactor;
 		GLenum lastSrcFactor;
 		GLenum lastDestFactor;
 
