@@ -6,6 +6,7 @@
 #include "pofBang.h"
 
 t_class *pofbang_class;
+static t_symbol *bangsym;
 
 void *pofbang_new(t_floatarg _enable)
 {    
@@ -35,7 +36,7 @@ void pofBang::draw()
 {
 	if(enable) {
 		t_atom at;
-		SETSYMBOL(&at, &s_bang);
+		SETSYMBOL(&at, bangsym);
 		queueToSelfPd(1, &at);
 	}
 }
@@ -43,6 +44,7 @@ void pofBang::draw()
 void pofBang::setup(void)
 {
 	//post("pofbang_setup");
+	bangsym = gensym("bang");
 	pofbang_class = class_new(gensym("pofbang"), (t_newmethod)pofbang_new,
 		(t_method)pofbang_free,sizeof(PdObject), 0, A_DEFFLOAT, A_NULL);
 	POF_SETUP(pofbang_class);

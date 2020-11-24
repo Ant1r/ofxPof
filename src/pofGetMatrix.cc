@@ -31,7 +31,7 @@ static void pofGetMatrix_dosend(void *x)
 	t_atom at[16];
 
 	for(int i = 0 ; i < 16 ; i++) SETFLOAT(&at[i],px->matrix(i%4, i/4));
-	outlet_anything(px->m_out2, &s_list, 16, at);
+	outlet_anything(px->m_out2, gensym("list"), 16, at);
 
 	ofVec3f trans = px->matrix.getTranslation();
 	SETFLOAT(&at[0],trans.x);

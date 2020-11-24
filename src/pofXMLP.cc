@@ -9,7 +9,7 @@ std::map<t_symbol*,pofsubXMLP*> pofsubXMLP::xmls;
 
 static t_class *pofxmlp_class;
 static t_symbol *s_set, *s_add, *s_setattr, *s_remove, *s_removeall, *s_removeattr, *s_get, *s_gets, 
-	*s_addbefore, *s_addafter, *s_copy, *s_rename, *s_setto, *s_getpath;
+	*s_addbefore, *s_addafter, *s_copy, *s_rename, *s_setto, *s_getpath, *s_none;
 
 static void *pofxmlp_new(t_symbol *n)
 {
@@ -180,7 +180,7 @@ static void pofxmlp_set(void *x, t_symbol *s,int argc, t_atom *argv)
 	pofXMLP* px= (pofXMLP*)(((PdObject*)x)->parent);
 	char *buf;
 	int buflen;
-	t_symbol * name = &s_;
+	t_symbol * name = s_none;
 	
 	t_symbol * path = atom_getsymbol(argv);
 	argc--; argv++;
@@ -297,6 +297,7 @@ void pofXMLP::setup(void)
 	s_copy =gensym("copy");
 	s_setto = gensym("setto");
 	s_getpath = gensym("getpath");
+	s_none = gensym("");
 	
 	pofxmlp_class = class_new(gensym("pofxmlp"), (t_newmethod)pofxmlp_new, (t_method)pofxmlp_free,
 		sizeof(PdObject), 0, A_SYMBOL, A_NULL);
