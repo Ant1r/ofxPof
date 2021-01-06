@@ -9,7 +9,7 @@ t_class *poffbo_class;
 
 std::map<t_symbol*,pofsubFbo*> pofsubFbo::sfbos;
 
-pofsubFbo::pofsubFbo(t_symbol *n):refCount(1), name(n), width(0), height(0), format(GL_RGBA) {
+pofsubFbo::pofsubFbo(t_symbol *n):refCount(1), name(n), width(0), height(0), format(GL_RGBA), numSamples(0) {
 	fbo = new ofFbo();
 	sfbos[n] = this;
 	ofAddListener(pofBase::reloadTexturesEvent, this, &pofsubFbo::reloadTexture);
@@ -48,7 +48,7 @@ void pofsubFbo::let(pofsubFbo *sfbo) {
 	if(!--sfbo->refCount) delete sfbo;
 }
 
-void pofsubFbo::begin(float w, float h, GLint _format) {
+void pofsubFbo::begin(float w, float h, GLint _format, int _numSamples) {
     if(w < 0) w = 0;
 	if(h < 0) h = 0;
 	
@@ -57,18 +57,19 @@ void pofsubFbo::begin(float w, float h, GLint _format) {
 
 	
 	if(width != 0 && height != 0) {
-		if(_format && (format != _format)) {
+		if((_format && (format != _format)) || ((_numSamples >= 0) && (numSamples != _numSamples))) {
 			delete fbo;
 			fbo = new ofFbo();
-			format = _format;
+			if(_format) format = _format;
+			if(_numSamples >= 0) numSamples = _numSamples;
 		}
 		if( (!fbo->isAllocated()) || (fbo->getWidth() != width) || (fbo->getHeight() != height) )
 		{
-			fbo->allocate(width, height, format /*GL_RGBA*/);
+			fbo->allocate(width, height, format, numSamples);
 		}
 	}
-	fbo->begin();
 	pofBase::textures[name] = &fbo->getTexture();
+	fbo->begin();
 }
 
 void pofsubFbo::end() {
@@ -93,16 +94,16 @@ void *poffbo_new(t_symbol *sym,int argc, t_atom *argv)
     t_symbol *name = NULL;
     
     if(argc && argv->a_type == A_SYMBOL) {
-    	name = atom_getsymbol(argv); argc--; argv++;   	
+    	name = atom_getsymbol(argv); argc--; argv++;
     	if(argc && argv->a_type == A_FLOAT) {
-    		w = atom_getfloat(argv); argc--; argv++; 
-    		if(argc && argv->a_type == A_FLOAT) h = atom_getfloat(argv); argc--; argv++;
+    		w = atom_getfloat(argv); argc--; argv++;
+    		if(argc && argv->a_type == A_FLOAT) h = atom_getfloat(argv);
     	}
     } else if(argc && argv->a_type == A_FLOAT) {
-    	w = atom_getfloat(argv); argc--; argv++; 
+    	w = atom_getfloat(argv); argc--; argv++;
     	if(argc && argv->a_type == A_FLOAT) {
     		h = atom_getfloat(argv); argc--; argv++;
-    		if(argc && argv->a_type == A_SYMBOL) name = atom_getsymbol(argv); argc--; argv++;
+    		if(argc && argv->a_type == A_SYMBOL) name = atom_getsymbol(argv);
     	}
     }
     
@@ -164,6 +165,12 @@ void poffbo_format(void *x, t_symbol *formatString)
 #endif
 }
 
+void poffbo_numsamples(void *x, t_float num)
+{
+	pofFbo *px = (pofFbo*)(((PdObject*)x)->parent);
+	px->numSamples = num;
+}
+
 void pofFbo::setup(void)
 {
 	//post("poffbo_setup");
@@ -174,12 +181,13 @@ void pofFbo::setup(void)
 	class_addmethod(poffbo_class, (t_method)poffbo_quality, gensym("quality"), A_FLOAT, A_NULL);
 	class_addmethod(poffbo_class, (t_method)poffbo_set, gensym("set"), A_SYMBOL, A_NULL);
 	class_addmethod(poffbo_class, (t_method)poffbo_format, gensym("format"), A_SYMBOL, A_NULL);
+	class_addmethod(poffbo_class, (t_method)poffbo_numsamples, gensym("numsamples"), A_FLOAT, A_NULL);
 	POF_SETUP(poffbo_class);
 }
 
 void pofFbo::draw()
 {
-	sfbo->begin(width, height, format);
+	sfbo->begin(width, height, format, numSamples);
 	sfbo->setQuality(quality);
 	//if(update) {
 	if(clear) ofClear(255,255,255, 0);
