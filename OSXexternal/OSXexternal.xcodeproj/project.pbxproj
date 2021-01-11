@@ -928,7 +928,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $SRCROOT\nexport POF_GITVERSION=`git describe --abbrev=4`\necho \"#define POF_VERSION $POF_GITVERSION\" > ../src/VERSION\ntouch ../src/version.cc\n";
+			shellScript = "cd $SRCROOT\nexport POF_GITVERSION=`git describe --long --abbrev=4`\necho \"#define POF_VERSION $POF_GITVERSION\" > ../src/VERSION\ntouch ../src/version.cc\n";
 		};
 		C92493611C328D7A00C309A2 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

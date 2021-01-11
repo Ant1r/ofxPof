@@ -2,7 +2,7 @@
 # CONFIGURE PROJECT MAKEFILE (optional)
 #   This file is where we make project specific configurations.
 ################################################################################
-POF_GITVERSION=$(shell git describe --abbrev=4)
+POF_GITVERSION=$(shell git describe --long --abbrev=4)
 $(shell echo "#define POF_VERSION $(POF_GITVERSION)" > ../src/VERSION)
 $(shell touch ../src/version.cc)
 
