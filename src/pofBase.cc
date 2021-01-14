@@ -485,7 +485,7 @@ t_symbol *makefilename(t_symbol *f, t_canvas *pdcanvas)
 	if(f->s_name[0] == '@' && f->s_name[1] == '[') {
 		char buf[256];
 		int i = 0;
-		char *in = f->s_name + 2;
+		const char *in = f->s_name + 2;
 		while((*in) && (*in) != ']') buf[i++] = *in++;
 		if((*in) == ']') {
 			buf[i] = 0;
@@ -511,7 +511,7 @@ string makefilenameString(t_symbol *f, t_canvas *pdcanvas)
 	if(f->s_name[0] == '@' && f->s_name[1] == '[') {
 		char buf[256];
 		int i = 0;
-		char *in = f->s_name + 2;
+		const char *in = f->s_name + 2;
 		while((*in) && (*in) != ']') buf[i++] = *in++;
 		if((*in) == ']') {
 			buf[i] = 0;
