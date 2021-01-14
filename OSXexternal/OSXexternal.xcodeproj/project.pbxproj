@@ -54,20 +54,6 @@
 		C93BB5D81B10BAA700FD662B /* ofxFontStash.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB5D11B10BAA700FD662B /* ofxFontStash.h */; };
 		C93BB63E1B10BAF400FD662B /* ofxZipPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C93BB6171B10BAF400FD662B /* ofxZipPass.cpp */; };
 		C93BB63F1B10BAF400FD662B /* ofxZipPass.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6181B10BAF400FD662B /* ofxZipPass.h */; };
-		C93BB65A1B10BB1300FD662B /* checked.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6441B10BB1300FD662B /* checked.h */; };
-		C93BB65B1B10BB1300FD662B /* core.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6451B10BB1300FD662B /* core.h */; };
-		C93BB65C1B10BB1300FD662B /* unchecked.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6461B10BB1300FD662B /* unchecked.h */; };
-		C93BB65D1B10BB1300FD662B /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6471B10BB1300FD662B /* utf8.h */; };
-		C93BB65E1B10BB1300FD662B /* checked.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB64F1B10BB1300FD662B /* checked.h */; };
-		C93BB65F1B10BB1300FD662B /* core.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6501B10BB1300FD662B /* core.h */; };
-		C93BB6601B10BB1300FD662B /* unchecked.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6511B10BB1300FD662B /* unchecked.h */; };
-		C93BB6611B10BB1300FD662B /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6521B10BB1300FD662B /* utf8.h */; };
-		C93BB6621B10BB1300FD662B /* ofTextConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C93BB6541B10BB1300FD662B /* ofTextConverter.cpp */; };
-		C93BB6631B10BB1300FD662B /* ofTextConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6551B10BB1300FD662B /* ofTextConverter.h */; };
-		C93BB6641B10BB1300FD662B /* ofUnicode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C93BB6561B10BB1300FD662B /* ofUnicode.cpp */; };
-		C93BB6651B10BB1300FD662B /* ofUnicode.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6571B10BB1300FD662B /* ofUnicode.h */; };
-		C93BB6661B10BB1300FD662B /* ofUTF8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C93BB6581B10BB1300FD662B /* ofUTF8.cpp */; };
-		C93BB6671B10BB1300FD662B /* ofUTF8.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB6591B10BB1300FD662B /* ofUTF8.h */; };
 		C93BB6741B10BB3B00FD662B /* json-forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB66C1B10BB3B00FD662B /* json-forwards.h */; };
 		C93BB6751B10BB3B00FD662B /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BB66D1B10BB3B00FD662B /* json.h */; };
 		C93BB6761B10BB3B00FD662B /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C93BB66F1B10BB3B00FD662B /* jsoncpp.cpp */; };
@@ -163,6 +149,15 @@
 		C9F0EE081F7250BC00095B75 /* pofShader.h in Headers */ = {isa = PBXBuildFile; fileRef = C9F0EE061F7250BC00095B75 /* pofShader.h */; };
 		C9FA1472217A560D00243718 /* pofBlend.cc in Sources */ = {isa = PBXBuildFile; fileRef = C9FA1471217A560D00243718 /* pofBlend.cc */; };
 		C9FA1474217A561A00243718 /* pofBlend.h in Headers */ = {isa = PBXBuildFile; fileRef = C9FA1473217A561A00243718 /* pofBlend.h */; };
+		E0A46D37250002A5001296E8 /* pofIPcam.cc in Sources */ = {isa = PBXBuildFile; fileRef = E0A46D35250002A4001296E8 /* pofIPcam.cc */; };
+		E0A46D38250002A5001296E8 /* pofIPcam.h in Headers */ = {isa = PBXBuildFile; fileRef = E0A46D36250002A4001296E8 /* pofIPcam.h */; };
+		E0A46D43250003A5001296E8 /* IPVideoGrabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0A46D41250003A5001296E8 /* IPVideoGrabber.cpp */; };
+		E0A46D44250003A5001296E8 /* IPVideoGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = E0A46D42250003A5001296E8 /* IPVideoGrabber.h */; };
+		E0BEFE8A2372C855007B2CD7 /* pofXMLP.h in Headers */ = {isa = PBXBuildFile; fileRef = E0BEFE882372C854007B2CD7 /* pofXMLP.h */; };
+		E0BEFE8B2372C855007B2CD7 /* pofXMLP.cc in Sources */ = {isa = PBXBuildFile; fileRef = E0BEFE892372C855007B2CD7 /* pofXMLP.cc */; };
+		E0BEFE9A2372CA68007B2CD7 /* pugiconfig.hpp in Headers */ = {isa = PBXBuildFile; fileRef = E0BEFE972372CA68007B2CD7 /* pugiconfig.hpp */; };
+		E0BEFE9B2372CA68007B2CD7 /* pugixml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0BEFE982372CA68007B2CD7 /* pugixml.cpp */; };
+		E0BEFE9C2372CA68007B2CD7 /* pugixml.hpp in Headers */ = {isa = PBXBuildFile; fileRef = E0BEFE992372CA68007B2CD7 /* pugixml.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -232,20 +227,6 @@
 		C93BB5D11B10BAA700FD662B /* ofxFontStash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFontStash.h; sourceTree = "<group>"; };
 		C93BB6171B10BAF400FD662B /* ofxZipPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxZipPass.cpp; sourceTree = "<group>"; };
 		C93BB6181B10BAF400FD662B /* ofxZipPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxZipPass.h; sourceTree = "<group>"; };
-		C93BB6441B10BB1300FD662B /* checked.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = checked.h; sourceTree = "<group>"; };
-		C93BB6451B10BB1300FD662B /* core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
-		C93BB6461B10BB1300FD662B /* unchecked.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unchecked.h; sourceTree = "<group>"; };
-		C93BB6471B10BB1300FD662B /* utf8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf8.h; sourceTree = "<group>"; };
-		C93BB64F1B10BB1300FD662B /* checked.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = checked.h; sourceTree = "<group>"; };
-		C93BB6501B10BB1300FD662B /* core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
-		C93BB6511B10BB1300FD662B /* unchecked.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unchecked.h; sourceTree = "<group>"; };
-		C93BB6521B10BB1300FD662B /* utf8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf8.h; sourceTree = "<group>"; };
-		C93BB6541B10BB1300FD662B /* ofTextConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofTextConverter.cpp; sourceTree = "<group>"; };
-		C93BB6551B10BB1300FD662B /* ofTextConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofTextConverter.h; sourceTree = "<group>"; };
-		C93BB6561B10BB1300FD662B /* ofUnicode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofUnicode.cpp; sourceTree = "<group>"; };
-		C93BB6571B10BB1300FD662B /* ofUnicode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofUnicode.h; sourceTree = "<group>"; };
-		C93BB6581B10BB1300FD662B /* ofUTF8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofUTF8.cpp; sourceTree = "<group>"; };
-		C93BB6591B10BB1300FD662B /* ofUTF8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofUTF8.h; sourceTree = "<group>"; };
 		C93BB66C1B10BB3B00FD662B /* json-forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "json-forwards.h"; sourceTree = "<group>"; };
 		C93BB66D1B10BB3B00FD662B /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
 		C93BB66F1B10BB3B00FD662B /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsoncpp.cpp; sourceTree = "<group>"; };
@@ -344,6 +325,18 @@
 		C9F0EE061F7250BC00095B75 /* pofShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofShader.h; sourceTree = "<group>"; };
 		C9FA1471217A560D00243718 /* pofBlend.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofBlend.cc; sourceTree = "<group>"; };
 		C9FA1473217A561A00243718 /* pofBlend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofBlend.h; sourceTree = "<group>"; };
+		E0A46D35250002A4001296E8 /* pofIPcam.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofIPcam.cc; sourceTree = "<group>"; };
+		E0A46D36250002A4001296E8 /* pofIPcam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofIPcam.h; sourceTree = "<group>"; };
+		E0A46D3D250003A5001296E8 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		E0A46D3E250003A5001296E8 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
+		E0A46D3F250003A5001296E8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		E0A46D41250003A5001296E8 /* IPVideoGrabber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IPVideoGrabber.cpp; sourceTree = "<group>"; };
+		E0A46D42250003A5001296E8 /* IPVideoGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPVideoGrabber.h; sourceTree = "<group>"; };
+		E0BEFE882372C854007B2CD7 /* pofXMLP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pofXMLP.h; sourceTree = "<group>"; };
+		E0BEFE892372C855007B2CD7 /* pofXMLP.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pofXMLP.cc; sourceTree = "<group>"; };
+		E0BEFE972372CA68007B2CD7 /* pugiconfig.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pugiconfig.hpp; sourceTree = "<group>"; };
+		E0BEFE982372CA68007B2CD7 /* pugixml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pugixml.cpp; sourceTree = "<group>"; };
+		E0BEFE992372CA68007B2CD7 /* pugixml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pugixml.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -419,15 +412,6 @@
 			path = ofxZipPass;
 			sourceTree = "<group>";
 		};
-		C93BB4711B10B33F00FD662B /* ofxUnicode */ = {
-			isa = PBXGroup;
-			children = (
-				C93BB6401B10BB1300FD662B /* libs */,
-				C93BB6531B10BB1300FD662B /* src */,
-			);
-			path = ofxUnicode;
-			sourceTree = "<group>";
-		};
 		C93BB4751B10B33F00FD662B /* ofxAccelerometer */ = {
 			isa = PBXGroup;
 			children = (
@@ -458,7 +442,6 @@
 			isa = PBXGroup;
 			children = (
 				C93BB4561B10B33F00FD662B /* ofxZipPass */,
-				C93BB4711B10B33F00FD662B /* ofxUnicode */,
 				C93BB4751B10B33F00FD662B /* ofxAccelerometer */,
 				C93BB4821B10B33F00FD662B /* ofxJSON */,
 				C93BB4CB1B10B33F00FD662B /* ofxPof */,
@@ -479,6 +462,8 @@
 		C93BB5C21B10BAA700FD662B /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				E0A46D39250003A5001296E8 /* ofxIpVideoGrabber */,
+				E0BEFE942372CA68007B2CD7 /* pugixml-1.10 */,
 				C93BB5C31B10BAA700FD662B /* ofxFontStash */,
 			);
 			path = libs;
@@ -546,90 +531,6 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		C93BB6401B10BB1300FD662B /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				C93BB6411B10BB1300FD662B /* utf8cpp */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
-		C93BB6411B10BB1300FD662B /* utf8cpp */ = {
-			isa = PBXGroup;
-			children = (
-				C93BB6421B10BB1300FD662B /* include */,
-				C93BB6481B10BB1300FD662B /* src */,
-			);
-			path = utf8cpp;
-			sourceTree = "<group>";
-		};
-		C93BB6421B10BB1300FD662B /* include */ = {
-			isa = PBXGroup;
-			children = (
-				C93BB6431B10BB1300FD662B /* utf8 */,
-				C93BB6471B10BB1300FD662B /* utf8.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		C93BB6431B10BB1300FD662B /* utf8 */ = {
-			isa = PBXGroup;
-			children = (
-				C93BB6441B10BB1300FD662B /* checked.h */,
-				C93BB6451B10BB1300FD662B /* core.h */,
-				C93BB6461B10BB1300FD662B /* unchecked.h */,
-			);
-			path = utf8;
-			sourceTree = "<group>";
-		};
-		C93BB6481B10BB1300FD662B /* src */ = {
-			isa = PBXGroup;
-			children = (
-				C93BB6491B10BB1300FD662B /* utf8_v2_3_1 */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		C93BB6491B10BB1300FD662B /* utf8_v2_3_1 */ = {
-			isa = PBXGroup;
-			children = (
-				C93BB64D1B10BB1300FD662B /* source */,
-			);
-			path = utf8_v2_3_1;
-			sourceTree = "<group>";
-		};
-		C93BB64D1B10BB1300FD662B /* source */ = {
-			isa = PBXGroup;
-			children = (
-				C93BB64E1B10BB1300FD662B /* utf8 */,
-				C93BB6521B10BB1300FD662B /* utf8.h */,
-			);
-			path = source;
-			sourceTree = "<group>";
-		};
-		C93BB64E1B10BB1300FD662B /* utf8 */ = {
-			isa = PBXGroup;
-			children = (
-				C93BB64F1B10BB1300FD662B /* checked.h */,
-				C93BB6501B10BB1300FD662B /* core.h */,
-				C93BB6511B10BB1300FD662B /* unchecked.h */,
-			);
-			path = utf8;
-			sourceTree = "<group>";
-		};
-		C93BB6531B10BB1300FD662B /* src */ = {
-			isa = PBXGroup;
-			children = (
-				C93BB6541B10BB1300FD662B /* ofTextConverter.cpp */,
-				C93BB6551B10BB1300FD662B /* ofTextConverter.h */,
-				C93BB6561B10BB1300FD662B /* ofUnicode.cpp */,
-				C93BB6571B10BB1300FD662B /* ofUnicode.h */,
-				C93BB6581B10BB1300FD662B /* ofUTF8.cpp */,
-				C93BB6591B10BB1300FD662B /* ofUTF8.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
 		C93BB6681B10BB3B00FD662B /* libs */ = {
 			isa = PBXGroup;
 			children = (
@@ -693,6 +594,10 @@
 		C93BB6BF1B13153700FD662B /* src */ = {
 			isa = PBXGroup;
 			children = (
+				E0A46D35250002A4001296E8 /* pofIPcam.cc */,
+				E0A46D36250002A4001296E8 /* pofIPcam.h */,
+				E0BEFE892372C855007B2CD7 /* pofXMLP.cc */,
+				E0BEFE882372C854007B2CD7 /* pofXMLP.h */,
 				C9606FD9236442A6002E915F /* pofOnce.cc */,
 				C9606FDA236442A6002E915F /* pofOnce.h */,
 				C9FA1473217A561A00243718 /* pofBlend.h */,
@@ -819,6 +724,44 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		E0A46D39250003A5001296E8 /* ofxIpVideoGrabber */ = {
+			isa = PBXGroup;
+			children = (
+				E0A46D3D250003A5001296E8 /* LICENSE.md */,
+				E0A46D3E250003A5001296E8 /* license.txt */,
+				E0A46D3F250003A5001296E8 /* README.md */,
+				E0A46D40250003A5001296E8 /* src */,
+			);
+			path = ofxIpVideoGrabber;
+			sourceTree = "<group>";
+		};
+		E0A46D40250003A5001296E8 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E0A46D41250003A5001296E8 /* IPVideoGrabber.cpp */,
+				E0A46D42250003A5001296E8 /* IPVideoGrabber.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		E0BEFE942372CA68007B2CD7 /* pugixml-1.10 */ = {
+			isa = PBXGroup;
+			children = (
+				E0BEFE962372CA68007B2CD7 /* src */,
+			);
+			path = "pugixml-1.10";
+			sourceTree = "<group>";
+		};
+		E0BEFE962372CA68007B2CD7 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E0BEFE972372CA68007B2CD7 /* pugiconfig.hpp */,
+				E0BEFE982372CA68007B2CD7 /* pugixml.cpp */,
+				E0BEFE992372CA68007B2CD7 /* pugixml.hpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -832,8 +775,8 @@
 				C93BB5D51B10BAA700FD662B /* stb_truetype.h in Headers */,
 				C93BB5881B10BA7200FD662B /* ofxAccelerometer.h in Headers */,
 				C93BB70A1B13153700FD662B /* pofGetMatrix.h in Headers */,
+				E0A46D38250002A5001296E8 /* pofIPcam.h in Headers */,
 				C93BB72A1B13153800FD662B /* pofVisible.h in Headers */,
-				C93BB6651B10BB1300FD662B /* ofUnicode.h in Headers */,
 				C93BB6751B10BB3B00FD662B /* json.h in Headers */,
 				C9ED7F7D1D7AC730000FC356 /* pofQuad.h in Headers */,
 				C904239120E6190F00A8B48F /* unzip.h in Headers */,
@@ -846,29 +789,26 @@
 				C9678B7720591A1F0081049F /* pofLayer.h in Headers */,
 				C90423A620E61A3E00A8B48F /* trees.h in Headers */,
 				C90423A420E61A3E00A8B48F /* inftrees.h in Headers */,
-				C93BB65A1B10BB1300FD662B /* checked.h in Headers */,
 				C93BB6FA1B13153700FD662B /* pofAccel.h in Headers */,
 				C90423A220E61A3E00A8B48F /* inflate.h in Headers */,
 				C93BB6741B10BB3B00FD662B /* json-forwards.h in Headers */,
 				C90423A020E61A3E00A8B48F /* inffixed.h in Headers */,
 				C904239320E6190F00A8B48F /* zip.h in Headers */,
 				C93BB71E1B13153700FD662B /* pofTextbox.h in Headers */,
+				E0BEFE9A2372CA68007B2CD7 /* pugiconfig.hpp in Headers */,
 				C93BB6FC1B13153700FD662B /* pofBang.h in Headers */,
 				C90423A920E61A3E00A8B48F /* zlib.h in Headers */,
 				C93BB70C1B13153700FD662B /* pofHead.h in Headers */,
 				C904239920E61A3E00A8B48F /* deflate.h in Headers */,
 				C904239B20E61A3E00A8B48F /* gzguts.h in Headers */,
-				C93BB65C1B10BB1300FD662B /* unchecked.h in Headers */,
 				C90423AB20E61A8200A8B48F /* zutil.h in Headers */,
-				C93BB65E1B10BB1300FD662B /* checked.h in Headers */,
 				C90423A820E61A3E00A8B48F /* zconf.h in Headers */,
 				C93BB72C1B13153800FD662B /* pofWin.h in Headers */,
 				C93BB7261B13153800FD662B /* pofTranslate.h in Headers */,
 				C93BB70E1B13153700FD662B /* pofImage.h in Headers */,
+				E0A46D44250003A5001296E8 /* IPVideoGrabber.h in Headers */,
 				C904239720E61A3E00A8B48F /* crc32.h in Headers */,
-				C93BB6611B10BB1300FD662B /* utf8.h in Headers */,
 				C9ED7F791D7AC70E000FC356 /* pofFilm.h in Headers */,
-				C93BB6631B10BB1300FD662B /* ofTextConverter.h in Headers */,
 				C93BB7281B13153800FD662B /* pofUtil.h in Headers */,
 				C9768D2F1DFFF74100F185A0 /* pofTexture.h in Headers */,
 				C93BB7081B13153700FD662B /* pofFonts.h in Headers */,
@@ -884,23 +824,20 @@
 				C904239F20E61A3E00A8B48F /* inffast.h in Headers */,
 				C93BB7161B13153700FD662B /* pofRotate.h in Headers */,
 				C93BB7201B13153800FD662B /* pofTexts.h in Headers */,
-				C93BB65D1B10BB1300FD662B /* utf8.h in Headers */,
 				C9FA1474217A561A00243718 /* pofBlend.h in Headers */,
 				C9DCA5121C05F13E00554E71 /* pofSphere.h in Headers */,
 				C93BB6791B10BB3B00FD662B /* ofxJSONElement.h in Headers */,
+				E0BEFE8A2372C855007B2CD7 /* pofXMLP.h in Headers */,
 				C93BB7221B13153800FD662B /* pofTouch.h in Headers */,
-				C93BB65B1B10BB1300FD662B /* core.h in Headers */,
 				C90854C220455C2B0044332F /* pofFill.h in Headers */,
 				C93BB71A1B13153700FD662B /* pofScope.h in Headers */,
-				C93BB6671B10BB1300FD662B /* ofUTF8.h in Headers */,
 				C93BB7041B13153700FD662B /* pofFbo.h in Headers */,
 				C93BB7101B13153700FD662B /* pofJSON.h in Headers */,
-				C93BB65F1B10BB1300FD662B /* core.h in Headers */,
 				C99191311DC89B2A00433B4F /* pofPath.h in Headers */,
+				E0BEFE9C2372CA68007B2CD7 /* pugixml.hpp in Headers */,
 				C93BB5D81B10BAA700FD662B /* ofxFontStash.h in Headers */,
 				C90854C320455C2B0044332F /* RWmutex.h in Headers */,
 				C9606FDC236442A7002E915F /* pofOnce.h in Headers */,
-				C93BB6601B10BB1300FD662B /* unchecked.h in Headers */,
 				C93BB72E1B13153800FD662B /* pofXML.h in Headers */,
 				C904238B20E6190F00A8B48F /* crypt.h in Headers */,
 				C93BB7001B13153700FD662B /* pofCirc.h in Headers */,
@@ -991,7 +928,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $SRCROOT\nexport POF_GITVERSION=`git describe --abbrev=4`\necho \"#define POF_VERSION $POF_GITVERSION\" > ../src/VERSION\ntouch ../src/version.cc\n";
+			shellScript = "cd $SRCROOT\nexport POF_GITVERSION=`git describe --long --abbrev=4`\necho \"#define POF_VERSION $POF_GITVERSION\" > ../src/VERSION\ntouch ../src/version.cc\n";
 		};
 		C92493611C328D7A00C309A2 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1004,7 +941,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#install_name_tool -change ./libfmodex.dylib @loader_path/libfmodex.dylib  /Users/$USER/Library/Pd/pof/pof.pd_darwin\ninstall_name_tool -change @executable_path/libfmodex.dylib @loader_path/libfmodex.dylib  $BUILT_PRODUCTS_DIR/pof.pd_darwin\n";
+			shellScript = "#install_name_tool -change ./libfmodex.dylib @loader_path/libfmodex.dylib  /Users/$USER/Library/Pd/pof/pof.pd_darwin\ninstall_name_tool -change @executable_path/libfmodex.dylib @loader_path/libfmodex.dylib  /Users/$USER/Library/Pd/pof/pof.pd_darwin\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1015,13 +952,14 @@
 			files = (
 				C9ED7F781D7AC70E000FC356 /* pofFilm.cc in Sources */,
 				C95F512D1B105CF700C8B17A /* ofApp.cpp in Sources */,
-				C93BB6641B10BB1300FD662B /* ofUnicode.cpp in Sources */,
 				C93BB7231B13153800FD662B /* pofTouchable.cc in Sources */,
 				C90423A120E61A3E00A8B48F /* inflate.c in Sources */,
 				C90423A520E61A3E00A8B48F /* trees.c in Sources */,
 				C93BB7291B13153800FD662B /* pofVisible.cc in Sources */,
+				E0BEFE9B2372CA68007B2CD7 /* pugixml.cpp in Sources */,
 				C904239E20E61A3E00A8B48F /* inffast.c in Sources */,
 				C93BB71B1B13153700FD662B /* pofText.cc in Sources */,
+				E0BEFE8B2372C855007B2CD7 /* pofXMLP.cc in Sources */,
 				C9678B7420591A1F0081049F /* EventDispatcher.cc in Sources */,
 				C90423A720E61A3E00A8B48F /* uncompr.c in Sources */,
 				C90423A320E61A3E00A8B48F /* inftrees.c in Sources */,
@@ -1042,6 +980,7 @@
 				C93BB71F1B13153700FD662B /* pofTexts.cc in Sources */,
 				C93BB5871B10BA7200FD662B /* ofxAccelerometer.cpp in Sources */,
 				C9FA1472217A560D00243718 /* pofBlend.cc in Sources */,
+				E0A46D43250003A5001296E8 /* IPVideoGrabber.cpp in Sources */,
 				C93BB7111B13153700FD662B /* pofRect.cc in Sources */,
 				C93BB6761B10BB3B00FD662B /* jsoncpp.cpp in Sources */,
 				C93BB5D71B10BAA700FD662B /* ofxFontStash.cpp in Sources */,
@@ -1056,6 +995,7 @@
 				C93BB70D1B13153700FD662B /* pofImage.cc in Sources */,
 				C904239020E6190F00A8B48F /* unzip.c in Sources */,
 				C9678B7620591A1F0081049F /* pofLayer.cc in Sources */,
+				E0A46D37250002A5001296E8 /* pofIPcam.cc in Sources */,
 				C93BB72D1B13153800FD662B /* pofXML.cc in Sources */,
 				C93BB7171B13153700FD662B /* pofScale.cc in Sources */,
 				C93BB6FF1B13153700FD662B /* pofCirc.cc in Sources */,
@@ -1069,7 +1009,6 @@
 				C93BB6781B10BB3B00FD662B /* ofxJSONElement.cpp in Sources */,
 				C93BB6F91B13153700FD662B /* pofAccel.cc in Sources */,
 				C93BB7071B13153700FD662B /* pofFonts.cc in Sources */,
-				C93BB6661B10BB1300FD662B /* ofUTF8.cpp in Sources */,
 				C904239220E6190F00A8B48F /* zip.c in Sources */,
 				C93BB72B1B13153800FD662B /* pofWin.cc in Sources */,
 				C93BB70B1B13153700FD662B /* pofHead.cc in Sources */,
@@ -1078,7 +1017,6 @@
 				C93BB7091B13153700FD662B /* pofGetMatrix.cc in Sources */,
 				C93BB6FD1B13153700FD662B /* pofBase.cc in Sources */,
 				C904239820E61A3E00A8B48F /* deflate.c in Sources */,
-				C93BB6621B10BB1300FD662B /* ofTextConverter.cpp in Sources */,
 				C93BB7191B13153700FD662B /* pofScope.cc in Sources */,
 				C904239A20E61A3E00A8B48F /* gzclose.c in Sources */,
 				C93BB7131B13153700FD662B /* pofResetMatrix.cc in Sources */,

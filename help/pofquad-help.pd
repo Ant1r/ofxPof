@@ -1,4 +1,4 @@
-#N canvas 654 75 562 573 10;
+#N canvas 521 81 775 573 10;
 #X declare -lib pof;
 #X obj 21 536 cnv 15 120 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
@@ -11,7 +11,7 @@
 0;
 #X text 7 3 Pof: Pd OpenFrameworks externals;
 #X obj 216 16 declare -lib pof;
-#X floatatom 100 131 5 0 0 0 - - -, f 5;
+#X floatatom 100 131 5 0 0 0 - - -;
 #X obj 38 152 pofrotate x;
 #X obj 38 543 pofquad 500 500;
 #X msg 73 246 res \$1 \$1;
@@ -20,49 +20,81 @@
 #X msg 105 218 5;
 #X obj 38 91 pofhead;
 #X text 11 57 pofquad : quad corners warping;
-#X obj 291 178 t b f;
-#X msg 237 231 corner 0 \$1 \$2;
-#X obj 421 176 t b f;
-#X msg 373 229 corner 1 \$1 \$2;
-#X obj 237 209 pack -200 -150;
-#X obj 373 207 pack 200 -150;
-#X obj 283 315 t b f;
-#X obj 419 313 t b f;
-#X msg 235 368 corner 3 \$1 \$2;
-#X msg 371 366 corner 2 \$1 \$2;
-#X obj 371 344 pack 200 150;
-#X obj 235 346 pack -200 150;
-#X obj 326 309 t a;
-#X obj 291 161 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+#X obj 284 135 t b f;
+#X msg 230 188 corner 0 \$1 \$2;
+#X obj 414 133 t b f;
+#X msg 366 186 corner 1 \$1 \$2;
+#X obj 230 166 pack -200 -150;
+#X obj 366 164 pack 200 -150;
+#X obj 283 268 t b f;
+#X obj 419 266 t b f;
+#X msg 235 321 corner 3 \$1 \$2;
+#X msg 371 319 corner 2 \$1 \$2;
+#X obj 371 297 pack 200 150;
+#X obj 235 299 pack -200 150;
+#X obj 333 348 t a;
+#X obj 284 118 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
 -262144 -1 -1 -115 256;
-#X obj 232 160 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+#X obj 225 117 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
 -262144 -1 -1 -123 256;
-#X obj 421 159 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+#X obj 414 116 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
 -262144 -1 -1 -118 256;
-#X obj 362 158 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+#X obj 355 115 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
 -262144 -1 -1 213 256;
-#X obj 283 291 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+#X obj 283 244 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
 -262144 -1 -1 75 256;
-#X obj 224 290 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+#X obj 224 243 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
 -262144 -1 -1 -232 256;
-#X obj 419 289 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+#X obj 419 242 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
 -262144 -1 -1 150 256;
-#X obj 360 288 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+#X obj 360 241 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
 -262144 -1 -1 274 256;
-#X msg 169 481 drawMesh \$1;
-#X obj 169 459 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X msg 386 479 drawMesh \$1;
+#X obj 386 457 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 248 460 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 465 458 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 351 460 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 568 458 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 459 459 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 676 457 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X msg 248 482 drawVertices \$1;
-#X msg 351 482 drawWireframe \$1;
-#X msg 459 481 drawFaces \$1;
+#X msg 465 480 drawVertices \$1;
+#X msg 568 480 drawWireframe \$1;
+#X msg 676 479 drawFaces \$1;
 #X msg 123 151 resize 200 200;
 #X obj 38 183 pofimage img/bikers.jpg TEX;
+#X obj 568 130 t b f;
+#X obj 698 128 t b f;
+#X obj 573 266 t b f;
+#X obj 709 264 t b f;
+#X obj 609 344 t a;
+#X obj 568 113 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+-262144 -1 -1 0.01 256;
+#X obj 509 112 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+-262144 -1 -1 0 256;
+#X obj 698 111 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+-262144 -1 -1 0 256;
+#X obj 639 110 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+-262144 -1 -1 1 256;
+#X obj 573 242 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+-262144 -1 -1 1 256;
+#X obj 514 241 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+-262144 -1 -1 0 256;
+#X obj 709 240 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+-262144 -1 -1 1 256;
+#X obj 650 239 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+-262144 -1 -1 1 256;
+#X msg 514 183 tcorner 0 \$1 \$2;
+#X msg 650 181 tcorner 1 \$1 \$2;
+#X msg 661 317 tcorner 2 \$1 \$2;
+#X msg 525 319 tcorner 3 \$1 \$2;
+#X obj 514 161 pack 0 0;
+#X obj 650 159 pack 1 0;
+#X obj 661 295 pack 1 1;
+#X obj 525 297 pack 0 1;
+#X obj 386 499 t a;
+#X text 286 81 draw corners:;
+#X text 582 81 texture corners:;
 #X connect 7 0 8 1;
 #X connect 8 0 46 0;
 #X connect 10 0 9 0;
@@ -95,13 +127,39 @@
 #X connect 34 0 27 0;
 #X connect 35 0 23 0;
 #X connect 36 0 26 0;
-#X connect 37 0 9 0;
+#X connect 37 0 68 0;
 #X connect 38 0 37 0;
 #X connect 39 0 42 0;
 #X connect 40 0 43 0;
 #X connect 41 0 44 0;
-#X connect 42 0 9 0;
-#X connect 43 0 9 0;
-#X connect 44 0 9 0;
+#X connect 42 0 68 0;
+#X connect 43 0 68 0;
+#X connect 44 0 68 0;
 #X connect 45 0 46 0;
 #X connect 46 0 9 0;
+#X connect 47 0 64 0;
+#X connect 47 1 64 1;
+#X connect 48 0 65 0;
+#X connect 48 1 65 1;
+#X connect 49 0 67 0;
+#X connect 49 1 67 1;
+#X connect 50 0 66 0;
+#X connect 50 1 66 1;
+#X connect 51 0 9 0;
+#X connect 52 0 47 0;
+#X connect 53 0 64 0;
+#X connect 54 0 48 0;
+#X connect 55 0 65 0;
+#X connect 56 0 49 0;
+#X connect 57 0 67 0;
+#X connect 58 0 50 0;
+#X connect 59 0 66 0;
+#X connect 60 0 51 0;
+#X connect 61 0 51 0;
+#X connect 62 0 51 0;
+#X connect 63 0 51 0;
+#X connect 64 0 60 0;
+#X connect 65 0 61 0;
+#X connect 66 0 62 0;
+#X connect 67 0 63 0;
+#X connect 68 0 9 0;

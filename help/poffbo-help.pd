@@ -1,4 +1,4 @@
-#N canvas 617 85 560 664 10;
+#N canvas 744 86 560 664 10;
 #X declare -lib pof;
 #X obj 3 3 cnv 15 200 20 empty empty empty 20 12 0 14 -204786 -66577
 0;
@@ -10,9 +10,9 @@
 #X obj 20 342 cnv 15 140 30 empty empty empty 20 12 0 14 -261682 -66577
 0;
 #X obj 27 84 pofhead;
-#X floatatom 67 328 5 0 0 0 - - -, f 5;
-#X floatatom 108 328 5 0 0 0 - - -, f 5;
-#X floatatom 96 379 5 0 0 0 - - -, f 5;
+#X floatatom 67 328 5 0 0 0 - - -;
+#X floatatom 108 328 5 0 0 0 - - -;
+#X floatatom 96 379 5 0 0 0 - - -;
 #X obj 27 510 pofimage img/of.png 200 200;
 #X obj 27 107 t a a;
 #X obj 54 130 pofcolor 0 0 0 1;
@@ -21,7 +21,7 @@
 #X obj 27 487 pofrect 240 200;
 #X text 197 337 Inlet 2: width;
 #X text 197 350 Inlet 3: height;
-#X floatatom 78 421 5 0 0 0 - - -, f 5;
+#X floatatom 78 421 5 0 0 0 - - -;
 #X obj 27 441 pofrotate;
 #X obj 27 350 poffbo 300 200;
 #X obj 54 153 pofrect 320 220;
@@ -32,7 +32,7 @@
 #X obj 41 581 loadbang;
 #X obj 27 560 pofcolor 0 0.5 0 1;
 #X obj 152 573 route up down;
-#X floatatom 152 616 5 0 0 0 - - -, f 5;
+#X floatatom 152 616 5 0 0 0 - - -;
 #X msg 152 594 1;
 #X msg 189 593 0;
 #X text 239 528 poffbo also clips touch events \;;
@@ -40,7 +40,7 @@
 #X text 237 559 after having hidden a part of it (translate).;
 #X text 132 378 <-- translate the sub-scene;
 #X text 114 420 <-- rotate the sub-scene;
-#X floatatom 149 401 5 0 0 0 - - -, f 5;
+#X floatatom 149 401 5 0 0 0 - - -;
 #X obj 51 221 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X msg 51 261 clear \$1;
@@ -55,7 +55,7 @@
 #X text 203 129 or : [poffbo] fboName;
 #X text 118 76 Use for : clipping a sub-scene \, pre-drawing \, feedback
 \, ...;
-#N canvas 835 196 513 508 EXAMPLE_motion-blur 1;
+#N canvas 835 197 513 508 EXAMPLE_motion-blur 0;
 #X obj 47 39 pofhead;
 #X obj 47 69 pofvisible;
 #X obj 118 42 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
@@ -70,7 +70,7 @@
 #X obj 62 184 loadbang;
 #X obj 188 264 hsl 128 15 0.003 1 1 0 empty empty empty -2 -8 0 10
 -262144 -1 -1 0 1;
-#X floatatom 149 265 5 0 0 0 - - -, f 5;
+#X floatatom 149 265 5 0 0 0 - - -;
 #X obj 167 415 poftranslate 100;
 #X obj 167 439 pofrotate;
 #X obj 47 441 pofrotate;
@@ -132,7 +132,7 @@ accumulate its content.;
 #N canvas 705 130 590 591 EXAMPLE_named-fbo 0;
 #X obj 90 2 pofhead;
 #X obj 90 33 pofvisible;
-#X obj 146 12 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 146 12 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 469 97 pofrect 3000 3000;
 #X obj 211 201 t a a;
@@ -142,7 +142,7 @@ accumulate its content.;
 #X obj 96 203 loadbang;
 #X obj 371 187 hsl 128 15 0.003 1 1 0 empty empty empty -2 -8 0 10
 -262144 -1 -1 0 1;
-#X floatatom 313 205 5 0 0 0 - - -, f 5;
+#X floatatom 313 205 5 0 0 0 - - -;
 #X obj 331 355 poftranslate 100;
 #X obj 331 379 pofrotate;
 #X obj 211 381 pofrotate;
@@ -155,8 +155,8 @@ accumulate its content.;
 #X obj 81 250 poffbo MyFBO;
 #X obj 211 171 poffbo MyFBO 500 500;
 #X obj 90 60 t a a a;
-#X floatatom 262 113 5 0 0 0 - - -, f 5;
-#X floatatom 165 151 5 0 0 0 - - -, f 5;
+#X floatatom 262 113 5 0 0 0 - - -;
+#X floatatom 165 151 5 0 0 0 - - -;
 #X obj 469 77 pofcolor 0 0 0 1;
 #X obj 211 145 pofscale 0.5 0.5;
 #X obj 81 147 pofrotate 45;
@@ -164,7 +164,7 @@ accumulate its content.;
 #X msg 40 356 clear 0;
 #X obj 40 334 loadbang;
 #X obj 25 381 poffbo MyFBO;
-#X floatatom 122 284 5 0 0 0 - - -, f 5;
+#X floatatom 122 284 5 0 0 0 - - -;
 #X obj 25 278 pofrotate -45;
 #X obj 25 310 pofcolor 0 1 0 1;
 #X obj 450 145 f;
@@ -275,6 +275,14 @@ write access to it.;
 #X msg 51 284 format RGBA;
 #X obj 200 486 pofcolor 1 0.8 0.8 0.7;
 #X text 208 190 format RGBA/RGB;
+#X text 359 289 number of MSAA subsamples;
+#X msg 273 289 numsamples \$1;
+#X msg 273 248 0;
+#X text 250 233 (default);
+#X floatatom 273 269 5 0 128 0 - - -;
+#X msg 313 248 2;
+#X msg 342 248 4;
+#X msg 372 248 8;
 #X connect 5 0 10 0;
 #X connect 6 0 19 1;
 #X connect 7 0 19 2;
@@ -310,3 +318,9 @@ write access to it.;
 #X connect 58 0 19 0;
 #X connect 59 0 19 0;
 #X connect 60 0 21 0;
+#X connect 63 0 19 0;
+#X connect 64 0 66 0;
+#X connect 66 0 63 0;
+#X connect 67 0 66 0;
+#X connect 68 0 66 0;
+#X connect 69 0 66 0;

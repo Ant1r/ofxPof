@@ -26,10 +26,11 @@ class pofTexts: public pofBase {
 		
 		t_symbol *font;
 		float size;
-		float xanchor; // -1=left 0=center 1=right
-		float yanchor; // -1=top 0=center 1=bottom
+		float lastFinalsize;		// last (size*font->scale) value
+		float xanchor;			// -1=left 0=center 1=right
+		float yanchor;			// -1=top 0=center 1=bottom
 		float width, lineHeight;
-		float letterSpacing; // 1= normal
+		float letterSpacing;	// 1= normal
 		bool center;
 		float underHeight, underWidth, underY;
 		int maxLines, lineOffset, totalLines;

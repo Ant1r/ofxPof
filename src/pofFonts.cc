@@ -9,17 +9,18 @@ t_class *poffonts_class;
 
 std::map<t_symbol*,pofFonts*> pofFonts::fonts;
 
-void *poffonts_new(t_symbol *font, t_symbol *fontfile)
+void *poffonts_new(t_symbol *font, t_symbol *fontfile, float scale)
 {
 	if(pofFonts::fonts.find(font)!=pofFonts::fonts.end()) {
-    	post("poffonts error : duplicate font name %s",font->s_name);
-    	return NULL;
-    }
-    
-    pofFonts* obj = new pofFonts(poffonts_class, font, fontfile);
-    obj->pdcanvas = canvas_getcurrent();
-    
-    return (void*) (obj->pdobj);
+		post("poffonts error : duplicate font name %s",font->s_name);
+		return NULL;
+	}
+
+	pofFonts* obj = new pofFonts(poffonts_class, font, fontfile);
+	obj->pdcanvas = canvas_getcurrent();
+	if(scale <= 0.0) scale = 1.0;
+	obj->scale = scale;
+	return (void*) (obj->pdobj);
 }
 
 void poffonts_free(void *x)
@@ -34,6 +35,14 @@ void poffonts_set(void *x, t_symbol *file)
 	
 	px->fontfile = file;
 	px->need_reload = true;
+}
+
+void poffonts_scale(void *x, t_float scale)
+{
+	pofFonts* px= (pofFonts*)(((PdObject*)x)->parent);
+	
+	if(scale <= 0.0) scale = 1.0;
+	px->scale = scale;
 }
 
 void pofFonts::update()
@@ -79,17 +88,18 @@ void pofFonts::setup(void)
 {
 	//post("poffonts_setup");
 	poffonts_class = class_new(gensym("poffonts"), (t_newmethod)poffonts_new, (t_method)poffonts_free,
-		sizeof(PdObject), 0, A_SYMBOL, A_SYMBOL, A_NULL);
+		sizeof(PdObject), 0, A_SYMBOL, A_SYMBOL, A_DEFFLOAT, A_NULL);
 	POF_SETUP(poffonts_class);
 	class_addmethod(poffonts_class, (t_method)poffonts_set, gensym("set"), A_SYMBOL, A_NULL);
+	class_addmethod(poffonts_class, (t_method)poffonts_scale, gensym("scale"), A_FLOAT, A_NULL);
 
 }
 
-ofxFontStash* pofFonts::getFont(t_symbol* font)
+pofFonts* pofFonts::getFont(t_symbol* font)
 {
 	std::map<t_symbol*,pofFonts*>::iterator it;
 	
 	it = fonts.find(font);
-	if( (it != fonts.end()) && (it->second->offont) && (it->second->offont->isLoaded()) ) return (it->second->offont);
+	if( (it != fonts.end()) && (it->second->offont) && (it->second->offont->isLoaded()) ) return (it->second);
 	else return NULL;
 }

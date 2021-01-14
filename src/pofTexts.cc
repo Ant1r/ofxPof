@@ -63,7 +63,7 @@ void poftexts_size(void *x, t_float s)
 	pofTexts* px= (pofTexts*)(((PdObject*)x)->parent);
 	if(s < 1) s = 1;
 	px->size = s;
-	px->mustUpdate = true;
+	//px->mustUpdate = true;
 }
 
 void poftexts_anchor(void *x, t_float xanchor, t_float yanchor)
@@ -169,16 +169,23 @@ void pofTexts::setup(void)
 
 void pofTexts::draw()
 {
-	ofxFontStash *offont = pofFonts::getFont(font);
+	pofFonts *poffont = pofFonts::getFont(font);
+	ofxFontStash *offont = poffont->offont;
 	bool update = false;
 	int numLines;
 	bool wordsWereCropped;
+	float finalsize;
 
 	if(offont == NULL) return;
 	if(!offont->isLoaded()) return;
 
 	offont->setCharacterSpacing(letterSpacing);
 	offont->setLineHeight(lineHeight);
+	finalsize = size * poffont->scale;
+	if(lastFinalsize != finalsize) {
+		lastFinalsize = finalsize;
+		mustUpdate = true;
+	}
 	
 	if(mustUpdate) {
 		string copyStr;
@@ -189,42 +196,44 @@ void pofTexts::draw()
 		mutex.unlock();
 		update = true;
 		
-		lines = offont->computeMultiLines(	str,	/*string*/
-									size,		/*size*/
-									width,		/*column width*/
-									numLines,	/*get back the number of lines*/
-									&wordsWereCropped /* this bool will b set to true if the box was to small to fit all text*/
-								 );
-								 
+		lines = offont->computeMultiLines(
+			str,				/*string*/
+			finalsize,			/*size*/
+			width,				/*column width*/
+			numLines,			/*get back the number of lines*/
+			&wordsWereCropped 	/* this bool will b set to true if the box was to small to fit all text*/
+		);
 		totalLines = numLines;//lines.size();
 	}
 
 	if(update || clipChanged) {
 		clipChanged = false;
 		update = true;
-		bound = offont->drawMultiLines( lines,			/*lines*/
-										size,	/*size*/
-										0, 0,		/*where*/
-										width/*1e6*/, /*column width*/
-										numLines,	/*get back the number of lines*/
-										true,		/* if true, we wont draw (just get bbox back) */
-										maxLines/*0*/,			/* max number of lines to draw, crop after that */
-										center, lineOffset
-									 );
-	}	
+		bound = offont->drawMultiLines(
+			lines,		/*lines*/
+			finalsize,	/*size*/
+			0, 0,		/*where*/
+			width, 		/*column width*/
+			numLines,	/*get back the number of lines*/
+			true,		/* if true, we wont draw (just get bbox back) */
+			maxLines,	/* max number of lines to draw, crop after that */
+			center, lineOffset
+		);
+	}
 
-	offont->drawMultiLines( lines,	/*lines*/
-							size,	/*size*/
-							bound.width*(-xanchor-1)/2 - bound.x,bound.height*(yanchor-1)/2 - bound.y,	/*where*/
-							width/*1e6*/, /*column width*/
-							numLines,	/*get back the number of lines*/
-							false,		/* if true, we wont draw (just get bbox back) */
-							maxLines/*0*/,			/* max number of lines to draw, crop after that */
-							center, lineOffset, underHeight, underWidth, underY
-						 );
+	offont->drawMultiLines(
+		lines,		/*lines*/
+		finalsize,	/*size*/
+		bound.width*(-xanchor-1)/2 - bound.x,bound.height*(yanchor-1)/2 - bound.y,	/*where*/
+		width, 		/*column width*/
+		numLines,	/*get back the number of lines*/
+		false,		/* if true, we wont draw (just get bbox back) */
+		maxLines,	/* max number of lines to draw, crop after that */
+		center, lineOffset, underHeight, underWidth, underY
+	 );
 
 	if((oldBound != bound)||update) {
-		oldBound = bound;	
+		oldBound = bound;
 		t_atom ap[6];
 
 		SETSYMBOL(&ap[0], s_out);

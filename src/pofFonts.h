@@ -13,7 +13,7 @@ class pofFonts;
 class pofFonts: public pofBase {
 	public:
 		pofFonts(t_class *Class, t_symbol *_font, t_symbol *_fontfile):
-		 pofBase(Class),offont(NULL),font(_font),fontfile(_fontfile),need_reload(true)
+		 pofBase(Class),offont(NULL),font(_font),fontfile(_fontfile),need_reload(true), scale(1.0)
 		{
 			fonts[font]=this;
 			ofAddListener(pofBase::reloadTexturesEvent, this, &pofFonts::reloadTexture);
@@ -40,9 +40,10 @@ class pofFonts: public pofBase {
 
 		bool need_reload;
 		t_canvas *pdcanvas;
+		float scale;
 		
 	static std::map<t_symbol*,pofFonts*> fonts;
-	static ofxFontStash* getFont(t_symbol* font);
+	static pofFonts* getFont(t_symbol* font);
 };
 
 
