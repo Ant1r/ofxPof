@@ -17,6 +17,7 @@
 #include "ofPixels.h"
 #include "ofRectangle.h"
 #include "ofBaseTypes.h"
+#include "ofEvents.h"
 
 
 namespace ofx {
