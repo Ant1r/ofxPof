@@ -9,14 +9,15 @@
 
 class pofLua: public pofBase {
 	public:
-		pofLua(t_class *Class):
-			pofBase(Class){}
-
+		pofLua(t_class *Class);
+		~pofLua();
+		
 		virtual void draw();
 		virtual void postdraw();
 		static void setup(void);
 
 		string script;
+		t_symbol *name;
 };
 
 

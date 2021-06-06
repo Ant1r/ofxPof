@@ -1,5 +1,5 @@
-#N canvas 713 417 601 455 12;
-#X obj 229 326 poflua;
+#N canvas 589 120 967 658 12;
+#X declare -lib pof;
 #X obj 229 194 pofhead;
 #X obj 229 260 poftranslate;
 #X floatatom 329 147 5 0 0 0 - - -;
@@ -9,48 +9,85 @@
 #X obj 190 273 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X floatatom 383 146 5 0 0 0 - - -;
-#X obj 229 284 pofvisible 1;
-#X floatatom 99 238 0 0 0 0 - - -;
-#X obj 99 150 cputime;
-#X obj 99 30 loadbang;
-#X obj 99 94 metro 1000;
-#X obj 99 122 t b b;
-#X obj 99 210 * 0.1;
-#X obj 99 179 int;
-#X text 122 60 <= on/off;
-#X obj 99 61 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1 1
-;
+#X floatatom 467 213 0 0 0 0 - - -;
+#X obj 467 125 cputime;
+#X obj 467 5 loadbang;
+#X obj 467 69 metro 1000;
+#X obj 467 97 t b b;
+#X obj 467 185 * 0.1;
+#X obj 467 154 int;
+#X text 490 35 <= on/off;
+#X obj 467 36 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
 #X obj 257 103 pofwin;
 #X msg 257 63 framerate 60;
-#X msg 227 37 framerate 25;
-#X obj 65 392 poflua;
+#X msg 214 13 framerate 25;
 #X obj 26 339 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 65 350 pofvisible 1;
 #X floatatom 96 295 5 0 0 0 - - -;
-#X obj 65 326 poftranslate 200 200;
-#X connect 1 0 4 0;
-#X connect 2 0 9 0;
-#X connect 3 0 2 1;
-#X connect 4 0 2 0;
-#X connect 4 0 26 0;
-#X connect 4 1 6 0;
-#X connect 6 0 5 0;
-#X connect 7 0 9 0;
-#X connect 8 0 2 2;
-#X connect 9 0 0 0;
-#X connect 11 0 16 0;
-#X connect 12 0 18 0;
-#X connect 13 0 14 0;
-#X connect 14 0 11 0;
-#X connect 14 1 11 1;
-#X connect 15 0 10 0;
-#X connect 16 0 15 0;
-#X connect 18 0 13 0;
-#X connect 20 0 19 0;
-#X connect 21 0 19 0;
+#X obj 567 13 pofhead;
+#X obj 567 37 pofbang 1;
+#X obj 627 60 t b b;
+#X obj 627 84 timer;
+#X msg 627 108 1000 \$1;
+#X obj 627 132 /;
+#X msg 237 38 framerate 50;
+#X obj 627 180 +;
+#X floatatom 609 225 5 0 0 0 - - -;
+#X obj 627 156 * 0.05;
+#X obj 660 179 * 0.95;
+#X obj 609 203 f;
+#X obj 14 12 declare -lib pof;
+#X obj 229 289 pofvisible;
+#X obj 65 326 poftranslate 0 0;
+#X obj 426 425 poflua truc_\$0 \; function M.draw() \; for i=0 \, 200
+do \; of.setColor(of.random(0 \, 255) \, of.random(0 \, 255) \, of.random(0
+\, 255) \, 255) \; of.drawRectangle(of.random(-100 \, 100) \, of.random(-100
+\, 100) \, of.random(10 \, 20) \, of.random(10 \, 20)) \; end \; end
+\;;
+#X obj 229 323 poflua draw1 \; function M.draw() \; of.setColor(of.random(0
+\, 255) \, of.random(0 \, 255) \, of.random(0 \, 255) \, 255) \; of.drawRectangle(of.random(-100
+\, 100) \, of.random(-100 \, 100) \, of.random(10 \, 20) \, of.random(10
+\, 20)) \; end \;, f 101;
+#X obj 65 434 poflua truc1_\$0 \; function M.draw() \; for i=0 \, 500
+do \; draw1.draw() \; end \; end \;;
+#X connect 0 0 3 0;
+#X connect 1 0 36 0;
+#X connect 2 0 1 1;
+#X connect 3 0 1 0;
+#X connect 3 0 37 0;
+#X connect 3 1 5 0;
+#X connect 5 0 4 0;
+#X connect 6 0 36 0;
+#X connect 7 0 1 2;
+#X connect 9 0 14 0;
+#X connect 10 0 16 0;
+#X connect 11 0 12 0;
+#X connect 12 0 9 0;
+#X connect 12 1 9 1;
+#X connect 12 1 34 0;
+#X connect 13 0 8 0;
+#X connect 14 0 13 0;
+#X connect 16 0 11 0;
+#X connect 18 0 17 0;
+#X connect 19 0 17 0;
+#X connect 20 0 21 0;
+#X connect 21 0 40 0;
+#X connect 22 0 37 1;
+#X connect 22 0 37 2;
 #X connect 23 0 24 0;
-#X connect 24 0 22 0;
-#X connect 25 0 26 1;
-#X connect 25 0 26 2;
-#X connect 26 0 24 0;
+#X connect 24 1 25 0;
+#X connect 25 0 26 0;
+#X connect 25 1 26 1;
+#X connect 26 0 27 0;
+#X connect 27 0 28 0;
+#X connect 28 0 32 0;
+#X connect 29 0 17 0;
+#X connect 30 0 33 0;
+#X connect 30 0 34 1;
+#X connect 32 0 30 0;
+#X connect 33 0 30 1;
+#X connect 34 0 31 0;
+#X connect 36 0 39 0;
+#X connect 37 0 21 0;
