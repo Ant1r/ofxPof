@@ -1,4 +1,4 @@
-#N canvas 589 120 967 658 12;
+#N canvas 844 123 967 744 12;
 #X declare -lib pof;
 #X obj 229 194 pofhead;
 #X obj 229 260 poftranslate;
@@ -22,14 +22,13 @@
 #X obj 257 103 pofwin;
 #X msg 257 63 framerate 60;
 #X msg 214 13 framerate 25;
-#X obj 26 339 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 26 339 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 65 350 pofvisible 1;
 #X floatatom 96 295 5 0 0 0 - - -;
 #X obj 567 13 pofhead;
 #X obj 567 37 pofbang 1;
-#X obj 627 60 t b b;
-#X obj 627 84 timer;
+#X obj 627 60 t b b, f 8;
 #X msg 627 108 1000 \$1;
 #X obj 627 132 /;
 #X msg 237 38 framerate 50;
@@ -41,53 +40,64 @@
 #X obj 14 12 declare -lib pof;
 #X obj 229 289 pofvisible;
 #X obj 65 326 poftranslate 0 0;
-#X obj 426 425 poflua truc_\$0 \; function M.draw() \; for i=0 \, 200
-do \; of.setColor(of.random(0 \, 255) \, of.random(0 \, 255) \, of.random(0
-\, 255) \, 255) \; of.drawRectangle(of.random(-100 \, 100) \, of.random(-100
-\, 100) \, of.random(10 \, 20) \, of.random(10 \, 20)) \; end \; end
-\;;
-#X obj 229 323 poflua draw1 \; function M.draw() \; of.setColor(of.random(0
-\, 255) \, of.random(0 \, 255) \, of.random(0 \, 255) \, 255) \; of.drawRectangle(of.random(-100
-\, 100) \, of.random(-100 \, 100) \, of.random(10 \, 20) \, of.random(10
-\, 20)) \; end \;, f 101;
-#X obj 65 434 poflua truc1_\$0 \; function M.draw() \; for i=0 \, 500
-do \; draw1.draw() \; end \; end \;;
+#X obj 627 84 realtime;
+#X obj 293 488 poflua screen \; M.W=1024 \; M.H=768 \; M.wh=200;
+#X obj 229 323 poflua draw1 \; function M.draw() \; local wh=screen.wh
+\; of.setColor(of.random(0 \, 255) \, of.random(0 \, 255) \, of.random(0
+\, 255) \, 255) \; of.drawRectangle(of.random(-wh \, wh) \, of.random(-wh
+\, wh) \, of.random(10 \, 20) \, of.random(10 \, 20)) \; end \;, f
+101;
+#X floatatom 506 512 5 0 0 0 - - -;
+#X msg 499 539 lua screen.wh = \$1;
+#X obj 71 435 poflua truc1_\$0 \; M.count=500 \; function M.draw()
+\; for i=0 \, M.count do \; draw1.draw() \; end \; end \;;
+#X obj 291 611 list prepend lua truc1_\$0.count=;
+#X obj 291 635 list trim;
+#X floatatom 291 587 5 0 0 0 - - -;
+#X obj 144 633 s truc1_\$0;
+#X floatatom 156 574 5 0 0 0 - - -;
+#X msg 144 608 lua M.count=\$1;
 #X connect 0 0 3 0;
-#X connect 1 0 36 0;
+#X connect 1 0 35 0;
 #X connect 2 0 1 1;
 #X connect 3 0 1 0;
-#X connect 3 0 37 0;
+#X connect 3 0 36 0;
 #X connect 3 1 5 0;
 #X connect 5 0 4 0;
-#X connect 6 0 36 0;
+#X connect 6 0 35 0;
 #X connect 7 0 1 2;
 #X connect 9 0 14 0;
 #X connect 10 0 16 0;
 #X connect 11 0 12 0;
 #X connect 12 0 9 0;
 #X connect 12 1 9 1;
-#X connect 12 1 34 0;
+#X connect 12 1 33 0;
 #X connect 13 0 8 0;
 #X connect 14 0 13 0;
 #X connect 16 0 11 0;
 #X connect 18 0 17 0;
 #X connect 19 0 17 0;
 #X connect 20 0 21 0;
-#X connect 21 0 40 0;
-#X connect 22 0 37 1;
-#X connect 22 0 37 2;
+#X connect 21 0 42 0;
+#X connect 22 0 36 1;
+#X connect 22 0 36 2;
 #X connect 23 0 24 0;
 #X connect 24 1 25 0;
-#X connect 25 0 26 0;
-#X connect 25 1 26 1;
+#X connect 25 0 37 0;
+#X connect 25 1 37 1;
 #X connect 26 0 27 0;
-#X connect 27 0 28 0;
-#X connect 28 0 32 0;
-#X connect 29 0 17 0;
-#X connect 30 0 33 0;
-#X connect 30 0 34 1;
-#X connect 32 0 30 0;
-#X connect 33 0 30 1;
-#X connect 34 0 31 0;
-#X connect 36 0 39 0;
-#X connect 37 0 21 0;
+#X connect 27 0 31 0;
+#X connect 28 0 17 0;
+#X connect 29 0 32 0;
+#X connect 29 0 33 1;
+#X connect 31 0 29 0;
+#X connect 32 0 29 1;
+#X connect 33 0 30 0;
+#X connect 36 0 21 0;
+#X connect 37 0 26 0;
+#X connect 40 0 41 0;
+#X connect 41 0 38 0;
+#X connect 43 0 44 0;
+#X connect 45 0 43 0;
+#X connect 47 0 48 0;
+#X connect 48 0 46 0;

@@ -9,6 +9,7 @@
 t_class *pofLua_class;
 
 ofxLua lua;
+ofMutex luaMutex;
 
 void *pofLua_new(t_symbol *s, int argc, t_atom *argv)
 {
@@ -43,11 +44,13 @@ void *pofLua_new(t_symbol *s, int argc, t_atom *argv)
 	}
 	//ss << "\nreturn M end";
 
-	cout << ss.str() << endl;
+	//cout << ss.str() << endl;
+	luaMutex.lock();
 	if(!lua.doString(ss.str())) {
-		pd_error(obj, "pofLua: %s", lua.getErrorMessage().c_str());
+		pd_error(obj->pdobj, "pofLua: %s", lua.getErrorMessage().c_str());
 		//error("pofLua: %s", lua.getErrorMessage().c_str());
 	}
+	luaMutex.unlock();
 	return (void*) (obj->pdobj);
 }
 
@@ -58,6 +61,24 @@ void pofLua_free(void *x)
 	delete obj;
 }
 
+void pofLua_lua(void *x, t_symbol *s, int argc, t_atom *argv)
+{
+	pofLua* obj = (pofLua*)(((PdObject*)x)->parent);
+	t_binbuf *bb = binbuf_new();
+	char *buf;
+	int bufsize;
+	binbuf_add(bb, argc, argv);
+	binbuf_gettext(bb, &buf, &bufsize);
+	//post("lua: %s", buf);
+	string str = "local M=" + string(obj->name->s_name) + ";" + buf;
+	luaMutex.lock();
+	if(!lua.doString(str.c_str())) {
+		pd_error(x, "pofLua: %s", lua.getErrorMessage().c_str());
+		//error("pofLua: %s", lua.getErrorMessage().c_str());
+	}
+	luaMutex.unlock();
+	t_freebytes(buf, bufsize);
+}
 
 void pofLua::setup(void)
 {
@@ -65,6 +86,8 @@ void pofLua::setup(void)
 	pofLua_class = class_new(gensym("poflua"), (t_newmethod)pofLua_new, (t_method)pofLua_free,
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
 	POF_SETUP(pofLua_class);
+	class_addmethod(pofLua_class, (t_method)pofLua_lua, gensym("lua"),	A_GIMME, A_NULL);
+	//class_addanything(pofLua_class, (t_method)tellGUI, s_anything,	A_GIMME, A_NULL);
 	// init the lua state
 	lua.init();
 }
@@ -84,10 +107,21 @@ void pofLua::draw()
 	//lua.scriptDraw();
 	//cout << "local M=require(" + string(name->s_name) + "); M.draw();" << endl;
 	//if(!lua.doString("local M=require('" + string(name->s_name) + "'); M.draw();"))
-	if(!lua.doString(string(name->s_name) + ".draw();"))
+	/*if(!lua.doString(string(name->s_name) + ".draw();"))
 	{
 		cout << lua.getErrorMessage() << endl;
+	}*/
+	luaMutex.lock();
+	lua.pushTable(name->s_name);
+	if(!lua.isFunction("draw")) return;
+	//cout << "isFunction OK" << endl;
+	lua_getfield(lua, -1, "draw");
+	if(lua_pcall(lua, 0, 0, 0) != 0) {
+		cout << "Error running draw(): " + (string) lua_tostring(lua, -1) << endl;
+		//errorOccurred(msg);
 	}
+	lua.popTable();
+	luaMutex.unlock();
 }
 
 void pofLua::postdraw()

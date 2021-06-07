@@ -10,7 +10,7 @@
 class pofLua: public pofBase {
 	public:
 		pofLua(t_class *Class);
-		~pofLua();
+		virtual ~pofLua();
 		
 		virtual void draw();
 		virtual void postdraw();
