@@ -5,19 +5,23 @@
  */
 #pragma once
 
-#include "pofBase.h"
+#include "pofTouch.h"
 
-class pofLua: public pofBase {
+class pofLua: public pofTouch {
 	public:
 		pofLua(t_class *Class);
 		virtual ~pofLua();
 		
 		virtual void draw();
 		virtual void postdraw();
-		static void setup(void);
-
+		virtual void Send(t_symbol *s, int n, float f1, float f2=0, float f3=0); // outlet_anything
+		virtual bool isTouchable() {return touchable;}
 		string script;
 		t_symbol *name;
+		//t_outlet *m_out2;
+		bool touchable;
+
+		static void setup(void);
 };
 
 

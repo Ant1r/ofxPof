@@ -28,7 +28,7 @@ class pofTouch: public pofBase {
 		virtual bool isTouchable() {return true;}
 		
 		bool isInside(int x,int y);
-		void Send(t_symbol *s, int n, float f1, float f2=0, float f3=0); // outlet_anything
+		virtual void Send(t_symbol *s, int n, float f1, float f2=0, float f3=0); // outlet_anything
 		
 		float width, height;
 		bool do_draw;
