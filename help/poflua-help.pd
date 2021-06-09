@@ -1,4 +1,4 @@
-#N canvas 844 140 1042 829 12;
+#N canvas 970 143 1042 829 12;
 #X declare -lib pof;
 #X obj 229 194 pofhead;
 #X obj 229 260 poftranslate;
@@ -22,7 +22,7 @@
 #X obj 257 103 pofwin;
 #X msg 257 63 framerate 60;
 #X msg 214 13 framerate 25;
-#X obj 26 339 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 26 339 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X floatatom 96 295 5 0 0 0 - - -;
 #X obj 567 13 pofhead;
@@ -68,22 +68,170 @@
 #X msg 94 409 draw \$1;
 #X obj 94 386 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 579 445 poflua testout \; function M.try() \; out("hello" \,
+#X obj 531 425 poflua testout \; function M.try() \; out("hello" \,
 "you" \, 0) \; end;
 #X obj 65 350 pofvisible 0;
 #X obj 349 669 route loops touch;
 #X obj 428 700 print touch;
-#X obj 71 435 poflua truc1_\$0 \; M.count=500 \; M.loops=0 \; function
+#X obj 61 435 poflua truc1_\$0 \; M.count=500 \; M.loops=0 \; function
 M.draw() \; for i=0 \, M.count do \; draw1.draw() \; M.loops = M.loops
 + 1 \; end \; M.out("loops" \, M.loops) \; end \; function M.touch(event
 \, x \, y \, id) \; M.out("touch" \, event \, x \, y \, id) \; end
 \;;
+#N canvas 727 229 1192 784 test_slider 0;
+#X obj 360 46 pofhead;
+#X obj 360 109 pofvisible;
+#X obj 312 90 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X floatatom 830 697 5 0 0 0 - - -;
+#X obj 360 214 poftranslate;
+#X floatatom 386 188 5 0 0 0 - - -;
+#X floatatom 440 187 5 0 0 0 - - -;
+#X obj 562 36 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 3700 1;
+#X msg 574 75 lua M.v=\$1;
+#X obj 811 742 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 11421 1;
+#X obj 591 133 hsl 128 15 20 100 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 12700 1;
+#X msg 587 156 lua M.w=\$1;
+#X msg 46 44 lua of.drawRectangle(0\\\,0\\\,1000\\\,1000);
+#X obj 328 255 pofonce;
+#X obj 294 229 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 360 77 t a a, f 15;
+#X obj 183 232 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 183 296 continuousForce \$1;
+#X obj 360 161 pofcolor 1 1 1 1;
+#X obj 419 140 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 219 138 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 315 188 t a a;
+#X obj 138 386 poftranslate 200;
+#X obj 138 410 pofcirc 50;
+#X obj 359 309 poflua sliderVertA \; M.w=50 \; M.h=200 \; M.v=0 \;
+local border = 4 \; local knobW = 20 \; local rad = 10 \; local function
+clip(x \, min \, max) \; if(x < min) then return min \; elseif(x >max)
+then return max \; else return x \; end \; end \; local function adjColor(r
+\, g \, b \, a) \; local style = of.getStyle().color \; of.setColor(style.r*r
+\, style.g*g \, style.b*b \, style.a*a) \; end \; function M.touch(event
+\, x \, y \, id) \; if(event=="down") then M.y0=y \; M.v0=M.v \; elseif(event=="move")
+then M.v = clip(M.v0 - (y-M.y0)/(M.h-border-knobW) \, 0 \, 1) \; M.out(M.v)
+\; end \; end \; function M.draw() \; adjColor(1 \, 1 \, 1 \, 1) \;
+of.drawRectRounded(-M.w/2 \, -M.h/2 \, M.w \, M.h \, rad) \; adjColor(0
+\, 0 \, 0 \, 1) \; of.drawRectRounded((-M.w + border)/2 \, (-M.h+border)/2
++ (M.h-knobW-border)*(1-M.v) \, M.w - border \, knobW \, rad) \; end
+\;;
+#X connect 0 0 15 0;
+#X connect 1 0 18 0;
+#X connect 2 0 1 0;
+#X connect 4 0 24 0;
+#X connect 5 0 4 1;
+#X connect 6 0 4 2;
+#X connect 7 0 8 0;
+#X connect 8 0 24 0;
+#X connect 10 0 11 0;
+#X connect 11 0 24 0;
+#X connect 12 0 24 0;
+#X connect 14 0 13 0;
+#X connect 15 0 1 0;
+#X connect 16 0 17 0;
+#X connect 17 0 13 0;
+#X connect 18 0 21 0;
+#X connect 19 0 18 4;
+#X connect 20 0 18 2;
+#X connect 20 0 18 3;
+#X connect 21 0 22 0;
+#X connect 21 1 4 0;
+#X connect 22 0 23 0;
+#X connect 24 1 3 0;
+#X connect 24 1 9 0;
+#X restore 84 680 pd test_slider;
+#N canvas 848 176 1018 813 test_slider_class 0;
+#X floatatom 930 782 5 0 0 0 - - -;
+#X obj 492 256 poflua sliderV-def \; sliderV = class() \; M = sliderV
+\; function M:__init() \; self.w=50 \; self.h=200 \; self.v=0 \; end
+\; local border = 20 \; local knobW = 20 \; local rad = 10 \; local
+function clip(x \, min \, max) \; if(x < min) then return min \; elseif(x
+>max) then return max \; else return x \; end \; end \; local function
+adjColor(r \, g \, b \, a) \; local style = of.getStyle().color \;
+of.setColor(style.r*r \, style.g*g \, style.b*b \, style.a*a) \; end
+\; function M:touch(event \, x \, y \, id) \; if(event == "down") then
+self.y0 = y \; self.v0 = self.v \; elseif(event == "move") then self.v
+= clip(self.v0 - (y - self.y0) / (self.h - border-knobW) \, 0 \, 1)
+\; self.out(M.v) \; end \; end \; function M:draw() \; adjColor(1 \,
+1 \, 1 \, 1) \; of.drawRectRounded(-self.w/2 \, -self.h/2 \, self.w
+\, self.h \, rad) \; adjColor(0 \, 0 \, 0 \, 1) \; of.drawRectRounded((-self.w
++ border)/2 \, (-self.h+border)/2 + (self.h-knobW-border)*(1-self.v)
+\, self.w - border \, knobW \, rad) \; end \;, f 70;
+#X obj 63 298 pofhead;
+#X obj 63 361 pofvisible;
+#X obj 35 331 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 63 329 t a a, f 15;
+#X obj 63 393 poflua slider1 \; M.s = sliderV() \; M.s.w = 200 \; local
+border = 10 \; function M.draw() M.s.draw(M.s) \; end \; M.s.out =
+M.out \; function M.touch(event \, x \, y \, id) M.s.touch(M.s \, event
+\, x \, y \, id) \; end;
+#X floatatom 426 574 5 0 0 0 - - -;
+#X obj 64 75 poflua testEllipse \; testEllipse = class() \; function
+testEllipse:__init(x \, y) \; self.x = x \; self.y = y \; self.radius
+= 4 \; end \; function testEllipse:draw() \; of.drawEllipse(self.x
+\, self.y \, self.radius \, self.radius) \; end \; \;;
+#X connect 1 1 0 0;
+#X connect 2 0 5 0;
+#X connect 3 0 6 0;
+#X connect 4 0 3 0;
+#X connect 5 0 3 0;
+#X connect 6 1 7 0;
+#X restore 85 726 pd test_slider_class;
+#X obj 91 98 tgl 50 0 empty empty empty 17 7 0 10 -258113 -1 -1 0 1
+;
+#X obj 71 175 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 2500 1;
+#N canvas 848 176 1018 813 test_slider_class2 1;
+#X floatatom 823 713 5 0 0 0 - - -;
+#X obj 384 157 poflua sliderV2 \; local border = 20 \; local knobW
+= 20 \; local rad = 10 \; local function clip(x \, min \, max) \; if(x
+< min) then return min \; elseif(x >max) then return max \; else return
+x \; end \; end \; local function adjColor(r \, g \, b \, a) \; local
+style = of.getStyle().color \; of.setColor(style.r*r \, style.g*g \,
+style.b*b \, style.a*a) \; end \; function M:touch(event \, x \, y
+\, id) \; if(event == "down") then self.y0 = y \; self.v0 = self.v
+\; elseif(event == "move") then self.v = clip(self.v0 - (y - self.y0)
+/ (self.h - border-knobW) \, 0 \, 1) \; slider3.out(self.v) \; end
+\; end \; function M:draw() \; adjColor(1 \, 1 \, 1 \, 1) \; of.drawRectRounded(-self.w/2
+\, -self.h/2 \, self.w \, self.h \, rad) \; adjColor(0 \, 0 \, 0 \,
+1) \; of.drawRectRounded((-self.w + border)/2 \, (-self.h+border)/2
++ (self.h-knobW-border)*(1-self.v) \, self.w - border \, knobW \, rad)
+\; end \; function M:format() \; self.w=50 \; self.h=200 \; self.v=0
+\; function self.draw() M.draw(self) end \; function self.touch(event
+\, x \, y \, id) M.touch(self \, event \, x \, y \, id) end \; end
+\;, f 75;
+#X obj 63 298 pofhead;
+#X obj 63 361 pofvisible;
+#X obj 35 331 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 63 329 t a a, f 15;
+#X floatatom 193 469 5 0 0 0 - - -;
+#X obj 63 390 poflua slider3 \; sliderV2.format(M) \; M.w = 200 \;
+M.out(2);
+#X msg 219 321 lua slider3.out(8);
+#X connect 1 1 0 0;
+#X connect 2 0 5 0;
+#X connect 3 0 7 0;
+#X connect 4 0 3 0;
+#X connect 5 0 3 0;
+#X connect 7 1 6 0;
+#X connect 8 0 7 0;
+#X restore 83 757 pd test_slider_class2;
 #X connect 0 0 3 0;
 #X connect 1 0 34 0;
 #X connect 2 0 1 1;
 #X connect 3 0 1 0;
 #X connect 3 0 35 0;
-#X connect 3 1 5 0;
 #X connect 5 0 4 0;
 #X connect 6 0 34 0;
 #X connect 7 0 1 2;
