@@ -12,11 +12,64 @@ static ofxLua lua;
 static ofMutex luaMutex;
 static t_symbol *s_out;
 
+static string pofLua_prefix(void *x)
+{
+	pofLua* obj = (pofLua*)(((PdObject*)x)->parent);
+	std::ostringstream ss;
+	string namestr = string(obj->name->s_name);
+	ss << namestr << " = {} local M = " << namestr <<" ";
+	ss << "M.pdself = '" << namestr << "' ";
+	ss << "function M.out(...) topd(M.pdself, 'out', ...) end; ";
+	ss << "function M.config(...) topd(M.pdself, 'config', ...) end; ";
+	return ss.str();
+}
+
+static void pofLua_reload(void *x)
+{
+	pofLua* obj = (pofLua*)(((PdObject*)x)->parent);
+	int fd;
+	char namebuf[MAXPDSTRING], *namebufptr;
+	long length;
+	int readret;
+	char *buf;
+	
+	if ((fd = canvas_open(obj->pdcanvas, obj->filename->s_name, "", namebuf, &namebufptr, MAXPDSTRING, 0)) < 0)
+	{
+		pd_error(x, "pofLua_read: can't open %s", obj->filename->s_name);
+		return;
+	}
+	
+	if ((length = (long)lseek(fd, 0, SEEK_END)) < 0 || lseek(fd, 0, SEEK_SET) < 0
+		|| !(buf = (char *)t_getbytes(length + 1)))
+	{
+		pd_error(x, "pofLua_read %s lseek: %s", obj->filename->s_name, strerror(errno));
+		close(fd);
+		return;
+	}
+	
+	if ((readret = (int)read(fd, buf, length)) < length)
+	{
+		pd_error(x, "pofLua_read %s read: %s", obj->filename->s_name, strerror(errno));
+		close(fd);
+		t_freebytes(buf, length);
+		return;
+	}
+	close (fd);
+	buf[length] = 0;
+	obj->script = pofLua_prefix(x) + string(buf);
+	obj->loaded = obj->touchable = obj->drawable = false;
+
+	t_freebytes(buf, length);
+}
+
 static void *pofLua_new(t_symbol *s, int argc, t_atom *argv)
 {
 	pofLua* obj = new pofLua(pofLua_class);
 	t_symbol *name = obj->s_self;
+	t_symbol *filename = NULL;
 
+	obj->pdcanvas = canvas_getcurrent();
+	
 	if(argc && argv->a_type == A_SYMBOL && *atom_getsymbol(argv)->s_name != ';') {
 		name = atom_getsymbol(argv);
 		argv++; argc--;
@@ -26,40 +79,40 @@ static void *pofLua_new(t_symbol *s, int argc, t_atom *argv)
 	obj->name = name;
 	if(obj->name != obj->s_self) pd_bind(&obj->pdobj->x_obj.ob_pd, name);
 
-	while(argc && *atom_getsymbol(argv)->s_name != ';') { argv++; argc--; }
-	if(argc && *atom_getsymbol(argv)->s_name == ';') { argv++; argc--; }
-
-	std::ostringstream ss;
-	string namestr = string(name->s_name);
-	ss << namestr << " = {} local M = " << namestr <<" ";
-	ss << "M.pdself = '" << namestr << "' ";
-	ss << "function M.out(...) topd(M.pdself, 'out', ...) end; ";
-	ss << "function M.config(...) topd(M.pdself, 'config', ...) end; ";
-
-	for (int i = 0; i < argc; ++i)
-	{
-		if (argv[i].a_type == A_SYMBOL)
-			ss << argv[i].a_w.w_symbol->s_name;
-		else if (argv[i].a_type == A_FLOAT)
-			ss << argv[i].a_w.w_float;
-		ss << ' ';
+	while(argc && *atom_getsymbol(argv)->s_name != ';') { 
+		if(atom_getsymbol(argv) == gensym("-r")) {
+			argv++; argc--;
+			if(argc) {
+				obj->filename = atom_getsymbol(argv);
+				argv++; argc--;
+				pofLua_reload(obj->pdobj);
+			}
+		}
+		else {argv++; argc--;}
 	}
 
-	//cout << ss.str() << endl;
-	
-	luaMutex.lock();
-	if(!lua.doString(ss.str())) {
-		pd_error(obj->pdobj, "pofLua: %s", lua.getErrorMessage().c_str());
-		luaMutex.unlock();
-		delete obj;
-		return 0;
-		//error("pofLua: %s", lua.getErrorMessage().c_str());
-	}
-	lua.pushTable(name->s_name);
-	obj->touchable = lua.isFunction("touch");
-	lua.popTable();
+	if(!obj->filename) {
+		if(argc && *atom_getsymbol(argv)->s_name == ';') { argv++; argc--; }
 
-	luaMutex.unlock();
+		std::ostringstream ss;
+		/*string namestr = string(name->s_name);
+		ss << namestr << " = {} local M = " << namestr <<" ";
+		ss << "M.pdself = '" << namestr << "' ";
+		ss << "function M.out(...) topd(M.pdself, 'out', ...) end; ";
+		ss << "function M.config(...) topd(M.pdself, 'config', ...) end; ";*/
+		ss << pofLua_prefix(obj->pdobj);
+		for (int i = 0; i < argc; ++i)
+		{
+			if (argv[i].a_type == A_SYMBOL)
+				ss << argv[i].a_w.w_symbol->s_name;
+			else if (argv[i].a_type == A_FLOAT)
+				ss << argv[i].a_w.w_float;
+			ss << ' ';
+		}
+
+		obj->script = ss.str();
+	}
+
 	return (void*) (obj->pdobj);
 }
 
@@ -148,9 +201,26 @@ static void pofLua_out(void *x, t_symbol *s, int argc, t_atom *argv)
 static void pofLua_config(void *x, t_symbol *s, int argc, t_atom *argv)
 {
 	pofLua* px = (pofLua*)(((PdObject*)x)->parent);
+	t_symbol *command;
+	post("pofLua_config");
 	if(!argc) return;
-	if(argv->a_type == A_SYMBOL) outlet_anything(px->m_out2, atom_getsymbol(argv), argc - 1, argv + 1);
-	else outlet_list(px->m_out2, s, argc, argv);
+	if(argv->a_type == A_SYMBOL) {
+		command = atom_getsymbol(argv);
+		argv++; argc--;
+		if(command == gensym("size") && argc > 1) {
+			px->width == atom_getfloat(argv);
+			px->height == atom_getfloat(argv + 1);
+		}
+		else if(command == gensym("dont_capture") && argc > 0) {
+			float dc = atom_getfloat(argv);
+			px->capture = (dc==0) || (dc==3);
+			px->dynamic = (dc>=2);
+		}
+		else if(command == gensym("multi") && argc > 0) {
+			float m = atom_getfloat(argv);
+			px->multi = (m != 0);
+		}
+	}
 }
 
 void pofLua::setup(void)
@@ -163,8 +233,8 @@ void pofLua::setup(void)
 	class_addmethod(pofLua_class, (t_method)pofLua_lua, gensym("lua"),	A_GIMME, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_out, s_out, A_GIMME, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_config, gensym("config"), A_GIMME, A_NULL);
+	class_addmethod(pofLua_class, (t_method)pofLua_reload, gensym("reload"), A_NULL);
 
-	//class_addanything(pofLua_class, (t_method)tellGUI, s_anything,	A_GIMME, A_NULL);
 	// init the lua state
 	lua.init();
 	lua_pushcfunction(lua, (lua_CFunction)pofLua_print);
@@ -173,7 +243,7 @@ void pofLua::setup(void)
 	lua_setglobal(lua, "topd");
 }
 
-pofLua::pofLua(t_class *Class): pofTouch(Class, 200, 200)
+pofLua::pofLua(t_class *Class): pofTouch(Class, 200, 200), loaded(false), touchable(false), drawable(false)
 {
 }
 pofLua::~pofLua()
@@ -182,16 +252,16 @@ pofLua::~pofLua()
 
 void pofLua::Send(t_symbol *s, int n, float f1, float f2, float f3)
 {
-	//pofTouch::Send(s, n, f1, f2, f3);
 	luaMutex.lock();
 	lua.pushTable(name->s_name);
 	if(lua.isFunction("touch")) {
 		lua_getfield(lua, -1, "touch");
+		lua_getglobal(lua, name->s_name);
 		lua_pushstring(lua, s->s_name);
 		lua_pushnumber(lua, f1);
 		lua_pushnumber(lua, f2);
 		lua_pushnumber(lua, f3);
-		if(lua_pcall(lua, 4, 0, 0) != 0) {
+		if(lua_pcall(lua, 5, 0, 0) != 0) {
 			pd_error(pdobj, "Error running touch(): %s", lua_tostring(lua, -1));
 		}
 	}
@@ -201,23 +271,33 @@ void pofLua::Send(t_symbol *s, int n, float f1, float f2, float f3)
 
 void pofLua::draw()
 {
+	if(!loaded) {
+		luaMutex.lock();
+		if(!lua.doString(script)) {
+			pd_error(pdobj, "pofLua: %s", lua.getErrorMessage().c_str());
+		}
+		else {
+			lua.pushTable(name->s_name);
+			touchable = lua.isFunction("touch");
+			drawable = lua.isFunction("draw");
+			lua.popTable();
+		}
+		luaMutex.unlock();
+		pofBase::needBuild = true; // needed to rebuild the touchtree
+		loaded = true;
+	}
+	if(!drawable) return;
 	ofPushMatrix();
 	ofPushStyle();
-	//lua.scriptDraw();
-	//cout << "local M=require(" + string(name->s_name) + "); M.draw();" << endl;
-	//if(!lua.doString("local M=require('" + string(name->s_name) + "'); M.draw();"))
-	/*if(!lua.doString(string(name->s_name) + ".draw();"))
-	{
-		cout << lua.getErrorMessage() << endl;
-	}*/
 	luaMutex.lock();
 	lua.pushTable(name->s_name);
-	if(lua.isFunction("draw")) {
+	//if(lua.isFunction("draw")) {
 		lua_getfield(lua, -1, "draw");
-		if(lua_pcall(lua, 0, 0, 0) != 0) {
+		lua_getglobal(lua, name->s_name);
+		if(lua_pcall(lua, 1, 0, 0) != 0) {
 			pd_error(pdobj, "Error running draw(): %s", lua_tostring(lua, -1));
 		}
-	}
+	//}
 	lua.popTable();
 	luaMutex.unlock();
 }

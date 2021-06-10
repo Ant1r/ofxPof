@@ -18,8 +18,11 @@ class pofLua: public pofTouch {
 		virtual bool isTouchable() {return touchable;}
 		string script;
 		t_symbol *name;
-		//t_outlet *m_out2;
+		t_symbol *filename;
+		t_canvas *pdcanvas;
+		bool loaded;
 		bool touchable;
+		bool drawable;
 
 		static void setup(void);
 };
