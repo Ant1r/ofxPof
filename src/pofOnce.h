@@ -7,7 +7,7 @@
 
 #include "pofBase.h"
 
-class pofOnce : public pofBase{
+class pofOnce : virtual public pofBase{
 	public:
 		pofOnce(t_class *Class, bool continuousForce0 = false);
 		~pofOnce();

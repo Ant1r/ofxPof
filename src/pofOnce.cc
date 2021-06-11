@@ -6,9 +6,11 @@
 #include "pofOnce.h"
 #include "pofWin.h"
 #include "pofHead.h"
+//#include "pofLua.h"
 
 t_class *pofonce_class;
 bool pofOnce::FORCE_ONCE = false;
+extern t_class *pofLua_class;
 
 class pofBlocker {
 	pofBase *obj;
@@ -17,7 +19,8 @@ class pofBlocker {
 	static std::list<pofBlocker> heads;
 
 	pofBlocker(pofBase* _obj) : obj(_obj) {
-		isOnce = (pd_class(&obj->pdobj->x_obj.ob_pd) == pofonce_class);
+		isOnce = (pd_class(&obj->pdobj->x_obj.ob_pd) == pofonce_class)
+			|| (pd_class(&obj->pdobj->x_obj.ob_pd) == pofLua_class);
 	}
 
 	bool tree_process() {
@@ -28,7 +31,7 @@ class pofBlocker {
 			if(it->tree_process()) childrenAskTrigger = 1;
 			it++;
 		}
-		if(isOnce) return ((pofOnce*)obj)->process(childrenAskTrigger);
+		if(isOnce) return (dynamic_cast<pofOnce*>(obj))->process(childrenAskTrigger);
 		else return childrenAskTrigger;
 	}
 
@@ -93,24 +96,24 @@ static void *pofonce_new(t_symbol *sym,int argc, t_atom *argv)
 
 static void pofonce_free(void *x)
 {
-	delete (pofOnce*)(((PdObject*)x)->parent);
+	delete (dynamic_cast<pofOnce*>(((PdObject*)x)->parent));
 }
 
 static void pofonce_bang(void *x)
 {
-	pofOnce *px = (pofOnce*)(((PdObject*)x)->parent);
+	pofOnce *px = dynamic_cast<pofOnce*>(((PdObject*)x)->parent);
 	px->trigger = true;
 }
 
 static void pofonce_continuousForce(void *x, t_float t)
 {
-	pofOnce *px = (pofOnce*)(((PdObject*)x)->parent);
+	pofOnce *px = dynamic_cast<pofOnce*>(((PdObject*)x)->parent);
 	px->continuousForce = (t != 0);
 }
 
 static void pofonce_force(void *x)
 {
-	pofOnce *px = (pofOnce*)(((PdObject*)x)->parent);
+	pofOnce *px = dynamic_cast<pofOnce*>(((PdObject*)x)->parent);
 	px->force = true;
 }
 

@@ -9,7 +9,7 @@
 
 class pofTouch;
 
-class pofTouch: public pofBase {
+class pofTouch: virtual public pofBase {
 	public:
 		pofTouch(t_class *Class, float w=0, float h=0, float dont_capture=0,float multi_=0):
 			pofBase(Class), width(w), height(h), do_draw(false), capture(dont_capture==0),
