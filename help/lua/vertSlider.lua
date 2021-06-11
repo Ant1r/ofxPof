@@ -1,6 +1,9 @@
 M.border = 20
-local knobW = 20
-local rad = 10
+M.knobW = 20
+M.rad = 10
+
+local red = 0
+red = 1
 
 pof_instances = pof_instances or {}
 pof_instances[M.pdself] = pof_instances[M.pdself] or {}
@@ -12,9 +15,9 @@ local function clip(x, min, max)
 	end
 end
 
-local function adjColor(r, g, b, a)
-	local style = of.getStyle().color
-	of.setColor(style.r*r, style.g*g, style.b*b, style.a*a)
+local function adjColor(r, g, b, a, initColor)
+	local initColor = initColor or of.getStyle().color
+	of.setColor(initColor.r*r, initColor.g*g, initColor.b*b, initColor.a*a)
 end
 
 function M:dotouch(event, x, y, id)
@@ -22,46 +25,49 @@ function M:dotouch(event, x, y, id)
 		self.y0 = y
 		self.v0 = self.v
 	elseif(event == "move") then
-		self.v = clip(self.v0 - (y - self.y0) / (self.h - M.border - knobW), 0, 1)
+		self.v = clip(self.v0 - (y - self.y0) / (self.h - M.border - M.knobW), 0, 1)
 		self.out(self.v)
+		self.drawonce("do")
+	end
+end
+
+function M:update()
+	if((self.w ~= self.oldw) or (self.h ~= self.oldh)) then
+		self.oldw = self.w
+		self.oldh = self.h
+		self.config("size", self.w, self.h)
 	end
 end
 
 function M:dodraw()
-	adjColor(1, 1, 1, 1)
-	of.drawRectRounded(-self.w/2, -self.h/2, self.w, self.h, rad)
-	adjColor(0, 0, 0, 1)
+	local initColor = of.getStyle().color
+	self:update()
+	of.setRectMode(of.RECTMODE_CENTER)
+	adjColor(0, 1, 0, 1, initColor)
+	of.drawRectRounded(0, 0, self.w, self.h, M.rad)
+	adjColor(1, 1, 1, 1, initColor)
+	of.drawRectRounded(0, 0, self.w - M.border, self.h - M.border, M.rad)
+	adjColor(red, 0, 0, 1, initColor)
 	of.drawRectRounded(
-		(-self.w + M.border)/2,
-		(-self.h + M.border)/2 + (self.h-knobW - M.border)*(1-self.v),
-		self.w - M.border, knobW, rad
+		0, (self.h - M.knobW - M.border) * (0.5 - self.v),
+		self.w - M.border, M.knobW, M.rad
 	)
-end
-
-function M:reload(what)
-	-- print("reloading ",self)
-	self.draw = what.dodraw
-	self.touch = what.dotouch
-	self.reload = what.reload
-	self.v=0
-	self.w=100
-	self.config(self.w, self.h)
+	of.setRectMode(of.RECTMODE_CORNER)
 end
 
 function M:format()
-	self.w=50
-	self.h=200
-	self.config(self.w, self.h)
-	self.v=0
+	self.w = self.w or 50
+	self.h = self.h or 200
+	-- self.config("size", self.w, self.h)
+	self.v = self.v or 0
 	self.draw = M.dodraw
 	self.touch = M.dotouch
-	self.reload = M.reload
+	self.update = M.update
+	self.drawonce("continuousForce", false)
 	pof_instances[M.pdself][self.pdself] = self
 end
 
 for k,v in pairs(pof_instances[M.pdself]) do
-	if(type(v.reload) == "function") then 
-		v:reload(M)
-	end
+	M.format(v)
 end
 

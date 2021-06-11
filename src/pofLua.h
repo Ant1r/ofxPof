@@ -6,8 +6,9 @@
 #pragma once
 
 #include "pofTouch.h"
+#include "pofOnce.h"
 
-class pofLua: public pofTouch {
+class pofLua: public pofTouch, public pofOnce {
 	public:
 		pofLua(t_class *Class);
 		virtual ~pofLua();
@@ -17,6 +18,7 @@ class pofLua: public pofTouch {
 		virtual void Send(t_symbol *s, int n, float f1, float f2=0, float f3=0); // outlet_anything
 		virtual bool isTouchable() {return touchable;}
 		string script;
+		string argsScript;
 		t_symbol *name;
 		t_symbol *filename;
 		t_canvas *pdcanvas;

@@ -1,4 +1,4 @@
-#N canvas 877 160 1042 858 12;
+#N canvas 877 169 1042 858 12;
 #X declare -lib pof;
 #X declare -path lua;
 #X obj 229 194 pofhead;
@@ -40,34 +40,19 @@
 #X obj 229 289 pofvisible;
 #X obj 65 326 poftranslate 0 0;
 #X obj 627 84 realtime;
-#X obj 565 596 poflua screen \; M.W=1024 \; M.H=768 \; M.wh=200;
-#X floatatom 506 512 5 0 0 0 - - -;
-#X msg 499 539 lua screen.wh = \$1;
-#X obj 325 599 list prepend lua truc1_\$0.count=;
-#X obj 325 623 list trim;
-#X floatatom 325 575 5 0 0 0 - - -;
-#X obj 442 821 s truc1_\$0;
-#X floatatom 448 774 5 0 0 0 - - -;
-#X msg 442 796 lua M.count=\$1;
-#X msg 764 457 lua M.try();
-#X msg 753 562 lua M.try();
-#X obj 764 484 poflua testout \; function M.try() \; out("hello" \,
-"you" \, 0) \; end;
-#X obj 757 708 print fromLua;
-#X obj 753 588 poflua \; function M.try() \; M.out("h" \, 5 \, 6 \,
-7 \, 8 \, 9 \, 10) \; M.out(5 \, 6 \, 7 \, 8 \, 9 \, 10) \; print("boujou"
-\, 1 \, 2 \, 3) \; end;
-#X obj 895 719 route h;
-#X floatatom 895 743 5 0 0 0 - - -;
-#X floatatom 349 694 8 0 0 0 - - -;
+#X obj 603 549 poflua screen \; M.W=1024 \; M.H=768 \; M.wh=200;
+#X floatatom 544 465 5 0 0 0 - - -;
+#X msg 537 492 lua screen.wh = \$1;
+#X obj 346 552 s truc1_\$0;
+#X floatatom 352 505 5 0 0 0 - - -;
+#X msg 346 527 lua M.count=\$1;
+#X floatatom 294 658 8 0 0 0 - - -;
 #X msg 94 409 draw \$1;
 #X obj 94 386 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 531 425 poflua testout \; function M.try() \; out("hello" \,
-"you" \, 0) \; end;
 #X obj 65 350 pofvisible 0;
-#X obj 349 669 route loops touch;
-#X obj 428 700 print touch;
+#X obj 294 633 route loops touch;
+#X obj 373 664 print touch;
 #N canvas 717 219 1192 784 test_slider 0;
 #X obj 360 46 pofhead;
 #X obj 360 109 pofvisible;
@@ -288,23 +273,20 @@ M.draw() \; for i=0 \, M.count do \; draw1.dodraw() \; M.loops = M.loops
 + 1 \; end \; M.out("loops" \, M.loops) \; end \; function M:touch(event
 \, x \, y \, id) \; M.out("touch" \, event \, x \, y \, id) \; end
 \;;
-#N canvas 877 148 1018 813 test_slider_class4 1;
+#N canvas 793 196 1018 813 test_slider_class4 1;
 #X msg 515 75 lua M.border=\$1;
 #X floatatom 515 42 5 0 0 0 - - -;
-#X obj 63 298 pofhead;
-#X obj 35 331 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 63 260 pofhead;
+#X obj 35 331 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 63 329 t a a, f 15;
-#X floatatom 193 521 5 0 0 0 - - -;
+#X floatatom 207 499 5 0 0 0 - - -;
 #X msg 227 251 lua M.v=\$1;
 #X obj 217 199 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
 -1 -1 0 1;
 #X obj 55 172 hsl 128 15 10 200 0 0 empty empty empty -2 -8 0 10 -262144
 -1 -1 0 1;
 #X msg 124 228 lua M.w=\$1;
-#X msg 215 298 lua sliderV3.format(M);
-#X msg 210 342 lua M.draw=sliderV3.draw;
-#X obj 172 604 pofonce;
 #X obj 316 65 pofvisible;
 #X obj 324 39 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
@@ -312,30 +294,49 @@ M.draw() \; for i=0 \, M.count do \; draw1.dodraw() \; M.loops = M.loops
 #X floatatom 179 398 5 0 0 0 - - -;
 #X obj 599 280 declare -path lua;
 #X obj 63 361 pofvisible 1;
-#X obj 488 422 poflua sliderV4 -r vertSlider.lua;
 #X msg 539 367 reload;
-#X obj 61 439 poflua slider5 \; sliderV4.format(M);
-#X connect 0 0 19 0;
+#X obj 61 532 pofrect 100 100;
+#X obj 61 504 pofcolor 1 1 1 0.4;
+#X obj 180 642 poftouch;
+#X obj 517 426 poflua sliderV4 -r vertSlider.lua \; M.border = 30 \;
+M.rad = 5 \; M.knobW = 20;
+#X obj 63 295 pofonce;
+#X msg 202 54 force;
+#X obj 203 80 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 203 100 continuousForce \$1;
+#X msg 207 445 lua M:drawonce("continuousForce" \, false);
+#X obj 27 270 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 61 439 poflua slider4 \; sliderV4.format(M) \; M.w=80;
+#X msg 236 411 lua M:drawonce("do");
+#X connect 0 0 20 0;
 #X connect 1 0 0 0;
-#X connect 2 0 4 0;
-#X connect 3 0 18 0;
-#X connect 4 0 18 0;
-#X connect 4 1 19 0;
-#X connect 6 0 21 0;
+#X connect 2 0 21 0;
+#X connect 3 0 15 0;
+#X connect 4 0 15 0;
+#X connect 4 1 20 0;
+#X connect 6 0 27 0;
 #X connect 7 0 6 0;
 #X connect 8 0 9 0;
-#X connect 9 0 21 0;
-#X connect 10 0 21 0;
-#X connect 11 0 21 0;
-#X connect 14 0 13 0;
-#X connect 15 0 21 0;
-#X connect 16 0 15 1;
-#X connect 18 0 15 0;
-#X connect 20 0 19 0;
-#X connect 21 1 5 0;
+#X connect 9 0 27 0;
+#X connect 11 0 10 0;
+#X connect 12 0 27 0;
+#X connect 13 0 12 1;
+#X connect 15 0 12 0;
+#X connect 16 0 20 0;
+#X connect 18 0 17 0;
+#X connect 21 0 4 0;
+#X connect 22 0 21 0;
+#X connect 23 0 24 0;
+#X connect 24 0 21 0;
+#X connect 25 0 27 0;
+#X connect 26 0 21 0;
+#X connect 27 1 5 0;
+#X connect 28 0 27 0;
 #X restore 81 809 pd test_slider_class4;
 #X obj 229 227 t a a a, f 23;
-#X connect 0 0 68 0;
+#X connect 0 0 57 0;
 #X connect 1 0 33 0;
 #X connect 2 0 1 1;
 #X connect 4 0 3 0;
@@ -352,7 +353,7 @@ M.draw() \; for i=0 \, M.count do \; draw1.dodraw() \; M.loops = M.loops
 #X connect 15 0 10 0;
 #X connect 17 0 16 0;
 #X connect 18 0 16 0;
-#X connect 19 0 56 0;
+#X connect 19 0 45 0;
 #X connect 20 0 34 1;
 #X connect 20 0 34 2;
 #X connect 21 0 22 0;
@@ -367,27 +368,19 @@ M.draw() \; for i=0 \, M.count do \; draw1.dodraw() \; M.loops = M.loops
 #X connect 29 0 27 0;
 #X connect 30 0 27 1;
 #X connect 31 0 28 0;
-#X connect 34 0 56 0;
+#X connect 34 0 45 0;
 #X connect 35 0 24 0;
 #X connect 37 0 38 0;
 #X connect 38 0 36 0;
-#X connect 39 0 40 0;
+#X connect 40 0 41 0;
 #X connect 41 0 39 0;
-#X connect 43 0 44 0;
-#X connect 44 0 42 0;
-#X connect 45 0 47 0;
-#X connect 46 0 49 0;
-#X connect 49 1 48 0;
-#X connect 49 1 50 0;
-#X connect 50 0 51 0;
-#X connect 53 0 66 0;
-#X connect 54 0 53 0;
-#X connect 56 0 55 0;
-#X connect 56 0 66 0;
-#X connect 57 0 52 0;
-#X connect 57 1 58 0;
-#X connect 66 1 57 0;
-#X connect 68 0 1 0;
-#X connect 68 0 34 0;
-#X connect 68 1 65 0;
-#X connect 68 2 36 0;
+#X connect 43 0 55 0;
+#X connect 44 0 43 0;
+#X connect 45 0 55 0;
+#X connect 46 0 42 0;
+#X connect 46 1 47 0;
+#X connect 55 1 46 0;
+#X connect 57 0 1 0;
+#X connect 57 0 34 0;
+#X connect 57 1 54 0;
+#X connect 57 2 36 0;
