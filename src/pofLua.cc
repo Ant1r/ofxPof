@@ -23,6 +23,7 @@ static string pofLua_prefix(void *x)
 	ss << "function M.out(...) topd(M.pdself, 'out', ...) end; ";
 	ss << "function M.config(...) topd(M.pdself, 'config', ...) end; ";
 	ss << "function M.drawonce(...) drawonce(M.pdself, ...) end; ";
+	ss << "function M.getfile(...) return getfile(M.pdself, ...) end; ";
 	return ss.str();
 }
 
@@ -34,16 +35,16 @@ static void pofLua_reload(void *x)
 	long length;
 	int readret;
 	char *buf;
-	
+
 	obj->script = pofLua_prefix(x);
-	
+
 	if(obj->filename) {
 		if ((fd = canvas_open(obj->pdcanvas, obj->filename->s_name, "", namebuf, &namebufptr, MAXPDSTRING, 0)) < 0)
 		{
 			pd_error(x, "pofLua_read: can't open %s", obj->filename->s_name);
 			return;
 		}
-	
+
 		if ((length = (long)lseek(fd, 0, SEEK_END)) < 0 || lseek(fd, 0, SEEK_SET) < 0
 			|| !(buf = (char *)t_getbytes(length + 1)))
 		{
@@ -203,7 +204,7 @@ static void pofLua_lua_drawonce(lua_State *L)
 	string objname = lua_tostring(L, 1);
 	pofLua *obj = pofLuas[objname];
 	if(!obj) return;
-	
+
 	string command = lua_tostring(L, 2);
 	if(command == "do") {
 		obj->trigger = true;
@@ -212,6 +213,29 @@ static void pofLua_lua_drawonce(lua_State *L)
 	} else if(command == "continuousForce") {
 		obj->continuousForce = lua_toboolean(L, 3);;
 	}
+}
+
+static int pofLua_lua_getfile(lua_State *L)
+{
+	if(lua_type (L, 1) != LUA_TSTRING) return 0;
+	if(lua_type (L, 2) != LUA_TSTRING) return 0;
+
+	string objname = string(lua_tostring(L, 1));
+	const char* filename = lua_tostring(L, 2);
+	pofLua *obj = pofLuas[objname];
+	if(!obj) return 0;
+
+	int fd;
+	char namebuf[MAXPDSTRING+1], *namebufptr;
+
+	if ((fd = canvas_open(obj->pdcanvas, filename, "", namebuf, &namebufptr, MAXPDSTRING, 1)) < 0)
+	{
+		pd_error(obj->pdobj, "pofLua_lua_getfile: can't open %s", filename);
+		return 0;
+	}
+	string absfilename = string(namebuf) + "/" + string(namebufptr);
+	lua_pushstring(lua, absfilename.c_str());
+	return 1;
 }
 
 static void pofLua_out(void *x, t_symbol *s, int argc, t_atom *argv)
@@ -266,6 +290,8 @@ void pofLua::setup(void)
 	lua_setglobal(lua, "topd");
 	lua_pushcfunction(lua, (lua_CFunction)pofLua_lua_drawonce);
 	lua_setglobal(lua, "drawonce");
+	lua_pushcfunction(lua, (lua_CFunction)pofLua_lua_getfile);
+	lua_setglobal(lua, "getfile");
 }
 
 pofLua::pofLua(t_class *Class): pofBase(Class), pofTouch(Class, 200, 200), pofOnce(Class, true), loaded(false), touchable(false), drawable(false)

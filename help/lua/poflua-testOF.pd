@@ -1,0 +1,18 @@
+#N canvas 364 278 457 302 12;
+#X obj 130 84 pofhead;
+#X obj 130 108 pofvisible;
+#X obj 95 100 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 130 149 pofonce;
+#X obj 227 82 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 227 102 continuousForce \$1;
+#X obj 130 191 poflua testOF -r testOF.lua \;;
+#X msg 210 153 reload;
+#X connect 0 0 1 0;
+#X connect 1 0 3 0;
+#X connect 2 0 1 0;
+#X connect 3 0 6 0;
+#X connect 4 0 5 0;
+#X connect 5 0 3 0;
+#X connect 7 0 6 0;
