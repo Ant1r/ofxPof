@@ -270,6 +270,10 @@ static void pofLua_config(void *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
+extern "C" {
+	int luaopen_pugixml(lua_State* L);
+}
+
 void pofLua::setup(void)
 {
 	s_out = gensym("out");
@@ -284,6 +288,7 @@ void pofLua::setup(void)
 
 	// init the lua state
 	lua.init();
+	luaopen_pugixml(lua);
 	lua_pushcfunction(lua, (lua_CFunction)pofLua_print);
 	lua_setglobal(lua, "print");
 	lua_pushcfunction(lua, (lua_CFunction)pofLua_lua_topd);
