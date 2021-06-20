@@ -1371,6 +1371,7 @@ namespace pugi
 
 		// Indexing operator
 		const xpath_node& operator[](size_t index) const;
+		const xpath_node& get(size_t index) const;
 
 		// Collection iterators
 		const_iterator begin() const;

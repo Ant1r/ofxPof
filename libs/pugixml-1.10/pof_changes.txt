@@ -1,0 +1,3 @@
+june 2021:
+Added function: xpath_node_set::get(size_t index) 
+equivalent to:  xpath_node_set::operator[](size_t index) (unusable in lua)
