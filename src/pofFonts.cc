@@ -7,7 +7,8 @@
 
 t_class *poffonts_class;
 
-std::map<t_symbol*,pofFonts*> pofFonts::fonts;
+std::map<t_symbol*, pofFonts*> pofFonts::fonts;
+std::list<ofxFontStash*> pofFonts::offontsToDelete;
 
 void *poffonts_new(t_symbol *font, t_symbol *fontfile, float scale)
 {
@@ -92,7 +93,7 @@ void pofFonts::setup(void)
 	POF_SETUP(poffonts_class);
 	class_addmethod(poffonts_class, (t_method)poffonts_set, gensym("set"), A_SYMBOL, A_NULL);
 	class_addmethod(poffonts_class, (t_method)poffonts_scale, gensym("scale"), A_FLOAT, A_NULL);
-
+	ofAddListener(pofBase::initFrameEvent, &pofFonts::initFrame);
 }
 
 pofFonts* pofFonts::getFont(t_symbol* font)

@@ -21,29 +21,38 @@ class pofFonts: public pofBase {
 		}
 		~pofFonts() { 
 			fonts.erase(font);
-			if(offont) delete offont;
+			if(offont) {
+				offontsToDelete.push_back(offont);
+			}
 			ofRemoveListener(pofBase::reloadTexturesEvent, this, &pofFonts::reloadTexture);
 			ofRemoveListener(pofBase::unloadTexturesEvent, this, &pofFonts::unloadTexture);
 		}
-		
+
 		virtual void update();
 		virtual bool hasUpdate(){ return true;}
 
 		void reloadTexture(ofEventArgs & args);
 		void unloadTexture(ofEventArgs & args);
-		
-		static void setup(void);
-		
+
 		ofxFontStash *offont;
 		t_symbol *font;
 		t_symbol *fontfile;
-
 		bool need_reload;
 		t_canvas *pdcanvas;
 		float scale;
-		
-	static std::map<t_symbol*,pofFonts*> fonts;
-	static pofFonts* getFont(t_symbol* font);
+
+		static void setup(void);
+		static pofFonts* getFont(t_symbol* font);
+		static void initFrame(ofEventArgs & args){
+			while(!offontsToDelete.empty()) {
+				delete offontsToDelete.front();
+				offontsToDelete.pop_front();
+			}
+		}
+
+		static std::map<t_symbol*, pofFonts*> fonts;
+		static std::list<ofxFontStash*> offontsToDelete;
+
 };
 
 
