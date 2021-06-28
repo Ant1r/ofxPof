@@ -170,6 +170,7 @@ void pofTexts::setup(void)
 void pofTexts::draw()
 {
 	pofFonts *poffont = pofFonts::getFont(font);
+	if(!poffont) return;
 	ofxFontStash *offont = poffont->offont;
 	bool update = false;
 	int numLines;
