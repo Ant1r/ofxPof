@@ -9,7 +9,6 @@
 #include "RWmutex.h"
 
 class pofsubFbo	{
-	static std::map<t_symbol*,pofsubFbo*> sfbos;
 	int refCount;
 	t_symbol *name;
 	public:
@@ -25,6 +24,9 @@ class pofsubFbo	{
 	void reloadTexture(ofEventArgs & args);
 	//void unloadTexture(ofEventArgs & args);
 	
+	static std::map<t_symbol*,pofsubFbo*> sfbos;
+	static std::list<ofFbo*> fbosToDelete;
+	
 	static pofsubFbo* get(t_symbol *name);			
 	static void let(pofsubFbo *sfbo);
 	
@@ -32,6 +34,7 @@ class pofsubFbo	{
 	void end();	
 	void draw(float w, float h);
 	void setQuality(bool quality);
+	static void initFrame(ofEventArgs & args); // collect garbage
 };
 
 class pofFbo: public pofBase {
