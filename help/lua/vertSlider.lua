@@ -5,7 +5,7 @@ M.rad = 10
 local red = 0
 red = 1
 
-pof_instances = pof_instances or {}
+local pof_instances = pof_instances or {}
 pof_instances[M.pdself] = pof_instances[M.pdself] or {}
 
 local function clip(x, min, max)
@@ -27,7 +27,7 @@ function M:dotouch(event, x, y, id)
 	elseif(event == "move") then
 		self.v = clip(self.v0 - (y - self.y0) / (self.h - M.border - M.knobW), 0, 1)
 		self.out(self.v)
-		self.drawonce("do")
+		self.drawconfig("do")
 	end
 end
 
@@ -35,7 +35,7 @@ function M:update()
 	if((self.w ~= self.oldw) or (self.h ~= self.oldh)) then
 		self.oldw = self.w
 		self.oldh = self.h
-		self.config("size", self.w, self.h)
+		self.touchconfig("size", self.w, self.h)
 	end
 end
 
@@ -55,6 +55,10 @@ function M:dodraw()
 	of.setRectMode(of.RECTMODE_CORNER)
 end
 
+function M:set(v)
+	self.v = v
+end
+
 function M:format()
 	self.w = self.w or 50
 	self.h = self.h or 200
@@ -63,7 +67,8 @@ function M:format()
 	self.draw = M.dodraw
 	self.touch = M.dotouch
 	self.update = M.update
-	self.drawonce("continuousForce", false)
+	self.set = M.set
+	self.drawconfig("continuousForce", false)
 	pof_instances[M.pdself][self.pdself] = self
 end
 

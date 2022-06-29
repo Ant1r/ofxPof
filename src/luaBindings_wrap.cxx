@@ -2662,59 +2662,69 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 /* -------- TYPES TABLE (BEGIN) -------- */
 
 #define SWIGTYPE_p_attribute_iterator swig_types[0]
-#define SWIGTYPE_p_char swig_types[1]
-#define SWIGTYPE_p_difference_type swig_types[2]
-#define SWIGTYPE_p_f_p_void__void swig_types[3]
-#define SWIGTYPE_p_f_size_t__p_void swig_types[4]
-#define SWIGTYPE_p_iterator swig_types[5]
-#define SWIGTYPE_p_iterator_category swig_types[6]
-#define SWIGTYPE_p_ptrdiff_t swig_types[7]
-#define SWIGTYPE_p_pugi__xml_attribute swig_types[8]
-#define SWIGTYPE_p_pugi__xml_attribute_iterator swig_types[9]
-#define SWIGTYPE_p_pugi__xml_attribute_struct swig_types[10]
-#define SWIGTYPE_p_pugi__xml_document swig_types[11]
-#define SWIGTYPE_p_pugi__xml_named_node_iterator swig_types[12]
-#define SWIGTYPE_p_pugi__xml_node swig_types[13]
-#define SWIGTYPE_p_pugi__xml_node_iterator swig_types[14]
-#define SWIGTYPE_p_pugi__xml_node_struct swig_types[15]
-#define SWIGTYPE_p_pugi__xml_object_rangeT_pugi__xml_attribute_iterator_t swig_types[16]
-#define SWIGTYPE_p_pugi__xml_object_rangeT_pugi__xml_named_node_iterator_t swig_types[17]
-#define SWIGTYPE_p_pugi__xml_object_rangeT_pugi__xml_node_iterator_t swig_types[18]
-#define SWIGTYPE_p_pugi__xml_parse_result swig_types[19]
-#define SWIGTYPE_p_pugi__xml_text swig_types[20]
-#define SWIGTYPE_p_pugi__xml_tree_walker swig_types[21]
-#define SWIGTYPE_p_pugi__xml_writer swig_types[22]
-#define SWIGTYPE_p_pugi__xml_writer_file swig_types[23]
-#define SWIGTYPE_p_pugi__xml_writer_stream swig_types[24]
-#define SWIGTYPE_p_pugi__xpath_exception swig_types[25]
-#define SWIGTYPE_p_pugi__xpath_node swig_types[26]
-#define SWIGTYPE_p_pugi__xpath_node_set swig_types[27]
-#define SWIGTYPE_p_pugi__xpath_parse_result swig_types[28]
-#define SWIGTYPE_p_pugi__xpath_query swig_types[29]
-#define SWIGTYPE_p_pugi__xpath_variable swig_types[30]
-#define SWIGTYPE_p_pugi__xpath_variable_set swig_types[31]
-#define SWIGTYPE_p_std__basic_istreamT_char_std__char_traitsT_char_t_t swig_types[32]
-#define SWIGTYPE_p_std__basic_istreamT_wchar_t_std__char_traitsT_wchar_t_t_t swig_types[33]
-#define SWIGTYPE_p_std__basic_ostreamT_char_std__char_traitsT_char_t_t swig_types[34]
-#define SWIGTYPE_p_std__basic_ostreamT_wchar_t_std__char_traitsT_wchar_t_t_t swig_types[35]
-#define SWIGTYPE_p_std__basic_stringT_char_std__char_traitsT_char_t_std__allocatorT_char_t_t swig_types[36]
-#define SWIGTYPE_p_std__basic_stringT_wchar_t_std__char_traitsT_wchar_t_t_std__allocatorT_wchar_t_t_t swig_types[37]
-#define SWIGTYPE_p_std__exception swig_types[38]
-#define SWIGTYPE_p_std__string swig_types[39]
-#define SWIGTYPE_p_value_type swig_types[40]
-#define SWIGTYPE_p_wchar_t swig_types[41]
-static swig_type_info *swig_types[43];
-static swig_module_info swig_module = {swig_types, 42, 0, 0, 0, 0};
+#define SWIGTYPE_p_bool swig_types[1]
+#define SWIGTYPE_p_char swig_types[2]
+#define SWIGTYPE_p_difference_type swig_types[3]
+#define SWIGTYPE_p_f_p_void__void swig_types[4]
+#define SWIGTYPE_p_f_size_t__p_void swig_types[5]
+#define SWIGTYPE_p_int swig_types[6]
+#define SWIGTYPE_p_iterator swig_types[7]
+#define SWIGTYPE_p_iterator_category swig_types[8]
+#define SWIGTYPE_p_ofAlignHorz swig_types[9]
+#define SWIGTYPE_p_ofFbo swig_types[10]
+#define SWIGTYPE_p_ofRectangle swig_types[11]
+#define SWIGTYPE_p_ofTexture swig_types[12]
+#define SWIGTYPE_p_ofVec2f swig_types[13]
+#define SWIGTYPE_p_ofxFontStash swig_types[14]
+#define SWIGTYPE_p_ofx_sth_stash swig_types[15]
+#define SWIGTYPE_p_ptrdiff_t swig_types[16]
+#define SWIGTYPE_p_pugi__xml_attribute swig_types[17]
+#define SWIGTYPE_p_pugi__xml_attribute_iterator swig_types[18]
+#define SWIGTYPE_p_pugi__xml_attribute_struct swig_types[19]
+#define SWIGTYPE_p_pugi__xml_document swig_types[20]
+#define SWIGTYPE_p_pugi__xml_named_node_iterator swig_types[21]
+#define SWIGTYPE_p_pugi__xml_node swig_types[22]
+#define SWIGTYPE_p_pugi__xml_node_iterator swig_types[23]
+#define SWIGTYPE_p_pugi__xml_node_struct swig_types[24]
+#define SWIGTYPE_p_pugi__xml_object_rangeT_pugi__xml_attribute_iterator_t swig_types[25]
+#define SWIGTYPE_p_pugi__xml_object_rangeT_pugi__xml_named_node_iterator_t swig_types[26]
+#define SWIGTYPE_p_pugi__xml_object_rangeT_pugi__xml_node_iterator_t swig_types[27]
+#define SWIGTYPE_p_pugi__xml_parse_result swig_types[28]
+#define SWIGTYPE_p_pugi__xml_text swig_types[29]
+#define SWIGTYPE_p_pugi__xml_tree_walker swig_types[30]
+#define SWIGTYPE_p_pugi__xml_writer swig_types[31]
+#define SWIGTYPE_p_pugi__xml_writer_file swig_types[32]
+#define SWIGTYPE_p_pugi__xml_writer_stream swig_types[33]
+#define SWIGTYPE_p_pugi__xpath_exception swig_types[34]
+#define SWIGTYPE_p_pugi__xpath_node swig_types[35]
+#define SWIGTYPE_p_pugi__xpath_node_set swig_types[36]
+#define SWIGTYPE_p_pugi__xpath_parse_result swig_types[37]
+#define SWIGTYPE_p_pugi__xpath_query swig_types[38]
+#define SWIGTYPE_p_pugi__xpath_variable swig_types[39]
+#define SWIGTYPE_p_pugi__xpath_variable_set swig_types[40]
+#define SWIGTYPE_p_std__basic_istreamT_char_std__char_traitsT_char_t_t swig_types[41]
+#define SWIGTYPE_p_std__basic_istreamT_wchar_t_std__char_traitsT_wchar_t_t_t swig_types[42]
+#define SWIGTYPE_p_std__basic_ostreamT_char_std__char_traitsT_char_t_t swig_types[43]
+#define SWIGTYPE_p_std__basic_ostreamT_wchar_t_std__char_traitsT_wchar_t_t_t swig_types[44]
+#define SWIGTYPE_p_std__basic_stringT_char_std__char_traitsT_char_t_std__allocatorT_char_t_t swig_types[45]
+#define SWIGTYPE_p_std__basic_stringT_wchar_t_std__char_traitsT_wchar_t_t_std__allocatorT_wchar_t_t_t swig_types[46]
+#define SWIGTYPE_p_std__exception swig_types[47]
+#define SWIGTYPE_p_std__string swig_types[48]
+#define SWIGTYPE_p_value_type swig_types[49]
+#define SWIGTYPE_p_vectorT_std__string_t swig_types[50]
+#define SWIGTYPE_p_wchar_t swig_types[51]
+static swig_type_info *swig_types[53];
+static swig_module_info swig_module = {swig_types, 52, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
 /* -------- TYPES TABLE (END) -------- */
 
-#define SWIG_name      "pugixml"
-#define SWIG_init      luaopen_pugixml
-#define SWIG_init_user luaopen_pugixml_user
+#define SWIG_name      "pof"
+#define SWIG_init      luaopen_pof
+#define SWIG_init_user luaopen_pof_user
 
-#define SWIG_LUACODE   luaopen_pugixml_luacode
+#define SWIG_LUACODE   luaopen_pof_luacode
 
 namespace swig {
 typedef struct{} LANGUAGE_OBJ;
@@ -2723,6 +2733,11 @@ typedef struct{} LANGUAGE_OBJ;
 
 	// include any needed headers here
 	#include "../libs/pugixml-1.10/src/pugixml.hpp"
+	#include "pofBase.h"
+	#include "ofxFontStash.h"
+	extern ofTexture *textures_get(string texname);
+	extern ofxFontStash *fonts_get(string fontsymaddr);
+	extern ofFbo *fbo_get(string fbosymaddr);
 
 
 #include <stdexcept>
@@ -11751,6 +11766,1184 @@ static int _wrap_get_memory_deallocation_function(lua_State* L) { int SWIG_arg =
   result = (pugi::deallocation_function)pugi::get_memory_deallocation_function();
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_f_p_void__void,0); SWIG_arg++;  return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L);
   return SWIG_arg; }
+static int _wrap_new_ofxFontStash(lua_State* L) { int SWIG_arg = 0; ofxFontStash *result = 0 ;
+  SWIG_check_num_args("ofxFontStash::ofxFontStash",0,0) result = (ofxFontStash *)new ofxFontStash();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_ofxFontStash,1); SWIG_arg++;  return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L);
+  return SWIG_arg; }
+static int _wrap_ofxFontStash_setup__SWIG_0(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string arg2 ; float arg3 ; int arg4 ; bool arg5 ; int arg6 ; float arg7 ; bool result;
+  SWIG_check_num_args("ofxFontStash::setup",7,7)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::setup",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::setup",2,"string");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::setup",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::setup",4,"int");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("ofxFontStash::setup",5,"bool");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("ofxFontStash::setup",6,"int");
+  if(!lua_isnumber(L,7)) SWIG_fail_arg("ofxFontStash::setup",7,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_setup",1,SWIGTYPE_p_ofxFontStash); }  (&arg2)->assign(lua_tostring(L,2),lua_rawlen(L,2));
+  arg3 = (float)lua_tonumber(L, 3); arg4 = (int)lua_tonumber(L, 4); arg5 = (lua_toboolean(L, 5)!=0);
+  arg6 = (int)lua_tonumber(L, 6); arg7 = (float)lua_tonumber(L, 7); result = (bool)(arg1)->setup(arg2,arg3,arg4,arg5,arg6,arg7);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++; return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_setup__SWIG_1(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string arg2 ; float arg3 ; int arg4 ; bool arg5 ; int arg6 ; bool result; SWIG_check_num_args("ofxFontStash::setup",6,6)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::setup",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::setup",2,"string");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::setup",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::setup",4,"int");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("ofxFontStash::setup",5,"bool");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("ofxFontStash::setup",6,"int");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_setup",1,SWIGTYPE_p_ofxFontStash); }  (&arg2)->assign(lua_tostring(L,2),lua_rawlen(L,2));
+  arg3 = (float)lua_tonumber(L, 3); arg4 = (int)lua_tonumber(L, 4); arg5 = (lua_toboolean(L, 5)!=0);
+  arg6 = (int)lua_tonumber(L, 6); result = (bool)(arg1)->setup(arg2,arg3,arg4,arg5,arg6);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++; return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_setup__SWIG_2(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string arg2 ; float arg3 ; int arg4 ; bool arg5 ; bool result; SWIG_check_num_args("ofxFontStash::setup",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::setup",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::setup",2,"string");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::setup",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::setup",4,"int");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("ofxFontStash::setup",5,"bool");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_setup",1,SWIGTYPE_p_ofxFontStash); }  (&arg2)->assign(lua_tostring(L,2),lua_rawlen(L,2));
+  arg3 = (float)lua_tonumber(L, 3); arg4 = (int)lua_tonumber(L, 4); arg5 = (lua_toboolean(L, 5)!=0);
+  result = (bool)(arg1)->setup(arg2,arg3,arg4,arg5); lua_pushboolean(L,(int)(result!=0)); SWIG_arg++; return SWIG_arg;
+  if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_setup__SWIG_3(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string arg2 ; float arg3 ; int arg4 ; bool result; SWIG_check_num_args("ofxFontStash::setup",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::setup",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::setup",2,"string");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::setup",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::setup",4,"int");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_setup",1,SWIGTYPE_p_ofxFontStash); }  (&arg2)->assign(lua_tostring(L,2),lua_rawlen(L,2));
+  arg3 = (float)lua_tonumber(L, 3); arg4 = (int)lua_tonumber(L, 4); result = (bool)(arg1)->setup(arg2,arg3,arg4);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++; return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_setup__SWIG_4(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string arg2 ; float arg3 ; bool result; SWIG_check_num_args("ofxFontStash::setup",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::setup",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::setup",2,"string");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::setup",3,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_setup",1,SWIGTYPE_p_ofxFontStash); }  (&arg2)->assign(lua_tostring(L,2),lua_rawlen(L,2));
+  arg3 = (float)lua_tonumber(L, 3); result = (bool)(arg1)->setup(arg2,arg3); lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_setup__SWIG_5(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string arg2 ; bool result; SWIG_check_num_args("ofxFontStash::setup",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::setup",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::setup",2,"string");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_setup",1,SWIGTYPE_p_ofxFontStash); }  (&arg2)->assign(lua_tostring(L,2),lua_rawlen(L,2));
+  result = (bool)(arg1)->setup(arg2); lua_pushboolean(L,(int)(result!=0)); SWIG_arg++; return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_setup(lua_State* L) { int argc; int argv[8]={ 1,2,3,4,5,6,7,8} ; argc = lua_gettop(L);
+  if (argc == 2) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { return _wrap_ofxFontStash_setup__SWIG_5(L);}
+       }  }  if (argc == 3) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          return _wrap_ofxFontStash_setup__SWIG_4(L);}  }  }  }  if (argc == 4) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          { _v = lua_isnumber(L,argv[3]); }  if (_v) { return _wrap_ofxFontStash_setup__SWIG_3(L);}  }  }  }  } 
+  if (argc == 5) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          { _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isboolean(L,argv[4]); }  if (_v) {
+              return _wrap_ofxFontStash_setup__SWIG_2(L);}  }  }  }  }  }  if (argc == 6) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          { _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isboolean(L,argv[4]); }  if (_v) { {
+                _v = lua_isnumber(L,argv[5]); }  if (_v) { return _wrap_ofxFontStash_setup__SWIG_1(L);}  }  }  }  }  }  } 
+  if (argc == 7) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          { _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isboolean(L,argv[4]); }  if (_v) { {
+                _v = lua_isnumber(L,argv[5]); }  if (_v) { { _v = lua_isnumber(L,argv[6]); }  if (_v) {
+                  return _wrap_ofxFontStash_setup__SWIG_0(L);}  }  }  }  }  }  }  } 
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ofxFontStash_setup'\n" "  Possible C/C++ prototypes are:\n"
+  "    ofxFontStash::setup(string,float,int,bool,int,float)\n" "    ofxFontStash::setup(string,float,int,bool,int)\n"
+  "    ofxFontStash::setup(string,float,int,bool)\n" "    ofxFontStash::setup(string,float,int)\n"
+  "    ofxFontStash::setup(string,float)\n" "    ofxFontStash::setup(string)\n"); lua_error(L);return 0; }
+static int _wrap_ofxFontStash_addFont(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  std::string *arg2 = 0 ; std::string temp2 ; SWIG_check_num_args("ofxFontStash::addFont",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::addFont",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::addFont",2,"std::string const &");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_addFont",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; (arg1)->addFont((std::string const &)*arg2); return SWIG_arg;
+  if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_draw(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; string temp2 ; float result;
+  SWIG_check_num_args("ofxFontStash::draw",5,5) if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::draw",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::draw",2,"string const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::draw",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::draw",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::draw",5,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_draw",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5);
+  result = (float)(arg1)->draw((string const &)*arg2,arg3,arg4,arg5); lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLine__SWIG_0(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; ofAlignHorz arg6 ; float arg7 ; string temp2 ; ofAlignHorz *argp6 ;
+  ofRectangle result; SWIG_check_num_args("ofxFontStash::drawMultiLine",7,7)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLine",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLine",2,"string const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLine",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLine",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLine",5,"float");
+  if(!lua_isuserdata(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiLine",6,"ofAlignHorz");
+  if(!lua_isnumber(L,7)) SWIG_fail_arg("ofxFontStash::drawMultiLine",7,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLine",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,6,(void**)&argp6,SWIGTYPE_p_ofAlignHorz,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLine",6,SWIGTYPE_p_ofAlignHorz); }  arg6 = *argp6; arg7 = (float)lua_tonumber(L, 7);
+  result = (arg1)->drawMultiLine((string const &)*arg2,arg3,arg4,arg5,arg6,arg7); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLine__SWIG_1(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; ofAlignHorz arg6 ; string temp2 ; ofAlignHorz *argp6 ;
+  ofRectangle result; SWIG_check_num_args("ofxFontStash::drawMultiLine",6,6)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLine",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLine",2,"string const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLine",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLine",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLine",5,"float");
+  if(!lua_isuserdata(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiLine",6,"ofAlignHorz");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLine",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,6,(void**)&argp6,SWIGTYPE_p_ofAlignHorz,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLine",6,SWIGTYPE_p_ofAlignHorz); }  arg6 = *argp6;
+  result = (arg1)->drawMultiLine((string const &)*arg2,arg3,arg4,arg5,arg6); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLine__SWIG_2(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; string temp2 ; ofRectangle result;
+  SWIG_check_num_args("ofxFontStash::drawMultiLine",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLine",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLine",2,"string const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLine",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLine",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLine",5,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLine",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5);
+  result = (arg1)->drawMultiLine((string const &)*arg2,arg3,arg4,arg5); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLine(lua_State* L) { int argc; int argv[8]={ 1,2,3,4,5,6,7,8} ; argc = lua_gettop(L);
+  if (argc == 5) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          { _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) {
+              return _wrap_ofxFontStash_drawMultiLine__SWIG_2(L);}  }  }  }  }  }  if (argc == 6) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          { _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { { void *ptr;
+                if (lua_isuserdata(L,argv[5])==0 || SWIG_ConvertPtr(L,argv[5], (void **) &ptr, SWIGTYPE_p_ofAlignHorz, 0)) {
+                  _v = 0; }  else { _v = 1; }  }  if (_v) { return _wrap_ofxFontStash_drawMultiLine__SWIG_1(L);}  }  }  }  }  }
+     }  if (argc == 7) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          { _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { { void *ptr;
+                if (lua_isuserdata(L,argv[5])==0 || SWIG_ConvertPtr(L,argv[5], (void **) &ptr, SWIGTYPE_p_ofAlignHorz, 0)) {
+                  _v = 0; }  else { _v = 1; }  }  if (_v) { { _v = lua_isnumber(L,argv[6]); }  if (_v) {
+                  return _wrap_ofxFontStash_drawMultiLine__SWIG_0(L);}  }  }  }  }  }  }  } 
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ofxFontStash_drawMultiLine'\n"
+  "  Possible C/C++ prototypes are:\n" "    ofxFontStash::drawMultiLine(string const &,float,float,float,ofAlignHorz,float)\n"
+  "    ofxFontStash::drawMultiLine(string const &,float,float,float,ofAlignHorz)\n"
+  "    ofxFontStash::drawMultiLine(string const &,float,float,float)\n"); lua_error(L);return 0; }
+static int _wrap_ofxFontStash_drawMultiLineColumn__SWIG_0(lua_State* L) { int SWIG_arg = 0;
+  ofxFontStash *arg1 = (ofxFontStash *) 0 ; string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; float arg6 ;
+  int *arg7 = 0 ; bool arg8 ; int arg9 ; bool arg10 ; bool *arg11 = (bool *) 0 ; bool arg12 ; int arg13 ; ofRectangle result;
+  SWIG_check_num_args("ofxFontStash::drawMultiLineColumn",13,13)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",1,"ofxFontStash *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",2,"string &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",5,"float");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",6,"float");
+  if(!lua_isuserdata(L,7)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",7,"int &");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",8,"bool");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",9,"int");
+  if(!lua_isboolean(L,10)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",10,"bool");
+  if(!SWIG_isptrtype(L,11)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",11,"bool *");
+  if(!lua_isboolean(L,12)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",12,"bool");
+  if(!lua_isnumber(L,13)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",13,"int");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",1,SWIGTYPE_p_ofxFontStash); } 
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__string,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",2,SWIGTYPE_p_std__string); }  arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5); arg6 = (float)lua_tonumber(L, 6);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_int,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",7,SWIGTYPE_p_int); }  arg8 = (lua_toboolean(L, 8)!=0);
+  arg9 = (int)lua_tonumber(L, 9); arg10 = (lua_toboolean(L, 10)!=0);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,11,(void**)&arg11,SWIGTYPE_p_bool,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",11,SWIGTYPE_p_bool); }  arg12 = (lua_toboolean(L, 12)!=0);
+  arg13 = (int)lua_tonumber(L, 13);
+  result = (arg1)->drawMultiLineColumn(*arg2,arg3,arg4,arg5,arg6,*arg7,arg8,arg9,arg10,arg11,arg12,arg13); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLineColumn__SWIG_1(lua_State* L) { int SWIG_arg = 0;
+  ofxFontStash *arg1 = (ofxFontStash *) 0 ; string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; float arg6 ;
+  int *arg7 = 0 ; bool arg8 ; int arg9 ; bool arg10 ; bool *arg11 = (bool *) 0 ; bool arg12 ; ofRectangle result;
+  SWIG_check_num_args("ofxFontStash::drawMultiLineColumn",12,12)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",1,"ofxFontStash *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",2,"string &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",5,"float");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",6,"float");
+  if(!lua_isuserdata(L,7)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",7,"int &");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",8,"bool");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",9,"int");
+  if(!lua_isboolean(L,10)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",10,"bool");
+  if(!SWIG_isptrtype(L,11)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",11,"bool *");
+  if(!lua_isboolean(L,12)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",12,"bool");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",1,SWIGTYPE_p_ofxFontStash); } 
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__string,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",2,SWIGTYPE_p_std__string); }  arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5); arg6 = (float)lua_tonumber(L, 6);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_int,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",7,SWIGTYPE_p_int); }  arg8 = (lua_toboolean(L, 8)!=0);
+  arg9 = (int)lua_tonumber(L, 9); arg10 = (lua_toboolean(L, 10)!=0);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,11,(void**)&arg11,SWIGTYPE_p_bool,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",11,SWIGTYPE_p_bool); }  arg12 = (lua_toboolean(L, 12)!=0);
+  result = (arg1)->drawMultiLineColumn(*arg2,arg3,arg4,arg5,arg6,*arg7,arg8,arg9,arg10,arg11,arg12); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLineColumn__SWIG_2(lua_State* L) { int SWIG_arg = 0;
+  ofxFontStash *arg1 = (ofxFontStash *) 0 ; string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; float arg6 ;
+  int *arg7 = 0 ; bool arg8 ; int arg9 ; bool arg10 ; bool *arg11 = (bool *) 0 ; ofRectangle result;
+  SWIG_check_num_args("ofxFontStash::drawMultiLineColumn",11,11)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",1,"ofxFontStash *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",2,"string &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",5,"float");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",6,"float");
+  if(!lua_isuserdata(L,7)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",7,"int &");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",8,"bool");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",9,"int");
+  if(!lua_isboolean(L,10)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",10,"bool");
+  if(!SWIG_isptrtype(L,11)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",11,"bool *");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",1,SWIGTYPE_p_ofxFontStash); } 
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__string,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",2,SWIGTYPE_p_std__string); }  arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5); arg6 = (float)lua_tonumber(L, 6);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_int,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",7,SWIGTYPE_p_int); }  arg8 = (lua_toboolean(L, 8)!=0);
+  arg9 = (int)lua_tonumber(L, 9); arg10 = (lua_toboolean(L, 10)!=0);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,11,(void**)&arg11,SWIGTYPE_p_bool,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",11,SWIGTYPE_p_bool); } 
+  result = (arg1)->drawMultiLineColumn(*arg2,arg3,arg4,arg5,arg6,*arg7,arg8,arg9,arg10,arg11); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLineColumn__SWIG_3(lua_State* L) { int SWIG_arg = 0;
+  ofxFontStash *arg1 = (ofxFontStash *) 0 ; string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; float arg6 ;
+  int *arg7 = 0 ; bool arg8 ; int arg9 ; bool arg10 ; ofRectangle result;
+  SWIG_check_num_args("ofxFontStash::drawMultiLineColumn",10,10)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",1,"ofxFontStash *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",2,"string &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",5,"float");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",6,"float");
+  if(!lua_isuserdata(L,7)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",7,"int &");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",8,"bool");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",9,"int");
+  if(!lua_isboolean(L,10)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",10,"bool");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",1,SWIGTYPE_p_ofxFontStash); } 
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__string,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",2,SWIGTYPE_p_std__string); }  arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5); arg6 = (float)lua_tonumber(L, 6);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_int,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",7,SWIGTYPE_p_int); }  arg8 = (lua_toboolean(L, 8)!=0);
+  arg9 = (int)lua_tonumber(L, 9); arg10 = (lua_toboolean(L, 10)!=0);
+  result = (arg1)->drawMultiLineColumn(*arg2,arg3,arg4,arg5,arg6,*arg7,arg8,arg9,arg10); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLineColumn__SWIG_4(lua_State* L) { int SWIG_arg = 0;
+  ofxFontStash *arg1 = (ofxFontStash *) 0 ; string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; float arg6 ;
+  int *arg7 = 0 ; bool arg8 ; int arg9 ; ofRectangle result; SWIG_check_num_args("ofxFontStash::drawMultiLineColumn",9,9)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",1,"ofxFontStash *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",2,"string &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",5,"float");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",6,"float");
+  if(!lua_isuserdata(L,7)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",7,"int &");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",8,"bool");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",9,"int");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",1,SWIGTYPE_p_ofxFontStash); } 
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__string,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",2,SWIGTYPE_p_std__string); }  arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5); arg6 = (float)lua_tonumber(L, 6);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_int,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",7,SWIGTYPE_p_int); }  arg8 = (lua_toboolean(L, 8)!=0);
+  arg9 = (int)lua_tonumber(L, 9); result = (arg1)->drawMultiLineColumn(*arg2,arg3,arg4,arg5,arg6,*arg7,arg8,arg9); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLineColumn__SWIG_5(lua_State* L) { int SWIG_arg = 0;
+  ofxFontStash *arg1 = (ofxFontStash *) 0 ; string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; float arg6 ;
+  int *arg7 = 0 ; bool arg8 ; ofRectangle result; SWIG_check_num_args("ofxFontStash::drawMultiLineColumn",8,8)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",1,"ofxFontStash *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",2,"string &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",5,"float");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",6,"float");
+  if(!lua_isuserdata(L,7)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",7,"int &");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",8,"bool");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",1,SWIGTYPE_p_ofxFontStash); } 
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__string,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",2,SWIGTYPE_p_std__string); }  arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5); arg6 = (float)lua_tonumber(L, 6);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_int,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",7,SWIGTYPE_p_int); }  arg8 = (lua_toboolean(L, 8)!=0);
+  result = (arg1)->drawMultiLineColumn(*arg2,arg3,arg4,arg5,arg6,*arg7,arg8); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLineColumn__SWIG_6(lua_State* L) { int SWIG_arg = 0;
+  ofxFontStash *arg1 = (ofxFontStash *) 0 ; string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; float arg6 ;
+  int *arg7 = 0 ; ofRectangle result; SWIG_check_num_args("ofxFontStash::drawMultiLineColumn",7,7)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",1,"ofxFontStash *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",2,"string &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",5,"float");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",6,"float");
+  if(!lua_isuserdata(L,7)) SWIG_fail_arg("ofxFontStash::drawMultiLineColumn",7,"int &");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",1,SWIGTYPE_p_ofxFontStash); } 
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__string,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",2,SWIGTYPE_p_std__string); }  arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5); arg6 = (float)lua_tonumber(L, 6);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_int,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineColumn",7,SWIGTYPE_p_int); } 
+  result = (arg1)->drawMultiLineColumn(*arg2,arg3,arg4,arg5,arg6,*arg7); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLineColumn(lua_State* L) { int argc; int argv[14]={ 1,2,3,4,5,6,7,8,9,10,11,12,13,14} ;
+  argc = lua_gettop(L); if (argc == 7) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_std__string, 0)) { _v = 0; }
+         else { _v = 1; }  }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) { { _v = lua_isnumber(L,argv[3]); } 
+          if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { { _v = lua_isnumber(L,argv[5]); }  if (_v) { { void *ptr;
+                  if (lua_isuserdata(L,argv[6])==0 || SWIG_ConvertPtr(L,argv[6], (void **) &ptr, SWIGTYPE_p_int, 0)) { _v = 0; }
+                   else { _v = 1; }  }  if (_v) { return _wrap_ofxFontStash_drawMultiLineColumn__SWIG_6(L);}  }  }  }  }  }  }  }
+   if (argc == 8) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_std__string, 0)) { _v = 0; }
+         else { _v = 1; }  }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) { { _v = lua_isnumber(L,argv[3]); } 
+          if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { { _v = lua_isnumber(L,argv[5]); }  if (_v) { { void *ptr;
+                  if (lua_isuserdata(L,argv[6])==0 || SWIG_ConvertPtr(L,argv[6], (void **) &ptr, SWIGTYPE_p_int, 0)) { _v = 0; }
+                   else { _v = 1; }  }  if (_v) { { _v = lua_isboolean(L,argv[7]); }  if (_v) {
+                    return _wrap_ofxFontStash_drawMultiLineColumn__SWIG_5(L);}  }  }  }  }  }  }  }  }  if (argc == 9) { int _v;
+    { void *ptr; if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) {
+        _v = 0; }  else { _v = 1; }  }  if (_v) { { void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_std__string, 0)) { _v = 0; }
+         else { _v = 1; }  }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) { { _v = lua_isnumber(L,argv[3]); } 
+          if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { { _v = lua_isnumber(L,argv[5]); }  if (_v) { { void *ptr;
+                  if (lua_isuserdata(L,argv[6])==0 || SWIG_ConvertPtr(L,argv[6], (void **) &ptr, SWIGTYPE_p_int, 0)) { _v = 0; }
+                   else { _v = 1; }  }  if (_v) { { _v = lua_isboolean(L,argv[7]); }  if (_v) { { _v = lua_isnumber(L,argv[8]); }
+                     if (_v) { return _wrap_ofxFontStash_drawMultiLineColumn__SWIG_4(L);}  }  }  }  }  }  }  }  }  } 
+  if (argc == 10) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_std__string, 0)) { _v = 0; }
+         else { _v = 1; }  }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) { { _v = lua_isnumber(L,argv[3]); } 
+          if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { { _v = lua_isnumber(L,argv[5]); }  if (_v) { { void *ptr;
+                  if (lua_isuserdata(L,argv[6])==0 || SWIG_ConvertPtr(L,argv[6], (void **) &ptr, SWIGTYPE_p_int, 0)) { _v = 0; }
+                   else { _v = 1; }  }  if (_v) { { _v = lua_isboolean(L,argv[7]); }  if (_v) { { _v = lua_isnumber(L,argv[8]); }
+                     if (_v) { { _v = lua_isboolean(L,argv[9]); }  if (_v) {
+                        return _wrap_ofxFontStash_drawMultiLineColumn__SWIG_3(L);}  }  }  }  }  }  }  }  }  }  } 
+  if (argc == 11) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_std__string, 0)) { _v = 0; }
+         else { _v = 1; }  }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) { { _v = lua_isnumber(L,argv[3]); } 
+          if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { { _v = lua_isnumber(L,argv[5]); }  if (_v) { { void *ptr;
+                  if (lua_isuserdata(L,argv[6])==0 || SWIG_ConvertPtr(L,argv[6], (void **) &ptr, SWIGTYPE_p_int, 0)) { _v = 0; }
+                   else { _v = 1; }  }  if (_v) { { _v = lua_isboolean(L,argv[7]); }  if (_v) { { _v = lua_isnumber(L,argv[8]); }
+                     if (_v) { { _v = lua_isboolean(L,argv[9]); }  if (_v) { { void *ptr;
+                          if (SWIG_isptrtype(L,argv[10])==0 || SWIG_ConvertPtr(L,argv[10], (void **) &ptr, SWIGTYPE_p_bool, 0)) {
+                            _v = 0; }  else { _v = 1; }  }  if (_v) { return _wrap_ofxFontStash_drawMultiLineColumn__SWIG_2(L);}
+                         }  }  }  }  }  }  }  }  }  }  }  if (argc == 12) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_std__string, 0)) { _v = 0; }
+         else { _v = 1; }  }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) { { _v = lua_isnumber(L,argv[3]); } 
+          if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { { _v = lua_isnumber(L,argv[5]); }  if (_v) { { void *ptr;
+                  if (lua_isuserdata(L,argv[6])==0 || SWIG_ConvertPtr(L,argv[6], (void **) &ptr, SWIGTYPE_p_int, 0)) { _v = 0; }
+                   else { _v = 1; }  }  if (_v) { { _v = lua_isboolean(L,argv[7]); }  if (_v) { { _v = lua_isnumber(L,argv[8]); }
+                     if (_v) { { _v = lua_isboolean(L,argv[9]); }  if (_v) { { void *ptr;
+                          if (SWIG_isptrtype(L,argv[10])==0 || SWIG_ConvertPtr(L,argv[10], (void **) &ptr, SWIGTYPE_p_bool, 0)) {
+                            _v = 0; }  else { _v = 1; }  }  if (_v) { { _v = lua_isboolean(L,argv[11]); }  if (_v) {
+                            return _wrap_ofxFontStash_drawMultiLineColumn__SWIG_1(L);}  }  }  }  }  }  }  }  }  }  }  }  } 
+  if (argc == 13) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_std__string, 0)) { _v = 0; }
+         else { _v = 1; }  }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) { { _v = lua_isnumber(L,argv[3]); } 
+          if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { { _v = lua_isnumber(L,argv[5]); }  if (_v) { { void *ptr;
+                  if (lua_isuserdata(L,argv[6])==0 || SWIG_ConvertPtr(L,argv[6], (void **) &ptr, SWIGTYPE_p_int, 0)) { _v = 0; }
+                   else { _v = 1; }  }  if (_v) { { _v = lua_isboolean(L,argv[7]); }  if (_v) { { _v = lua_isnumber(L,argv[8]); }
+                     if (_v) { { _v = lua_isboolean(L,argv[9]); }  if (_v) { { void *ptr;
+                          if (SWIG_isptrtype(L,argv[10])==0 || SWIG_ConvertPtr(L,argv[10], (void **) &ptr, SWIGTYPE_p_bool, 0)) {
+                            _v = 0; }  else { _v = 1; }  }  if (_v) { { _v = lua_isboolean(L,argv[11]); }  if (_v) { {
+                              _v = lua_isnumber(L,argv[12]); }  if (_v) {
+                              return _wrap_ofxFontStash_drawMultiLineColumn__SWIG_0(L);}  }  }  }  }  }  }  }  }  }  }  }  }  } 
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ofxFontStash_drawMultiLineColumn'\n"
+  "  Possible C/C++ prototypes are:\n"
+  "    ofxFontStash::drawMultiLineColumn(string &,float,float,float,float,int &,bool,int,bool,bool *,bool,int)\n"
+  "    ofxFontStash::drawMultiLineColumn(string &,float,float,float,float,int &,bool,int,bool,bool *,bool)\n"
+  "    ofxFontStash::drawMultiLineColumn(string &,float,float,float,float,int &,bool,int,bool,bool *)\n"
+  "    ofxFontStash::drawMultiLineColumn(string &,float,float,float,float,int &,bool,int,bool)\n"
+  "    ofxFontStash::drawMultiLineColumn(string &,float,float,float,float,int &,bool,int)\n"
+  "    ofxFontStash::drawMultiLineColumn(string &,float,float,float,float,int &,bool)\n"
+  "    ofxFontStash::drawMultiLineColumn(string &,float,float,float,float,int &)\n"); lua_error(L);return 0; }
+static int _wrap_ofxFontStash_computeMultiLines(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string arg2 ; float arg3 ; float arg4 ; int *arg5 = 0 ; bool *arg6 = (bool *) 0 ;
+  SwigValueWrapper< vector< std::string > > result; SWIG_check_num_args("ofxFontStash::computeMultiLines",6,6)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::computeMultiLines",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::computeMultiLines",2,"string");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::computeMultiLines",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::computeMultiLines",4,"float");
+  if(!lua_isuserdata(L,5)) SWIG_fail_arg("ofxFontStash::computeMultiLines",5,"int &");
+  if(!SWIG_isptrtype(L,6)) SWIG_fail_arg("ofxFontStash::computeMultiLines",6,"bool *");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_computeMultiLines",1,SWIGTYPE_p_ofxFontStash); } 
+  (&arg2)->assign(lua_tostring(L,2),lua_rawlen(L,2)); arg3 = (float)lua_tonumber(L, 3); arg4 = (float)lua_tonumber(L, 4);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,5,(void**)&arg5,SWIGTYPE_p_int,0))){
+    SWIG_fail_ptr("ofxFontStash_computeMultiLines",5,SWIGTYPE_p_int); } 
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,6,(void**)&arg6,SWIGTYPE_p_bool,0))){
+    SWIG_fail_ptr("ofxFontStash_computeMultiLines",6,SWIGTYPE_p_bool); } 
+  result = (arg1)->computeMultiLines(arg2,arg3,arg4,*arg5,arg6); {
+    vector< string > * resultptr = new vector< string >((const vector< string > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_vectorT_std__string_t,1); SWIG_arg++; }  return SWIG_arg;
+  if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLines__SWIG_0(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  vector< string > *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; float arg6 ; int *arg7 = 0 ; bool arg8 ; int arg9 ;
+  bool arg10 ; int arg11 ; float arg12 ; float arg13 ; float arg14 ; ofRectangle result;
+  SWIG_check_num_args("ofxFontStash::drawMultiLines",14,14)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLines",1,"ofxFontStash *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLines",2,"vector< string > &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLines",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLines",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLines",5,"float");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiLines",6,"float");
+  if(!lua_isuserdata(L,7)) SWIG_fail_arg("ofxFontStash::drawMultiLines",7,"int &");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("ofxFontStash::drawMultiLines",8,"bool");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("ofxFontStash::drawMultiLines",9,"int");
+  if(!lua_isboolean(L,10)) SWIG_fail_arg("ofxFontStash::drawMultiLines",10,"bool");
+  if(!lua_isnumber(L,11)) SWIG_fail_arg("ofxFontStash::drawMultiLines",11,"int");
+  if(!lua_isnumber(L,12)) SWIG_fail_arg("ofxFontStash::drawMultiLines",12,"float");
+  if(!lua_isnumber(L,13)) SWIG_fail_arg("ofxFontStash::drawMultiLines",13,"float");
+  if(!lua_isnumber(L,14)) SWIG_fail_arg("ofxFontStash::drawMultiLines",14,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",1,SWIGTYPE_p_ofxFontStash); } 
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_vectorT_std__string_t,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",2,SWIGTYPE_p_vectorT_std__string_t); }  arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5); arg6 = (float)lua_tonumber(L, 6);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_int,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",7,SWIGTYPE_p_int); }  arg8 = (lua_toboolean(L, 8)!=0);
+  arg9 = (int)lua_tonumber(L, 9); arg10 = (lua_toboolean(L, 10)!=0); arg11 = (int)lua_tonumber(L, 11);
+  arg12 = (float)lua_tonumber(L, 12); arg13 = (float)lua_tonumber(L, 13); arg14 = (float)lua_tonumber(L, 14);
+  result = (arg1)->drawMultiLines(*arg2,arg3,arg4,arg5,arg6,*arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLines__SWIG_1(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  vector< string > *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; float arg6 ; int *arg7 = 0 ; bool arg8 ; int arg9 ;
+  bool arg10 ; int arg11 ; float arg12 ; float arg13 ; ofRectangle result;
+  SWIG_check_num_args("ofxFontStash::drawMultiLines",13,13)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLines",1,"ofxFontStash *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLines",2,"vector< string > &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLines",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLines",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLines",5,"float");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiLines",6,"float");
+  if(!lua_isuserdata(L,7)) SWIG_fail_arg("ofxFontStash::drawMultiLines",7,"int &");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("ofxFontStash::drawMultiLines",8,"bool");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("ofxFontStash::drawMultiLines",9,"int");
+  if(!lua_isboolean(L,10)) SWIG_fail_arg("ofxFontStash::drawMultiLines",10,"bool");
+  if(!lua_isnumber(L,11)) SWIG_fail_arg("ofxFontStash::drawMultiLines",11,"int");
+  if(!lua_isnumber(L,12)) SWIG_fail_arg("ofxFontStash::drawMultiLines",12,"float");
+  if(!lua_isnumber(L,13)) SWIG_fail_arg("ofxFontStash::drawMultiLines",13,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",1,SWIGTYPE_p_ofxFontStash); } 
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_vectorT_std__string_t,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",2,SWIGTYPE_p_vectorT_std__string_t); }  arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5); arg6 = (float)lua_tonumber(L, 6);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_int,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",7,SWIGTYPE_p_int); }  arg8 = (lua_toboolean(L, 8)!=0);
+  arg9 = (int)lua_tonumber(L, 9); arg10 = (lua_toboolean(L, 10)!=0); arg11 = (int)lua_tonumber(L, 11);
+  arg12 = (float)lua_tonumber(L, 12); arg13 = (float)lua_tonumber(L, 13);
+  result = (arg1)->drawMultiLines(*arg2,arg3,arg4,arg5,arg6,*arg7,arg8,arg9,arg10,arg11,arg12,arg13); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLines__SWIG_2(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  vector< string > *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; float arg6 ; int *arg7 = 0 ; bool arg8 ; int arg9 ;
+  bool arg10 ; int arg11 ; float arg12 ; ofRectangle result; SWIG_check_num_args("ofxFontStash::drawMultiLines",12,12)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLines",1,"ofxFontStash *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLines",2,"vector< string > &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLines",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLines",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLines",5,"float");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiLines",6,"float");
+  if(!lua_isuserdata(L,7)) SWIG_fail_arg("ofxFontStash::drawMultiLines",7,"int &");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("ofxFontStash::drawMultiLines",8,"bool");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("ofxFontStash::drawMultiLines",9,"int");
+  if(!lua_isboolean(L,10)) SWIG_fail_arg("ofxFontStash::drawMultiLines",10,"bool");
+  if(!lua_isnumber(L,11)) SWIG_fail_arg("ofxFontStash::drawMultiLines",11,"int");
+  if(!lua_isnumber(L,12)) SWIG_fail_arg("ofxFontStash::drawMultiLines",12,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",1,SWIGTYPE_p_ofxFontStash); } 
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_vectorT_std__string_t,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",2,SWIGTYPE_p_vectorT_std__string_t); }  arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5); arg6 = (float)lua_tonumber(L, 6);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_int,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",7,SWIGTYPE_p_int); }  arg8 = (lua_toboolean(L, 8)!=0);
+  arg9 = (int)lua_tonumber(L, 9); arg10 = (lua_toboolean(L, 10)!=0); arg11 = (int)lua_tonumber(L, 11);
+  arg12 = (float)lua_tonumber(L, 12);
+  result = (arg1)->drawMultiLines(*arg2,arg3,arg4,arg5,arg6,*arg7,arg8,arg9,arg10,arg11,arg12); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLines__SWIG_3(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  vector< string > *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; float arg6 ; int *arg7 = 0 ; bool arg8 ; int arg9 ;
+  bool arg10 ; int arg11 ; ofRectangle result; SWIG_check_num_args("ofxFontStash::drawMultiLines",11,11)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLines",1,"ofxFontStash *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLines",2,"vector< string > &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLines",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLines",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLines",5,"float");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiLines",6,"float");
+  if(!lua_isuserdata(L,7)) SWIG_fail_arg("ofxFontStash::drawMultiLines",7,"int &");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("ofxFontStash::drawMultiLines",8,"bool");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("ofxFontStash::drawMultiLines",9,"int");
+  if(!lua_isboolean(L,10)) SWIG_fail_arg("ofxFontStash::drawMultiLines",10,"bool");
+  if(!lua_isnumber(L,11)) SWIG_fail_arg("ofxFontStash::drawMultiLines",11,"int");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",1,SWIGTYPE_p_ofxFontStash); } 
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_vectorT_std__string_t,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",2,SWIGTYPE_p_vectorT_std__string_t); }  arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5); arg6 = (float)lua_tonumber(L, 6);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_int,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",7,SWIGTYPE_p_int); }  arg8 = (lua_toboolean(L, 8)!=0);
+  arg9 = (int)lua_tonumber(L, 9); arg10 = (lua_toboolean(L, 10)!=0); arg11 = (int)lua_tonumber(L, 11);
+  result = (arg1)->drawMultiLines(*arg2,arg3,arg4,arg5,arg6,*arg7,arg8,arg9,arg10,arg11); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLines__SWIG_4(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  vector< string > *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; float arg6 ; int *arg7 = 0 ; bool arg8 ; int arg9 ;
+  bool arg10 ; ofRectangle result; SWIG_check_num_args("ofxFontStash::drawMultiLines",10,10)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLines",1,"ofxFontStash *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLines",2,"vector< string > &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLines",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLines",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLines",5,"float");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiLines",6,"float");
+  if(!lua_isuserdata(L,7)) SWIG_fail_arg("ofxFontStash::drawMultiLines",7,"int &");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("ofxFontStash::drawMultiLines",8,"bool");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("ofxFontStash::drawMultiLines",9,"int");
+  if(!lua_isboolean(L,10)) SWIG_fail_arg("ofxFontStash::drawMultiLines",10,"bool");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",1,SWIGTYPE_p_ofxFontStash); } 
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_vectorT_std__string_t,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",2,SWIGTYPE_p_vectorT_std__string_t); }  arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5); arg6 = (float)lua_tonumber(L, 6);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_int,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",7,SWIGTYPE_p_int); }  arg8 = (lua_toboolean(L, 8)!=0);
+  arg9 = (int)lua_tonumber(L, 9); arg10 = (lua_toboolean(L, 10)!=0);
+  result = (arg1)->drawMultiLines(*arg2,arg3,arg4,arg5,arg6,*arg7,arg8,arg9,arg10); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLines__SWIG_5(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  vector< string > *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; float arg6 ; int *arg7 = 0 ; bool arg8 ; int arg9 ;
+  ofRectangle result; SWIG_check_num_args("ofxFontStash::drawMultiLines",9,9)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLines",1,"ofxFontStash *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLines",2,"vector< string > &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLines",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLines",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLines",5,"float");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiLines",6,"float");
+  if(!lua_isuserdata(L,7)) SWIG_fail_arg("ofxFontStash::drawMultiLines",7,"int &");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("ofxFontStash::drawMultiLines",8,"bool");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("ofxFontStash::drawMultiLines",9,"int");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",1,SWIGTYPE_p_ofxFontStash); } 
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_vectorT_std__string_t,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",2,SWIGTYPE_p_vectorT_std__string_t); }  arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5); arg6 = (float)lua_tonumber(L, 6);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_int,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLines",7,SWIGTYPE_p_int); }  arg8 = (lua_toboolean(L, 8)!=0);
+  arg9 = (int)lua_tonumber(L, 9); result = (arg1)->drawMultiLines(*arg2,arg3,arg4,arg5,arg6,*arg7,arg8,arg9); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLines(lua_State* L) { int argc; int argv[15]={ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15} ;
+  argc = lua_gettop(L); if (argc == 9) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_vectorT_std__string_t, 0)) {
+          _v = 0; }  else { _v = 1; }  }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) { {
+            _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { {
+                _v = lua_isnumber(L,argv[5]); }  if (_v) { { void *ptr;
+                  if (lua_isuserdata(L,argv[6])==0 || SWIG_ConvertPtr(L,argv[6], (void **) &ptr, SWIGTYPE_p_int, 0)) { _v = 0; }
+                   else { _v = 1; }  }  if (_v) { { _v = lua_isboolean(L,argv[7]); }  if (_v) { { _v = lua_isnumber(L,argv[8]); }
+                     if (_v) { return _wrap_ofxFontStash_drawMultiLines__SWIG_5(L);}  }  }  }  }  }  }  }  }  } 
+  if (argc == 10) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_vectorT_std__string_t, 0)) {
+          _v = 0; }  else { _v = 1; }  }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) { {
+            _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { {
+                _v = lua_isnumber(L,argv[5]); }  if (_v) { { void *ptr;
+                  if (lua_isuserdata(L,argv[6])==0 || SWIG_ConvertPtr(L,argv[6], (void **) &ptr, SWIGTYPE_p_int, 0)) { _v = 0; }
+                   else { _v = 1; }  }  if (_v) { { _v = lua_isboolean(L,argv[7]); }  if (_v) { { _v = lua_isnumber(L,argv[8]); }
+                     if (_v) { { _v = lua_isboolean(L,argv[9]); }  if (_v) {
+                        return _wrap_ofxFontStash_drawMultiLines__SWIG_4(L);}  }  }  }  }  }  }  }  }  }  }  if (argc == 11) {
+    int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_vectorT_std__string_t, 0)) {
+          _v = 0; }  else { _v = 1; }  }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) { {
+            _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { {
+                _v = lua_isnumber(L,argv[5]); }  if (_v) { { void *ptr;
+                  if (lua_isuserdata(L,argv[6])==0 || SWIG_ConvertPtr(L,argv[6], (void **) &ptr, SWIGTYPE_p_int, 0)) { _v = 0; }
+                   else { _v = 1; }  }  if (_v) { { _v = lua_isboolean(L,argv[7]); }  if (_v) { { _v = lua_isnumber(L,argv[8]); }
+                     if (_v) { { _v = lua_isboolean(L,argv[9]); }  if (_v) { { _v = lua_isnumber(L,argv[10]); }  if (_v) {
+                          return _wrap_ofxFontStash_drawMultiLines__SWIG_3(L);}  }  }  }  }  }  }  }  }  }  }  } 
+  if (argc == 12) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_vectorT_std__string_t, 0)) {
+          _v = 0; }  else { _v = 1; }  }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) { {
+            _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { {
+                _v = lua_isnumber(L,argv[5]); }  if (_v) { { void *ptr;
+                  if (lua_isuserdata(L,argv[6])==0 || SWIG_ConvertPtr(L,argv[6], (void **) &ptr, SWIGTYPE_p_int, 0)) { _v = 0; }
+                   else { _v = 1; }  }  if (_v) { { _v = lua_isboolean(L,argv[7]); }  if (_v) { { _v = lua_isnumber(L,argv[8]); }
+                     if (_v) { { _v = lua_isboolean(L,argv[9]); }  if (_v) { { _v = lua_isnumber(L,argv[10]); }  if (_v) { {
+                            _v = lua_isnumber(L,argv[11]); }  if (_v) { return _wrap_ofxFontStash_drawMultiLines__SWIG_2(L);}  }
+                         }  }  }  }  }  }  }  }  }  }  }  if (argc == 13) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_vectorT_std__string_t, 0)) {
+          _v = 0; }  else { _v = 1; }  }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) { {
+            _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { {
+                _v = lua_isnumber(L,argv[5]); }  if (_v) { { void *ptr;
+                  if (lua_isuserdata(L,argv[6])==0 || SWIG_ConvertPtr(L,argv[6], (void **) &ptr, SWIGTYPE_p_int, 0)) { _v = 0; }
+                   else { _v = 1; }  }  if (_v) { { _v = lua_isboolean(L,argv[7]); }  if (_v) { { _v = lua_isnumber(L,argv[8]); }
+                     if (_v) { { _v = lua_isboolean(L,argv[9]); }  if (_v) { { _v = lua_isnumber(L,argv[10]); }  if (_v) { {
+                            _v = lua_isnumber(L,argv[11]); }  if (_v) { { _v = lua_isnumber(L,argv[12]); }  if (_v) {
+                              return _wrap_ofxFontStash_drawMultiLines__SWIG_1(L);}  }  }  }  }  }  }  }  }  }  }  }  }  } 
+  if (argc == 14) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_vectorT_std__string_t, 0)) {
+          _v = 0; }  else { _v = 1; }  }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) { {
+            _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { {
+                _v = lua_isnumber(L,argv[5]); }  if (_v) { { void *ptr;
+                  if (lua_isuserdata(L,argv[6])==0 || SWIG_ConvertPtr(L,argv[6], (void **) &ptr, SWIGTYPE_p_int, 0)) { _v = 0; }
+                   else { _v = 1; }  }  if (_v) { { _v = lua_isboolean(L,argv[7]); }  if (_v) { { _v = lua_isnumber(L,argv[8]); }
+                     if (_v) { { _v = lua_isboolean(L,argv[9]); }  if (_v) { { _v = lua_isnumber(L,argv[10]); }  if (_v) { {
+                            _v = lua_isnumber(L,argv[11]); }  if (_v) { { _v = lua_isnumber(L,argv[12]); }  if (_v) { {
+                                _v = lua_isnumber(L,argv[13]); }  if (_v) { return _wrap_ofxFontStash_drawMultiLines__SWIG_0(L);}
+                               }  }  }  }  }  }  }  }  }  }  }  }  }  } 
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ofxFontStash_drawMultiLines'\n"
+  "  Possible C/C++ prototypes are:\n"
+  "    ofxFontStash::drawMultiLines(vector< string > &,float,float,float,float,int &,bool,int,bool,int,float,float,float)\n"
+  "    ofxFontStash::drawMultiLines(vector< string > &,float,float,float,float,int &,bool,int,bool,int,float,float)\n"
+  "    ofxFontStash::drawMultiLines(vector< string > &,float,float,float,float,int &,bool,int,bool,int,float)\n"
+  "    ofxFontStash::drawMultiLines(vector< string > &,float,float,float,float,int &,bool,int,bool,int)\n"
+  "    ofxFontStash::drawMultiLines(vector< string > &,float,float,float,float,int &,bool,int,bool)\n"
+  "    ofxFontStash::drawMultiLines(vector< string > &,float,float,float,float,int &,bool,int)\n"); lua_error(L);return 0; }
+static int _wrap_ofxFontStash_drawMultiColumnFormatted__SWIG_0(lua_State* L) { int SWIG_arg = 0;
+  ofxFontStash *arg1 = (ofxFontStash *) 0 ; string *arg2 = 0 ; float arg3 ; float arg4 ; bool arg5 ; bool arg6 ; string temp2 ;
+  ofVec2f result; SWIG_check_num_args("ofxFontStash::drawMultiColumnFormatted",6,6)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiColumnFormatted",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiColumnFormatted",2,"string const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiColumnFormatted",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiColumnFormatted",4,"float");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiColumnFormatted",5,"bool");
+  if(!lua_isboolean(L,6)) SWIG_fail_arg("ofxFontStash::drawMultiColumnFormatted",6,"bool");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiColumnFormatted",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (lua_toboolean(L, 5)!=0); arg6 = (lua_toboolean(L, 6)!=0);
+  result = (arg1)->drawMultiColumnFormatted((string const &)*arg2,arg3,arg4,arg5,arg6); {
+    ofVec2f * resultptr = new ofVec2f((const ofVec2f &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofVec2f,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiColumnFormatted__SWIG_1(lua_State* L) { int SWIG_arg = 0;
+  ofxFontStash *arg1 = (ofxFontStash *) 0 ; string *arg2 = 0 ; float arg3 ; float arg4 ; bool arg5 ; string temp2 ;
+  ofVec2f result; SWIG_check_num_args("ofxFontStash::drawMultiColumnFormatted",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiColumnFormatted",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiColumnFormatted",2,"string const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiColumnFormatted",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiColumnFormatted",4,"float");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiColumnFormatted",5,"bool");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiColumnFormatted",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (lua_toboolean(L, 5)!=0);
+  result = (arg1)->drawMultiColumnFormatted((string const &)*arg2,arg3,arg4,arg5); {
+    ofVec2f * resultptr = new ofVec2f((const ofVec2f &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofVec2f,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiColumnFormatted__SWIG_2(lua_State* L) { int SWIG_arg = 0;
+  ofxFontStash *arg1 = (ofxFontStash *) 0 ; string *arg2 = 0 ; float arg3 ; float arg4 ; string temp2 ; ofVec2f result;
+  SWIG_check_num_args("ofxFontStash::drawMultiColumnFormatted",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiColumnFormatted",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiColumnFormatted",2,"string const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiColumnFormatted",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiColumnFormatted",4,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiColumnFormatted",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); result = (arg1)->drawMultiColumnFormatted((string const &)*arg2,arg3,arg4); {
+    ofVec2f * resultptr = new ofVec2f((const ofVec2f &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofVec2f,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiColumnFormatted(lua_State* L) { int argc; int argv[7]={ 1,2,3,4,5,6,7} ;
+  argc = lua_gettop(L); if (argc == 4) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          { _v = lua_isnumber(L,argv[3]); }  if (_v) { return _wrap_ofxFontStash_drawMultiColumnFormatted__SWIG_2(L);}  }  }  }
+     }  if (argc == 5) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          { _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isboolean(L,argv[4]); }  if (_v) {
+              return _wrap_ofxFontStash_drawMultiColumnFormatted__SWIG_1(L);}  }  }  }  }  }  if (argc == 6) { int _v; {
+      void *ptr; if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) {
+        _v = 0; }  else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }
+         if (_v) { { _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isboolean(L,argv[4]); }  if (_v) { {
+                _v = lua_isboolean(L,argv[5]); }  if (_v) { return _wrap_ofxFontStash_drawMultiColumnFormatted__SWIG_0(L);}  }  }
+           }  }  }  } 
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ofxFontStash_drawMultiColumnFormatted'\n"
+  "  Possible C/C++ prototypes are:\n" "    ofxFontStash::drawMultiColumnFormatted(string const &,float,float,bool,bool)\n"
+  "    ofxFontStash::drawMultiColumnFormatted(string const &,float,float,bool)\n"
+  "    ofxFontStash::drawMultiColumnFormatted(string const &,float,float)\n"); lua_error(L);return 0; }
+static int _wrap_ofxFontStash_getFontHeight(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  float arg2 ; float result; SWIG_check_num_args("ofxFontStash::getFontHeight",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::getFontHeight",1,"ofxFontStash *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ofxFontStash::getFontHeight",2,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_getFontHeight",1,SWIGTYPE_p_ofxFontStash); }  arg2 = (float)lua_tonumber(L, 2);
+  result = (float)(arg1)->getFontHeight(arg2); lua_pushnumber(L, (lua_Number) result); SWIG_arg++; return SWIG_arg;
+  if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_getBBox__SWIG_0(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; ofAlignHorz arg6 ; float arg7 ; string temp2 ; ofAlignHorz *argp6 ;
+  ofRectangle result; SWIG_check_num_args("ofxFontStash::getBBox",7,7)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::getBBox",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::getBBox",2,"string const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::getBBox",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::getBBox",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::getBBox",5,"float");
+  if(!lua_isuserdata(L,6)) SWIG_fail_arg("ofxFontStash::getBBox",6,"ofAlignHorz");
+  if(!lua_isnumber(L,7)) SWIG_fail_arg("ofxFontStash::getBBox",7,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_getBBox",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,6,(void**)&argp6,SWIGTYPE_p_ofAlignHorz,0))){
+    SWIG_fail_ptr("ofxFontStash_getBBox",6,SWIGTYPE_p_ofAlignHorz); }  arg6 = *argp6; arg7 = (float)lua_tonumber(L, 7);
+  result = (arg1)->getBBox((string const &)*arg2,arg3,arg4,arg5,arg6,arg7); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_getBBox__SWIG_1(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; ofAlignHorz arg6 ; string temp2 ; ofAlignHorz *argp6 ;
+  ofRectangle result; SWIG_check_num_args("ofxFontStash::getBBox",6,6)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::getBBox",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::getBBox",2,"string const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::getBBox",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::getBBox",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::getBBox",5,"float");
+  if(!lua_isuserdata(L,6)) SWIG_fail_arg("ofxFontStash::getBBox",6,"ofAlignHorz");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_getBBox",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,6,(void**)&argp6,SWIGTYPE_p_ofAlignHorz,0))){
+    SWIG_fail_ptr("ofxFontStash_getBBox",6,SWIGTYPE_p_ofAlignHorz); }  arg6 = *argp6;
+  result = (arg1)->getBBox((string const &)*arg2,arg3,arg4,arg5,arg6); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_getBBox__SWIG_2(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; string temp2 ; ofRectangle result;
+  SWIG_check_num_args("ofxFontStash::getBBox",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::getBBox",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::getBBox",2,"string const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::getBBox",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::getBBox",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::getBBox",5,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_getBBox",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5);
+  result = (arg1)->getBBox((string const &)*arg2,arg3,arg4,arg5); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_getBBox(lua_State* L) { int argc; int argv[8]={ 1,2,3,4,5,6,7,8} ; argc = lua_gettop(L);
+  if (argc == 5) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          { _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) {
+              return _wrap_ofxFontStash_getBBox__SWIG_2(L);}  }  }  }  }  }  if (argc == 6) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          { _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { { void *ptr;
+                if (lua_isuserdata(L,argv[5])==0 || SWIG_ConvertPtr(L,argv[5], (void **) &ptr, SWIGTYPE_p_ofAlignHorz, 0)) {
+                  _v = 0; }  else { _v = 1; }  }  if (_v) { return _wrap_ofxFontStash_getBBox__SWIG_1(L);}  }  }  }  }  }  } 
+  if (argc == 7) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          { _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) { { void *ptr;
+                if (lua_isuserdata(L,argv[5])==0 || SWIG_ConvertPtr(L,argv[5], (void **) &ptr, SWIGTYPE_p_ofAlignHorz, 0)) {
+                  _v = 0; }  else { _v = 1; }  }  if (_v) { { _v = lua_isnumber(L,argv[6]); }  if (_v) {
+                  return _wrap_ofxFontStash_getBBox__SWIG_0(L);}  }  }  }  }  }  }  } 
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ofxFontStash_getBBox'\n"
+  "  Possible C/C++ prototypes are:\n" "    ofxFontStash::getBBox(string const &,float,float,float,ofAlignHorz,float)\n"
+  "    ofxFontStash::getBBox(string const &,float,float,float,ofAlignHorz)\n"
+  "    ofxFontStash::getBBox(string const &,float,float,float)\n"); lua_error(L);return 0; }
+static int _wrap_ofxFontStash_beginBatch(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  SWIG_check_num_args("ofxFontStash::beginBatch",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::beginBatch",1,"ofxFontStash *");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_beginBatch",1,SWIGTYPE_p_ofxFontStash); }  (arg1)->beginBatch(); return SWIG_arg;
+  if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawBatch(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; string temp2 ; SWIG_check_num_args("ofxFontStash::drawBatch",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawBatch",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::drawBatch",2,"string const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawBatch",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawBatch",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawBatch",5,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawBatch",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5); (arg1)->drawBatch((string const &)*arg2,arg3,arg4,arg5);
+  return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawMultiLineBatch(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string *arg2 = 0 ; float arg3 ; float arg4 ; float arg5 ; string temp2 ;
+  SWIG_check_num_args("ofxFontStash::drawMultiLineBatch",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawMultiLineBatch",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::drawMultiLineBatch",2,"string const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawMultiLineBatch",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawMultiLineBatch",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::drawMultiLineBatch",5,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawMultiLineBatch",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); arg5 = (float)lua_tonumber(L, 5);
+  (arg1)->drawMultiLineBatch((string const &)*arg2,arg3,arg4,arg5); return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L);
+  return SWIG_arg; }
+static int _wrap_ofxFontStash_endBatch(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  SWIG_check_num_args("ofxFontStash::endBatch",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::endBatch",1,"ofxFontStash *");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_endBatch",1,SWIGTYPE_p_ofxFontStash); }  (arg1)->endBatch(); return SWIG_arg; if(0) SWIG_fail;
+  fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_setLineHeight(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  float arg2 ; SWIG_check_num_args("ofxFontStash::setLineHeight",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::setLineHeight",1,"ofxFontStash *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ofxFontStash::setLineHeight",2,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_setLineHeight",1,SWIGTYPE_p_ofxFontStash); }  arg2 = (float)lua_tonumber(L, 2);
+  (arg1)->setLineHeight(arg2); return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_setKerning(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ; bool arg2 ;
+  SWIG_check_num_args("ofxFontStash::setKerning",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::setKerning",1,"ofxFontStash *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("ofxFontStash::setKerning",2,"bool");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_setKerning",1,SWIGTYPE_p_ofxFontStash); }  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->setKerning(arg2); return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_getKerning(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  bool result; SWIG_check_num_args("ofxFontStash::getKerning",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::getKerning",1,"ofxFontStash *");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_getKerning",1,SWIGTYPE_p_ofxFontStash); }  result = (bool)(arg1)->getKerning();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++; return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_getStash(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  ofx_sth_stash *result = 0 ; SWIG_check_num_args("ofxFontStash::getStash",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::getStash",1,"ofxFontStash *");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_getStash",1,SWIGTYPE_p_ofxFontStash); }  result = (ofx_sth_stash *)(arg1)->getStash();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_ofx_sth_stash,0); SWIG_arg++;  return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L);
+  return SWIG_arg; }
+static int _wrap_ofxFontStash_getDpiScale(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  float result; SWIG_check_num_args("ofxFontStash::getDpiScale",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::getDpiScale",1,"ofxFontStash *");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_getDpiScale",1,SWIGTYPE_p_ofxFontStash); }  result = (float)(arg1)->getDpiScale();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++; return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_setLodBias(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  float arg2 ; SWIG_check_num_args("ofxFontStash::setLodBias",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::setLodBias",1,"ofxFontStash *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ofxFontStash::setLodBias",2,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_setLodBias",1,SWIGTYPE_p_ofxFontStash); }  arg2 = (float)lua_tonumber(L, 2);
+  (arg1)->setLodBias(arg2); return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_loadFont__SWIG_0(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string arg2 ; int arg3 ; float arg4 ; int arg5 ; bool result; SWIG_check_num_args("ofxFontStash::loadFont",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::loadFont",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::loadFont",2,"string");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::loadFont",3,"int");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::loadFont",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("ofxFontStash::loadFont",5,"int");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_loadFont",1,SWIGTYPE_p_ofxFontStash); }  (&arg2)->assign(lua_tostring(L,2),lua_rawlen(L,2));
+  arg3 = (int)lua_tonumber(L, 3); arg4 = (float)lua_tonumber(L, 4); arg5 = (int)lua_tonumber(L, 5);
+  result = (bool)(arg1)->loadFont(arg2,arg3,arg4,arg5); lua_pushboolean(L,(int)(result!=0)); SWIG_arg++; return SWIG_arg;
+  if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_loadFont__SWIG_1(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string arg2 ; int arg3 ; float arg4 ; bool result; SWIG_check_num_args("ofxFontStash::loadFont",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::loadFont",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::loadFont",2,"string");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::loadFont",3,"int");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::loadFont",4,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_loadFont",1,SWIGTYPE_p_ofxFontStash); }  (&arg2)->assign(lua_tostring(L,2),lua_rawlen(L,2));
+  arg3 = (int)lua_tonumber(L, 3); arg4 = (float)lua_tonumber(L, 4); result = (bool)(arg1)->loadFont(arg2,arg3,arg4);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++; return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_loadFont__SWIG_2(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string arg2 ; int arg3 ; bool result; SWIG_check_num_args("ofxFontStash::loadFont",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::loadFont",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::loadFont",2,"string");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::loadFont",3,"int");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_loadFont",1,SWIGTYPE_p_ofxFontStash); }  (&arg2)->assign(lua_tostring(L,2),lua_rawlen(L,2));
+  arg3 = (int)lua_tonumber(L, 3); result = (bool)(arg1)->loadFont(arg2,arg3); lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_loadFont(lua_State* L) { int argc; int argv[6]={ 1,2,3,4,5,6} ; argc = lua_gettop(L);
+  if (argc == 3) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          return _wrap_ofxFontStash_loadFont__SWIG_2(L);}  }  }  }  if (argc == 4) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          { _v = lua_isnumber(L,argv[3]); }  if (_v) { return _wrap_ofxFontStash_loadFont__SWIG_1(L);}  }  }  }  } 
+  if (argc == 5) { int _v; { void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ofxFontStash, 0)) { _v = 0; }
+       else { _v = 1; }  }  if (_v) { { _v = lua_isstring(L,argv[1]); }  if (_v) { { _v = lua_isnumber(L,argv[2]); }  if (_v) {
+          { _v = lua_isnumber(L,argv[3]); }  if (_v) { { _v = lua_isnumber(L,argv[4]); }  if (_v) {
+              return _wrap_ofxFontStash_loadFont__SWIG_0(L);}  }  }  }  }  } 
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ofxFontStash_loadFont'\n"
+  "  Possible C/C++ prototypes are:\n" "    ofxFontStash::loadFont(string,int,float,int)\n"
+  "    ofxFontStash::loadFont(string,int,float)\n" "    ofxFontStash::loadFont(string,int)\n"); lua_error(L);return 0; }
+static int _wrap_ofxFontStash_isLoaded(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ; bool result;
+  SWIG_check_num_args("ofxFontStash::isLoaded",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::isLoaded",1,"ofxFontStash *");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_isLoaded",1,SWIGTYPE_p_ofxFontStash); }  result = (bool)(arg1)->isLoaded();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++; return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_setSize(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ; int arg2 ;
+  SWIG_check_num_args("ofxFontStash::setSize",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::setSize",1,"ofxFontStash *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ofxFontStash::setSize",2,"int");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_setSize",1,SWIGTYPE_p_ofxFontStash); }  arg2 = (int)lua_tonumber(L, 2); (arg1)->setSize(arg2);
+  return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_getSize(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ; int result;
+  SWIG_check_num_args("ofxFontStash::getSize",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::getSize",1,"ofxFontStash *");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_getSize",1,SWIGTYPE_p_ofxFontStash); }  result = (int)(arg1)->getSize();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++; return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_getLineHeight(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  float result; SWIG_check_num_args("ofxFontStash::getLineHeight",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::getLineHeight",1,"ofxFontStash *");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_getLineHeight",1,SWIGTYPE_p_ofxFontStash); }  result = (float)(arg1)->getLineHeight();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++; return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_getSpaceSize(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  float result; SWIG_check_num_args("ofxFontStash::getSpaceSize",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::getSpaceSize",1,"ofxFontStash *");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_getSpaceSize",1,SWIGTYPE_p_ofxFontStash); }  result = (float)(arg1)->getSpaceSize();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++; return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_getCharacterSpacing(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  float result; SWIG_check_num_args("ofxFontStash::getCharacterSpacing",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::getCharacterSpacing",1,"ofxFontStash *");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_getCharacterSpacing",1,SWIGTYPE_p_ofxFontStash); } 
+  result = (float)(arg1)->getCharacterSpacing(); lua_pushnumber(L, (lua_Number) result); SWIG_arg++; return SWIG_arg;
+  if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_setCharacterSpacing(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  float arg2 ; SWIG_check_num_args("ofxFontStash::setCharacterSpacing",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::setCharacterSpacing",1,"ofxFontStash *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ofxFontStash::setCharacterSpacing",2,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_setCharacterSpacing",1,SWIGTYPE_p_ofxFontStash); }  arg2 = (float)lua_tonumber(L, 2);
+  (arg1)->setCharacterSpacing(arg2); return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_stringWidth(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string *arg2 = 0 ; string temp2 ; float result; SWIG_check_num_args("ofxFontStash::stringWidth",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::stringWidth",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::stringWidth",2,"string const &");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_stringWidth",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; result = (float)(arg1)->stringWidth((string const &)*arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++; return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_stringHeight(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string *arg2 = 0 ; string temp2 ; float result; SWIG_check_num_args("ofxFontStash::stringHeight",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::stringHeight",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::stringHeight",2,"string const &");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_stringHeight",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; result = (float)(arg1)->stringHeight((string const &)*arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++; return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_getStringBoundingBox(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string *arg2 = 0 ; float arg3 ; float arg4 ; string temp2 ; ofRectangle result;
+  SWIG_check_num_args("ofxFontStash::getStringBoundingBox",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::getStringBoundingBox",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::getStringBoundingBox",2,"string const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::getStringBoundingBox",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::getStringBoundingBox",4,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_getStringBoundingBox",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); result = (arg1)->getStringBoundingBox((string const &)*arg2,arg3,arg4); {
+    ofRectangle * resultptr = new ofRectangle((const ofRectangle &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_ofRectangle,1); SWIG_arg++; }  return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static int _wrap_ofxFontStash_drawString(lua_State* L) { int SWIG_arg = 0; ofxFontStash *arg1 = (ofxFontStash *) 0 ;
+  string *arg2 = 0 ; float arg3 ; float arg4 ; string temp2 ; SWIG_check_num_args("ofxFontStash::drawString",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ofxFontStash::drawString",1,"ofxFontStash *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("ofxFontStash::drawString",2,"string const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ofxFontStash::drawString",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("ofxFontStash::drawString",4,"float");
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ofxFontStash,0))){
+    SWIG_fail_ptr("ofxFontStash_drawString",1,SWIGTYPE_p_ofxFontStash); } 
+  temp2.assign(lua_tostring(L,2),lua_rawlen(L,2)); arg2=&temp2; arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4); (arg1)->drawString((string const &)*arg2,arg3,arg4); return SWIG_arg; if(0) SWIG_fail; fail:
+  lua_error(L); return SWIG_arg; }
+static void swig_delete_ofxFontStash(void *obj) {
+ofxFontStash *arg1 = (ofxFontStash *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_ofxFontStash(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_ofxFontStash);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_ofxFontStash_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_method swig_ofxFontStash_methods[]= {
+    { "setup", _wrap_ofxFontStash_setup},
+    { "addFont", _wrap_ofxFontStash_addFont},
+    { "draw", _wrap_ofxFontStash_draw},
+    { "drawMultiLine", _wrap_ofxFontStash_drawMultiLine},
+    { "drawMultiLineColumn", _wrap_ofxFontStash_drawMultiLineColumn},
+    { "computeMultiLines", _wrap_ofxFontStash_computeMultiLines},
+    { "drawMultiLines", _wrap_ofxFontStash_drawMultiLines},
+    { "drawMultiColumnFormatted", _wrap_ofxFontStash_drawMultiColumnFormatted},
+    { "getFontHeight", _wrap_ofxFontStash_getFontHeight},
+    { "getBBox", _wrap_ofxFontStash_getBBox},
+    { "beginBatch", _wrap_ofxFontStash_beginBatch},
+    { "drawBatch", _wrap_ofxFontStash_drawBatch},
+    { "drawMultiLineBatch", _wrap_ofxFontStash_drawMultiLineBatch},
+    { "endBatch", _wrap_ofxFontStash_endBatch},
+    { "setLineHeight", _wrap_ofxFontStash_setLineHeight},
+    { "setKerning", _wrap_ofxFontStash_setKerning},
+    { "getKerning", _wrap_ofxFontStash_getKerning},
+    { "getStash", _wrap_ofxFontStash_getStash},
+    { "getDpiScale", _wrap_ofxFontStash_getDpiScale},
+    { "setLodBias", _wrap_ofxFontStash_setLodBias},
+    { "loadFont", _wrap_ofxFontStash_loadFont},
+    { "isLoaded", _wrap_ofxFontStash_isLoaded},
+    { "setSize", _wrap_ofxFontStash_setSize},
+    { "getSize", _wrap_ofxFontStash_getSize},
+    { "getLineHeight", _wrap_ofxFontStash_getLineHeight},
+    { "getSpaceSize", _wrap_ofxFontStash_getSpaceSize},
+    { "getCharacterSpacing", _wrap_ofxFontStash_getCharacterSpacing},
+    { "setCharacterSpacing", _wrap_ofxFontStash_setCharacterSpacing},
+    { "stringWidth", _wrap_ofxFontStash_stringWidth},
+    { "stringHeight", _wrap_ofxFontStash_stringHeight},
+    { "getStringBoundingBox", _wrap_ofxFontStash_getStringBoundingBox},
+    { "drawString", _wrap_ofxFontStash_drawString},
+    {0,0}
+};
+static swig_lua_method swig_ofxFontStash_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_ofxFontStash_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_ofxFontStash_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_ofxFontStash_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_ofxFontStash_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_ofxFontStash_Sf_SwigStatic = {
+    "ofxFontStash",
+    swig_ofxFontStash_Sf_SwigStatic_methods,
+    swig_ofxFontStash_Sf_SwigStatic_attributes,
+    swig_ofxFontStash_Sf_SwigStatic_constants,
+    swig_ofxFontStash_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_ofxFontStash_bases[] = {0};
+static const char *swig_ofxFontStash_base_names[] = {0};
+static swig_lua_class _wrap_class_ofxFontStash = { "ofxFontStash", "ofxFontStash", &SWIGTYPE_p_ofxFontStash,_proxy__wrap_new_ofxFontStash, swig_delete_ofxFontStash, swig_ofxFontStash_methods, swig_ofxFontStash_attributes, &swig_ofxFontStash_Sf_SwigStatic, swig_ofxFontStash_meta, swig_ofxFontStash_bases, swig_ofxFontStash_base_names };
+
+static int _wrap_textures_get(lua_State* L) { int SWIG_arg = 0; string arg1 ; ofTexture *result = 0 ;
+  SWIG_check_num_args("textures_get",1,1) if(!lua_isstring(L,1)) SWIG_fail_arg("textures_get",1,"string");
+  (&arg1)->assign(lua_tostring(L,1),lua_rawlen(L,1)); result = (ofTexture *)textures_get(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_ofTexture,0); SWIG_arg++;  return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L);
+  return SWIG_arg; }
+static int _wrap_fonts_get(lua_State* L) { int SWIG_arg = 0; string arg1 ; ofxFontStash *result = 0 ;
+  SWIG_check_num_args("fonts_get",1,1) if(!lua_isstring(L,1)) SWIG_fail_arg("fonts_get",1,"string");
+  (&arg1)->assign(lua_tostring(L,1),lua_rawlen(L,1)); result = (ofxFontStash *)fonts_get(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_ofxFontStash,0); SWIG_arg++;  return SWIG_arg; if(0) SWIG_fail; fail: lua_error(L);
+  return SWIG_arg; }
+static int _wrap_fbo_get(lua_State* L) { int SWIG_arg = 0; string arg1 ; ofFbo *result = 0 ; SWIG_check_num_args("fbo_get",1,1)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("fbo_get",1,"string"); (&arg1)->assign(lua_tostring(L,1),lua_rawlen(L,1));
+  result = (ofFbo *)fbo_get(arg1); SWIG_NewPointerObj(L,result,SWIGTYPE_p_ofFbo,0); SWIG_arg++;  return SWIG_arg;
+  if(0) SWIG_fail; fail: lua_error(L); return SWIG_arg; }
 static swig_lua_attribute swig_SwigModule_attributes[] = {
     { "parse_minimal", _wrap_parse_minimal_get, SWIG_Lua_set_immutable },
     { "parse_pi", _wrap_parse_pi_get, SWIG_Lua_set_immutable },
@@ -11828,6 +13021,7 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
     {SWIG_LUA_CONSTTAB_INT("xpath_node_set_type_unsorted", pugi::xpath_node_set::type_unsorted)},
     {SWIG_LUA_CONSTTAB_INT("xpath_node_set_type_sorted", pugi::xpath_node_set::type_sorted)},
     {SWIG_LUA_CONSTTAB_INT("xpath_node_set_type_sorted_reverse", pugi::xpath_node_set::type_sorted_reverse)},
+    {SWIG_LUA_CONSTTAB_FLOAT("OFX_FONT_STASH_LINE_HEIGHT_MULT", 0.9)},
     {0,0,0,0,0,0}
 };
 static swig_lua_method swig_SwigModule_methods[]= {
@@ -11836,6 +13030,9 @@ static swig_lua_method swig_SwigModule_methods[]= {
     { "set_memory_management_functions", _wrap_set_memory_management_functions},
     { "get_memory_allocation_function", _wrap_get_memory_allocation_function},
     { "get_memory_deallocation_function", _wrap_get_memory_deallocation_function},
+    { "textures_get", _wrap_textures_get},
+    { "fonts_get", _wrap_fonts_get},
+    { "fbo_get", _wrap_fbo_get},
     {0,0}
 };
 static swig_lua_class* swig_SwigModule_classes[]= {
@@ -11859,6 +13056,7 @@ static swig_lua_class* swig_SwigModule_classes[]= {
 &_wrap_class_xpath_exception,
 &_wrap_class_xpath_node,
 &_wrap_class_xpath_node_set,
+&_wrap_class_ofxFontStash,
     0
 };
 static swig_lua_namespace* swig_SwigModule_namespaces[] = {
@@ -11866,7 +13064,7 @@ static swig_lua_namespace* swig_SwigModule_namespaces[] = {
 };
 
 static swig_lua_namespace swig_SwigModule = {
-    "pugixml",
+    "pof",
     swig_SwigModule_methods,
     swig_SwigModule_attributes,
     swig_SwigModule_constants,
@@ -11892,12 +13090,21 @@ static void *_p_pugi__xml_documentTo_p_pugi__xml_node(void *x, int *SWIGUNUSEDPA
     return (void *)((pugi::xml_node *)  ((pugi::xml_document *) x));
 }
 static swig_type_info _swigt__p_attribute_iterator = {"_p_attribute_iterator", "attribute_iterator *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_bool = {"_p_bool", "bool *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *|pugi::char_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_difference_type = {"_p_difference_type", "difference_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_void__void = {"_p_f_p_void__void", "pugi::deallocation_function|void (*)(void *)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_size_t__p_void = {"_p_f_size_t__p_void", "void *(*)(size_t)|pugi::allocation_function", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_int = {"_p_int", "int *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_iterator = {"_p_iterator", "iterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_iterator_category = {"_p_iterator_category", "iterator_category *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_ofAlignHorz = {"_p_ofAlignHorz", "ofAlignHorz *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_ofFbo = {"_p_ofFbo", "ofFbo *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_ofRectangle = {"_p_ofRectangle", "ofRectangle *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_ofTexture = {"_p_ofTexture", "ofTexture *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_ofVec2f = {"_p_ofVec2f", "ofVec2f *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_ofxFontStash = {"_p_ofxFontStash", "ofxFontStash *", 0, 0, (void*)&_wrap_class_ofxFontStash, 0};
+static swig_type_info _swigt__p_ofx_sth_stash = {"_p_ofx_sth_stash", "ofx_sth_stash *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ptrdiff_t = {"_p_ptrdiff_t", "ptrdiff_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_pugi__xml_attribute = {"_p_pugi__xml_attribute", "pugi::xml_attribute *", 0, 0, (void*)&_wrap_class_xml_attribute, 0};
 static swig_type_info _swigt__p_pugi__xml_attribute_iterator = {"_p_pugi__xml_attribute_iterator", "pugi::xml_attribute_iterator *|pugi::xml_node::attribute_iterator *", 0, 0, (void*)&_wrap_class_xml_attribute_iterator, 0};
@@ -11932,16 +13139,26 @@ static swig_type_info _swigt__p_std__basic_stringT_wchar_t_std__char_traitsT_wch
 static swig_type_info _swigt__p_std__exception = {"_p_std__exception", "std::exception *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__string = {"_p_std__string", "std::string *|string *", 0, 0, (void*)&_wrap_class_string, 0};
 static swig_type_info _swigt__p_value_type = {"_p_value_type", "value_type *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_vectorT_std__string_t = {"_p_vectorT_std__string_t", "vector< std::string > *|vector< string > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_wchar_t = {"_p_wchar_t", "wchar_t *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_attribute_iterator,
+  &_swigt__p_bool,
   &_swigt__p_char,
   &_swigt__p_difference_type,
   &_swigt__p_f_p_void__void,
   &_swigt__p_f_size_t__p_void,
+  &_swigt__p_int,
   &_swigt__p_iterator,
   &_swigt__p_iterator_category,
+  &_swigt__p_ofAlignHorz,
+  &_swigt__p_ofFbo,
+  &_swigt__p_ofRectangle,
+  &_swigt__p_ofTexture,
+  &_swigt__p_ofVec2f,
+  &_swigt__p_ofxFontStash,
+  &_swigt__p_ofx_sth_stash,
   &_swigt__p_ptrdiff_t,
   &_swigt__p_pugi__xml_attribute,
   &_swigt__p_pugi__xml_attribute_iterator,
@@ -11976,16 +13193,26 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__exception,
   &_swigt__p_std__string,
   &_swigt__p_value_type,
+  &_swigt__p_vectorT_std__string_t,
   &_swigt__p_wchar_t,
 };
 
 static swig_cast_info _swigc__p_attribute_iterator[] = {  {&_swigt__p_attribute_iterator, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_bool[] = {  {&_swigt__p_bool, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_difference_type[] = {  {&_swigt__p_difference_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_void__void[] = {  {&_swigt__p_f_p_void__void, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_size_t__p_void[] = {  {&_swigt__p_f_size_t__p_void, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_iterator[] = {  {&_swigt__p_iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_iterator_category[] = {  {&_swigt__p_iterator_category, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ofAlignHorz[] = {  {&_swigt__p_ofAlignHorz, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ofFbo[] = {  {&_swigt__p_ofFbo, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ofRectangle[] = {  {&_swigt__p_ofRectangle, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ofTexture[] = {  {&_swigt__p_ofTexture, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ofVec2f[] = {  {&_swigt__p_ofVec2f, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ofxFontStash[] = {  {&_swigt__p_ofxFontStash, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ofx_sth_stash[] = {  {&_swigt__p_ofx_sth_stash, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ptrdiff_t[] = {  {&_swigt__p_ptrdiff_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_pugi__xml_attribute[] = {  {&_swigt__p_pugi__xml_attribute, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_pugi__xml_attribute_iterator[] = {  {&_swigt__p_pugi__xml_attribute_iterator, 0, 0, 0},{0, 0, 0, 0}};
@@ -12020,16 +13247,26 @@ static swig_cast_info _swigc__p_std__basic_stringT_wchar_t_std__char_traitsT_wch
 static swig_cast_info _swigc__p_std__exception[] = {  {&_swigt__p_std__exception, 0, 0, 0},  {&_swigt__p_pugi__xpath_exception, _p_pugi__xpath_exceptionTo_p_std__exception, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__string[] = {  {&_swigt__p_std__string, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_value_type[] = {  {&_swigt__p_value_type, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_vectorT_std__string_t[] = {  {&_swigt__p_vectorT_std__string_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_wchar_t[] = {  {&_swigt__p_wchar_t, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_attribute_iterator,
+  _swigc__p_bool,
   _swigc__p_char,
   _swigc__p_difference_type,
   _swigc__p_f_p_void__void,
   _swigc__p_f_size_t__p_void,
+  _swigc__p_int,
   _swigc__p_iterator,
   _swigc__p_iterator_category,
+  _swigc__p_ofAlignHorz,
+  _swigc__p_ofFbo,
+  _swigc__p_ofRectangle,
+  _swigc__p_ofTexture,
+  _swigc__p_ofVec2f,
+  _swigc__p_ofxFontStash,
+  _swigc__p_ofx_sth_stash,
   _swigc__p_ptrdiff_t,
   _swigc__p_pugi__xml_attribute,
   _swigc__p_pugi__xml_attribute_iterator,
@@ -12064,6 +13301,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__exception,
   _swigc__p_std__string,
   _swigc__p_value_type,
+  _swigc__p_vectorT_std__string_t,
   _swigc__p_wchar_t,
 };
 
