@@ -9,10 +9,10 @@
 #include "RWmutex.h"
 
 class pofsubFbo	{
-	static std::map<t_symbol*,pofsubFbo*> sfbos;
 	int refCount;
 	t_symbol *name;
 	public:
+	static std::map<t_symbol*,pofsubFbo*> sfbos;
 	float width, height;
 	GLint format;
 	int numSamples;
