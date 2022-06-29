@@ -273,7 +273,7 @@ static void pofutil_thread(void *x, t_symbol *s, int argc, t_atom *argv)
 	if(px->sync) pofutil_fileops(x, s, argc, argv, true);
 	else {
 		if(px->systhread != NULL && px->systhread->running) {
-			error("pofutil %s : async thread is already running !", s->s_name);
+			pd_error(x, "pofutil %s : async thread is already running !", s->s_name);
 			SETSYMBOL(&at, gensym("error_running"));
 			outlet_anything(px->m_out1, s, 1, &at);
 			return;
