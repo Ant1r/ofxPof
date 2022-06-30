@@ -15,11 +15,13 @@ class pofLua_receiver
 	public:
 	t_pd pd;
 	pofLua *lua;
-	set<t_symbol*> channels;
-	pofLua_receiver(pofLua *owner);
+	bool update;
+	t_symbol *name;
+	pofLua_receiver();
 	~pofLua_receiver();
-	void bind(t_symbol *s);
-	void unbind(t_symbol *s);
+	void initialize(pofLua *owner, t_symbol *name, bool update = false);
+	void rcv_anything(t_symbol *s, int argc, t_atom *argv);
+	static void setup(void);
 };
 
 class pofLua: public pofTouch, public pofOnce {
@@ -40,8 +42,7 @@ class pofLua: public pofTouch, public pofOnce {
 		bool loaded;
 		bool touchable;
 		bool drawable;
-		pofLua_receiver receiver;
-		pofLua_receiver receiverupdater;
+		map<t_symbol*, pofLua_receiver> receivers;
 
 		static void setup(void);
 };

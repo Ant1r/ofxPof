@@ -12,32 +12,55 @@ t_class *pofLua_class, *pofLua_receiver_class;
 
 static ofxLua lua;
 static ofMutex luaMutex;
-static t_symbol *s_out, *s_function;
+static t_symbol *s_out, *s_function, *s_receive;
 static std::map<string, pofLua*> pofLuas;
 
-pofLua_receiver::pofLua_receiver(pofLua *owner)
-{
-	pd = pofLua_receiver_class;
-	lua = owner;
-}
+// ------------ pofLua_receiver -------------
+
+pofLua_receiver::pofLua_receiver() : pd(NULL)
+{}
 
 pofLua_receiver::~pofLua_receiver()
 {
-	for(t_symbol *chan : channels) pd_unbind(&pd, chan);
+	if(pd) pd_unbind(&pd, name);
 }
 
-void pofLua_receiver::bind(t_symbol *s)
+void pofLua_receiver::initialize(pofLua *owner, t_symbol *_name, bool _update)
 {
-	if(channels.count(s)) return;
-	pd_bind(&pd, s);
-	channels.insert(s);
+	pd = pofLua_receiver_class;
+	lua = owner;
+	name = _name;
+	update = _update;
+	pd_bind(&pd, name);
 }
 
-void pofLua_receiver::unbind(t_symbol *s)
+void pofLua_receiver::rcv_anything(t_symbol *s, int argc, t_atom *argv)
 {
-	if(!channels.count(s)) return;
-	pd_unbind(&pd, s);
-	channels.erase(s);
+	t_atom at;
+	t_binbuf *bb = binbuf_new();
+	SETSYMBOL(&at, s_receive);
+	binbuf_add(bb, 1, &at);
+	SETSYMBOL(&at, name);
+	binbuf_add(bb, 1, &at);
+	if(s != &s_list && s != &s_symbol && s != &s_float) {
+		SETSYMBOL(&at, s);
+		binbuf_add(bb, 1, &at);
+	}
+	binbuf_add(bb, argc, argv);
+	lua->queueToGUI(s_function, binbuf_getnatom(bb), binbuf_getvec(bb));
+	if(update) lua->trigger = true;
+	binbuf_free(bb);
+}
+
+static void pofLua_receiver_anything(pofLua_receiver *x, t_symbol *s, int argc, t_atom *argv)
+{
+	x->rcv_anything(s, argc, argv);
+}
+
+void pofLua_receiver::setup()
+{
+	pofLua_receiver_class = class_new(gensym("pofluarcv"), 0, 0, sizeof(pofLua_receiver), CLASS_PD, A_NULL);
+	class_addanything(pofLua_receiver_class, pofLua_receiver_anything);
 }
 
 // ------------ Methods exported to Lua -------------
@@ -65,7 +88,7 @@ static std::vector<Any> pofLua_stackToVec(lua_State *L, int first)
 	{
 		int type = lua_type (L, i);
 		if(type == LUA_TNUMBER) vec.push_back((float)lua_tonumber(L, i));
-		else if(type == LUA_TBOOLEAN) vec.push_back((float)lua_toboolean(L, i)?1.0:0.0);
+		else if(type == LUA_TBOOLEAN) vec.push_back((float)(lua_toboolean(L, i)?1.0:0.0));
 		else if(type == LUA_TSTRING) vec.push_back(string(lua_tostring(L, i)));
 		else continue;
 	}
@@ -167,6 +190,7 @@ static string pofLua_prefix(void *x)
 	ss << "function M.send(...) topd(M.pdself, 'send', ...) end; ";
 	ss << "function M.touchconfig(...) topd(M.pdself, 'touchconfig', ...) end; ";
 	ss << "function M.drawconfig(...) drawconfig(M.pdself, ...) end; ";
+	ss << "function M.addreceive(name, update) topd(M.pdself, 'receive', name, update) end; ";
 	ss << "function M.getfile(...) return getfile(M.pdself, ...) end; ";
 	return ss.str();
 }
@@ -236,10 +260,11 @@ static void pofLua_reload(void *x)
 		t_freebytes(buf, length);
 	}
 	
+	obj->receivers.clear();
 	obj->script += obj->argsScript;
 	obj->script = dollarsymbol(obj->script);
 	obj->loaded = obj->touchable = obj->drawable = false;
-
+	obj->trigger = true;
 }
 
 // ------------ pd class methods -------------
@@ -311,7 +336,6 @@ static void pofLua_lua(void *x, t_symbol *s, int argc, t_atom *argv)
 	binbuf_add(bb, argc, argv);
 	binbuf_gettext(bb, &buf, &bufsize);
 	binbuf_free(bb);
-	//post("lua: %s", buf);
 	string str = "local M=" + string(obj->name->s_name) + ";" + buf;
 	luaMutex.lock();
 	if(!lua.doString(str.c_str())) {
@@ -346,21 +370,10 @@ static void pofLua_send(void *x, t_symbol *s, int argc, t_atom *argv)
 	else pd_list(dest->s_thing, gensym("list"), argc, argv);
 }
 
-static void pofLua_receive(void *x, t_symbol *s)
+static void pofLua_receive(void *x, t_symbol *s, t_float update)
 {
 	pofLua* px = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
-	cout << "pofLua_receive s=" << s->s_name << endl;
-	/*if(!px->receiver.lr_channels.count(s)) {
-		pd_bind(&px->receiver.lr_pd, s);
-		px->receiver.lr_channels.insert(s);
-	}*/
-	px->receiver.bind(s);
-}
-
-static void pofLua_receiveupdate(void *x, t_symbol *s)
-{
-	pofLua_receive(x, s);
-	cout << "pofLua_receiveupdate s=" << s->s_name << endl;
+	px->receivers[s].initialize(px, s, update != 0);
 }
 
 static void pofLua_touchconfig(void *x, t_symbol *s, int argc, t_atom *argv)
@@ -405,13 +418,6 @@ static void pofLua_force(void *x)
 	px->force = true;
 }
 
-static void pofLua_rcv_anything(pofLua_receiver *x, t_symbol *s, int argc, t_atom *argv)
-{
-	//outlet_anything(x->x_obj.ob_outlet, s, argc, argv);
-	cout << "pofLua_rcv_anything s=" << s->s_name << endl;
-	x->lua->trigger = true;
-}
-
 extern "C" {
 	int luaopen_pof(lua_State* L);
 }
@@ -420,10 +426,9 @@ void pofLua::setup(void)
 {
 	s_out = gensym("out");
 	s_function = gensym("function");
-	//post("pofLua_setup");
+	s_receive = gensym("receive");
 
-	pofLua_receiver_class = class_new(gensym("pofluarcv"), 0, 0, sizeof(pofLua_receiver), CLASS_PD, A_NULL);
-	class_addanything(pofLua_receiver_class, pofLua_rcv_anything);
+	pofLua_receiver::setup();
 
 	pofLua_class = class_new(gensym("poflua"), (t_newmethod)pofLua_new, (t_method)pofLua_free,
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
@@ -432,8 +437,7 @@ void pofLua::setup(void)
 	class_addmethod(pofLua_class, (t_method)pofLua_lua_async, gensym("luaf"),	A_GIMME, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_out, s_out, A_GIMME, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_send, gensym("send"), A_GIMME, A_NULL);
-	class_addmethod(pofLua_class, (t_method)pofLua_receive, gensym("receive"), A_SYMBOL, A_NULL);
-	class_addmethod(pofLua_class, (t_method)pofLua_receiveupdate, gensym("receiveupdate"), A_SYMBOL, A_NULL);
+	class_addmethod(pofLua_class, (t_method)pofLua_receive, gensym("receive"), A_SYMBOL, A_DEFFLOAT, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_touchconfig, gensym("touchconfig"), A_GIMME, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_reload, gensym("reload"), A_NULL);
 	class_addbang(pofLua_class, (t_method)pofLua_bang);
@@ -460,8 +464,7 @@ void pofLua::setup(void)
 
 pofLua::pofLua(t_class *Class):
 	pofBase(Class), pofTouch(Class, 200, 200), pofOnce(Class, true),
-	loaded(false), touchable(false), drawable(false),
-	receiver(this), receiverupdater(this)
+	loaded(false), touchable(false), drawable(false)
 {
 }
 
