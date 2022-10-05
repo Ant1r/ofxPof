@@ -348,7 +348,11 @@ static void pofLua_lua(void *x, t_symbol *s, int argc, t_atom *argv)
 
 static void pofLua_lua_async(void *x, t_symbol *s, int argc, t_atom *argv)
 {
-	if(s == gensym("luaf")) pofBase::tellGUI(x, s_function, argc, argv);
+	pofLua* px = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
+	if(s == gensym("luaf")) {
+		pofBase::tellGUI(x, s_function, argc, argv);
+		px->trigger = true;
+	}
 }
 static void pofLua_out(void *x, t_symbol *s, int argc, t_atom *argv)
 {
@@ -547,6 +551,8 @@ void pofLua::message(int argc, t_atom *argv)
 	t_symbol *key = atom_getsymbol(argv); 
 	argv++; argc--;
 
+	if(!loaded) return;
+	luaMutex.lock();
 	if(key == s_function) {
 		t_symbol *func = atom_getsymbol(argv);
 		int n = 1;
@@ -568,4 +574,5 @@ void pofLua::message(int argc, t_atom *argv)
 		}
 		else pd_error(pdobj, "pofLua::message %s: %s", name->s_name, lua.getErrorMessage().c_str());
 	}
+	luaMutex.unlock();
 }

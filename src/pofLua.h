@@ -12,11 +12,11 @@ class pofLua;
 
 class pofLua_receiver
 {
-	public:
 	t_pd pd;
 	pofLua *lua;
 	bool update;
 	t_symbol *name;
+	public:
 	pofLua_receiver();
 	~pofLua_receiver();
 	void initialize(pofLua *owner, t_symbol *name, bool update = false);
