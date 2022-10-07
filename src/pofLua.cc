@@ -12,7 +12,7 @@ t_class *pofLua_class, *pofLua_receiver_class;
 
 static ofxLua lua;
 static ofMutex luaMutex;
-static t_symbol *s_out, *s_function, *s_receive;
+static t_symbol *s_out, *s_function, *s_method, *s_global, *s_receive;
 static std::map<string, pofLua*> pofLuas;
 
 // ------------ pofLua_receiver -------------
@@ -184,15 +184,18 @@ static string pofLua_prefix(void *x)
 	pofLua* obj = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
 	std::ostringstream ss;
 	string namestr = string(obj->name->s_name);
-	ss << namestr << " = " << namestr << " or {} local M = " << namestr <<" ";
-	ss << "M.pdself = '" << namestr << "' ";
-	ss << "function M.out(...) topd(M.pdself, 'out', ...) end; ";
-	ss << "function M.send(...) topd(M.pdself, 'send', ...) end; ";
-	ss << "function M.touchconfig(...) topd(M.pdself, 'touchconfig', ...) end; ";
-	ss << "function M.drawconfig(...) drawconfig(M.pdself, ...) end; ";
-	ss << "function M.addreceive(name, update) topd(M.pdself, 'receive', name, update) end; ";
-	ss << "function M.getfile(...) return getfile(M.pdself, ...) end; ";
-	return ss.str();
+	string commandstr =
+		namestr + " = " + namestr + " or {} local M = " + namestr + ";" +
+		"M.pdself = '" + namestr + "' ;" +
+		"function M.out(...) topd(M.pdself, 'out', ...) end; "
+		"function M.send(...) topd(M.pdself, 'send', ...) end; "
+		"function M.touchconfig(...) topd(M.pdself, 'touchconfig', ...) end; "
+		"function M.drawconfig(...) drawconfig(M.pdself, ...) end; "
+		"function M.addreceive(name, update) topd(M.pdself, 'receive', name, update) end; "
+		"function M.getfile(...) return getfile(M.pdself, ...) end; "
+	;
+
+	return commandstr;
 }
 
 static string dollarsymbol(string instring)
@@ -292,7 +295,6 @@ static void *pofLua_new(t_symbol *s, int argc, t_atom *argv)
 			if(argc) {
 				obj->filename = atom_getsymbol(argv);
 				argv++; argc--;
-				//pofLua_reload(obj->pdobj);
 			}
 		}
 		else {argv++; argc--;}
@@ -349,11 +351,10 @@ static void pofLua_lua(void *x, t_symbol *s, int argc, t_atom *argv)
 static void pofLua_lua_async(void *x, t_symbol *s, int argc, t_atom *argv)
 {
 	pofLua* px = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
-	if(s == gensym("luaf")) {
-		pofBase::tellGUI(x, s_function, argc, argv);
-		px->trigger = true;
-	}
+	pofBase::tellGUI(x, s, argc, argv);
+	px->trigger = true;
 }
+
 static void pofLua_out(void *x, t_symbol *s, int argc, t_atom *argv)
 {
 	pofLua* px = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
@@ -429,7 +430,9 @@ extern "C" {
 void pofLua::setup(void)
 {
 	s_out = gensym("out");
-	s_function = gensym("function");
+	s_function = gensym("f");
+	s_method = gensym("m");
+	s_global = gensym("g");
 	s_receive = gensym("receive");
 
 	pofLua_receiver::setup();
@@ -437,8 +440,12 @@ void pofLua::setup(void)
 	pofLua_class = class_new(gensym("poflua"), (t_newmethod)pofLua_new, (t_method)pofLua_free,
 		sizeof(PdObject), 0, A_GIMME, A_NULL);
 	POF_SETUP(pofLua_class);
-	class_addmethod(pofLua_class, (t_method)pofLua_lua, gensym("lua"),	A_GIMME, A_NULL);
-	class_addmethod(pofLua_class, (t_method)pofLua_lua_async, gensym("luaf"),	A_GIMME, A_NULL);
+	class_addmethod(pofLua_class, (t_method)pofLua_lua, gensym("lua"), A_GIMME, A_NULL);
+
+	class_addmethod(pofLua_class, (t_method)pofLua_lua_async, s_function, A_GIMME, A_NULL);
+	class_addmethod(pofLua_class, (t_method)pofLua_lua_async, s_method, A_GIMME, A_NULL);
+	class_addmethod(pofLua_class, (t_method)pofLua_lua_async, s_global, A_GIMME, A_NULL);
+
 	class_addmethod(pofLua_class, (t_method)pofLua_out, s_out, A_GIMME, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_send, gensym("send"), A_GIMME, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_receive, gensym("receive"), A_SYMBOL, A_DEFFLOAT, A_NULL);
@@ -553,26 +560,37 @@ void pofLua::message(int argc, t_atom *argv)
 
 	if(!loaded) return;
 	luaMutex.lock();
-	if(key == s_function) {
+	if(key == s_function || key == s_method || key == s_global) {
 		t_symbol *func = atom_getsymbol(argv);
-		int n = 1;
+		int n = 0;
 		argv++; argc--;
-		if(lua.pushTable(name->s_name)) {
-			if(lua.isFunction(func->s_name)) {
-				lua_getfield(lua, -1, func->s_name);
-				lua_getglobal(lua, name->s_name);
-				while(argc) {
-					if(argv->a_type == A_SYMBOL) lua_pushstring(lua, atom_getsymbol(argv)->s_name);
-					else if(argv->a_type == A_FLOAT) lua_pushnumber(lua, atom_getfloat(argv));
-					argv++; argc--; n++;
-				}
-				if(lua_pcall(lua, n, 0, 0) != 0) {
-					pd_error(pdobj, "pofLua::message calling %s(): %s", func->s_name, lua_tostring(lua, -1));
-				}
+		if(key == s_function || key == s_method) {
+			if(!lua.pushTable(name->s_name)) {
+				pd_error(pdobj, "pofLua::message %s: %s", name->s_name, lua.getErrorMessage().c_str());
+				goto end;
 			}
-			lua.popTable();
 		}
-		else pd_error(pdobj, "pofLua::message %s: %s", name->s_name, lua.getErrorMessage().c_str());
+		if(lua.isFunction(func->s_name)) {
+			if(key == s_function || key == s_method) {
+				lua_getfield(lua, -1, func->s_name);
+				if(key == s_method) {
+					lua_getglobal(lua, name->s_name);
+					n = 1;
+				}
+			} else {
+				lua_getglobal(lua, func->s_name);
+			}
+			while(argc) {
+				if(argv->a_type == A_SYMBOL) lua_pushstring(lua, atom_getsymbol(argv)->s_name);
+				else if(argv->a_type == A_FLOAT) lua_pushnumber(lua, atom_getfloat(argv));
+				argv++; argc--; n++;
+			}
+			if(lua_pcall(lua, n, 0, 0) != 0) {
+				pd_error(pdobj, "pofLua::message calling %s(): %s", func->s_name, lua_tostring(lua, -1));
+			}
+		}
+		if(key == s_function || key == s_method) lua.popTable();
 	}
+end:
 	luaMutex.unlock();
 }
