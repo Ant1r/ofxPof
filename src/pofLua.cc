@@ -25,12 +25,11 @@ pofLua_receiver::~pofLua_receiver()
 	if(pd) pd_unbind(&pd, name);
 }
 
-void pofLua_receiver::initialize(pofLua *owner, t_symbol *_name, bool _update)
+void pofLua_receiver::initialize(pofLua *owner, t_symbol *_name)
 {
 	pd = pofLua_receiver_class;
 	lua = owner;
 	name = _name;
-	update = _update;
 	pd_bind(&pd, name);
 }
 
@@ -47,8 +46,8 @@ void pofLua_receiver::rcv_anything(t_symbol *s, int argc, t_atom *argv)
 		binbuf_add(bb, 1, &at);
 	}
 	binbuf_add(bb, argc, argv);
-	lua->queueToGUI(s_function, binbuf_getnatom(bb), binbuf_getvec(bb));
-	if(update) lua->trigger = true;
+	lua->queueToGUI(s_method, binbuf_getnatom(bb), binbuf_getvec(bb));
+	lua->trigger = true;
 	binbuf_free(bb);
 }
 
@@ -191,7 +190,7 @@ static string pofLua_prefix(void *x)
 		"function M.send(...) topd(M.pdself, 'send', ...) end; "
 		"function M.touchconfig(...) topd(M.pdself, 'touchconfig', ...) end; "
 		"function M.drawconfig(...) drawconfig(M.pdself, ...) end; "
-		"function M.addreceive(name, update) topd(M.pdself, 'receive', name, update) end; "
+		"function M.addreceive(name) topd(M.pdself, 'receive', name) end; "
 		"function M.getfile(...) return getfile(M.pdself, ...) end; "
 	;
 
@@ -375,10 +374,10 @@ static void pofLua_send(void *x, t_symbol *s, int argc, t_atom *argv)
 	else pd_list(dest->s_thing, gensym("list"), argc, argv);
 }
 
-static void pofLua_receive(void *x, t_symbol *s, t_float update)
+static void pofLua_receive(void *x, t_symbol *s)
 {
 	pofLua* px = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
-	px->receivers[s].initialize(px, s, update != 0);
+	px->receivers[s].initialize(px, s);
 }
 
 static void pofLua_touchconfig(void *x, t_symbol *s, int argc, t_atom *argv)
@@ -448,7 +447,7 @@ void pofLua::setup(void)
 
 	class_addmethod(pofLua_class, (t_method)pofLua_out, s_out, A_GIMME, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_send, gensym("send"), A_GIMME, A_NULL);
-	class_addmethod(pofLua_class, (t_method)pofLua_receive, gensym("receive"), A_SYMBOL, A_DEFFLOAT, A_NULL);
+	class_addmethod(pofLua_class, (t_method)pofLua_receive, gensym("receive"), A_SYMBOL, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_touchconfig, gensym("touchconfig"), A_GIMME, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_reload, gensym("reload"), A_NULL);
 	class_addbang(pofLua_class, (t_method)pofLua_bang);

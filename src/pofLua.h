@@ -14,12 +14,11 @@ class pofLua_receiver
 {
 	t_pd pd;
 	pofLua *lua;
-	bool update;
 	t_symbol *name;
 	public:
 	pofLua_receiver();
 	~pofLua_receiver();
-	void initialize(pofLua *owner, t_symbol *name, bool update = false);
+	void initialize(pofLua *owner, t_symbol *name);
 	void rcv_anything(t_symbol *s, int argc, t_atom *argv);
 	static void setup(void);
 };
