@@ -49,6 +49,8 @@ class ofxFontStash{
 		
 		ofxFontStash();
 		~ofxFontStash();
+		int numlines;
+		bool wordsWereTruncated;
 	
 		//call this to set your font file (.ttf, etc)
 		bool setup(string firstFontFile,
@@ -120,11 +122,21 @@ class ofxFontStash{
 		vector<string> computeMultiLines( string text, float size,
 											  float maxW, int &numLines, bool* wordsWereTruncated);
 
+		vector<string> computeMultiLines( string text, float size, float maxW) {
+			return computeMultiLines(text, size, maxW, numlines, &wordsWereTruncated);
+		}
 		ofRectangle drawMultiLines( vector<string> &splitLines, float size, float x, float y,
-											  float maxW, int &numLines, bool dontDraw, int maxLines,
-											  bool centered = 0, int firstLine = 0, 
-											  float underHeight = 0, float underWidth = 0, float underY = 0);
+											float maxW, int &numLines, bool dontDraw, int maxLines,
+											bool centered = 0, int firstLine = 0, 
+											float underHeight = 0, float underWidth = 0, float underY = 0);
 
+		ofRectangle drawMultiLines( vector<string> &splitLines, float size, float x, float y,
+											float maxW, bool dontDraw, int maxLines,
+											bool centered = 0, int firstLine = 0, 
+											float underHeight = 0, float underWidth = 0, float underY = 0) {
+			return drawMultiLines(splitLines, size, x, y, maxW, numlines, dontDraw, maxLines, centered, firstLine, underHeight, underWidth, underY); 
+		}
+		
 		ofVec2f drawMultiColumnFormatted(const string &text, float size, float columnWidth, bool topLeftAlign = false, bool dryrun = false);
 
 
