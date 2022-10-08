@@ -28,8 +28,8 @@ function M.proto:touch(event, x, y, id)
 		self.v0 = self.v
 	elseif(event == "move") then
 		self.v = clip(self.v0 - (y - self.y0) / (self.h - self.border - self.knobW), 0, 1)
-		self.out(self.v)
-		self.drawconfig("do")
+		self:out(self.v)
+		self:drawconfig("do")
 	end
 end
 
@@ -37,7 +37,7 @@ function M.proto:update()
 	if((self.w ~= self.oldw) or (self.h ~= self.oldh)) then
 		self.oldw = self.w
 		self.oldh = self.h
-		self.touchconfig("size", self.w, self.h)
+		self:touchconfig("size", self.w, self.h)
 	end
 end
 

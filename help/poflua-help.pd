@@ -1,97 +1,88 @@
-#N canvas 708 30 315 404 12;
+#N canvas 674 184 424 332 12;
 #X declare -lib pof;
 #X declare -path lua;
 #X obj 14 12 declare -lib pof;
-#N canvas 894 134 760 461 texture 0;
+#N canvas 604 119 737 421 texture 0;
 #X obj 105 33 pofhead;
 #X obj 105 89 t a a, f 13;
 #X obj 193 114 poftranslate 200;
 #X obj 105 61 pofvisible;
 #X obj 188 31 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 0 1;
-#X obj 530 363 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
-#000000 #000000;
-#X obj 530 333 route OK BAD;
-#X obj 570 362 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
-#000000 #000000;
 #X obj 193 138 pofimage logo/pOf.png POFPNG;
-#X obj 610 366 print;
-#X floatatom 579 414 5 0 0 0 - - - 0;
-#X obj 582 389 unpack f f;
-#X floatatom 646 415 5 0 0 0 - - - 0;
+#X floatatom 599 353 5 0 0 0 - - - 0;
+#X obj 599 328 unpack f f;
+#X floatatom 666 354 5 0 0 0 - - - 0;
 #X msg 42 130 reload;
-#X obj 105 166 poflua test_texture \; local tex=nil \; M.out(\$0) \;
-\; function M:draw() \; if(tex) then tex:draw(0 \, 0) else \; tex=pof.textures_get($"POFPNG")
-\; if(tex) then self.out("OK" \, tex:getWidth() \, tex:getHeight())
+#X obj 105 167 poflua test_texture \; local tex=nil \; \; function
+M:draw() \; if(tex) then tex:draw(0 \, 0) else \; tex=M:gettexture("POFPNG")
+\; if(tex) then self:out("size" \, tex:getWidth() \, tex:getHeight())
 end \; end \; end, f 71;
+#X obj 599 304 route size;
 #X connect 0 0 3 0;
-#X connect 1 0 14 0;
+#X connect 1 0 10 0;
 #X connect 1 1 2 0;
-#X connect 2 0 8 0;
+#X connect 2 0 5 0;
 #X connect 3 0 1 0;
 #X connect 4 0 3 0;
-#X connect 6 0 5 0;
-#X connect 6 0 11 0;
-#X connect 6 1 7 0;
-#X connect 6 2 9 0;
-#X connect 11 0 10 0;
-#X connect 11 1 12 0;
-#X connect 13 0 14 0;
-#X connect 14 1 6 0;
+#X connect 7 0 6 0;
+#X connect 7 1 8 0;
+#X connect 9 0 10 0;
+#X connect 10 1 11 0;
+#X connect 11 0 7 0;
 #X restore 17 137 pd texture;
-#N canvas 828 298 822 364 fonts 1;
+#N canvas 551 128 822 388 fonts 0;
 #X obj 47 31 pofhead;
 #X obj 47 59 pofvisible;
 #X obj 130 29 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 0 1;
-#X msg 66 134 reload;
-#X msg 211 169 20;
-#X msg 211 198 m set fontsize \$1;
-#X floatatom 271 164 5 0 0 0 - - - 0;
+#X msg 65 97 reload;
+#X msg 225 170 20;
+#X floatatom 285 165 5 0 0 0 - - - 0;
 #X msg 370 142 2;
 #X floatatom 406 144 5 0 0 0 - - - 0;
 #X msg 370 170 m settext ce texte est franchement long\\\, il va sans
 doute tenir sur plusieurs lignes ! Et maintenant\\\, un numéro\\\,
 le : \$1;
-#X msg 75 167 1;
-#X msg 112 166 2;
-#X msg 101 198 m setfontn \$1;
-#X obj 189 21 poffonts font1 font/vera.ttf;
-#X obj 190 46 poffonts font2 font/FreeMonoBold.ttf;
-#X msg 145 165 3;
+#X msg 80 137 1;
+#X msg 117 136 2;
 #X obj 553 92 loadbang;
 #X msg 553 116 10;
-#X obj 190 70 poffonts font3 font/Quicksand-Bold.ttf;
-#X obj 47 278 poflua test_font -r lua/testfont.lua \; M.font3=$"font3"
-\; M:setfontn(3);
-#X obj 378 258 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
-#000000 #000000;
-#X listbox 379 309 20 0 0 0 - - - 0;
-#X obj 378 283 list \$0 un deux #"\$0";
-#X obj 397 254 loadbang;
+#X msg 152 137 3;
+#X msg 225 199 m set fontsize \$1;
+#X obj 190 70 poffonts \$0-font3 font/Quicksand-Bold.ttf;
+#X obj 80 161 list prepend \$0;
+#X msg 80 200 m setfont \$1-font\$2;
+#X obj 190 46 poffonts \$0-font2 font/FreeMonoBold.ttf;
+#X obj 189 21 poffonts \$0-font1 font/vera.ttf;
+#X obj 47 315 poflua test_font -r lua/testfont.lua \; M:setfont("\$0-font3"
+\, 30) \;;
+#X msg 369 261 m set centered \$1;
+#X obj 369 237 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X connect 0 0 1 0;
-#X connect 1 0 19 0;
+#X connect 1 0 20 0;
 #X connect 2 0 1 0;
-#X connect 3 0 19 0;
-#X connect 4 0 5 0;
-#X connect 5 0 19 0;
-#X connect 6 0 5 0;
-#X connect 7 0 9 0;
-#X connect 8 0 9 0;
-#X connect 9 0 19 0;
-#X connect 10 0 12 0;
+#X connect 3 0 20 0;
+#X connect 4 0 14 0;
+#X connect 5 0 14 0;
+#X connect 6 0 8 0;
+#X connect 7 0 8 0;
+#X connect 8 0 20 0;
+#X connect 9 0 16 0;
+#X connect 10 0 16 0;
 #X connect 11 0 12 0;
-#X connect 12 0 19 0;
-#X connect 15 0 12 0;
+#X connect 12 0 8 0;
+#X connect 13 0 16 0;
+#X connect 14 0 20 0;
 #X connect 16 0 17 0;
-#X connect 17 0 9 0;
-#X connect 20 0 22 0;
+#X connect 17 0 20 0;
+#X connect 21 0 20 0;
 #X connect 22 0 21 0;
-#X connect 23 0 20 0;
 #X restore 16 164 pd fonts;
 #N canvas 1044 58 550 532 sndrcv 0;
 #X msg 74 145 reload;
-#X obj 65 457 r testrcv;
+#X obj 62 432 r testrcv;
 #X obj 45 87 pofhead;
 #X msg 79 357 hello lua;
 #X obj 41 352 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
@@ -102,13 +93,9 @@ le : \$1;
 #X floatatom 232 319 5 0 0 0 - - - 0;
 #X obj 232 382 s testsnd2;
 #X obj 79 383 s testsnd1;
-#X obj 65 481 print testrcv;
 #X msg 154 145 receive testsnd3;
 #X obj 324 380 s testsnd3;
 #X floatatom 324 353 5 0 0 0 - - - 0;
-#X obj 45 183 poflua test_sndrcv \; \; M.addreceive("testsnd1") \;
-M.addreceive("testsnd2") \; function M:receive(origin \, ...) \; M.send("testrcv"
-\, "from" \, origin \, ":" \, ...) \; end;
 #X obj 45 118 pofvisible 1;
 #X obj 117 79 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 0 1;
@@ -119,35 +106,41 @@ channel(s). It also have the ability to send the Pd's channels., f
 #X text 136 62 receiving is only possible if the object is "visible".
 Otherwise the messages are queued and will be unqueued at first draw
 cyle., f 54;
-#X connect 0 0 15 0;
-#X connect 1 0 11 0;
-#X connect 2 0 16 0;
+#X obj 45 183 poflua test_sndrcv \; \; M:addreceive("testsnd1") \;
+M:addreceive("testsnd2") \; function M:receive(origin \, ...) \; M:send("testrcv"
+\, "from" \, origin \, ":" \, ...) \; end;
+#X listbox 62 483 49 0 0 0 - - - 0;
+#X obj 62 459 list;
+#X connect 0 0 19 0;
+#X connect 1 0 21 0;
+#X connect 2 0 14 0;
 #X connect 3 0 10 0;
 #X connect 4 0 10 0;
 #X connect 5 0 10 0;
 #X connect 6 0 5 0;
 #X connect 7 0 9 0;
 #X connect 8 0 7 0;
-#X connect 12 0 15 0;
-#X connect 14 0 13 0;
-#X connect 16 0 15 0;
-#X connect 17 0 16 0;
+#X connect 11 0 19 0;
+#X connect 13 0 12 0;
+#X connect 14 0 19 0;
+#X connect 15 0 14 0;
+#X connect 21 0 20 0;
 #X restore 16 189 pd sndrcv;
-#N canvas 863 150 950 520 draw 0;
-#X obj 78 38 pofhead;
-#X obj 43 51 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000
+#N canvas 656 277 661 462 draw 0;
+#X obj 49 36 pofhead;
+#X obj 24 37 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000
 0 1;
-#X floatatom 837 396 8 0 0 0 - - - 0;
-#X obj 78 64 pofvisible 0;
-#X obj 78 89 t a a, f 38;
-#X obj 837 371 route loops;
-#X obj 78 122 poflua draw_\$0 \; \; local count=500 \; local loops=0
-\; local W=1024 \; M.size=200 \; \; function M:draw() \; for i=0 \,
-count do \; of.setColor(of.random(0 \, 255) \, of.random(0 \, 255)
-\, of.random(0 \, 255) \, 255) \; of.drawRectangle(of.random(-self.size
-\, self.size) \, of.random(-self.size \, self.size) \, of.random(10
-\, 20) \, of.random(10 \, 20)) \; loops = loops + 1 \; end \; M.out("loops"
-\, loops) \; end \;, f 115;
+#X floatatom 557 406 8 0 0 0 - - - 0;
+#X obj 49 62 pofvisible 0;
+#X obj 49 87 t a a, f 38;
+#X obj 557 381 route loops;
+#X obj 49 114 poflua draw_\$0 \; \; local rnd = of.random \; local
+setcolor = of.setColor \; local drawrect = of.drawRectangle \; \; local
+count = 500 \; local loops = 0 \; local size = 150 \; \; function M:draw()
+\; for i=0 \, count do \; setcolor(rnd(0 \, 255) \, rnd(0 \, 255) \,
+rnd(0 \, 255) \, 255) \; drawrect(rnd(-size \, size) \, rnd(-size \,
+size) \, rnd(10 \, 20) \, rnd(10 \, 20)) \; loops = loops + 1 \; end
+\; M:out("loops" \, loops) \; end \;, f 73;
 #X connect 0 0 3 0;
 #X connect 1 0 3 0;
 #X connect 3 0 4 0;
@@ -161,7 +154,7 @@ count do \; of.setColor(of.random(0 \, 255) \, of.random(0 \, 255)
 #X obj 199 41 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 0 1;
 #X msg 44 64 reload;
-#X obj 116 95 poflua test_image \; local im=of.Image(M.getfile("logo/pOf.png"))
+#X obj 116 95 poflua test_image \; local im=of.Image(M:getfile("logo/pOf.png"))
 \; \; function M:draw() \; of.setRectMode(of.RECTMODE_CENTER) \; im:draw(0
 \, 0) \; of.setRectMode(of.RECTMODE_CORNER) \; end;
 #X connect 0 0 1 0;
@@ -169,7 +162,7 @@ count do \; of.setColor(of.random(0 \, 255) \, of.random(0 \, 255)
 #X connect 2 0 1 0;
 #X connect 3 0 4 0;
 #X restore 16 112 pd image;
-#N canvas 816 167 990 663 vertical_slider_class 0;
+#N canvas 603 169 909 663 vertical_slider_class 0;
 #X floatatom 496 149 5 0 0 0 - - - 0;
 #X obj 65 71 pofhead;
 #X obj 33 71 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000
@@ -248,3 +241,11 @@ which properties can be overwritten.;
 #X connect 32 0 31 0;
 #X connect 35 0 21 0;
 #X restore 18 220 pd vertical_slider_class;
+#X obj 164 83 pofhead;
+#X msg 229 83 reload;
+#X obj 301 159 print fromlua;
+#X obj 164 107 poflua luaobj_\$0 \; print("hello") \; M:out("world")
+\;, f 20;
+#X connect 7 0 10 0;
+#X connect 8 0 10 0;
+#X connect 10 1 9 0;
