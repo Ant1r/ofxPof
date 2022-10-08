@@ -12,7 +12,7 @@ t_class *pofLua_class, *pofLua_receiver_class;
 
 static ofxLua lua;
 static ofMutex luaMutex;
-static t_symbol *s_out, *s_function, *s_method, *s_global, *s_receive;
+static t_symbol *s_out, *s_function, *s_method, *s_global, *s_receive, *s_getsym;
 static std::map<string, pofLua*> pofLuas;
 
 // ------------ pofLua_receiver -------------
@@ -62,7 +62,7 @@ void pofLua_receiver::setup()
 	class_addanything(pofLua_receiver_class, pofLua_receiver_anything);
 }
 
-// ------------ Methods exported to Lua -------------
+// ------------ global functions exported to Lua -------------
 
 static void pofLua_stackToBinbuf(lua_State *L, int first, t_binbuf *bb)
 {
@@ -152,7 +152,7 @@ static int pofLua_lua_getfile(lua_State *L)
 	return 1;
 }
 
-static t_symbol *getsym(string symaddr)
+static t_symbol *addr_to_sym(string symaddr)
 {
 	stringstream ss(symaddr);
 	long long unsigned int i;
@@ -161,66 +161,63 @@ static t_symbol *getsym(string symaddr)
 }
 
 ofTexture *textures_get(string texsymaddr) {
-	return pofBase::textures[getsym(texsymaddr)];
+	return pofBase::textures[addr_to_sym(texsymaddr)];
 }
 
 ofxFontStash *fonts_get(string fontsymaddr) {
-	pofFonts *pfs = pofFonts::getFont(getsym(fontsymaddr));
+	pofFonts *pfs = pofFonts::getFont(addr_to_sym(fontsymaddr));
 	if(pfs) return pfs->offont;
 	else return NULL;
 }
 
 ofFbo *fbo_get(string fbosymaddr) {
-	auto it = pofsubFbo::sfbos.find(getsym(fbosymaddr));
+	auto it = pofsubFbo::sfbos.find(addr_to_sym(fbosymaddr));
 	if(it != pofsubFbo::sfbos.end() && it->second->fbo->isAllocated()) return it->second->fbo;
 	else return NULL;
 }
 
 // ------------ module creation and script loading utilities -------------
 
+static void pofLua_initscript()
+{
+	string script =
+		"poflua = {}; "
+		"poflua.symbols = {};"
+		"poflua.functions = {};"
+
+		"function poflua.functions:out(...) topd(self.pdself, 'out', ...) end; "
+		"function poflua.functions:send(...) topd(self.pdself, 'send', ...) end; "
+		"function poflua.functions:touchconfig(...) topd(self.pdself, 'touchconfig', ...) end; "
+		"function poflua.functions:drawconfig(...) drawconfig(self.pdself, ...) end; "
+		"function poflua.functions:addreceive(name) topd(self.pdself, 'receive', name) end; "
+		"function poflua.functions:getfile(...) return getfile(self.pdself, ...) end; "
+
+		"function poflua.functions:getsym(name) "
+			"local sym = poflua.symbols[name]; "
+			"if sym then return sym end; "
+			"topd(self.pdself, '_getsym_', name)"
+			/*"print(self.pdself, 'wants symbol:', name)"*/
+		"end;"
+
+		"function poflua.functions:gettexture(name) return pof.textures_get(self:getsym(name) or '_') end; "
+		"function poflua.functions:getfbo(name) return pof.fbo_get(self:getsym(name) or '_') end; "
+		"function poflua.functions:getfont(name) return pof.fonts_get(self:getsym(name) or '_') end; "
+
+	;
+	lua.doString(script);
+}
+
 static string pofLua_prefix(void *x)
 {
 	pofLua* obj = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
-	std::ostringstream ss;
 	string namestr = string(obj->name->s_name);
 	string commandstr =
 		namestr + " = " + namestr + " or {} local M = " + namestr + ";" +
 		"M.pdself = '" + namestr + "' ;" +
-		"function M.out(...) topd(M.pdself, 'out', ...) end; "
-		"function M.send(...) topd(M.pdself, 'send', ...) end; "
-		"function M.touchconfig(...) topd(M.pdself, 'touchconfig', ...) end; "
-		"function M.drawconfig(...) drawconfig(M.pdself, ...) end; "
-		"function M.addreceive(name) topd(M.pdself, 'receive', name) end; "
-		"function M.getfile(...) return getfile(M.pdself, ...) end; "
+		"for k, v in pairs(poflua.functions) do M[k] = v end;"
 	;
 
 	return commandstr;
-}
-
-static string dollarsymbol(string instring)
-{
-	string outstring;
-	std::size_t index = instring.find("$\"");
-	std::size_t lastindex = 0;
-	
-	while(index != std::string::npos) {
-		outstring.append(instring.substr(lastindex, index - lastindex));
-		lastindex = index;
-		size_t nextindex = instring.find('"', index + 2);
-		if(nextindex != std::string::npos) {
-			string tmpstr = instring.substr(index + 2, nextindex - index - 2);
-			t_symbol *s = gensym(tmpstr.c_str());
-			stringstream ss;
-			ss << s;
-			//cout << "dollarsymbol: " << tmpstr.c_str() << " -> " << ss.str() << endl;
-			outstring.append("'" + ss.str() + "'");
-			index = lastindex = nextindex + 1;
-		}
-		index = instring.find("$\"", index + 1);
-	}
-	outstring.append(instring.substr(lastindex, index - lastindex));
-	//cout << "final string: " << outstring << endl;
-	return outstring;
 }
 
 static void pofLua_reload(void *x)
@@ -264,7 +261,6 @@ static void pofLua_reload(void *x)
 	
 	obj->receivers.clear();
 	obj->script += obj->argsScript;
-	obj->script = dollarsymbol(obj->script);
 	obj->loaded = obj->touchable = obj->drawable = false;
 	obj->trigger = true;
 }
@@ -350,7 +346,7 @@ static void pofLua_lua(void *x, t_symbol *s, int argc, t_atom *argv)
 static void pofLua_lua_async(void *x, t_symbol *s, int argc, t_atom *argv)
 {
 	pofLua* px = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
-	pofBase::tellGUI(x, s, argc, argv);
+	px->queueToGUI(s, argc, argv);
 	px->trigger = true;
 }
 
@@ -422,6 +418,19 @@ static void pofLua_force(void *x)
 	px->force = true;
 }
 
+/* internal message asking Pd to send the symbol's address to Lua */
+static void pofLua_getsym(void *x, t_symbol *name)
+{
+	pofLua *px = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
+	t_atom at[2];
+	stringstream ss;
+	ss << name;
+	t_symbol *addr = gensym(ss.str().c_str());
+	SETSYMBOL(&at[0], name);
+	SETSYMBOL(&at[1], addr);
+	px->queueToGUI(s_getsym, 2, at);
+}
+
 extern "C" {
 	int luaopen_pof(lua_State* L);
 }
@@ -433,6 +442,7 @@ void pofLua::setup(void)
 	s_method = gensym("m");
 	s_global = gensym("g");
 	s_receive = gensym("receive");
+	s_getsym = gensym("_getsym_");
 
 	pofLua_receiver::setup();
 
@@ -453,6 +463,7 @@ void pofLua::setup(void)
 	class_addbang(pofLua_class, (t_method)pofLua_bang);
 	class_addmethod(pofLua_class, (t_method)pofLua_force, gensym("force"), A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_continuousForce, gensym("continuousForce"), A_DEFFLOAT, A_NULL);
+	class_addmethod(pofLua_class, (t_method)pofLua_getsym, s_getsym, A_SYMBOL, A_NULL);
 
 	// init the lua state
 	lua.init();
@@ -467,6 +478,7 @@ void pofLua::setup(void)
 	lua_setglobal(lua, "getfile");
 	lua_pushboolean(lua, false);
 	lua_setglobal(lua, "FORCE_DRAW");
+	pofLua_initscript();
 }
 
 
@@ -589,6 +601,15 @@ void pofLua::message(int argc, t_atom *argv)
 			}
 		}
 		if(key == s_function || key == s_method) lua.popTable();
+	} else if(key == s_getsym) {
+		t_symbol *symname = atom_getsymbol(argv);
+		t_symbol *symaddr = atom_getsymbol(argv + 1);
+		//post("pofLua::message getsym %s %s", symname->s_name, symaddr->s_name);
+		lua.pushTable("poflua");
+		lua.pushTable("symbols");
+		lua.setString(symname->s_name, symaddr->s_name);
+		lua.popTable();
+		lua.popTable();
 	}
 end:
 	luaMutex.unlock();
