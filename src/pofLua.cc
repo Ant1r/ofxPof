@@ -12,7 +12,7 @@ t_class *pofLua_class, *pofLua_receiver_class;
 
 static ofxLua lua;
 static ofMutex luaMutex;
-static t_symbol *s_out, *s_function, *s_method, *s_global, *s_receive, *s_getsym;
+static t_symbol *s_function, *s_method, *s_global, *s_receive, *s_getsym;
 static std::map<string, pofLua*> pofLuas;
 
 // ------------ pofLua_receiver -------------
@@ -92,14 +92,6 @@ static std::vector<Any> pofLua_stackToVec(lua_State *L, int first)
 		else continue;
 	}
 	return vec;
-}
-
-static void pofLua_print(lua_State *L)
-{
-	t_binbuf *bb = binbuf_new();
-	pofLua_stackToBinbuf(L, 1, bb);
-	binbuf_print(bb);
-	binbuf_free(bb);
 }
 
 static void pofLua_lua_topd(lua_State *L)
@@ -215,6 +207,7 @@ static string pofLua_prefix(void *x)
 		namestr + " = " + namestr + " or {} local M = " + namestr + ";" +
 		"M.pdself = '" + namestr + "' ;" +
 		"for k, v in pairs(poflua.functions) do M[k] = v end;"
+		"local function print(...) topd(M.pdself, 'print', ...) end;"
 	;
 
 	return commandstr;
@@ -350,6 +343,14 @@ static void pofLua_lua_async(void *x, t_symbol *s, int argc, t_atom *argv)
 	px->trigger = true;
 }
 
+static void pofLua_print(void *x, t_symbol *s, int argc, t_atom *argv)
+{
+	pofLua* px = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
+	if(!argc) return;
+	postatom(argc, argv);
+	endpost();
+}
+
 static void pofLua_out(void *x, t_symbol *s, int argc, t_atom *argv)
 {
 	pofLua* px = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
@@ -437,7 +438,6 @@ extern "C" {
 
 void pofLua::setup(void)
 {
-	s_out = gensym("out");
 	s_function = gensym("f");
 	s_method = gensym("m");
 	s_global = gensym("g");
@@ -455,7 +455,8 @@ void pofLua::setup(void)
 	class_addmethod(pofLua_class, (t_method)pofLua_lua_async, s_method, A_GIMME, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_lua_async, s_global, A_GIMME, A_NULL);
 
-	class_addmethod(pofLua_class, (t_method)pofLua_out, s_out, A_GIMME, A_NULL);
+	class_addmethod(pofLua_class, (t_method)pofLua_print, gensym("print"), A_GIMME, A_NULL);
+	class_addmethod(pofLua_class, (t_method)pofLua_out, gensym("out"), A_GIMME, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_send, gensym("send"), A_GIMME, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_receive, gensym("receive"), A_SYMBOL, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_touchconfig, gensym("touchconfig"), A_GIMME, A_NULL);
@@ -468,8 +469,6 @@ void pofLua::setup(void)
 	// init the lua state
 	lua.init();
 	luaopen_pof(lua);
-	lua_pushcfunction(lua, (lua_CFunction)pofLua_print);
-	lua_setglobal(lua, "print");
 	lua_pushcfunction(lua, (lua_CFunction)pofLua_lua_topd);
 	lua_setglobal(lua, "topd");
 	lua_pushcfunction(lua, (lua_CFunction)pofLua_lua_drawconfig);
