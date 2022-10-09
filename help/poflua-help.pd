@@ -1,4 +1,4 @@
-#N canvas 674 184 424 332 12;
+#N canvas 674 184 676 345 12;
 #X declare -lib pof;
 #X declare -path lua;
 #X obj 14 12 declare -lib pof;
@@ -246,6 +246,31 @@ which properties can be overwritten.;
 #X obj 301 159 print fromlua;
 #X obj 164 107 poflua luaobj_\$0 \; print("hello") \; M:out("world")
 \;, f 20;
+#N canvas 636 71 574 352 available_functions 0;
+#X obj 74 86 pofhead;
+#X obj 74 245 poflua luaobj_printtable_\$0 -r print_table.lua;
+#X msg 172 51 reload;
+#X msg 176 87 m print_table of;
+#X msg 175 118 m print_table pof;
+#X msg 175 149 m print_table poflua;
+#X msg 174 179 m print_table poflua functions;
+#X text 100 268 It has been necessary to write the code into a .lua
+file \, because curly braces were needed (to convert variable arguments
+'...' to a table);
+#X connect 0 0 1 0;
+#X connect 2 0 1 0;
+#X connect 3 0 1 0;
+#X connect 4 0 1 0;
+#X connect 5 0 1 0;
+#X connect 6 0 1 0;
+#X restore 19 248 pd available_functions;
+#X text 217 197 limitations:;
+#X text 219 246 - curly braces cannot (yet) be used in Pd object texts.
+So for "serious" code \, writing to a separate .lua file is mandatory.
+;
+#X text 218 213 - don't start your poflua name with number \; don't
+use '-' in variable name \, e.g '\$0-foo' is not allowed \, but foo_\$0
+is.;
 #X connect 7 0 10 0;
 #X connect 8 0 10 0;
 #X connect 10 1 9 0;
