@@ -8,22 +8,19 @@
 t_class *poffbo_class;
 
 std::map<t_symbol*,pofsubFbo*> pofsubFbo::sfbos;
+std::list<ofFbo*> pofsubFbo::fbosToDelete;
 
 pofsubFbo::pofsubFbo(t_symbol *n):refCount(1), name(n), width(0), height(0), format(GL_RGBA), numSamples(0) {
 	fbo = new ofFbo();
 	sfbos[n] = this;
 	ofAddListener(pofBase::reloadTexturesEvent, this, &pofsubFbo::reloadTexture);
-	//ofAddListener(pofBase::unloadTexturesEvent, this, &pofsubFbo::unloadTexture);
-
-	//pofBase::textures[name] = &fbo.getTexture();
 }
 	
 pofsubFbo::~pofsubFbo() {
 	sfbos.erase(name);
 	ofRemoveListener(pofBase::reloadTexturesEvent, this, &pofsubFbo::reloadTexture);	
-	//ofRemoveListener(pofBase::unloadTexturesEvent, this, &pofFbo::unloadTexture);
 	pofBase::textures.erase(name);
-	delete fbo;
+	fbosToDelete.push_back(fbo);
 }
 
 void pofsubFbo::reloadTexture(ofEventArgs & args) { 
@@ -84,6 +81,14 @@ void pofsubFbo::setQuality(bool quality) {
 	if(!fbo->isAllocated()) return;
 	if(!quality) fbo->getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
 	else fbo->getTexture().setTextureMinMagFilter(GL_LINEAR, GL_LINEAR);
+}
+
+void pofsubFbo::initFrame(ofEventArgs & args)
+{
+	while(!fbosToDelete.empty()) {
+		delete fbosToDelete.front();
+		fbosToDelete.pop_front();
+	}
 }
 
 /*******************************************/
@@ -183,6 +188,7 @@ void pofFbo::setup(void)
 	class_addmethod(poffbo_class, (t_method)poffbo_format, gensym("format"), A_SYMBOL, A_NULL);
 	class_addmethod(poffbo_class, (t_method)poffbo_numsamples, gensym("numsamples"), A_FLOAT, A_NULL);
 	POF_SETUP(poffbo_class);
+	ofAddListener(pofBase::initFrameEvent, &pofsubFbo::initFrame);
 }
 
 void pofFbo::draw()

@@ -31,6 +31,8 @@ class pofImLoader: public ofThread {
 } *imLoader = NULL, *imLoaderHTTP = NULL; // two loader tasks : one for online resources, one for on disk ones.
     
 
+std::list<ofImage*> imsToDelete;
+
 class pofIm{
 
 	t_symbol *file;
@@ -40,24 +42,26 @@ class pofIm{
 	static ofMutex mutex;
 
 	public:
-	ofImage im;
+	ofImage *im;
 	bool loaded, preloaded, needUpdate;
 	
 	pofIm(t_symbol *f):file(f),refCount(1), loaded(false), preloaded(false), needUpdate(false) {
+		im = new ofImage();
 		images[file] = this;
-		im.setAnchorPercent(0.5,0.5);
-		im.setUseTexture(false);
+		im->setAnchorPercent(0.5,0.5);
+		im->setUseTexture(false);
 	}
 	
 	~pofIm() {
 		images.erase(file);
-		//pofBase::textures.erase(file);
+		//delete im;
+		imsToDelete.push_back(im);
 	}
 	
 	void doLoad(void) {
 		if(loaded) return;
 		if( (!strncmp(file->s_name, "http", strlen("http"))) || ofFile(file->s_name).exists())
-            im.load(file->s_name);
+            im->load(file->s_name);
 		loaded = true;
 	}
 	
@@ -79,20 +83,20 @@ class pofIm{
 
 	void loadfile(t_symbol *file) {
 		if( (!strncmp(file->s_name, "http", strlen("http"))) || ofFile(file->s_name).exists())
-            im.load(file->s_name);
+            im->load(file->s_name);
 		preloaded = loaded = true;
 	}
 
 	bool update() {
-		if(!(loaded && im.isAllocated())) return false;
+		if(!(loaded && im->isAllocated())) return false;
 		
-		if(!im.isUsingTexture())
+		if(!im->isUsingTexture())
 		{
-            im.setUseTexture(true);
+            im->setUseTexture(true);
             needUpdate = true;
         }
         if(needUpdate) {
-        	im.update();
+        	im->update();
         	needUpdate = false;
         }
 		return true;
@@ -101,28 +105,28 @@ class pofIm{
 
 	void draw(float x, float y, float w, float h, bool quality) {
 		if(!update()) return;
-		if(!quality) im.getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
-		else im.getTexture().setTextureMinMagFilter(GL_LINEAR, GL_LINEAR);
-		im.draw(x, y, w, h);
+		if(!quality) im->getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
+		else im->getTexture().setTextureMinMagFilter(GL_LINEAR, GL_LINEAR);
+		im->draw(x, y, w, h);
 	}
 
 	void drawsub(float x, float y, float w, float h, float sx, float sy, float sw, float sh, bool quality) {
 		if(!update()) return;
-		if(!quality) im.getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
-		else im.getTexture().setTextureMinMagFilter(GL_LINEAR, GL_LINEAR);
-		im.drawSubsection(x, y, w, h, sx, sy, sw, sh);
+		if(!quality) im->getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
+		else im->getTexture().setTextureMinMagFilter(GL_LINEAR, GL_LINEAR);
+		im->drawSubsection(x, y, w, h, sx, sy, sw, sh);
 	}
 
 	void bind() {
 		if(update()) {
-			im.bind();
-			pofBase::currentTexture = &im.getTexture();
+			im->bind();
+			pofBase::currentTexture = &im->getTexture();
 		}
 	}
 
 	void unbind() {
 		if(!loaded) return;
-		im.unbind();
+		im->unbind();
 	}
 
 	static pofIm* getImage(t_symbol *file){
@@ -164,6 +168,14 @@ class pofIm{
 	static int getNumImages()
 	{
 		return images.size();
+	}
+	
+	static void initFrame(ofEventArgs & args)
+	{
+		while(!imsToDelete.empty()) {
+			delete imsToDelete.front();
+			imsToDelete.pop_front();
+		}
 	}
 };
 
@@ -285,7 +297,7 @@ static void pofimage_getcolor(void *x, t_float X, t_float Y)
 	pofImage* px= (pofImage*)(((PdObject*)x)->parent);
 	if(px->image == NULL) return;
 	
-	ofImage *image = &px->image->im;
+	ofImage *image = px->image->im;
 	if(px->image->loaded) {
 		t_atom ap[4];
 		ofColor color = image->getColor(ofClamp(X, 0, image->getWidth()), ofClamp(Y, 0, image->getHeight()));
@@ -422,6 +434,8 @@ void pofImage::setup(void)
     imLoaderHTTP = new pofImLoader;
 	imLoader->startThread(true); //, false);    // blocking, non verbose
 	imLoaderHTTP->startThread(true); //, false);    // blocking, non verbose
+	ofAddListener(pofBase::initFrameEvent, &pofIm::initFrame);
+
 }
 
 void pofImage::release(void)
@@ -471,13 +485,13 @@ void pofImage::Update()
 	if(image) {
 		image->load();
 		if(image->loaded) {
-			if(!image->im.isAllocated()) 
-			    image->im.allocate(width!=0?width:1, 
+			if(!image->im->isAllocated()) 
+			    image->im->allocate(width!=0?width:1, 
 			        height!=0?height:width!=0?width:1, 
 			        OF_IMAGE_COLOR_ALPHA);
-            w = image->im.getWidth();
-			h = image->im.getHeight();
-			if(name) pofBase::textures[name] = &image->im.getTexture();
+            w = image->im->getWidth();
+			h = image->im->getHeight();
+			if(name) pofBase::textures[name] = &image->im->getTexture();
 
 		} else w = h = 0;
 	} else w = h = 0;
@@ -588,7 +602,7 @@ void pofImage::message(int argc, t_atom *argv)
 	if(key == s_save) {
 		if(argc && argv->a_type == A_SYMBOL) {
 			t_symbol *filename = atom_getsymbol(argv);
-			image->im.save(filename->s_name);
+			image->im->save(filename->s_name);
 			SETSYMBOL(&ap[0], s_saved);
 			SETSYMBOL(&ap[1], filename);
 			queueToSelfPd(2, ap);
@@ -605,7 +619,7 @@ void pofImage::message(int argc, t_atom *argv)
 			A = atom_getfloat(&argv[5]);
 
 			if(image->loaded) {
-				image->im.setColor(ofClamp(X, 0, image->im.getWidth()-1), ofClamp(Y, 0, image->im.getHeight()-1), 
+				image->im->setColor(ofClamp(X, 0, image->im->getWidth()-1), ofClamp(Y, 0, image->im->getHeight()-1), 
 					ofColor(R*255.0, G*255.0, B*255.0, A*255.0));
 				image->needUpdate = true;
 			}
@@ -615,11 +629,11 @@ void pofImage::message(int argc, t_atom *argv)
 			unsigned int length = (int)atom_getfloat(&argv[2]);
 			t_float *colors = (t_float *)argv[3].a_w.w_gpointer;
 			unsigned int i;
-			unsigned int W = image->im.getWidth();
-			unsigned int H = image->im.getHeight();
+			unsigned int W = image->im->getWidth();
+			unsigned int H = image->im->getHeight();
 			if(X >= W || Y >= H) return;
 			for(i = 0; i < length ; i++) {
-				image->im.setColor(X, Y, ofColor(
+				image->im->setColor(X, Y, ofColor(
 					ofClamp(colors[4 * i], 0, 1) * 255.0, ofClamp(colors[4 * i + 1], 0, 1) * 255.0, 
 					ofClamp(colors[4 * i + 2], 0, 1) * 255.0, ofClamp(colors[4 * i + 3], 0, 1) * 255.0));
 				X++;
@@ -635,16 +649,16 @@ void pofImage::message(int argc, t_atom *argv)
 	} 
 	else if(key == s_resize) {
 		if(argc < 1) return;
-		if(argc == 1) image->im.resize(atom_getfloat(&argv[0]), atom_getfloat(&argv[0]));
-		else image->im.resize(atom_getfloat(&argv[0]), atom_getfloat(&argv[1]));
+		if(argc == 1) image->im->resize(atom_getfloat(&argv[0]), atom_getfloat(&argv[0]));
+		else image->im->resize(atom_getfloat(&argv[0]), atom_getfloat(&argv[1]));
 	} 
 	else if(key == s_crop) {
 		if(argc < 4) return;
-		image->im.crop(atom_getfloat(&argv[0]), atom_getfloat(&argv[1]), atom_getfloat(&argv[2]), atom_getfloat(&argv[3]));
+		image->im->crop(atom_getfloat(&argv[0]), atom_getfloat(&argv[1]), atom_getfloat(&argv[2]), atom_getfloat(&argv[3]));
 	} 
 	else if(key == s_grab) {
 		if(argc < 4) return;
-		image->im.grabScreen(atom_getfloat(&argv[0]), atom_getfloat(&argv[1]), atom_getfloat(&argv[2]), atom_getfloat(&argv[3]));
+		image->im->grabScreen(atom_getfloat(&argv[0]), atom_getfloat(&argv[1]), atom_getfloat(&argv[2]), atom_getfloat(&argv[3]));
 	}
 	else if(key == s_clear) {
 		float R = 0, G = 0, B = 0, A = 1;
@@ -652,13 +666,13 @@ void pofImage::message(int argc, t_atom *argv)
 		if(argc > 1) G = atom_getfloat(&argv[1]);
 		if(argc > 2) B = atom_getfloat(&argv[2]);
 		if(argc > 3) A = atom_getfloat(&argv[3]);
-		image->im.setColor(ofColor(R*255.0, G*255.0, B*255.0, A*255.0));
+		image->im->setColor(ofColor(R*255.0, G*255.0, B*255.0, A*255.0));
 		image->needUpdate = true;
 	}
 	else if(key == s_grabfbo) {
 		if(argc < 1 || argv->a_type != A_SYMBOL) return;
 		pofsubFbo* sub = pofsubFbo::get(atom_getsymbol(argv));
-		sub->fbo->readToPixels(image->im.getPixels());
+		sub->fbo->readToPixels(image->im->getPixels());
 		pofsubFbo::let(sub);
 		image->needUpdate = true;
 	}
@@ -674,9 +688,9 @@ void pofImage::message(int argc, t_atom *argv)
     else if(key == s_settype) {
         if(argc < 1 || argv->a_type != A_SYMBOL) return;
         t_symbol *sym = atom_getsymbol(argv);
-        if(sym == s_RGB) image->im.setImageType(OF_IMAGE_COLOR);
-        else if(sym == s_RGBA) image->im.setImageType(OF_IMAGE_COLOR_ALPHA);
-        else if(sym == s_GRAY) image->im.setImageType(OF_IMAGE_GRAYSCALE);
+        if(sym == s_RGB) image->im->setImageType(OF_IMAGE_COLOR);
+        else if(sym == s_RGBA) image->im->setImageType(OF_IMAGE_COLOR_ALPHA);
+        else if(sym == s_GRAY) image->im->setImageType(OF_IMAGE_GRAYSCALE);
         image->needUpdate = true;
     }
 }
