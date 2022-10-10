@@ -1,7 +1,7 @@
-#N canvas 114 305 676 345 12;
+#N canvas 806 219 940 626 12;
 #X declare -lib pof;
 #X declare -path lua;
-#X obj 14 12 declare -lib pof;
+#X obj 273 12 declare -lib pof;
 #N canvas 604 119 737 421 texture 0;
 #X obj 105 33 pofhead;
 #X obj 105 89 t a a, f 13;
@@ -30,7 +30,7 @@ end \; end \; end, f 71;
 #X connect 9 0 10 0;
 #X connect 10 1 11 0;
 #X connect 11 0 7 0;
-#X restore 17 137 pd texture;
+#X restore 23 366 pd texture;
 #N canvas 551 128 822 388 fonts 0;
 #X obj 47 31 pofhead;
 #X obj 47 59 pofvisible;
@@ -55,32 +55,32 @@ le : \$1;
 #X msg 80 200 m setfont \$1-font\$2;
 #X obj 190 46 poffonts \$0-font2 font/FreeMonoBold.ttf;
 #X obj 189 21 poffonts \$0-font1 font/vera.ttf;
-#X obj 47 315 poflua test_font -r lua/testfont.lua \; M:setfont("\$0-font3"
-\, 30) \;;
 #X msg 369 261 m set centered \$1;
 #X obj 369 237 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 0 1;
+#X obj 47 315 poflua test_font -l lua/testfont.lua \; M:setfont("\$0-font3"
+\, 30) \;;
 #X connect 0 0 1 0;
-#X connect 1 0 20 0;
+#X connect 1 0 22 0;
 #X connect 2 0 1 0;
-#X connect 3 0 20 0;
+#X connect 3 0 22 0;
 #X connect 4 0 14 0;
 #X connect 5 0 14 0;
 #X connect 6 0 8 0;
 #X connect 7 0 8 0;
-#X connect 8 0 20 0;
+#X connect 8 0 22 0;
 #X connect 9 0 16 0;
 #X connect 10 0 16 0;
 #X connect 11 0 12 0;
 #X connect 12 0 8 0;
 #X connect 13 0 16 0;
-#X connect 14 0 20 0;
+#X connect 14 0 22 0;
 #X connect 16 0 17 0;
-#X connect 17 0 20 0;
+#X connect 17 0 22 0;
+#X connect 20 0 22 0;
 #X connect 21 0 20 0;
-#X connect 22 0 21 0;
-#X restore 16 164 pd fonts;
-#N canvas 1044 58 550 532 sndrcv 0;
+#X restore 22 393 pd fonts;
+#N canvas 581 408 550 532 sndrcv 0;
 #X msg 74 145 reload;
 #X obj 62 432 r testrcv;
 #X obj 45 87 pofhead;
@@ -125,8 +125,8 @@ M:addreceive("testsnd2") \; function M:receive(origin \, ...) \; M:send("testrcv
 #X connect 14 0 19 0;
 #X connect 15 0 14 0;
 #X connect 21 0 20 0;
-#X restore 16 189 pd sndrcv;
-#N canvas 656 277 661 462 draw 1;
+#X restore 22 418 pd sndrcv;
+#N canvas 656 277 661 462 draw 0;
 #X obj 49 36 pofhead;
 #X obj 24 37 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000
 0 1;
@@ -147,7 +147,7 @@ size) \, rnd(10 \, 20) \, rnd(10 \, 20)) \; loops = loops + 1 \; end
 #X connect 4 0 6 0;
 #X connect 5 0 2 0;
 #X connect 6 1 5 0;
-#X restore 18 66 pd draw;
+#X restore 22 315 pd draw;
 #N canvas 660 308 529 390 image 0;
 #X obj 116 43 pofhead;
 #X obj 116 71 pofvisible;
@@ -161,8 +161,8 @@ size) \, rnd(10 \, 20) \, rnd(10 \, 20)) \; loops = loops + 1 \; end
 #X connect 1 0 4 0;
 #X connect 2 0 1 0;
 #X connect 3 0 4 0;
-#X restore 16 112 pd image;
-#N canvas 603 169 909 663 vertical_slider_class 0;
+#X restore 22 341 pd image;
+#N canvas 806 131 909 663 vertical_slider_class 0;
 #X floatatom 496 149 5 0 0 0 - - - 0;
 #X obj 65 71 pofhead;
 #X obj 33 71 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000
@@ -185,8 +185,6 @@ size) \, rnd(10 \, 20) \, rnd(10 \, 20)) \; loops = loops + 1 \; end
 #X msg 498 278 lua M.proto.w=\$1;
 #X msg 498 224 lua M.proto.h=\$1;
 #X msg 496 174 lua M.proto.border=\$1;
-#X obj 412 318 poflua vsliderClass -r vsliderClass.lua \; M.border
-= 30 \; M.rad = 5 \; M.knobW = 20;
 #X obj 65 380 poflua vslider_\$0 \; vsliderClass:new(M) \; M.w=80 \;
 ;
 #X msg 202 455 set \$1;
@@ -210,41 +208,45 @@ which properties can be overwritten.;
 #X obj 205 611 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 #fcfcfc
 #000000 #000000 0 1;
 #X msg 245 278 lua M.border=nil;
+#X msg 243 310 lua M.rad=nil;
+#X obj 412 318 poflua vsliderClass -l vsliderClass.lua \; M.proto.border
+= 10 \; M.proto.knobW = 10;
 #X connect 0 0 19 0;
 #X connect 1 0 7 0;
 #X connect 2 0 7 0;
-#X connect 3 0 21 0;
-#X connect 3 1 20 0;
-#X connect 5 0 20 0;
+#X connect 3 0 20 0;
+#X connect 3 1 36 0;
+#X connect 5 0 36 0;
 #X connect 6 0 9 0;
 #X connect 7 0 3 0;
-#X connect 8 0 21 0;
-#X connect 9 0 21 0;
-#X connect 10 0 21 0;
+#X connect 8 0 20 0;
+#X connect 9 0 20 0;
+#X connect 10 0 20 0;
 #X connect 11 0 10 0;
+#X connect 12 0 21 0;
 #X connect 12 0 22 0;
-#X connect 12 0 23 0;
 #X connect 13 0 18 0;
 #X connect 14 0 17 0;
 #X connect 15 0 16 0;
-#X connect 16 0 21 0;
-#X connect 17 0 20 0;
-#X connect 18 0 20 0;
-#X connect 19 0 20 0;
-#X connect 21 0 27 0;
-#X connect 21 1 12 0;
-#X connect 22 0 6 0;
-#X connect 27 0 30 0;
-#X connect 28 0 30 0;
-#X connect 30 1 34 0;
-#X connect 31 0 20 0;
-#X connect 32 0 31 0;
-#X connect 35 0 21 0;
-#X restore 18 220 pd vertical_slider_class;
-#X obj 164 83 pofhead;
-#X msg 229 83 reload;
-#X obj 301 159 print fromlua;
-#X obj 164 107 poflua luaobj_\$0 \; print("hello") \; M:out("world")
+#X connect 16 0 20 0;
+#X connect 17 0 36 0;
+#X connect 18 0 36 0;
+#X connect 19 0 36 0;
+#X connect 20 0 26 0;
+#X connect 20 1 12 0;
+#X connect 21 0 6 0;
+#X connect 26 0 29 0;
+#X connect 27 0 29 0;
+#X connect 29 1 33 0;
+#X connect 30 0 36 0;
+#X connect 31 0 30 0;
+#X connect 34 0 20 0;
+#X connect 35 0 20 0;
+#X restore 24 449 pd vertical_slider_class;
+#X obj 23 143 pofhead;
+#X msg 88 143 reload;
+#X obj 160 219 print fromlua;
+#X obj 23 167 poflua luaobj_\$0 \; print("hello") \; M:out("world")
 \;, f 20;
 #N canvas 367 415 574 352 available_functions 0;
 #X obj 74 86 pofhead;
@@ -257,7 +259,7 @@ which properties can be overwritten.;
 file \, because curly braces were needed (to convert variable arguments
 '...' to a table);
 #X msg 174 206 m print_table self;
-#X obj 74 245 poflua luaobj_printtable_\$0 -r print_table.lua \; M.TestVariable
+#X obj 74 245 poflua luaobj_printtable_\$0 -l print_table.lua \; M.TestVariable
 = 1;
 #X connect 0 0 8 0;
 #X connect 1 0 8 0;
@@ -266,14 +268,55 @@ file \, because curly braces were needed (to convert variable arguments
 #X connect 4 0 8 0;
 #X connect 5 0 8 0;
 #X connect 7 0 8 0;
-#X restore 19 248 pd available_functions;
-#X text 217 197 limitations:;
-#X text 217 260 - curly braces cannot (yet) be used in Pd object texts.
+#X restore 25 477 pd available_functions;
+#X text 24 502 limitations:;
+#X text 24 565 - curly braces cannot (yet) be used in Pd object texts.
 So for "serious" code \, writing to a separate .lua file is mandatory.
 ;
-#X text 218 213 - don't start your poflua name with number \; don't
+#X text 25 518 - don't start your poflua name with number \; don't
 use '-' in variable name \, e.g '\$0-foo' is not allowed \, but foo_\$0
 is.;
+#X obj 9 13 cnv 15 250 20 empty empty empty 20 12 0 14 #c4fcc4 #404040
+0;
+#X obj 9 35 cnv 15 200 20 empty empty empty 20 12 0 14 #fcfcc4 #404040
+0;
+#X obj 9 66 cnv 15 200 20 empty empty empty 20 12 0 14 #fce0c4 #404040
+0;
+#X text 13 14 Pof: Pd OpenFrameworks externals;
+#X text 18 66 poflua : lua interpreter;
+#X text 252 51 messages to inlet:;
+#X text 24 94 poflua OBJNAME [-l LUAFILE] [ \; INIT_SCRIPT], f 31
+;
+#X text 269 111 - lua SCRIPT: execute a lua script synchronously. M
+represents the current poflua module (object., f 63;
+#X text 270 142 - m METHOD [ARGS...]: execute a module's method asynchronously.
+, f 65;
+#X text 270 159 - f METHOD [ARGS...]: execute a module's function asynchronously.
+, f 65;
+#X text 270 177 - receive CHANNEL: setup a receiver for given channel.
+Incomming messages will call the module's method "receive(from_channel
+\, message...)"., f 74;
+#X text 339 289 - if DONTCAPTURE = 3 \, dynamically test for enter/leave
+events AND capture when entered or touched down., f 63;
+#X text 339 277 - if DONTCAPTURE = 2 \, dynamically test for enter/leave
+events., f 65;
+#X text 312 249 - dont_capture DONTCAPTURE: let the touch events climb
+the tree even after touchdown has been detected.;
+#X text 313 319 - multi : when touchdown has been detected \, continue
+to listen to other touch id events (only useful for multitouch apps).
+, f 72;
+#X text 313 221 - size WIDTH HEIGHT: set the size of the touchable
+area (centered to the current position), f 73;
+#X text 269 206 - touchconfig COMMAND ARGS: configure the touch behavior
+of the object:, f 72;
+#X text 276 354 - continuousForce CONTFORCE(0 or 1): draw continuously
+(default 1), f 67;
+#X text 277 381 - bang: trigger the drawing next frame, f 67;
+#X text 276 367 - force: force the drawing next frame, f 67;
+#X text 20 35 (c) Antoine Rousseau 2022;
+#X text 270 67 - reload [reset]: reload the object from the optional
+luafile and the init script. If "reset" is given \, the module's table
+is re-created from scratch before reloading., f 82;
 #X connect 7 0 10 0;
 #X connect 8 0 10 0;
 #X connect 10 1 9 0;

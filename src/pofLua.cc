@@ -64,21 +64,6 @@ void pofLua_receiver::setup()
 
 // ------------ global functions exported to Lua -------------
 
-static void pofLua_stackToBinbuf(lua_State *L, int first, t_binbuf *bb)
-{
-	int top = lua_gettop(L);
-	for(int i = first; i <= top; i++)
-	{
-		t_atom at;
-		int type = lua_type (L, i);
-		if(type == LUA_TNUMBER) SETFLOAT(&at, lua_tonumber(L, i));
-		else if(type == LUA_TBOOLEAN) SETFLOAT(&at, lua_toboolean(L, i)?1:0);
-		else if(type == LUA_TSTRING) SETSYMBOL(&at, gensym(lua_tostring(L, i)));
-		else continue;
-		binbuf_add(bb, 1, &at);
-	}
-}
-
 static std::vector<Any> pofLua_stackToVec(lua_State *L, int first)
 {
 	int top = lua_gettop(L);
@@ -199,21 +184,22 @@ static void pofLua_initscript()
 	lua.doString(script);
 }
 
-static string pofLua_prefix(void *x)
+static string pofLua_prefix(void *x, bool reset = false)
 {
 	pofLua* obj = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
 	string namestr = string(obj->name->s_name);
-	string commandstr =
-		namestr + " = " + namestr + " or {} local M = " + namestr + ";" +
+	string commandstr;
+	if(reset) commandstr = namestr + " = nil;";
+	commandstr +=
+		namestr + " = " + namestr + " or {}; local M = " + namestr + ";" +
 		"M.pdself = '" + namestr + "' ;" +
 		"for k, v in pairs(poflua.functions) do M[k] = v end;"
 		"local function print(...) topd(M.pdself, 'print', ...) end;"
 	;
-
 	return commandstr;
 }
 
-static void pofLua_reload(void *x)
+static void pofLua_reload(void *x, t_symbol *s = NULL)
 {
 	pofLua* obj = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
 	int fd;
@@ -222,7 +208,7 @@ static void pofLua_reload(void *x)
 	int readret;
 	char *buf;
 
-	obj->script = pofLua_prefix(x);
+	obj->script = pofLua_prefix(x, s == gensym("reset"));
 
 	if(obj->filename) {
 		if ((fd = canvas_open(obj->pdcanvas, obj->filename->s_name, "", namebuf, &namebufptr, MAXPDSTRING, 0)) < 0)
@@ -278,7 +264,7 @@ static void *pofLua_new(t_symbol *s, int argc, t_atom *argv)
 	if(obj->name != obj->s_self) pd_bind(&obj->pdobj->x_obj.ob_pd, name);
 
 	while(argc && *atom_getsymbol(argv)->s_name != ';') { 
-		if(atom_getsymbol(argv) == gensym("-r")) {
+		if(atom_getsymbol(argv) == gensym("-l")) {
 			argv++; argc--;
 			if(argc) {
 				obj->filename = atom_getsymbol(argv);
@@ -291,7 +277,7 @@ static void *pofLua_new(t_symbol *s, int argc, t_atom *argv)
 	if(argc && *atom_getsymbol(argv)->s_name == ';') { argv++; argc--; }
 
 	std::ostringstream ss;
-	ss << pofLua_prefix(obj->pdobj);
+	//ss << pofLua_prefix(obj->pdobj);
 	for (int i = 0; i < argc; ++i)
 	{
 		if (argv[i].a_type == A_SYMBOL)
@@ -343,11 +329,21 @@ static void pofLua_lua_async(void *x, t_symbol *s, int argc, t_atom *argv)
 	px->trigger = true;
 }
 
+extern "C" {
+extern void startlogpost(const void *object, const int level, const char *fmt, ...);
+}
+
 static void pofLua_print(void *x, t_symbol *s, int argc, t_atom *argv)
 {
-	pofLua* px = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
+	//pofLua* px = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
 	if(!argc) return;
-	postatom(argc, argv);
+	for (int i = 0; i < argc; i++)
+	{
+		char buf[MAXPDSTRING];
+		atom_string(argv+i, buf, MAXPDSTRING);
+		startlogpost(x, 2, "%s ", buf);
+	}
+	//postatom(argc, argv);
 	endpost();
 }
 
@@ -430,6 +426,7 @@ static void pofLua_getsym(void *x, t_symbol *name)
 	SETSYMBOL(&at[0], name);
 	SETSYMBOL(&at[1], addr);
 	px->queueToGUI(s_getsym, 2, at);
+	px->trigger = true;
 }
 
 extern "C" {
@@ -460,7 +457,7 @@ void pofLua::setup(void)
 	class_addmethod(pofLua_class, (t_method)pofLua_send, gensym("send"), A_GIMME, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_receive, gensym("receive"), A_SYMBOL, A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_touchconfig, gensym("touchconfig"), A_GIMME, A_NULL);
-	class_addmethod(pofLua_class, (t_method)pofLua_reload, gensym("reload"), A_NULL);
+	class_addmethod(pofLua_class, (t_method)pofLua_reload, gensym("reload"), A_DEFSYM, A_NULL);
 	class_addbang(pofLua_class, (t_method)pofLua_bang);
 	class_addmethod(pofLua_class, (t_method)pofLua_force, gensym("force"), A_NULL);
 	class_addmethod(pofLua_class, (t_method)pofLua_continuousForce, gensym("continuousForce"), A_DEFFLOAT, A_NULL);
