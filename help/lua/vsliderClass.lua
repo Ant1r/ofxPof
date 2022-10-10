@@ -1,14 +1,12 @@
-M.proto = {
-	border = 20,
-	knobW = 20,
-	rad = 10,
-	w = 50,
-	h = 200,
-	v = 0,
-	red = 0
-}
+M.proto = M.proto or {}
 
---local red = 1
+M.proto.border = 20
+M.proto.knobW = 20
+M.proto.rad = 5
+M.proto.w = 50
+M.proto.h = 200
+M.proto.v = 0
+M.proto.red = 0
 
 local function clip(x, min, max)
 	if(x < min) then return min
