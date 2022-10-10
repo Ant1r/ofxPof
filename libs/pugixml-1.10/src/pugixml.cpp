@@ -12203,6 +12203,12 @@ namespace pugi
 		return _begin[index];
 	}
 
+	PUGI__FN const xpath_node& xpath_node_set::get(size_t index) const
+	{
+		assert(index < size());
+		return _begin[index];
+	}
+ 
 	PUGI__FN xpath_node_set::const_iterator xpath_node_set::begin() const
 	{
 		return _begin;

@@ -329,25 +329,25 @@ static void pofimage_setcolors(void *x, t_symbol *s, int argc, t_atom *argv)
 	t_word *vecR, *vecG, *vecB, *vecA = NULL;
 	
 	if (!(R = (t_garray *)pd_findbyclass(atom_getsymbol(&argv[3]), garray_class)))
-		error("%s: no such array", atom_getsymbol(&argv[3])->s_name);
+		pd_error(x, "%s: no such array", atom_getsymbol(&argv[3])->s_name);
 	else if (!garray_getfloatwords(R, &lenR, &vecR))
-		error("%s: bad template for tabdump", atom_getsymbol(&argv[3])->s_name);
+		pd_error(x, "%s: bad template for tabdump", atom_getsymbol(&argv[3])->s_name);
 		
 	else if (!(G = (t_garray *)pd_findbyclass(atom_getsymbol(&argv[4]), garray_class)))
-		error("%s: no such array", atom_getsymbol(&argv[4])->s_name);
+		pd_error(x, "%s: no such array", atom_getsymbol(&argv[4])->s_name);
 	else if (!garray_getfloatwords(G, &lenG, &vecG))
-		error("%s: bad template for tabdump", atom_getsymbol(&argv[4])->s_name);
+		pd_error(x, "%s: bad template for tabdump", atom_getsymbol(&argv[4])->s_name);
 		
 	else if (!(B = (t_garray *)pd_findbyclass(atom_getsymbol(&argv[5]), garray_class)))
-		error("%s: no such array", atom_getsymbol(&argv[5])->s_name);
+		pd_error(x, "%s: no such array", atom_getsymbol(&argv[5])->s_name);
 	else if (!garray_getfloatwords(B, &lenB, &vecB))
-		error("%s: bad template for tabdump", atom_getsymbol(&argv[5])->s_name);
+		pd_error(x, "%s: bad template for tabdump", atom_getsymbol(&argv[5])->s_name);
 	else {
 		if(argc > 6 && argv[6].a_type == A_SYMBOL) {
 			if (!(A = (t_garray *)pd_findbyclass(atom_getsymbol(&argv[6]), garray_class)))
-				error("%s: no such array", atom_getsymbol(&argv[6])->s_name);
+				pd_error(x, "%s: no such array", atom_getsymbol(&argv[6])->s_name);
 			else if (!garray_getfloatwords(A, &lenA, &vecA))
-				error("%s: bad template for tabdump", atom_getsymbol(&argv[6])->s_name);
+				pd_error(x, "%s: bad template for tabdump", atom_getsymbol(&argv[6])->s_name);
 			argc-- ;argv++;
 		}
 		if(argc > 6) offsetR = atom_getfloat(&argv[6]);

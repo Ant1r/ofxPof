@@ -23,30 +23,32 @@ void *poftouch_new(t_floatarg w, t_floatarg h, t_floatarg dont_capture, t_floata
 
 void poftouch_free(void *x)
 {
-	pofTouch* obj = (pofTouch*)(((PdObject*)x)->parent);
-	
-	delete (pofTouch*)(((PdObject*)x)->parent);
+	pofTouch* px = dynamic_cast<pofTouch*>(((PdObject*)x)->parent);
+	delete px;
 }
 
 void poftouch_draw(void *x, t_float d)
 {
-	((pofTouch*)(((PdObject*)x)->parent))->do_draw = (d!=0);
+	pofTouch* px = dynamic_cast<pofTouch*>(((PdObject*)x)->parent);
+	px->do_draw = (d!=0);
 }
 
 void poftouch_dont_capture(void *x, t_float nc)
 {
-	((pofTouch*)(((PdObject*)x)->parent))->capture = (nc==0) || (nc==3);
-	((pofTouch*)(((PdObject*)x)->parent))->dynamic = (nc>=2);
+	pofTouch* px = dynamic_cast<pofTouch*>(((PdObject*)x)->parent);
+	px->capture = (nc==0) || (nc==3);
+	px->dynamic = (nc>=2);
 }
 
 void poftouch_multi(void *x, t_float m)
 {
-	((pofTouch*)(((PdObject*)x)->parent))->multi = (m!=0);
+	pofTouch* px = dynamic_cast<pofTouch*>(((PdObject*)x)->parent);
+	px->multi = (m!=0);
 }
 
 void poftouch_shape(void *x, t_symbol *shape)
 {
-	pofTouch* px = (pofTouch*)(((PdObject*)x)->parent);
+	pofTouch* px = dynamic_cast<pofTouch*>(((PdObject*)x)->parent);
 	
 	if(!strcmp(shape->s_name,"rect")) px->ellipse = false;
 	if(!strcmp(shape->s_name,"ellipse")) px->ellipse = true;
@@ -54,9 +56,10 @@ void poftouch_shape(void *x, t_symbol *shape)
 
 static void poftouch_anything(void *x, t_symbol *s, int argc, t_atom *argv)
 {
-    pofTouch* px = (pofTouch*)(((PdObject*)x)->parent);
-    
-    outlet_anything(px->m_out2, s, argc, argv);
+	//pofTouch* px = (pofTouch*)(((PdObject*)x)->parent);
+	pofTouch* px = dynamic_cast<pofTouch*>(((PdObject*)x)->parent);
+
+	outlet_anything(px->m_out2, s, argc, argv);
 }
 
 void pofTouch::setup(void)

@@ -9,7 +9,7 @@
 
 class pofTouch;
 
-class pofTouch: public pofBase {
+class pofTouch: virtual public pofBase {
 	public:
 		pofTouch(t_class *Class, float w=0, float h=0, float dont_capture=0,float multi_=0):
 			pofBase(Class), width(w), height(h), do_draw(false), capture(dont_capture==0),
@@ -28,7 +28,7 @@ class pofTouch: public pofBase {
 		virtual bool isTouchable() {return true;}
 		
 		bool isInside(int x,int y);
-		void Send(t_symbol *s, int n, float f1, float f2=0, float f3=0); // outlet_anything
+		virtual void Send(t_symbol *s, int n, float f1, float f2=0, float f3=0); // outlet_anything
 		
 		float width, height;
 		bool do_draw;
