@@ -329,22 +329,17 @@ static void pofLua_lua_async(void *x, t_symbol *s, int argc, t_atom *argv)
 	px->trigger = true;
 }
 
-extern "C" {
-extern void startlogpost(const void *object, const int level, const char *fmt, ...);
-}
-
 static void pofLua_print(void *x, t_symbol *s, int argc, t_atom *argv)
 {
-	//pofLua* px = dynamic_cast<pofLua*>(((PdObject*)x)->parent);
 	if(!argc) return;
+	std::string lineString;
 	for (int i = 0; i < argc; i++)
 	{
 		char buf[MAXPDSTRING];
 		atom_string(argv+i, buf, MAXPDSTRING);
-		startlogpost(x, 2, "%s ", buf);
+		lineString += buf;
 	}
-	//postatom(argc, argv);
-	endpost();
+	logpost(x, 2, "%s ", lineString.c_str());
 }
 
 static void pofLua_out(void *x, t_symbol *s, int argc, t_atom *argv)

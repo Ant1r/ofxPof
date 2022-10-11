@@ -1,4 +1,4 @@
-#N canvas 806 219 940 626 12;
+#N canvas 668 257 940 626 12;
 #X declare -lib pof;
 #X declare -path lua;
 #X obj 273 12 declare -lib pof;
@@ -80,7 +80,7 @@ le : \$1;
 #X connect 20 0 22 0;
 #X connect 21 0 20 0;
 #X restore 22 393 pd fonts;
-#N canvas 581 408 550 532 sndrcv 0;
+#N canvas 948 134 550 532 sndrcv 0;
 #X msg 74 145 reload;
 #X obj 62 432 r testrcv;
 #X obj 45 87 pofhead;
@@ -109,10 +109,9 @@ cyle., f 54;
 #X obj 45 183 poflua test_sndrcv \; \; M:addreceive("testsnd1") \;
 M:addreceive("testsnd2") \; function M:receive(origin \, ...) \; M:send("testrcv"
 \, "from" \, origin \, ":" \, ...) \; end;
-#X listbox 62 483 49 0 0 0 - - - 0;
-#X obj 62 459 list;
+#X obj 62 459 print testrcv;
 #X connect 0 0 19 0;
-#X connect 1 0 21 0;
+#X connect 1 0 20 0;
 #X connect 2 0 14 0;
 #X connect 3 0 10 0;
 #X connect 4 0 10 0;
@@ -124,7 +123,6 @@ M:addreceive("testsnd2") \; function M:receive(origin \, ...) \; M:send("testrcv
 #X connect 13 0 12 0;
 #X connect 14 0 19 0;
 #X connect 15 0 14 0;
-#X connect 21 0 20 0;
 #X restore 22 418 pd sndrcv;
 #N canvas 656 277 661 462 draw 0;
 #X obj 49 36 pofhead;
@@ -248,7 +246,7 @@ which properties can be overwritten.;
 #X obj 160 219 print fromlua;
 #X obj 23 167 poflua luaobj_\$0 \; print("hello") \; M:out("world")
 \;, f 20;
-#N canvas 367 415 574 352 available_functions 0;
+#N canvas 1147 111 574 352 available_functions 0;
 #X obj 74 86 pofhead;
 #X msg 172 51 reload;
 #X msg 176 87 m print_table of;
