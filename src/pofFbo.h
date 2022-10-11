@@ -12,7 +12,6 @@ class pofsubFbo	{
 	int refCount;
 	t_symbol *name;
 	public:
-	static std::map<t_symbol*,pofsubFbo*> sfbos;
 	float width, height;
 	GLint format;
 	int numSamples;
