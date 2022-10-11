@@ -1,7 +1,7 @@
 %module pof
 %{
 	// include any needed headers here
-	#include "../libs/pugixml-1.10/src/pugixml.hpp"
+	//#include "../libs/pugixml-1.10/src/pugixml.hpp"
 	#include "pofBase.h"
 	#include "ofxFontStash.h"
 	extern ofTexture *textures_get(string texname);
@@ -23,7 +23,7 @@ typedef std::string string;
 // include custom code you want to be wrapped,
 // note the '%' instead of '#' as '%include' is a SWIG
 // command to wrap code in the given header
-%include "../libs/pugixml-1.10/src/pugixml.hpp"
+//%include "../libs/pugixml-1.10/src/pugixml.hpp"
 %include "../libs/ofxFontStash/src/ofxFontStash.h"
 
 ofTexture *textures_get(string texname);
