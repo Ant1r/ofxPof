@@ -6,6 +6,7 @@
 #include "pofUtil.h"
 #include "ofxZipPass.h"
 #include "ofURLFileLoader.h"
+#include <curl/curl.h>
 
 static t_class *pofutil_class;
 static t_symbol *s_download, *s_out, *s_unzip, *s_done, *s_error;
@@ -352,6 +353,7 @@ static void pofutil_unzip(void *x, t_symbol *zipfile, t_symbol *path, t_symbol *
 /* FileDownload : */
 static void pofutil_download_tick(void *x);
 
+
 class pofFileDownloader : public ofThread {
 	public :
 	void *obj;
@@ -359,22 +361,94 @@ class pofFileDownloader : public ofThread {
 	string file;
 	bool done;
 	bool error;
+	bool aborting;
 	string redirection;
 	t_clock *x_clock;
+	CURL* curl;
 
-	pofFileDownloader(void *x, string _url, string _file) : obj(x), url(_url), file(_file), done(false), error(false), redirection("") {
+	pofFileDownloader(void *x, string _url, string _file) :
+		obj(x), url(_url), file(_file), done(false), error(false), aborting(false), redirection("")
+	{
 		x_clock = clock_new(x, (t_method)pofutil_download_tick);
 		clock_delay(x_clock, 500);
+		curl = curl_easy_init();
 	}
 	
 	virtual ~pofFileDownloader() {
 		clock_free(x_clock);
+		curl_easy_cleanup(curl);
+	}
+
+	static size_t saveToFile_cb(void *buffer, size_t size, size_t nmemb, void *userdata){
+		auto saveTo = (ofFile*)userdata;
+		saveTo->write((const char*)buffer, size * nmemb);
+		return size * nmemb;
+	}
+
+	static int progress_cb(void *clientp,
+			curl_off_t dltotal,
+			curl_off_t dlnow,
+			curl_off_t ultotal,
+			curl_off_t ulnow) {
+		bool *aborting = (bool*)clientp;
+		if(*aborting) return -1;
+		else return 0;
+	}
+
+	ofHttpResponse doDownload() {
+		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+
+		// always follow redirections
+		//curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, 0);
+		curl_easy_setopt(curl, CURLOPT_READFUNCTION, nullptr);
+		curl_easy_setopt(curl, CURLOPT_READDATA, nullptr);
+
+		curl_easy_setopt(curl, CURLOPT_HTTPGET, 1);
+		curl_easy_setopt(curl, CURLOPT_POST, 0);
+
+		/*if(request.timeoutSeconds>0){
+			curl_easy_setopt(curl, CURLOPT_TIMEOUT, request.timeoutSeconds);
+		}*/
+
+		// start request and receive response
+		ofHttpResponse response;///*request*/NULL, 0, "");
+		CURLcode err = CURLE_OK;
+
+		ofFile saveTo(file, ofFile::WriteOnly, true);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &saveTo);
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, saveToFile_cb);
+
+		curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0);
+		curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, &aborting);
+		curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, progress_cb);
+		err = curl_easy_perform(curl);
+
+		if(err==CURLE_OK){
+			long http_code = 0;
+			curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &http_code);
+			response.status = http_code;
+			char *redirUrl = NULL;
+			curl_easy_getinfo(curl, CURLINFO_REDIRECT_URL, &redirUrl);
+			redirection = "";
+			if(redirUrl) {
+				redirection = string(redirUrl);
+			}
+		} else {
+			response.error = curl_easy_strerror(err);
+			response.status = -1;
+		}
+
+		return response;
 	}
 
 	void threadedFunction(){
 		try {
-			ofHttpResponse response = ofSaveURLTo(url, file);
-			if (response.status == 200) done = true;
+			ofHttpResponse response = doDownload();
+			if (response.status == 200 || response.status == 301 || response.status == 302) done = true;
 			else error = true;
 			return;
 		} catch (const Exception& exc) {
@@ -390,6 +464,10 @@ class pofFileDownloader : public ofThread {
 		if(ofFile(file).exists())
 		return (ofFile(file).getSize()/(float)1000000);
 		else return 0.0;
+	}
+
+	void abort() {
+		aborting = true;
 	}
 };
 
@@ -465,6 +543,7 @@ static void pofutil_abort_download(void *x)
 	t_atom at;
 
 	if(px->fileDownloader) {
+		px->fileDownloader->abort();
 		px->fileDownloader->waitForThread(true);
 		delete px->fileDownloader;
 		px->fileDownloader = NULL;
