@@ -13,7 +13,7 @@ cp -a ../example/pd/* pof/example/
 
 
 echo copying pof external...
-cp bin/pof.* pof/
+cp bin/pof.pd_linux pof/
 
 patchelf --set-rpath '$ORIGIN/libs' pof/pof.*
 
@@ -25,13 +25,13 @@ LIBS_TO_COPY="freeimage boost_filesystem boost_system openal gstreamer gstbase g
 	sndfile GLEW openjpeg IlmImf IlmThread Half Iex raw gpg-error gcrypt datrie graphite2 \
 	protobuf-lite mirprotobuf mircommon jbig lzma gomp lcms2 jasper jpegxr Xdmcp Xau orc \
 	jxrglue pcre mirclient atspi wayland-client wayland-egl wayland-cursor Xfixes \
-	openjp2 jpeg png webp webpmux ssl crypto \
+	openjp2 jpeg png webp webpmux ssl crypto Poco rtaudio glfw\
 	"
 
 #	gstadaptivedemux gstallocators gstbadbase libgstbadvideo gstaudio gstbadaudio gstcheck gstcodecparsers gstcontroller gstfft gstgl gstinsertbin gstmpegts gstnet gstpbutils gstphotography gstplayer gstriff gstrtp gstrtsp gsttag
 
 for libtocopy in $LIBS_TO_COPY ; do 
-	libfile=`ldd bin/pof.* | grep lib${libtocopy} | cut -d' ' -f 3`
+	libfile=`ldd bin/pof.pd_linux | grep lib${libtocopy} | cut -d' ' -f 3`
 	if [ "x$libfile" != "x" ] ; then 
 		#echo "$libtocopy : copying $libfile in libs"
 		cp $libfile pof/libs 
@@ -58,7 +58,7 @@ mkdir pof/scripts
 cp -a ../../../scripts/linux/*/ pof/scripts
 echo
 	
-POF_VERSION=`strings pof/pof.* | grep "Pof: version" | cut -s -d' ' -f 4`
+POF_VERSION=`strings pof/pof.pd_linux | grep "Pof: version" | cut -s -d' ' -f 4`
 
 rm *${POF_VERSION}*dek*
 
