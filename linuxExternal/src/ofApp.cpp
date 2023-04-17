@@ -26,7 +26,8 @@ t_clock *pollEventsClock;
 bool windowCreated = FALSE;
 
 class GUIThread : public ofThread {
-
+	public:
+	GUIThread() { setThreadName("GUIThread"); }
 	void threadedFunction() {
 		//ofSetLogLevel(OF_LOG_VERBOSE);
 
@@ -44,7 +45,7 @@ class GUIThread : public ofThread {
 
 		string gstPluginsPath = string(pofwin_class->c_externdir->s_name) + "/libs/gstplugins";
 		if(ofFile(gstPluginsPath).exists()) {
-			//post("overwriting gst plugins dir: %s", gstPluginsPath.c_str());
+			post("overwriting gst plugins dir: %s", gstPluginsPath.c_str());
 			setenv("GST_PLUGIN_PATH", gstPluginsPath.c_str(), 1);
 			setenv("GST_PLUGIN_SYSTEM_PATH", "", 1);
 		}
@@ -55,10 +56,12 @@ class GUIThread : public ofThread {
 
 class TouchEventThread : public ofThread {
 
+	public:
+	TouchEventThread() { setThreadName("TouchEventThread"); }
 	void threadedFunction() {
 		while(isThreadRunning()) {
 			if(windowCreated) glfwPollEvents();
-			sleep(5);
+			sleep(1);
 		}
 	}
 };
@@ -70,8 +73,15 @@ void ofApp::exit(){
 	ofLogNotice("Pof: stopping TouchEvent thread:");
 	appTouchEventThread.waitForThread();
 	ofLogNotice("done");
-	//pofBase::release();
+
+	pofBase::release();
+
 	//ofExit();
+	/*ofGetMainLoop()->shouldClose(0);
+	ofLogNotice("Pof: stopping GUIthread thread:");
+	appGUIthread.waitForThread();
+	ofLogNotice("done");*/
+	ofExit();
 }
 
 //--------------------------------------------------------------
@@ -160,13 +170,13 @@ void ofApp::touchUp(ofTouchEventArgs &touch){
 /*void ofApp::touchDoubleTap(ofTouchEventArgs &touch){
 }*/
 #ifndef RASPI
-/*void pollEventsMethod(void* nul)
+void pollEventsMethod(void* nul)
 {
 	if(windowCreated) {
 		glfwPollEvents(); // REMOVE THE ONE IN ofAppGLFWWindow::display() !!
 		clock_delay(pollEventsClock,2); //poll events every 2ms
 	} else clock_delay(pollEventsClock,100);
-}*/
+}
 #endif
 
 extern "C" {
@@ -177,7 +187,7 @@ extern "C" {
 		appGUIthread.startThread();
 		pofBase::setup();
 		//(new TouchEventThread)->startThread(true);
-		appTouchEventThread.startThread(true);
+		appTouchEventThread.startThread();
 
 #ifndef RASPI
 		//pollEventsClock = clock_new(0,(t_method)pollEventsMethod);
